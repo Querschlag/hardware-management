@@ -50,7 +50,7 @@
 				// display room
 				$_view->displayDeliverer(
 					$deliverer['i_id'], 
-					$deliverer['i_firmename'], 	
+					$deliverer['i_firmenname'], 	
 					$deliverer['i_strasse'], 
 					$deliverer['i_plz'], 
 					$deliverer['i_ort'], 
@@ -91,7 +91,6 @@
 			
 			// get email from frontend
 			$email = $_view->getDelivererEmail();
-			
 			
 			// check id, company name, street, zip code, location, phone number, mobile number, fax number, email 
 			if(isset($companyName) && isset($street) && isset($zipCode) && isset($location) && isset($phoneNumber) && isset($mobileNumber) && isset($faxNumber) && isset($email))
@@ -164,7 +163,7 @@
 			// get unique deliverer id
 			$id = $_view->getDelivererId();
 			
-			// check id,
+			// check id
 			if(isset($id))
 			{
 				// delete deliverer
