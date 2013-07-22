@@ -19,6 +19,13 @@
 		public function displayComponents($id);
 		
 		/**
+		 *  function to get component id
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function getComponentId();
+		
+		/**
 		 *  function to get component deliverer
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>
