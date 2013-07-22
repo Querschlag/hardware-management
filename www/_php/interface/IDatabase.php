@@ -19,10 +19,11 @@
 		/**
 		 *  function to insert room
 		 * 
-		 * @param string $number The Room number.
+		 * @param int $floor The Room etage.
+		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function insertRoom($number, $name, $note);
+		public function insertRoom($floor, $number, $name, $note);
 	}
 ?>

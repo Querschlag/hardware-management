@@ -1,4 +1,8 @@
 <?php
+	
+	// include room controller
+	require_once('../../interface/IRoomController.php');
+
 	/**
 	* Controller for Rooms
 	*
@@ -28,11 +32,12 @@
 		function __construct($view) 
 		{
 			// store view
-			$_view = $view;
-			
+			$this->_view = $view;
+
 			// create database
 			// TODO 
 		}
+
 		/**
 		 *  Select all rooms and print the room on UI
 		 * 
@@ -41,13 +46,17 @@
 		public function selectRooms()
 		{
 			// get rooms from database
-			$rooms = $_database->getRooms();
+			$rooms = $this->_database->getRooms();
 			
 			// iteration over all rooms
 			foreach($rooms as $room)
 			{							
 				// display room
-				$_view->displayRoom($room['r_id'], $room['r_nr'], $room['r_bezeichnung'], $room['r_notiz']);
+				$this->_view->displayRoom(
+					$room['r_id'], 
+					sprintf("%1%02d", $room['r_etage'], $room['r_nr']), 
+					$room['r_bezeichnung'], 
+					$room['r_notiz']);
 			}
 		}
 		
@@ -59,25 +68,178 @@
 		public function insertRoom()
 		{
 			// get room number from frontend
-			$number = $_view->getRoomNumber();
+			$number = $this->_view->getRoomNumber();
 			
-			// get room name from frontend
-			$name = $_view->getRoomName();
-			
-			// get room note from frontend
-			$note = $_view->getRoomNote();
-			
-			// check room number and room name
-			if(isset($number) && isset($name))
+			// check room number
+			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
 			{
-				// insert room
-				$_database->insertRoom($number, $name, $note);
+				// get floor number
+				$floor = $this->getFloorNumberByNumber($number);
+			
+				// get room name from frontend
+				$name = $this->_view->getRoomName();
+				
+				// get room note from frontend
+				$note = $this->_view->getRoomNote();
+				
+				// check room number and room name
+				if(isset($number) && isset($name))
+				{
+					// insert room
+					$result = $this->_database->insertRoom($floor, $number, $name, $note);
+					
+					// check result of the function
+					if($result == TRUE)
+					{
+						// set success information
+						$this->_view->setSuccess();
+					}
+					else 
+					{
+						// set error to frontend
+						$this->_view->setError();						
+					}
+				}
+				else 
+				{
+					// set error to frontend
+					$this->_view->setError();
+				}
+			}
+			else 
+			{
+				// set room number error
+				$this->_view->setRoomNumberError();
+			}
+		}
+		
+		/**
+		 *  function to update room
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com> 
+		 */
+		public function updateRoom()
+		{
+			// get uniquei room id
+			$id = $this->_view->getRoomId();
+			
+			// get room number from frontend
+			$number = $this->_view->getRoomNumber();
+			
+			// check room number
+			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
+			{
+				// get floor number
+				$floor = $this->getFloorNumberByNumber($number);
+			
+				// get room name from frontend
+				$name = $this->_view->getRoomName();
+				
+				// get room note from frontend
+				$note = $this->_view->getRoomNote();
+				
+				// check room id, room number and romm name
+				if(isset($id) && isset($name))
+				{
+					// update room
+					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
+					
+					// check result of the function
+					if($result == TRUE)
+					{
+						// set success information
+						$this->_view->setSuccess();
+					}
+					else 
+					{
+						// set error to frontend
+						$this->_view->setError();						
+					}
+				}
+				else 
+				{
+					// set error to frontend
+					$this->_view->setError();
+				}
+			}
+			else 
+			{
+				// set room number error
+				$this->_view->setRoomNumberError();
+			}
+		}
+		
+		/**
+		 * function to delete room
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function deleteRoom()
+		{
+			// get uniquei room id
+			$id = $this->_view->getRoomId();
+			
+			// check room id
+			if(isset($id))
+			{
+				// delete room
+				$result = $this->_database->deleteRoom($id);
+				
+				// check result of the function
+				if($result == TRUE)
+				{
+					// set success information
+					$this->_view->setSuccess();
+				}
+				else 
+				{
+					// set error to frontend
+					$this->_view->setError();						
+				}
 			}
 			else 
 			{
 				// set error to frontend
-				$_view->setError();
+				$this->_view->setError();
+			}	
+		}
+		
+		/**
+		 *  function to get floor number by room number
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		private function getFloorNumberByNumber(&$number)
+		{
+			// floor number
+			$floor = null;
+			
+			// check for int
+			if(is_integer($number))
+			{
+				// find all numbers in string
+				$found = preg_match("[\d]", $number, $matches); 
+				
+				// check found result
+				if($found >= 1)
+				{
+					// get first number
+					$floor = $matches[0];
+					
+					// set number to 0
+					$number = 0;
+					
+					// from 1 to x
+					for($index = 1; $index < $found; $index++)
+					{
+						// set number
+						$number = ($number * 10) + $matches[$index];
+					}
+				}
 			}
+			
+			// return floor number
+			return $floor;			
 		}
 	}
 ?>

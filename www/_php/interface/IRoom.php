@@ -45,5 +45,19 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */			
 		public function setError();
+		
+		/**
+		 * function to set room number erro
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function setRoomNumberError();
+		
+		/**
+		 * function to get room id
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoomId();
 	}
 ?>

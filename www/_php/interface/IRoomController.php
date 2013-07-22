@@ -11,6 +11,32 @@
 	*/
 	interface IRoomController
 	{
+		/**
+		 *  Select all rooms and print the room on UI
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com> 
+		 */
+		public function selectRooms();
 		
+		/**
+		 *  function insert a new room
+		 *
+		 * @author Johannes Alt <altjohannes510@gmail.com> 
+		 */
+		public function insertRoom();
+		
+		/**
+		 *  function to update room
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com> 
+		 */
+		public function updateRoom();
+		
+		/**
+		 * function to delete room
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function deleteRoom();
 	}
 ?>
