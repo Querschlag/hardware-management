@@ -35,19 +35,19 @@
 		}
 		
 		/**
-		 *  select all rooms and print the room on UI
+		 *  select all deliverers and print the deliverers on UI
 		 * 
 		 * @author Thomas Bayer <thomasbayer95@gmail.com> 
 		 */
 		public function selectDeliverers()
 		{
-			// get rooms from database
+			// get deliverers from deliverers
 			$rooms = $_database->getDeliverers();
 			
-			// iteration over all rooms
+			// iteration over all deliverers
 			foreach($deliverer as $deliverers)
 			{							
-				// display room
+				// display deliverer
 				$_view->displayDeliverer(
 					$deliverer['i_id'], 
 					$deliverer['i_firmenname'], 	
@@ -175,4 +175,5 @@
 				$_view->setError();
 			}
 		}
+	}
 ?>
