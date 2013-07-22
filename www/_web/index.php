@@ -40,11 +40,10 @@
 
 		<div id="header">
 			<div id="top_nav">
-				<ul>
-					<li><strong>Verwaltung</strong></li>
-					<li><strong>Bestellung</strong></li>
-					<li><strong>Reporting</strong></li>
-				</ul>
+				<?php
+					//Include top navigation
+					include('nav.html');
+				?>
 			</div>
 			<div id="search_bar">
 				<form action="index.php" method="get">
@@ -60,7 +59,7 @@
 				 * Include module content
 				 */
 				 
-				$module = \template\ModuleImporter::moduleForName(GET('module'));
+				$module = \template\ModuleImporter::moduleForName(GET('mod'));
 				if ($module != null)
 					include($module);
 			?>

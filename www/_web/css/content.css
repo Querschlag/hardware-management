@@ -1,7 +1,7 @@
 body {
 	width:800px;
 	margin:auto;
-	font-family:Georgia, Verdana, sans-serif;
+	font-family:Arial, Verdana, sans-serif;
 	
 	-moz-box-shadow:    3px 3px 5px -2px #ccc;
 	-webkit-box-shadow: 3px 3px 5px -2px #ccc;
@@ -91,9 +91,35 @@ h1 {
 	float:right;
 }
 
+#breadcrumb_nav {
+	border:1px solid #ccc;
+}
+
+#breadcrumb_nav ul {
+	margin: 4px 0px;
+	list-style:none;
+}
+
+#breadcrumb_nav ul li {
+	display:inline;
+}
+
 #module {
 	margin:0 50px;
 	padding-bottom:25px;
+}
+
+#action_bar {
+	margin-top:10px;
+	background-color: #ddd;
+}
+
+#action_bar a {
+	border:1px solid #999;
+	color:#444;
+	font-weight:bold;
+	padding:2px 4px;
+	background-color: #bbb
 }
 
 #information {
@@ -123,3 +149,17 @@ td {
 form p {
 	margin:10px 0;
 }
+
+
+/* module Rooms */
+.rooms {list-style:none;}
+.rooms li {padding:30px;display:inline;}
+/* module Device */
+.components {list-style:none;}
+.components li {padding:10px;}
+.support_event {list-style:none;}
+.support_event li {padding:5px;}
+/* module Create Device */
+.deviceButton {float:left;margin:0px 20px;}
+.deviceButton input {height:64; width:64;border:0;}
+.deviceSelection {height:250px}
