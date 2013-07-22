@@ -150,6 +150,9 @@ form p {
 	margin:10px 0;
 }
 
+.abortButton {
+	float:right;
+}
 
 /* module Rooms */
 .rooms {list-style:none;}

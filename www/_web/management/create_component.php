@@ -30,6 +30,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
+				<input onClick="location.href = \'index.php?mod=device\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -46,6 +47,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/RCAConnector_Plug.png" /><p>Audio Anschluss</p></div>
 				<input name="step" value="2" type="hidden" />
 				<div class="clear" />
+				<input onClick="location.href = \'index.php?mod=device\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 		

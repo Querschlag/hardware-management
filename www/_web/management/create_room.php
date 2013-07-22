@@ -20,5 +20,6 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="Hinzuf&uuml;gen" />
+		<input onClick="location.href = 'index.php?mod=rooms'"; type="button" value="Abbrechen" />
 	</form>
 </div>

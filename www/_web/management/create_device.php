@@ -29,6 +29,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
+				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -50,7 +51,9 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
+				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
 			</form>
+			<div class="clear" />
 			';
 		
 		}
@@ -69,6 +72,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="step" value="2" type="hidden" />
+				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
 				<div class="clear" />
 			</form>
 			';
