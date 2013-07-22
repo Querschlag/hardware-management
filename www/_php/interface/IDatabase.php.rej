@@ -1,0 +1,55 @@
+diff a/www/_php/interface/IDatabase.php b/www/_php/interface/IDatabase.php	(rejected hunks)
+@@ -81,5 +81,52 @@
+ 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+ 		 */
+ 		public function deleteComponent($id);
++		
++		/**
++		 * select all deliverers
++		 * 
++		 * @return void
++		 */
++		 public function getDeliverers();
++		 
++		 /**
++		  * insert deliverer
++		  *
++		  * @param string $companyName company name 
++		  * @param string $street street 
++		  * @param string $zipCode zip code
++		  * @param string $location location
++		  * @param string $phoneNumber phone number
++		  * @param string $mobileNumber mobile number
++		  * @param string $faxNumber fax number
++		  * @param string $email email 
++		  * 
++		  * @return void
++		  */
++		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
++		 
++		 /**
++		  * update deliverer
++		  *
++		  * @param int $id id
++		  * @param string $companyName company name 
++		  * @param string $street street 
++		  * @param string $zipCode zip code
++		  * @param string $location location
++		  * @param string $phoneNumber phone number
++		  * @param string $mobileNumber mobile number
++		  * @param string $faxNumber fax number
++		  * @param string $email email 
++		  * 
++		  * @return void
++		  */
++		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
++		 
++		 /**
++		  * delete deliverer
++		  * 
++		  * @return void
++		  */
++		 public function deleteDeliverer($id);
+ 	}
+ ?>
+\ No newline at end of file
