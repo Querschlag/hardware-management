@@ -10,7 +10,6 @@
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	interface IRoomController
-	{
-		
+	{	
 	}
 ?>
