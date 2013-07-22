@@ -11,6 +11,18 @@
 	*/
 	interface IDatabase
 	{
+		/**
+		 *  function to get rooms
+		 */
+		public function getRooms();
 		
+		/**
+		 *  function to insert room
+		 * 
+		 * @param string $number The Room number.
+		 * @param string $name The Room name.
+		 * @param string $note The Room note.
+		 */
+		public function insertRoom($number, $name, $note);
 	}
 ?>
