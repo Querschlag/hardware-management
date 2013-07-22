@@ -1,3 +1,7 @@
+#project
+#Eclipse metadata
+.metadata
+
 #AppceleratorTitanium
 # Build folder and log file
 build/
