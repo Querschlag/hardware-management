@@ -1,24 +1,27 @@
 <?php
+	// include idatabase interface
+	require_once('../interface/IDatabase.php');
+	
+	// include room entity
+	require_once('../entity/RoomEntity.php');
+
 	/**
-	* Interface for Database
+	* Mock object room
 	*
-	* Interface for Database connection
+	* Mock object for the room
 	*
 	* @category 
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
-	interface IDatabase
+	class MockDatabase implements IDatabase
 	{
 		/**
-		 *  function to get rooms
-		 *
-		 * @return RoomEntity[] 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 *  storage for the last insert, update or delete room
 		 */
-		public function getRooms();
-		
+		public $_rooms = array();
+				
 		/**
 		 *  function to insert room
 		 * 
@@ -27,7 +30,88 @@
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function insertRoom($floor, $number, $name, $note);
+		public function insertRoom($floor, $number, $name, $note)
+		{
+			// store data in room entity
+			$entity = new RoomEntity();
+			
+			// set data
+			$entity->roomFloor = $floor;
+			
+			// set number
+			$entity->roomNumber = $number;
+			
+			// set name
+			$entity->roomName = $name;
+			
+			// set note
+			$entity->roomNote = $note;
+			
+			// store entity
+			$this->_rooms[] = $entity;
+		}	
+		
+		
+		/**
+		 *  function to get rooms
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRooms()
+		{
+			// create first room entity
+			$entity = new RoomEntity();
+			
+			// set room data
+			$entity->roomId = 1;
+			$entity->roomFloor = 2;
+			$entity->roomNumber = 14;
+			$entity->roomName = 'Medien IT-Raum';
+			$entity->roomNote = 'IT Raum der Mediendesigner';
+
+			// add entity to array
+			$this->_rooms[] = $entity;
+			
+			// create room entity
+			$entity = new RoomEntity();
+			
+			// set room data
+			$entity->roomId = 2;
+			$entity->roomFloor = 1;
+			$entity->roomNumber = 2;
+			$entity->roomName = 'Unterrichtsraum';
+
+			// add entity to array
+			$this->_rooms[] = $entity;
+			
+			// create room entity
+			$entity = new RoomEntity();
+			
+			// set room data
+			$entity->roomId = 3;
+			$entity->roomFloor = 0;
+			$entity->roomNumber = 1;
+			$entity->roomName = 'Labor';
+			$entity->roomNote = '';
+
+			// add entity to array
+			$this->_rooms[] = $entity;
+			
+			// create room entity
+			$entity = new RoomEntity();
+			
+			// set room data
+			$entity->roomId = 4;
+			$entity->roomFloor = 3;
+			$entity->roomNumber = 0;
+
+			// add entity to array
+			$this->_rooms[] = $entity;
+			
+			// return entites
+			return $this->_rooms;
+		}
 		
 		/**
 		 *  function to update room
@@ -38,14 +122,14 @@
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function updateRoom($id, $floor, $number, $name, $note);
+		public function updateRoom($id, $floor, $number, $name, $note){}
 		
 		/**
 		 *  function to delete room
 		 * 
 		 * @param int $id The Room id.
 		 */
-		public function deleteRoom($id);
+		public function deleteRoom($id){}
 		
 		/**
 		 * function to get components
@@ -53,7 +137,7 @@
 		 * @return components
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function getComponents();
+		public function getComponents(){}
 		
 		/**
 		 *  function to insert components
@@ -70,7 +154,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type){}
 				
 		/**
 		 * update a component
@@ -88,7 +172,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type){}
 		
 		/**
 		 * delete a component
@@ -98,14 +182,14 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
- 		public function deleteComponent($id);
+ 		public function deleteComponent($id){}
 		
 		/**
 		 * select all deliverers
 		 * 
 		 * @return void
 		 */
-		 public function getDeliverers();
+		 public function getDeliverers(){}
 		 
 		 /**
 		  * insert deliverer
@@ -121,7 +205,7 @@
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
 		 
 		 /**
 		  * update deliverer
@@ -138,12 +222,14 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
 		 
 		 /**
 		  * delete deliverer
 		  * 
 		  * @return void
 		  */
-		 public function deleteDeliverer($id);
-}
+		 public function deleteDeliverer($id){}
+		
+	}
+?>

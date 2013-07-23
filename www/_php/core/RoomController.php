@@ -1,7 +1,10 @@
 <?php
 	
 	// include room controller
-	require_once('../../interface/IRoomController.php');
+	require_once('../interface/IRoomController.php');
+
+	// include room entity
+	require_once('../entity/RoomEntity.php');
 
 	/**
 	* Controller for Rooms
@@ -29,13 +32,13 @@
 		/** 
 		 * default constructor
 		 */
-		function __construct($view) 
+		function __construct($view, $database) 
 		{
 			// store view
 			$this->_view = $view;
 
-			// create database
-			// TODO 
+			// store database
+			$this->_database = $database;
 		}
 		
 		/**
@@ -53,10 +56,10 @@
 			{							
 				// display room
 				$this->_view->displayRoom(
-					$room['r_id'], 
-					sprintf("%1%02d", $room['r_etage'], $room['r_nr']), 
-					$room['r_bezeichnung'], 
-					$room['r_notiz']);
+					$room->roomId, 
+					sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
+					$room->roomName, 
+					$room->roomNote);
 			}
 		}
 		
@@ -83,7 +86,7 @@
 				$note = $this->_view->getRoomNote();
 				
 				// check room number and room name
-				if(isset($number) && isset($name))
+				if(isset($number) && !empty($name))
 				{
 					// insert room
 					$result = $this->_database->insertRoom($floor, $number, $name, $note);
@@ -139,7 +142,7 @@
 				$note = $this->_view->getRoomNote();
 				
 				// check room id, room number and romm name
-				if(isset($id) && isset($name))
+				if(isset($id) && !empty($name))
 				{
 					// update room
 					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
