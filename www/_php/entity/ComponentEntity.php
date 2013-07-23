@@ -19,12 +19,12 @@
 		/** 
 		 *  storage for the deliverer of the component
 		 */
-		public $componentDelivererL;
+		public $componentDeliverer;
 		
 		/**
-		 *  storage for the deliverer of the component
+		 *  storage for the Room of the component
 		 */
-		public $componentDelivererR;
+		public $componentRoom;
 		
 		/**
 		 *  storage for the component name
