@@ -1,12 +1,12 @@
 <?php
 	// include idatabase interface
-	require_once('../_php/interface/IDatabase.php');
+	require_once('../interface/IDatabase.php');
 	
 	// include room entity
-	require_once('../_php/entity/RoomEntity.php');
+	require_once('../entity/RoomEntity.php');
 	
 	// include room entity
-	require_once('../_php/entity/ComponentEntity.php');
+	require_once('../entity/ComponentEntity.php');
 
 	/**
 	* Mock object room

@@ -39,13 +39,6 @@
 		 */
 		public function getRoomNumber();
 			
-		/**
-		 *  function to get floor number
-		 * 
-		 *  @author Johannes Alt <altjohannes510@gmail.com>
-		 */
-		public function getFloorNumber();
-			
 		/** 
 		 *  function to get room name
 		 * 

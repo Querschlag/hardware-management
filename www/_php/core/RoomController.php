@@ -1,10 +1,10 @@
 <?php
 	
 	// include room controller
-	require_once('../_php/interface/IRoomController.php');
+	require_once('../interface/IRoomController.php');
 
 	// include room entity
-	require_once('../_php/entity/RoomEntity.php');
+	require_once('../entity/RoomEntity.php');
 
 	/**
 	* Controller for Rooms
@@ -72,15 +72,15 @@
 				{
 					// display room
 					$this->_view->displayRoom(
-						$room->roomId,
-						$room->roomNumber, 
+						$room->roomId, 
+						sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
 						$room->roomName, 
 						$room->roomNote);	
 				}
-				
-				// display room end
-				$this->_view->displayRoomEnd();
 			}			
+				
+			// display room end
+			$this->_view->displayEnd();
 		}
 		
 		/**
@@ -93,25 +93,34 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-			// get floor number
-			$floor = $this->_view->getFloorNumber();
-			
-			// get room name from frontend
-			$name = $this->_view->getRoomName();
-			
-			// get room note from frontend
-			$note = $this->_view->getRoomNote();
-			
-			// check room number and room name
-			if(isset($number) && !empty($name))
+			// check room number
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
-				// insert room
-				$result = $this->_database->insertRoom($floor, $number, $name, $note);
+				// get floor number
+				$floor = $this->getFloorNumberByNumber($number);
+			
+				// get room name from frontend
+				$name = $this->_view->getRoomName();
+				
+				// get room note from frontend
+				$note = $this->_view->getRoomNote();
+				
+				// check room number and room name
+				if(isset($number) && !empty($name))
+				{
+					// insert room
+					$result = $this->_database->insertRoom($floor, $number, $name, $note);
+				}
+				else 
+				{
+					// set error to frontend
+					$this->_view->setError();
+				}
 			}
 			else 
 			{
-				// set error to frontend
-				$this->_view->setError();
+				// set room number error
+				$this->_view->setRoomNumberError();
 			}
 		}
 		
@@ -128,25 +137,34 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-			// get floor number
-			$floor = $this->_view->getFloorNumber();
-			
-			// get room name from frontend
-			$name = $this->_view->getRoomName();
-				
-			// get room note from frontend
-			$note = $this->_view->getRoomNote();
-			
-			// check room id, room number and romm name
-			if(isset($id) && !empty($name))
+			// check room number
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
-				// update room
-				$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
+				// get floor number
+				$floor = $this->getFloorNumberByNumber($number);
+			
+				// get room name from frontend
+				$name = $this->_view->getRoomName();
+				
+				// get room note from frontend
+				$note = $this->_view->getRoomNote();
+				
+				// check room id, room number and romm name
+				if(isset($id) && !empty($name))
+				{
+					// update room
+					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
+				}
+				else 
+				{
+					// set error to frontend
+					$this->_view->setError();
+				}
 			}
 			else 
 			{
-				// set error to frontend
-				$this->_view->setError();
+				// set room number error
+				$this->_view->setRoomNumberError();
 			}
 		}
 		
@@ -171,6 +189,33 @@
 				// set error to frontend
 				$this->_view->setError();
 			}	
+		}
+		
+		/**
+		 *  function to get floor number by room number
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		private function getFloorNumberByNumber(&$number)
+		{
+			// floor number
+			$floor = null;
+			
+			// find all numbers in string
+			$found = preg_match("/[0-9]/", $number, $matches); 
+
+			// check found result
+			if($found == 1)
+			{
+				// get first number
+				$floor = $matches[0];
+				
+				// set number to 0
+				$number = $number - ($floor * 100);
+			}
+			
+			// return floor number
+			return $floor;			
 		}
 	}
 ?>
