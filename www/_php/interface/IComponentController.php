@@ -11,6 +11,33 @@
 	*/
 	interface IComponentController
 	{
+		/**
+		 *  Select all components and print the room on UI
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+		 */
+		public function selectComponents();
+		
+		/**
+		 *  function insert a new component
+		 *
+		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+		 */
+		public function insertComponent();
+		
+		/**
+		 *  function to update component
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function updateComponent();
+		
+		/**
+		 * function to delete component
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+		 */
+		public function deleteComponent();
 		
 	}
 ?>

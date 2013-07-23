@@ -7,7 +7,9 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a href="index.php?mod=create_device">Ger&auml;t anlegen</a>
+		<a class="left" href="index.php?mod=create_device">Ger&auml;t anlegen</a>
+		<a class="right" href="index.php?mod=create_room">Bestellung f&uuml;r diesen Raum</a>
+		<div class="clear"></div>
 	</div>
 	<h2>Computer</h2>
 	<ul class="rooms">

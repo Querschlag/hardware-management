@@ -1,4 +1,7 @@
 <?php
+
+	require_once('../interface/IDatabase.php');
+	
 	/**
 	* Database connection
 	*
@@ -6,19 +9,44 @@
 	*
 	* @category 
 	* @package
-	* @author Johannes Alt <altjohannes510@gmail.com>
+	* @author Leon Geim<leon.geim@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class Database implements IDatabase
 	{
+		public function __construct() 
+		{
+			$verbindung = mysql_connect("localhost", "root", "");
+			mysql_select_db("itv_v1");
+					
+		}
+		
+	
 		/**
 		 *  function to get rooms
 		 *
 		 * @return RoomEntity[] 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRooms()
-		{
+		{   
+			$entityArray = array();
+			
+			$select = "Select * from raeume order by r_etage asc, r_nr asc;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new RoomEntity();
+				$entity->roomId = $row['r_id'];
+				$entity->roomNumber = $row['r_nr'];
+				$entity->roomFloor = $row['r_etage'];
+				$entity->roomName = $row['r_bezeichnung'];
+				$entity->roomNote= $row['r_notiz'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
 		}
 		
 		/**
@@ -31,6 +59,9 @@
 		 */
 		public function insertRoom($floor, $number, $name, $note)
 		{
+			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz) 
+						VALUES(".$number. ", ".$floor.", '".$name."', '".$note."')";
+			return mysql_query($insert);
 			
 		}
 		
@@ -45,6 +76,16 @@
 		 */
 		public function updateRoom($id, $floor, $number, $name, $note)
 		{
+			$update = "UPDATE raeume SET
+									r_nr = ".$number.",
+									r_etage= ".$floor.",
+									r_bezeichnung = '".$name."',
+									r_Notiz = '".$note."'
+						WHERE
+									r_id = ".$id.";";
+									
+			return mysql_query($update);
+									
 			
 		}
 		
@@ -55,7 +96,11 @@
 		 */
 		public function deleteRoom($id)
 		{
-		
+			$delete ="DELETE FROM 
+							raeume 
+						WHERE 
+							r_id = ".$id.";";
+			return mysql_query($delete);
 		}
 		
 		/**

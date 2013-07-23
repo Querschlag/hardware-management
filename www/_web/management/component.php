@@ -8,6 +8,10 @@
 	</ul>
 </div>
 <div id="module">
+	<div id="action_bar">
+		<a class="right" href="index.php?mod=create_room">Nachbestellen</a>
+		<div class="clear"></div>
+	</div>
 	<h2>Eigenschaften</h2>
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<form action="index.php?mod=device" method="post">

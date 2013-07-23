@@ -1,4 +1,11 @@
 <?php
+
+	// include room controller
+	require_once('../interface/IComponentController.php');
+
+	// include room entity
+	require_once('../entity/ComponentEntity.php');
+	
 	/**
 	* Controller for Components
 	*
@@ -26,13 +33,13 @@
 		/** 
 		 * default constructor
 		 */
-		function __construct($view) 
+		function __construct($view, $database) 
 		{
 			// store view
 			$this->_view = $view;
 			
 			// create database
-			// TODO 
+			$this->_database = $database; 
 		}
 		
 		/**
@@ -51,7 +58,15 @@
 			{							
 				// display components
 				$this->_view->displayComponents(
-					$component->componentId);
+					$component->componentId,
+					$component->componentDeliverer,
+					$component->componentRoom,
+					$component->componentName,
+					$component->componentBuy,
+					$component->componentWarranty,
+					$component->componentNote,
+					$component->componentSupplier,
+					$component->componentType);
 			}
 		}
 		
@@ -73,7 +88,7 @@
 			$name = $this->_view->getComponentName();
 			
 			// get component buying date
-			$date = $this->_view->getComponentDate();
+			$buy = $this->_view->getComponentBuy();
 			
 			// get component length of warranty (timestamp)
 			$warranty = $this->_view->getComponentWarranty();
@@ -88,10 +103,10 @@
 			$type = $this->_view->getComponentTypes();
 			
 			// check room number and room name
-			if($deliverer && $room && $name && $warranty && $date && $supplier && $type)
+			if($deliverer && $room && $name && $warranty && $buy && $supplier && $type)
 			{
 				// insert room
-				$this->_database->insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+				$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
 			}
 			else 
 			{
@@ -120,8 +135,8 @@
 			// get component name
 			$name = $this->_view->getComponentName();
 			
-			// get component buying date
-			$date = $this->_view->getComponentDate();
+			// get component buying buy
+			$buy = $this->_view->getComponentBuy();
 			
 			// get component length of warranty (timestamp)
 			$warranty = $this->_view->getComponentWarranty();
@@ -136,10 +151,10 @@
 			$type = $this->_view->getComponentTypes();
 			
 			// check room number and room name
-			if($id && $deliverer && $room && $name && $warranty && $note && $date && $supplier && $type)
+			if($id && $deliverer && $room && $name && $warranty && $note && $buy && $supplier && $type)
 			{
 				// insert room
-				$this->_database->updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+				$this->_database->updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
 			}
 			else 
 			{
@@ -169,7 +184,7 @@
 			else 
 			{
 				// set error to frontend
-				$this->_view->setError();
+				// $this->_view->setError();
 			}
 		}	
 	}
