@@ -16,6 +16,7 @@
 	* @category 
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
+	* @author Thomas Michl <thomas.michl1988@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class MockDatabase implements IDatabase
@@ -230,7 +231,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 		{
 			// store data in room entity
 			$entity = new ComponentEntity();
@@ -239,13 +240,13 @@
 			$entity->componentDeliverer = $deliverer;
 			
 			// set number
-			$entity->componentRoom = $number;
+			$entity->componentRoom = $room;
 			
 			// set name
 			$entity->componentName = $name;
 			
 			// set note
-			$entity->componentDate = $buy;
+			$entity->componentBuy = $buy;
 			
 			// set name
 			$entity->componentWarrenty = $warranty;

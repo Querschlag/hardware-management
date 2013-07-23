@@ -56,7 +56,8 @@
 					$deliverer->delivererTelephone, 
 					$deliverer->delivererMobile, 
 					$deliverer->delivererFax, 
-					$deliverer->delivererEmail);
+					$deliverer->delivererEmail,
+					$deliverer->delivererCountry);
 			}
 		}
 		
@@ -91,8 +92,11 @@
 			// get email from frontend
 			$email = $this->_view->getDelivererEmail();
 			
+			// get country from frontend
+			$email = $this->_view->getDelivererCountry();
+			
 			// check id, company name, street, zip code, location, phone number, mobile number, fax number, email 
-			if(isset($companyName) && isset($street) && isset($zipCode) && isset($location) && isset($phoneNumber) && isset($mobileNumber) && isset($faxNumber) && isset($email))
+			if(isset($companyName) && isset($street) && isset($zipCode) && isset($location) && isset($phoneNumber) && isset($mobileNumber) && isset($faxNumber) && isset($email) && isset($country))
 			{
 				// insert deliverer
 				$this->_database->insertDeliverer(
@@ -103,7 +107,8 @@
 					$phoneNumber, 
 					$mobileNumber, 
 					$faxNumber, 
-					$email);
+					$email,
+					$country);
 			}
 			else 
 			{
@@ -146,8 +151,11 @@
 			// get email from frontend
 			$email = $this->_view->getDelivererEmail();
 			
+			// get country from frontend
+			$email = $this->_view->getDelivererCountry();
+			
 			// check id, company name, street, zip code, location, phone number, mobile number, fax number, email 
-			if(isset($id) && isset($companyName) && isset($street) && isset($zipCode) && isset($location) && isset($phoneNumber) && isset($mobileNumber) && isset($faxNumber) && isset($email))
+			if(isset($companyName) && isset($street) && isset($zipCode) && isset($location) && isset($phoneNumber) && isset($mobileNumber) && isset($faxNumber) && isset($email) && isset($country))
 			{
 				// update deliverer
 				$this->_database->updateDeliverer(
@@ -159,7 +167,8 @@
 					$phoneNumber, 
 					$mobileNumber, 
 					$faxNumber, 
-					$email);
+					$email,
+					$country);
 			}
 			else 
 			{
