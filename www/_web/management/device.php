@@ -8,7 +8,11 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a href="index.php?mod=create_component">Komponente anlegen</a>
+		<a class="left" href="index.php?mod=create_component">Komponente anlegen</a>
+		<a class="right" href="index.php?mod=create_room">Problem melden</a>
+		<a class="right" href="index.php?mod=create_room">Probleme: 2</a>
+		<a class="right" href="index.php?mod=create_device">Nachbestellen</a>
+		<div class="clear"></div>
 	</div>
 	<h2>Komponenten</h2>
 	<ul class="components">

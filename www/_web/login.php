@@ -2,7 +2,6 @@
 	
 	require_once('php/additions.php');
 	
-	echo var_export($_POST);
 	$username = POST('username');
 	$password = POST('password');
 	

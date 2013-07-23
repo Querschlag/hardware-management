@@ -8,6 +8,18 @@ body {
 	box-shadow:         3px 3px 5px -2px #ccc;
 }
 
+.clear {
+	clear:both;
+}
+
+.left {
+	float:left;
+}
+
+.right {
+	float:right;
+}
+
 a {
 	color:#777;
 	text-decoration:none;
@@ -39,8 +51,7 @@ h1 {
 }
 
 #top_nav {
-	height:50px;
-	width:400px;
+	width:500px;
 	float:left;
 }
 
@@ -89,6 +100,11 @@ h1 {
 
 #search_bar {
 	float:right;
+}
+
+#content {
+	clear: both;
+	margin-top:10px;
 }
 
 #breadcrumb_nav {

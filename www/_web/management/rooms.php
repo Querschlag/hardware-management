@@ -6,7 +6,10 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a href="index.php?mod=create_room">Raum hinzuf&uuml;gen</a>
+		<a class="left" href="index.php?mod=create_room">Raum hinzuf&uuml;gen</a>
+		<a class="right" href="index.php?mod=create_room">Lieferanten</a>
+		<a class="right" href="index.php?mod=create_device">Bestellung</a>
+		<div class="clear"></div>
 	</div>
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">
