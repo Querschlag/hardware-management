@@ -35,6 +35,23 @@
 			// store data in room entity
 			$entity = new RoomEntity();
 			
+			// set default room id
+			$id = 0;
+			
+		    // get next free id name
+		    foreach($this->_rooms as $room)
+			{
+				// check id
+				if($room->roomId > $id)
+				{
+					// set room id
+					$id = $room->roomId;
+				}
+			}
+			
+			// set room id
+			$entity->roomId = $id;
+			
 			// set data
 			$entity->roomFloor = $floor;
 			
@@ -122,7 +139,39 @@
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function updateRoom($id, $floor, $number, $name, $note){}
+		public function updateRoom($id, $floor, $number, $name, $note)
+		{
+			// iteration over all rooms
+			foreach($this->_rooms as $key => $room)
+			{
+				// check id of the value
+				if($room->roomId == $id)
+				{
+					// change data
+					$room->roomFloor = $floor;
+				
+					// change number
+					$room->roomNumber = $number;
+				
+					// change name
+					$room->roomName = $name;
+				
+					// change note
+					$room->roomNote = $note;
+				
+					// set room
+					$this->_rooms[$key] = $room;
+				
+					// break
+					break;
+				}
+			}
+			// check room
+			if(isset($room))
+			{
+				
+			}
+		}
 		
 		/**
 		 *  function to delete room
