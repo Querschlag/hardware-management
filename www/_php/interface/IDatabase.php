@@ -61,7 +61,7 @@
 		 * @param integer $deliverer The components deliverer id
 		 * @param integer $room The components room id
 		 * @param string $name The components name
-		 * @param string $date The components date
+		 * @param integer $buy The components buy date
 		 * @param integer $warranty The components warranty
 		 * @param string $note The components note
 		 * @param string $supplier The components supplier
@@ -70,7 +70,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
 				
 		/**
 		 * update a component
