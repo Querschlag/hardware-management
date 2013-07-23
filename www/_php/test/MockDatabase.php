@@ -4,6 +4,9 @@
 	
 	// include room entity
 	require_once('../entity/RoomEntity.php');
+	
+	// include room entity
+	require_once('../entity/ComponentEntity.php');
 
 	/**
 	* Mock object room
@@ -21,6 +24,10 @@
 		 *  storage for the last insert, update or delete room
 		 */
 		public $_rooms = array();
+		/**
+		 *  storage for the last insert, update or delete component
+		 */
+		public $_component = array();
 				
 		/**
 		 *  function to insert room
@@ -134,18 +141,38 @@
 		/**
 		 * function to get components
 		 * 
-		 * @return components
+		 * @return ComponentsEntity[] 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function getComponents(){}
-		
+		public function getComponents()
+		{
+			// create first room entity
+			$entity = new ComponentEntity();
+			
+			// set room data
+			$entity->componentId = 1;
+			$entity->componentDeliverer = 1;
+			$entity->componentRoom = 1;
+			$entity->componentName = 'CPU';
+			$entity->componentBuy = 14;
+			$entity->componentWarrenty = 14;
+			$entity->componentNote = 'Notiz';
+			$entity->componentSupplier = 'INTEL';
+			$entity->componentType = 1;
+
+			// add entity to array
+			$this->_component[] = $entity;
+			
+			// return entites
+			return $this->_component;
+		}
 		/**
 		 *  function to insert components
 		 * 
 		 * @param integer $deliverer The components deliverer id
 		 * @param integer $room The components room id
 		 * @param string $name The components name
-		 * @param string $date The components date
+		 * @param interger $buy The components buy date
 		 * @param integer $warranty The components warranty
 		 * @param string $note The components note
 		 * @param string $supplier The components supplier
@@ -154,7 +181,38 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type){}
+		public function insertComponents($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+		{
+			// store data in room entity
+			$entity = new ComponentEntity();
+			
+			// set data
+			$entity->componentDeliverer = $deliverer;
+			
+			// set number
+			$entity->componentRoom = $number;
+			
+			// set name
+			$entity->componentName = $name;
+			
+			// set note
+			$entity->componentDate = $buy;
+			
+			// set name
+			$entity->componentWarrenty = $warranty;
+			
+			// set note
+			$entity->componentNote = $note;
+			
+			// set name
+			$entity->componentProducer = $supplier;
+			
+			// set note
+			$entity->componentType = $type;
+			
+			// store entity
+			$this->_component[] = $entity;
+		}
 				
 		/**
 		 * update a component
@@ -163,7 +221,7 @@
 		 * @param integer $deliverer The components deliverer id
 		 * @param integer $room The components room id
 		 * @param string $name The components name
-		 * @param string $date The components date
+		 * @param string $buy The components buy date
 		 * @param integer $warranty The components warranty
 		 * @param string $note The components note
 		 * @param string $supplier The components supplier
@@ -172,7 +230,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type){}
+		public function updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type){}
 		
 		/**
 		 * delete a component
