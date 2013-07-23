@@ -1,15 +1,15 @@
 <?php
 	/**
-	* Interface for Database
+	* Database connection
 	*
-	* Interface for Database connection
+	* Database connection to select, insert, update or delete data
 	*
 	* @category 
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
-	interface IDatabase
+	class Database implements IDatabase
 	{
 		/**
 		 *  function to get rooms
@@ -17,7 +17,9 @@
 		 * @return RoomEntity[] 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
-		public function getRooms();
+		public function getRooms()
+		{
+		}
 		
 		/**
 		 *  function to insert room
@@ -27,7 +29,10 @@
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function insertRoom($floor, $number, $name, $note);
+		public function insertRoom($floor, $number, $name, $note)
+		{
+			
+		}
 		
 		/**
 		 *  function to update room
@@ -38,14 +43,20 @@
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
 		 */
-		public function updateRoom($id, $floor, $number, $name, $note);
+		public function updateRoom($id, $floor, $number, $name, $note)
+		{
+			
+		}
 		
 		/**
 		 *  function to delete room
 		 * 
 		 * @param int $id The Room id.
 		 */
-		public function deleteRoom($id);
+		public function deleteRoom($id)
+		{
+		
+		}
 		
 		/**
 		 * function to get components
@@ -53,7 +64,10 @@
 		 * @return components
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function getComponents();
+		public function getComponents()
+		{
+			
+		}
 		
 		/**
 		 *  function to insert components
@@ -70,7 +84,10 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		{
+			
+		}
 				
 		/**
 		 * update a component
@@ -88,7 +105,10 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		{
+		
+		}
 		
 		/**
 		 * delete a component
@@ -98,14 +118,20 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
- 		public function deleteComponent($id);
+ 		public function deleteComponent($id)
+		{
+			
+		}
 		
 		/**
 		 * select all deliverers
 		 * 
 		 * @return void
 		 */
-		 public function getDeliverers();
+		 public function getDeliverers()
+		 {
+		 	
+		 }
 		 
 		 /**
 		  * insert deliverer
@@ -121,7 +147,10 @@
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email)
+		 {
+		 	
+		 }
 		 
 		 /**
 		  * update deliverer
@@ -138,12 +167,19 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email)
+		 {
+		 	
+		 }
 		 
 		 /**
 		  * delete deliverer
 		  * 
 		  * @return void
 		  */
-		 public function deleteDeliverer($id);
-}
+		 public function deleteDeliverer($id)
+		 {
+		 	
+		 }
+	}
+?>

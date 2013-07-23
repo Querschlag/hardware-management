@@ -1,7 +1,10 @@
 <?php
 	
 	// include room controller
-	require_once('../../interface/IRoomController.php');
+	require_once('../interface/IRoomController.php');
+
+	// include room entity
+	require_once('../entity/RoomEntity.php');
 
 	/**
 	* Controller for Rooms
@@ -29,13 +32,13 @@
 		/** 
 		 * default constructor
 		 */
-		function __construct($view) 
+		function __construct($view, $database) 
 		{
 			// store view
 			$this->_view = $view;
 
-			// create database
-			// TODO 
+			// store database
+			$this->_database = $database;
 		}
 		
 		/**
@@ -53,10 +56,10 @@
 			{							
 				// display room
 				$this->_view->displayRoom(
-					$room['r_id'], 
-					sprintf("%1%02d", $room['r_etage'], $room['r_nr']), 
-					$room['r_bezeichnung'], 
-					$room['r_notiz']);
+					$room->roomId, 
+					sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
+					$room->roomName, 
+					$room->roomNote);
 			}
 		}
 		
@@ -71,7 +74,7 @@
 			$number = $this->_view->getRoomNumber();
 			
 			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
 				// get floor number
 				$floor = $this->getFloorNumberByNumber($number);
@@ -83,22 +86,10 @@
 				$note = $this->_view->getRoomNote();
 				
 				// check room number and room name
-				if(isset($number) && isset($name))
+				if(isset($number) && !empty($name))
 				{
 					// insert room
 					$result = $this->_database->insertRoom($floor, $number, $name, $note);
-					
-					// check result of the function
-					if($result == TRUE)
-					{
-						// set success information
-						$this->_view->setSuccess();
-					}
-					else 
-					{
-						// set error to frontend
-						$this->_view->setError();						
-					}
 				}
 				else 
 				{
@@ -127,7 +118,7 @@
 			$number = $this->_view->getRoomNumber();
 			
 			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
 				// get floor number
 				$floor = $this->getFloorNumberByNumber($number);
@@ -139,22 +130,10 @@
 				$note = $this->_view->getRoomNote();
 				
 				// check room id, room number and romm name
-				if(isset($id) && isset($name))
+				if(isset($id) && !empty($name))
 				{
 					// update room
 					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
-					
-					// check result of the function
-					if($result == TRUE)
-					{
-						// set success information
-						$this->_view->setSuccess();
-					}
-					else 
-					{
-						// set error to frontend
-						$this->_view->setError();						
-					}
 				}
 				else 
 				{
@@ -184,18 +163,6 @@
 			{
 				// delete room
 				$result = $this->_database->deleteRoom($id);
-				
-				// check result of the function
-				if($result == TRUE)
-				{
-					// set success information
-					$this->_view->setSuccess();
-				}
-				else 
-				{
-					// set error to frontend
-					$this->_view->setError();						
-				}
 			}
 			else 
 			{
@@ -214,28 +181,17 @@
 			// floor number
 			$floor = null;
 			
-			// check for int
-			if(is_integer($number))
+			// find all numbers in string
+			$found = preg_match("/[0-9]/", $number, $matches); 
+
+			// check found result
+			if($found == 1)
 			{
-				// find all numbers in string
-				$found = preg_match("[\d]", $number, $matches); 
+				// get first number
+				$floor = $matches[0];
 				
-				// check found result
-				if($found >= 1)
-				{
-					// get first number
-					$floor = $matches[0];
-					
-					// set number to 0
-					$number = 0;
-					
-					// from 1 to x
-					for($index = 1; $index < $found; $index++)
-					{
-						// set number
-						$number = ($number * 10) + $matches[$index];
-					}
-				}
+				// set number to 0
+				$number = $number - ($floor * 100);
 			}
 			
 			// return floor number
