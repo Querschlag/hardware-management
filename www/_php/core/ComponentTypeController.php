@@ -29,7 +29,7 @@
 		function __construct($view) 
 		{
 			// store view
-			$_view = $view;
+			$this->_view = $view;
 			
 			// create database
 			// TODO 
@@ -44,13 +44,13 @@
 		public function selectComponents()
 		{
 			// get rooms from database
-			$components = $_database->getComponents();
+			$components = $this->_database->getComponents();
 			
 			// iteration over all rooms
 			foreach($components as $component)
 			{							
 				// display room
-				$_view->displayComponents($component['k_id']);
+				$this->_view->displayComponents($component['k_id']);
 			}
 		}
 		
@@ -63,39 +63,39 @@
 		public function insertComponent()
 		{			
 			// get component deliverer
-			$deliverer = $_view->getComponentDeliverer();
+			$deliverer = $this->_view->getComponentDeliverer();
 			
 			// get component room
-			$room = $_view->getComponentRoom();
+			$room = $this->_view->getComponentRoom();
 			
 			// get component name
-			$name = $_view->getComponentName();
+			$name = $this->_view->getComponentName();
 			
 			// get component buying date
-			$date = $_view->getComponentDate();
+			$date = $this->_view->getComponentDate();
 			
 			// get component length of warranty (timestamp)
-			$warranty = $_view->getComponentWarranty();
+			$warranty = $this->_view->getComponentWarranty();
 			
 			// get component note
-			$note = $_view->getComponentNote();
+			$note = $this->_view->getComponentNote();
 			
 			// get component supplier
-			$supplier = $_view->getComponentSupplier();
+			$supplier = $this->_view->getComponentSupplier();
 			
 			// get component type
-			$type = $_view->getComponentTypes();
+			$type = $this->_view->getComponentTypes();
 			
 			// check room number and room name
 			if($deliverer && $room && $name && $warranty && $date && $supplier && $type)
 			{
 				// insert room
-				$_database->insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+				$this->_database->insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
 			}
 			else 
 			{
 				// set error to frontend
-				$_view->setError();
+				$this->_view->setError();
 			}
 		}	
 		
@@ -108,42 +108,42 @@
 		public function updateComponent()
 		{
 			// get unique deliverer id
-			$id = $_view->getComponentId();
+			$id = $this->_view->getComponentId();
 			
 			// get component deliverer
-			$deliverer = $_view->getComponentDeliverer();
+			$deliverer = $this->_view->getComponentDeliverer();
 			
 			// get component room
-			$room = $_view->getComponentRoom();
+			$room = $this->_view->getComponentRoom();
 			
 			// get component name
-			$name = $_view->getComponentName();
+			$name = $this->_view->getComponentName();
 			
 			// get component buying date
-			$date = $_view->getComponentDate();
+			$date = $this->_view->getComponentDate();
 			
 			// get component length of warranty (timestamp)
-			$warranty = $_view->getComponentWarranty();
+			$warranty = $this->_view->getComponentWarranty();
 			
 			// get component note
-			$note = $_view->getComponentNote();
+			$note = $this->_view->getComponentNote();
 			
 			// get component supplier
-			$supplier = $_view->getComponentSupplier();
+			$supplier = $this->_view->getComponentSupplier();
 			
 			// get component type
-			$type = $_view->getComponentTypes();
+			$type = $this->_view->getComponentTypes();
 			
 			// check room number and room name
 			if($id && $deliverer && $room && $name && $warranty && $note && $date && $supplier && $type)
 			{
 				// insert room
-				$_database->updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+				$this->_database->updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
 			}
 			else 
 			{
 				// set error to frontend
-				$_view->setError();
+				$this->_view->setError();
 			}
 		
 		}
@@ -157,18 +157,18 @@
 		public function deleteComponent()
 		{
 			// get unique component id
-			$id = $_view->getComponentId();
+			$id = $this->_view->getComponentId();
 			
 			// check id,
 			if(isset($id))
 			{
 				// delete component
-				$_database->deleteComponent($id);
+				$this->_database->deleteComponent($id);
 			}
 			else 
 			{
 				// set error to frontend
-				$_view->setError();
+				$this->_view->setError();
 			}
 		}
 	}
