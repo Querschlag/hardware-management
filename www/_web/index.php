@@ -47,6 +47,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div id="top_nav">
+				<h1><a href="./">Hardware Verwaltung - B3 F&uuml;rth</a></h1>
 				<?php
 					//Include top navigation
 					include('nav.html');
@@ -64,6 +65,8 @@
 					include($module);
 			?>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">B3ProjectGroup2</a>
+		</div>
     </body>
 </html>

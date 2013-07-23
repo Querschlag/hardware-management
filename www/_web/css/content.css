@@ -46,6 +46,11 @@ hr {
 	color:#333;
 }
 
+#top_nav h1 a {
+	font-size: 36px;
+	color:#333;
+}
+
 #top_nav ul {
 	list-style:none;
 }
@@ -211,6 +216,14 @@ form p {
 .destructiveButton {
 	background-color: #D45E61!important;
 }
+
+#footer {
+	margin-top:20px;
+	font-size:13px;
+	text-align:center;
+	font-family:Latha ,sans-serif;
+}
+
 
 /* lauch screen */
 #launch_menu{width:300px;margin:20px auto;color:#105CB6;}
