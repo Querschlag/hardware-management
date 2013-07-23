@@ -2,13 +2,12 @@
 <div id="breadcrumb_nav">
 	<ul>
 		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=order">Bestellungen</a></li>
-		<li>>> <a href="index.php?mod=placeOrder">Bestellung anlegen</a></li>
-		<li>>> <a href="index.php?mod=order_device">Ger&auml;te</a></li>
+		<li>>> <a href="index.php?mod=stock">Neubeschaffung</a></li>
+		<li>>> <a href="index.php?mod=storeDevice">Ger&auml;t anlegen</a></li>
 	</ul>
 </div>
 <div id="module">
-	<h3>Ger&auml;t bestellen</h3>
+	<h3>Ger&auml;t anlegen</h3>
 	<?php
 		require_once('php/additions.php');
 		
@@ -16,21 +15,21 @@
 		
 		if ($step == 6) 
 		{
-			header('location:index.php?mod=order');
+			header('location:index.php?mod=stock');
 		}
 		else if ($step == 5) 
 		{
 	
 			echo '
 			<!-- Device creation wizard - Step 3 -->
-			<h4>Wie viele Ger&auml;te bestellen?</h4>
-			<form action="index.php?mod=order_device" method="post">
+			<h4>Wie viele Ger&auml;te anlegen?</h4>
+			<form action="index.php?mod=storeDevice" method="post">
 				<p>Anzahl</p><input name="itemCount" type="text"/>
 				<input name="step" value="6" type="hidden" />
 				<br>
 				<br>
-				<input name="btnSubmit" type="submit" value="Bestellen" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input name="btnSubmit" type="submit" value="Anlegen" />
+				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -46,16 +45,16 @@
 				<li>Komponente 1</li>
 				<li>Komponente 1</li>
 			</ul>
-			<form action="index.php?mod=order_component" method="post">
+			<form action="index.php?mod=storeComponent" method="post">
 				<input name="step" value="4" type="hidden" />
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
 			<br>
-			<form action="index.php?mod=order_device" method="post">
+			<form action="index.php?mod=storeDevice" method="post">
 				<input name="step" value="5" type="hidden" />
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -66,14 +65,14 @@
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
-			<form action="index.php?mod=order_device" method="post">
+			<form action="index.php?mod=storeDevice" method="post">
 				<p>Attribut 1</p><input name="attribute1" type="text"/>
 				<p>Attribut 2</p><input name="attribute2" type="text"/>
 				<input name="step" value="4" type="hidden" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -83,7 +82,7 @@
 			
 			echo '
 			<!-- Device creation wizard - Step 2 -->
-			<form action="index.php?mod=order_device" method="post">
+			<form action="index.php?mod=storeDevice" method="post">
 				<p>Bezeichnung</p><input name="device_name" type="text"/>
 				<br>
 				<p>Lieferant</p><input name="supplier" type="text"/>
@@ -95,7 +94,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 			</form>
 			<div class="clearfix" />
 			';
@@ -106,7 +105,7 @@
 	
 			echo '
 			<!-- Device creation wizard - Step 1 -->
-			<form class="deviceSelection" action="index.php?mod=order_device" method="post">
+			<form class="deviceSelection" action="index.php?mod=storeDevice" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/BluRayPlayer_Disc.png" /><p>Blu-ray Player</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Computer.png" /><p>Computer</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/HomeServer.png" /><p>Server</p></div>
@@ -116,7 +115,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 				<div class="clearfix" />
 			</form>
 			';

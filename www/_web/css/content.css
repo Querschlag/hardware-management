@@ -166,6 +166,10 @@ form p {
 	float:right;
 }
 
+.destructiveButton {
+	background-color: #D45E61!important;
+}
+
 /* lauch screen */
 #launch_menu{width:300px;margin:20px auto;color:#105CB6;}
 .tile {

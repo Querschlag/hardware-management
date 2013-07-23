@@ -8,6 +8,7 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=placeOrder">Neue Bestellung</a>
+		<a class="left" href="index.php?mod=order">Lieferanten</a>
 		<div class="clearfix"></div>
 	</div>
 	<h2>Ger&auml;te</h2>

@@ -10,7 +10,7 @@
 	</ul>
 </div>
 <div id="module">
-	<h3>Komponente anlegen</h3>
+	<h3>Komponente hinzuf&uuml;gen</h3>
 	<?php
 		require_once('php/additions.php');
 		
@@ -25,15 +25,21 @@
 	
 			echo '
 			<!-- Device creation wizard - Step 3 -->
-			<h4>Eigenschaften</h4>
-			<form action="index.php?mod=create_component" method="post">
-				<p>Attribut 1</p><input name="attribute1" type="text"/>
-				<p>Attribut 2</p><input name="attribute2" type="text"/>
+			<h4>Komponente w&auml;hlen</h4>
+			<form action="index.php?mod=addComponent" method="post">
+				<p>Komponente</p>
+				<select name="device">
+					<optgroup label="Komponente w&auml;hlen"></optgroup>
+						<option value="0">Komponente 1</option>
+						<option value="1">Komponente 2</option>
+						<option value="2">Komponente 3</option>
+				</select>
+				<p>Anzahl</p><input name="itemCount" type="text"/>
 				<input name="step" value="3" type="hidden" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=device\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -43,14 +49,14 @@
 	
 			echo '
 			<!-- Device creation wizard - Step 1 -->
-			<form class="deviceSelection" action="index.php?mod=create_component" method="post">
+			<form class="deviceSelection" action="index.php?mod=addComponent" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Chip1.png" /><p>Prozessor</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/EthernetCable.png" /><p>Ethernet Kabel</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Motherboard.png" /><p>Motherboard</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/RCAConnector_Plug.png" /><p>Audio Anschluss</p></div>
 				<input name="step" value="2" type="hidden" />
 				<div class="clearfix" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=device\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 		
