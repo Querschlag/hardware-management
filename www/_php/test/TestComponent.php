@@ -19,9 +19,9 @@
 			require_once('../entity/ComponentEntity.php');
 		
 			/**
-			* Mock object component
+			* Mock object room
 			*
-			* Mock object for the component
+			* Mock object for the room
 			*
 			* @category 
 			* @package
@@ -126,7 +126,7 @@
 				/**
 				 *  function to display room
 				 * 
-				 * @author Thomas Michl <thomas.michl1988@gmail.com>
+				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
 				public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 				{
@@ -259,70 +259,22 @@
 			}
 			?>
 			
-			<h3>SelectTest</h3>
-			
 			<?php
 
-				$view = new MockComponent(1, 1, 1, 'CPU', 12312312, 12312314, 'Notiz', 'INTEL',1);
-				$database = new MockDatabase();
-				
-				// create controller
-				$controller = new ComponentController($view, $database);
-				
-				// select controller
-				$controller->selectComponents();
-				
-				foreach($database->_component as $dbComponents)
-				{
-					var_dump($dbComponents);
-					die();
-				}
-			
-			?>
-			<br/>
-			
-			<b>Insert Test 1 (Component Number '1')</b><br/>
-			<?php  
-				// create view and database
-				$view = new MockComponent(2, 1, 1, 'Mainboard', 12346286, 12362137, 'Notiz', 'ASUS', 3);
-				$database = new MockDatabase();
-				
-				// create controller
-				$controller = new ComponentController($view, $database);
-				// select controller
-				$controller->insertComponent();
-							
-				// print success
-				print 'Success';
-			?>
-			
-			<b>Update Test 1</b><br/>
-		<?php
-			// create view and database
-			$view = new MockComponent(3, 1, 1, 'Grafikkarte', 12346286, 12362137, 'Notiz', 'Nvidea', 5);
+			$view = new MockComponent(1, 1, 1, 'CPU', 12312312, 12312314, 'Notiz', 'INTEL', 1);
 			$database = new MockDatabase();
 			
 			// create controller
 			$controller = new ComponentController($view, $database);
 			
-			// insert room
-			$controller->insertComponent();
-			
-			// create new view and controller with new data
-			$view = new MockComponent(3, 1, 1, 'Graka', 12346286, 12362137, 'Notiz', 'Nvidea', 5);
-			
-			$controller = new ComponentController($view, $database);
-			
-			// update room
-			$controller->updateComponent();
-
-			
-			// print success
-			print 'Success';
-			
+			// select controller
 			$controller->selectComponents();
+			
+			foreach($database->_component as $dbComponents)
+			{
+				var_dump($dbComponents);
+			}
+			
 		?>
-
-		<br/>
 	</body>
 </html>
