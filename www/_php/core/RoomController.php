@@ -74,7 +74,7 @@
 			$number = $this->_view->getRoomNumber();
 			
 			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
 				// get floor number
 				$floor = $this->getFloorNumberByNumber($number);
@@ -90,18 +90,6 @@
 				{
 					// insert room
 					$result = $this->_database->insertRoom($floor, $number, $name, $note);
-					
-					// check result of the function
-					if($result == TRUE)
-					{
-						// set success information
-						$this->_view->setSuccess();
-					}
-					else 
-					{
-						// set error to frontend
-						$this->_view->setError();						
-					}
 				}
 				else 
 				{
@@ -130,7 +118,7 @@
 			$number = $this->_view->getRoomNumber();
 			
 			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number, $matches))
+			if(strlen($number) == 3 && preg_match("[^\d]", $number))
 			{
 				// get floor number
 				$floor = $this->getFloorNumberByNumber($number);
@@ -146,18 +134,6 @@
 				{
 					// update room
 					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
-					
-					// check result of the function
-					if($result == TRUE)
-					{
-						// set success information
-						$this->_view->setSuccess();
-					}
-					else 
-					{
-						// set error to frontend
-						$this->_view->setError();						
-					}
 				}
 				else 
 				{
@@ -187,18 +163,6 @@
 			{
 				// delete room
 				$result = $this->_database->deleteRoom($id);
-				
-				// check result of the function
-				if($result == TRUE)
-				{
-					// set success information
-					$this->_view->setSuccess();
-				}
-				else 
-				{
-					// set error to frontend
-					$this->_view->setError();						
-				}
 			}
 			else 
 			{
@@ -217,28 +181,17 @@
 			// floor number
 			$floor = null;
 			
-			// check for int
-			if(is_integer($number))
+			// find all numbers in string
+			$found = preg_match("/[0-9]/", $number, $matches); 
+
+			// check found result
+			if($found == 1)
 			{
-				// find all numbers in string
-				$found = preg_match("[\d]", $number, $matches); 
+				// get first number
+				$floor = $matches[0];
 				
-				// check found result
-				if($found >= 1)
-				{
-					// get first number
-					$floor = $matches[0];
-					
-					// set number to 0
-					$number = 0;
-					
-					// from 1 to x
-					for($index = 1; $index < $found; $index++)
-					{
-						// set number
-						$number = ($number * 10) + $matches[$index];
-					}
-				}
+				// set number to 0
+				$number = $number - ($floor * 100);
 			}
 			
 			// return floor number
