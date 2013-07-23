@@ -103,7 +103,7 @@
 		/**
 		 * select all deliverers
 		 * 
-		 * @return void
+		 * @return DelivererEntity[]
 		 */
 		 public function getDeliverers();
 		 
@@ -119,7 +119,8 @@
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
 		 
@@ -136,14 +137,54 @@
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
 		 
 		 /**
 		  * delete deliverer
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function deleteDeliverer($id);
+		 
+		 /**
+		 * select all Usergroups
+		 * 
+		 * @return UsergroupEntity[]
+		 */
+		 public function getUsergroups();
+		 
+		 /**
+		  * insert usergroup
+		  *
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function insertUsergroup($name, $permission);
+		 
+		 /**
+		  * update usergroup
+		  *
+	  	  * @param int $id id
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function updateUsergroup($id, $name, $permission);
+		 
+		 /**
+		  * delete usergroup
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function deleteUsergroup($id);
 }
