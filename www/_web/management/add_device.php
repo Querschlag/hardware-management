@@ -1,8 +1,11 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php?mod=rooms">R&auml;ume</a></li>
+		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?mod=rooms">R&auml;ume</a></li>
 		<li>>> <a href="index.php?mod=room">R001</a></li>
+		<li>>> <a href="index.php?mod=device">Ger&auml;te</a></li>
+		<li>>> <a href="index.php?mod=create_device">Ger&auml;t hinzuf&uuml;gen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -18,7 +21,11 @@
 		}
 		else if ($step == 3) 
 		{
-	
+			
+			/*
+			 * FIXME: Just select a devices from storage and add it to room
+			 */
+			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
@@ -29,7 +36,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
-				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -51,9 +58,9 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
 			</form>
-			<div class="clear" />
+			<div class="clearfix" />
 			';
 		
 		}
@@ -72,8 +79,8 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=room\'"; type="button" value="Abbrechen" />
-				<div class="clear" />
+				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<div class="clearfix" />
 			</form>
 			';
 		

@@ -3,13 +3,9 @@ body {
 	margin:auto;
 	font-family:Arial, Verdana, sans-serif;
 	
-	-moz-box-shadow:    3px 3px 5px -2px #ccc;
-	-webkit-box-shadow: 3px 3px 5px -2px #ccc;
-	box-shadow:         3px 3px 5px -2px #ccc;
-}
-
-.clear {
-	clear:both;
+	-moz-box-shadow:    0px 0px 6px 2px #ccc;
+	-webkit-box-shadow: 0px 0px 6px 2px #ccc;
+	box-shadow:         0px 0px 6px 2px #ccc;
 }
 
 .left {
@@ -39,20 +35,19 @@ hr {
 	margin-bottom:30px;
 }
 
-h1 {
-	padding-top:20px;
-	text-align:center;
-	color:#333;
-}
-
 #header {
 	height:80px;
 	padding-top:40px;
 }
 
 #top_nav {
-	width:500px;
-	float:left;
+	width:600px;
+	margin:0 auto;
+}
+
+#top_nav h1 {
+	text-align:center;
+	color:#333;
 }
 
 #top_nav ul {
@@ -99,12 +94,13 @@ h1 {
 }
 
 #search_bar {
+	margin-right:20px;
 	float:right;
 }
 
 #content {
 	clear: both;
-	margin-top:10px;
+	margin-top:40px;
 }
 
 #breadcrumb_nav {
@@ -170,15 +166,57 @@ form p {
 	float:right;
 }
 
+/* lauch screen */
+#launch_menu{width:300px;margin:20px auto;color:#105CB6;}
+.tile {
+	background-color:#ccc;
+	text-align:center;
+	margin:15px 0;
+	padding:15px;
+	border:1px solid #888;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+	font-size:22px;
+
+	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s;
+    -webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
+    -o-transition: color 0.5s, background-color 0.5s, -o-transform 0.5s;
+    transition: color 0.5s, background-color 0.5s, transform 0.5s;
+}
+.tile:hover {
+	transform: scale(1.05);
+	background-color: #999;
+	color:#105CB6;
+	
+	-moz-box-shadow:    3px 3px 3px 1px #ccc;
+	-webkit-box-shadow: 3px 3px 3px 1px #ccc;
+	box-shadow:         3px 3px 3px 1px #ccc;
+}
+.tile:hover a {color:#fff;}
+
 /* module Rooms */
 .rooms {list-style:none;}
 .rooms li {padding:30px;display:inline;}
+
 /* module Device */
 .components {list-style:none;}
 .components li {padding:10px;}
 .support_event {list-style:none;}
 .support_event li {padding:5px;}
+
 /* module Create Device */
 .deviceButton {float:left;margin:0px 20px;}
 .deviceButton input {height:64; width:64;border:0;}
 .deviceSelection {height:250px}
+
+/* module Create Device */
+#order_selction {width:100%;margin:60px 0;text-align:center;}
+.largeButton {width:120px;margin:0 auto;padding:40px 30px;background-color: #bbb;text-align:center;display:inline-block;}
+.largeButton input {font-size:20px;background-color: #bbb;border:none;width:120px;height:80px;}
+
+/* module Orders */
+/* module Rooms */
+.orders {list-style:none}
+.orders li {padding:5px;}

@@ -1,7 +1,8 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php?mod=rooms">R&auml;ume</a></li>
+		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?mod=rooms">R&auml;ume</a></li>
 		<li>>> <a href="index.php?mod=room">R001</a></li>
 		<li>>> <a href="index.php?mod=device">PC001</a></li>
 	</ul>
@@ -12,7 +13,7 @@
 		<a class="right" href="index.php?mod=create_room">Problem melden</a>
 		<a class="right" href="index.php?mod=create_room">Probleme: 2</a>
 		<a class="right" href="index.php?mod=create_device">Nachbestellen</a>
-		<div class="clear"></div>
+		<div class="clearfix"></div>
 	</div>
 	<h2>Komponenten</h2>
 	<ul class="components">

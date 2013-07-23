@@ -1,15 +1,16 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php?mod=rooms">R&auml;ume</a></li>
+		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?mod=rooms">R&auml;ume</a></li>
 	</ul>
 </div>
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=create_room">Raum hinzuf&uuml;gen</a>
 		<a class="right" href="index.php?mod=create_room">Lieferanten</a>
-		<a class="right" href="index.php?mod=create_device">Bestellung</a>
-		<div class="clear"></div>
+		<a class="right" href="index.php?mod=order">Bestellung</a>
+		<div class="clearfix"></div>
 	</div>
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">

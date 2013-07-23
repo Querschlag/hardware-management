@@ -1,7 +1,8 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php?mod=rooms">R&auml;ume</a></li>
+		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?mod=rooms">R&auml;ume</a></li>
 		<li>>> <a href="index.php?mod=room">R001</a></li>
 		<li>>> <a href="index.php?mod=device">PC001</a></li>
 		<li>>> <a href="index.php?mod=component">Komponente1</a></li>
@@ -10,7 +11,7 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="right" href="index.php?mod=create_room">Nachbestellen</a>
-		<div class="clear"></div>
+		<div class="clearfix"></div>
 	</div>
 	<h2>Eigenschaften</h2>
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->

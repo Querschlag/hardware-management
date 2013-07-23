@@ -30,13 +30,31 @@
 				return 'management/create_device.php';
 			if ($moduleName == 'create_component')
 				return 'management/create_component.php';
+			
+			if ($moduleName == 'order')
+				return 'order/order.php';
+			if ($moduleName == 'modifyOrder')
+				return 'order/modify_order.php';
+			if ($moduleName == 'confirmOrder')
+				return 'order/confirm_order.php';
+			if ($moduleName == 'reorderOrder')
+				return 'order/reorder_order.php';
+			if ($moduleName == 'placeOrder')
+				return 'order/place_order.php';
+			if ($moduleName == 'order_device')
+				return 'order/order_device.php';
+			if ($moduleName == 'order_component')
+				return 'order/order_component.php';
+				
+			if ($moduleName == 'user')
+				return 'user/user.php';
 
 			
+			// default module
 			$userGroup = SESSION('userGroup');
 			if ($userGroup != null)
 			{
-				if ($userGroup == 1)
-					return 'management/rooms.php';
+				return 'launch_menu.php';
 			} else {
 				return null;
 			}
