@@ -348,7 +348,7 @@
 		
 		<br/>
 		
-		<b>Update Test 1</b><br/>
+		<b>Update Test 1 (Update!)</b><br/>
 		<?php
 			// create view and database
 			$view = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
@@ -368,11 +368,96 @@
 			assert($database->_rooms[0]->roomNote == $view->getRoomNote());
 			
 			// create new view and controller with new data
-			$view = new MockRoom(1, '101', 'Religion', '');
+			$view = new MockRoom(0, '101', 'Religion', '');
 			$controller = new RoomController($view, $database);
 			
 			// update room
 			$controller->updateRoom();
+
+			// check update file
+			assert(isset($database->_rooms[0]) == TRUE);
+			assert($database->_rooms[0]->roomFloor == 1);
+			assert($database->_rooms[0]->roomNumber == 1);
+			assert($database->_rooms[0]->roomName == $view->getRoomName());
+			assert($database->_rooms[0]->roomNote == $view->getRoomNote());			
+
+			// print success
+			print 'Success';
+		?>
+
+		<br/>
+		
+		<b>Update Test 2 (No Update!)</b><br/>
+		<?php
+			// create view and database
+			$view1 = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view1, $database);
+			
+			// insert room
+			$controller->insertRoom();
+						
+			// check last insert file
+			assert(isset($database->_rooms[0]) == TRUE);
+			assert($database->_rooms[0]->roomFloor == 0);
+			assert($database->_rooms[0]->roomNumber == 1);
+			assert($database->_rooms[0]->roomName == $view1->getRoomName());
+			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());
+			
+			// create new view and controller with new data
+			$view2 = new MockRoom(0, '555', '', '');
+			$controller = new RoomController($view2, $database);
+			
+			// update room
+			$controller->updateRoom();
+
+			// check update file
+			assert(isset($database->_rooms[0]) == TRUE);
+			assert($database->_rooms[0]->roomFloor == 0);
+			assert($database->_rooms[0]->roomNumber == 1);
+			assert($database->_rooms[0]->roomName == $view1->getRoomName());
+			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());			
+
+			// print success
+			print 'Success';
+		?>
+
+		<br/>
+		
+		<b>Update Test 3 (No Update!)</b><br/>
+		<?php
+			// create view and database
+			$view1 = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view1, $database);
+			
+			// insert room
+			$controller->insertRoom();
+						
+			// check last insert file
+			assert(isset($database->_rooms[0]) == TRUE);
+			assert($database->_rooms[0]->roomFloor == 0);
+			assert($database->_rooms[0]->roomNumber == 1);
+			assert($database->_rooms[0]->roomName == $view1->getRoomName());
+			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());
+			
+			// create new view and controller with new data
+			$view2 = new MockRoom(0, '55', 'Reli', '');
+			$controller = new RoomController($view2, $database);
+			
+			// update room
+			$controller->updateRoom();
+
+			// check update file
+			assert(isset($database->_rooms[0]) == TRUE);
+			assert($database->_rooms[0]->roomFloor == 0);
+			assert($database->_rooms[0]->roomNumber == 1);
+			assert($database->_rooms[0]->roomName == $view1->getRoomName());
+			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());	
 
 			// print success
 			print 'Success';

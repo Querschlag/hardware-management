@@ -55,5 +55,10 @@
 		 *  storage for the deliverer email adress
 		 */
 		public $delivererEmail;
+		
+		/**
+		 *  storage for the deliverer country
+		 */
+		public $delivererCountry;
 	}
 ?>

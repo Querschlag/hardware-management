@@ -1,4 +1,7 @@
 <?php
+
+	require_once('../interface/IDatabase.php');
+	
 	/**
 	* Database connection
 	*
@@ -6,19 +9,44 @@
 	*
 	* @category 
 	* @package
-	* @author Johannes Alt <altjohannes510@gmail.com>
+	* @author Leon Geim<leon.geim@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class Database implements IDatabase
 	{
+		public function __construct() 
+		{
+			$verbindung = mysql_connect("localhost", "root", "");
+			mysql_select_db("itv_v1");
+					
+		}
+		
+	
 		/**
 		 *  function to get rooms
 		 *
 		 * @return RoomEntity[] 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRooms()
-		{
+		{   
+			$entityArray = array();
+			
+			$select = "Select * from raeume order by r_etage asc, r_nr asc;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new RoomEntity();
+				$entity->roomId = $row['r_id'];
+				$entity->roomNumber = $row['r_nr'];
+				$entity->roomFloor = $row['r_etage'];
+				$entity->roomName = $row['r_bezeichnung'];
+				$entity->roomNote= $row['r_notiz'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
 		}
 		
 		/**
@@ -31,6 +59,9 @@
 		 */
 		public function insertRoom($floor, $number, $name, $note)
 		{
+			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz) 
+						VALUES(".$number. ", ".$floor.", '".$name."', '".$note."')";
+			return mysql_query($insert);
 			
 		}
 		
@@ -45,6 +76,16 @@
 		 */
 		public function updateRoom($id, $floor, $number, $name, $note)
 		{
+			$update = "UPDATE raeume SET
+									r_nr = ".$number.",
+									r_etage= ".$floor.",
+									r_bezeichnung = '".$name."',
+									r_Notiz = '".$note."'
+						WHERE
+									r_id = ".$id.";";
+									
+			return mysql_query($update);
+									
 			
 		}
 		
@@ -55,7 +96,11 @@
 		 */
 		public function deleteRoom($id)
 		{
-		
+			$delete ="DELETE FROM 
+							raeume 
+						WHERE 
+							r_id = ".$id.";";
+			return mysql_query($delete);
 		}
 		
 		/**
@@ -126,11 +171,31 @@
 		/**
 		 * select all deliverers
 		 * 
-		 * @return void
+		 * @return Array
 		 */
 		 public function getDeliverers()
 		 {
-		 	
+		 	$entityArray = array();
+			
+			$select = "Select * from lieferant order by l_id ASC;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new DelivererEntity();
+				$entity->delivererId = $row['l_id'];
+				$entity->delivererCompanyName = $row['l_firmenname'];
+				$entity->delivererStreet = $row['l_strasse'];
+				$entity->delivererZip = $row['l_plz'];
+				$entity->delivererCity= $row['l_ort'];
+				$entity->delivererTelephone= $row['l_tel'];
+				$entity->delivererMobile= $row['l_mobil'];
+				$entity->delivererFax= $row['l_fax'];
+				$entity->delivererEmail= $row['l_email'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
 		 }
 		 
 		 /**
@@ -147,9 +212,19 @@
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, 
+										$phoneNumber, $mobileNumber, $faxNumber, $email)
 		 {
-		 	
+		 	$insert ="INSERT INTO lieferant (l_firmenname,l_strasse,
+												l_plz,l_ort,
+												l_tel,l_mobil,
+												l_fax,l_email)
+								VALUES(	'".$companyName."','".$street."',
+										'".$zipCode."','".$location."',
+										'".$phoneNumber."','".$mobileNumber."',
+										'".$faxNumber."','".$email."');";
+										
+			return mysql_query($insert);
 		 }
 		 
 		 /**
@@ -167,9 +242,22 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location,
+										$phoneNumber, $mobileNumber, $faxNumber, $email)
 		 {
-		 	
+		 	$update = "UPDATE lieferant 
+					   SET l_firmenname = ".$companyName.",
+							l_strasse = ".$street.",
+							l_plz= ".$zipCode.",
+							l_ort= ".$location.",
+							l_tel= ".$phoneNumber.",
+							l_mobil= ".$mobileNumber.",
+							l_fax= ".$faxNumber.",
+							l_email= ".$email."
+						WHERE
+							l_id = ".$id.";";
+							
+			return mysql_query($update);
 		 }
 		 
 		 /**
@@ -179,7 +267,88 @@
 		  */
 		 public function deleteDeliverer($id)
 		 {
-		 	
+		 	$delete ="DELETE FROM 
+							lieferant 
+						WHERE 
+							l_id = ".$id.";";
+			return mysql_query($delete);
+		 }
+		 
+		  /**
+		 * select all Usergroups
+		 * 
+		 * @return UsergroupEntity[]
+		 */
+		 public function getUsergroups()
+		 {
+			$entityArray = array();
+			
+			$select = "Select * from benutzergruppe order by bg_id ASC;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new UserGroupEntity();
+				$entity->userGroupId = $row['bg_id'];
+				$entity->userGroupName = $row['bg_name'];
+				$entity->userGroupPermisson = $row['bg_rechte']				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 
+		 }
+		 
+		 /**
+		  * insert usergroup
+		  *
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function insertUsergroup($name, $permission)
+		 {
+		 $insert ="INSERT INTO benutzergruppe (bg_name,bg_rechte)
+								VALUES(	'".$name."',".$permission.");";
+										
+			return mysql_query($insert);
+		 }
+		 
+		 /**
+		  * update usergroup
+		  *
+	  	  * @param int $id id
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function updateUsergroup($id, $name, $permission)
+		 {
+			 $update = "UPDATE benutzergruppe 
+						   SET bg_name = '".$name."',
+								bg_rechte = ".$permission."
+							WHERE
+								bg_id = ".$id.";";
+								
+				return mysql_query($update);
+		 }
+		 
+		 /**
+		  * delete usergroup
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function deleteUsergroup($id)
+		 {
+			$delete ="DELETE FROM 
+							benutzergruppe 
+						WHERE 
+							bg_id = ".$id.";";
+			return mysql_query($delete);
 		 }
 	}
 ?>

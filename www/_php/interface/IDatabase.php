@@ -61,7 +61,7 @@
 		 * @param integer $deliverer The components deliverer id
 		 * @param integer $room The components room id
 		 * @param string $name The components name
-		 * @param string $date The components date
+		 * @param integer $buy The components buy date
 		 * @param integer $warranty The components warranty
 		 * @param string $note The components note
 		 * @param string $supplier The components supplier
@@ -70,7 +70,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
 				
 		/**
 		 * update a component
@@ -103,7 +103,7 @@
 		/**
 		 * select all deliverers
 		 * 
-		 * @return void
+		 * @return DelivererEntity[]
 		 */
 		 public function getDeliverers();
 		 
@@ -119,7 +119,8 @@
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
 		 
@@ -136,14 +137,54 @@
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
 		 
 		 /**
 		  * delete deliverer
 		  * 
-		  * @return void
+		  * @return 1 - true
+		  *			2 - false
 		  */
 		 public function deleteDeliverer($id);
+		 
+		 /**
+		 * select all Usergroups
+		 * 
+		 * @return UsergroupEntity[]
+		 */
+		 public function getUsergroups();
+		 
+		 /**
+		  * insert usergroup
+		  *
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function insertUsergroup($name, $permission);
+		 
+		 /**
+		  * update usergroup
+		  *
+	  	  * @param int $id id
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function updateUsergroup($id, $name, $permission);
+		 
+		 /**
+		  * delete usergroup
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function deleteUsergroup($id);
 }

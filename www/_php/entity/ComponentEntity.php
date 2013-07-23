@@ -9,7 +9,7 @@
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/	
-	class DelivererEntity
+	class ComponentEntity
 	{
 		/**
 		 *  storage for the component id
@@ -32,14 +32,14 @@
 		public $componentName;
 		
 		/** 
-		 *  storage for the component date
+		 *  storage for the component buy date
 		 */
-		public $componentDate;
+		public $componentBuy;
 		
 		/**
-		 *  storage for the component warrenty
+		 *  storage for the component warranty
 		 */
-		public $componentWarrenty;
+		public $componentWarranty;
 		
 		/**
 		 *  storage for the component note
@@ -47,9 +47,9 @@
 		public $componentNote;
 		
 		/**
-		 *  storage for the component producer
+		 *  storage for the component supplier
 		 */
-		public $componentProducer;
+		public $componentSupplier;
 		
 		/**
 		 *  storage for the component type

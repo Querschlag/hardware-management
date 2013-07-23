@@ -51,16 +51,36 @@
 			// get rooms from database
 			$rooms = $this->_database->getRooms();
 			
+			// create floor array
+			$floors = array();
+			
 			// iteration over all rooms
 			foreach($rooms as $room)
-			{							
-				// display room
-				$this->_view->displayRoom(
-					$room->roomId, 
-					sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
-					$room->roomName, 
-					$room->roomNote);
+			{
+				// add room to floor list
+				$floors[$room->roomFloor][] = $room;					
 			}
+			
+			// iteration over all floors
+			foreach($floors as $key=>$floor)
+			{
+				// display floor number
+				$this->_view->displayFloor($key);
+				
+				// iteration over the floor rooms
+				foreach($floor as $room)
+				{
+					// display room
+					$this->_view->displayRoom(
+						$room->roomId, 
+						sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
+						$room->roomName, 
+						$room->roomNote);	
+				}
+			}			
+				
+			// display room end
+			$this->_view->displayEnd();
 		}
 		
 		/**

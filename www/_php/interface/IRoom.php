@@ -19,6 +19,20 @@
 		public function displayRoom($id, $number, $name, $note);
 		
 		/**
+		 *  function to display floor
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function displayFloor($floorNumber);
+		
+		/**
+		*  function to display room end
+		* 
+		*  @author Johannes Alt <altjohannes@gmail.com>
+		*/
+		public function displayRoomEnd();
+		
+		/**
 		 *  function to get room number
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
