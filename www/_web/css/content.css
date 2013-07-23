@@ -172,7 +172,7 @@ form p {
 
 /* module Rooms */
 .rooms {list-style:none;}
-.rooms li {padding:30px;display:inline;}
+.rooms li { width:70px; display:inline-block;}
 /* module Device */
 .components {list-style:none;}
 .components li {padding:10px;}

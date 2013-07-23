@@ -1,6 +1,6 @@
 <?php
 
-	require_once('../interface/IDatabase.php');
+	require_once('../_php/interface/IDatabase.php');
 	
 	/**
 	* Database connection

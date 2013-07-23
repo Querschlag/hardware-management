@@ -14,28 +14,71 @@
 	
 	<?php
 		// include IRoom
-		require_once('www.localhost/ifa/www/_php/interface/IRoom.php');
+		require_once('../_php/interface/IRoom.php');
 		
 		// include room controller
-		require_once('../../_php/core/RoomController.php');
+		require_once('../_php/core/RoomController.php');
 		
 		// include mock database
-		require_once('../../_php/test/MockDatabase.php');
+		require_once('../_php/database/Database.php');
 		
 		// include room entity
-		require_once('../../_php/entity/RoomEntity.php');
+		require_once('../_php/entity/RoomEntity.php');
 	
+		/**
+		* room view object
+		*
+		* room view object
+		*
+		* @category 
+		* @package
+		* @author Johannes Alt <altjohannes510@gmail.com>
+		* @copyright 2013 B3ProjectGroup2
+		*/
 		class Room implements IRoom
 		{
 			/**
 			 *  storage for the row max
 			 */
-			private $_rowMax = 3;
+			private $_rowMax = 9;
 			
 			/** 
 			 *  storage for the row count
 			 */
 			private $_rowCount;
+				
+			/**
+			 *  storage for the floor negativ name
+			 */
+			private $_floorNegativName;	
+			
+			/**
+			 *  storage for the floor null name
+			 */
+			private $_floorNullName;
+			
+			/**
+			 *  storage for the floor positiv name
+			 */
+			private $_floorPositivName;
+			
+			/**
+			 *  paramized constructor
+			 */	
+			public function __construct($rowMax, $floorNegativName, $floorNullName, $floorPositivName)
+			{
+				// store row max count
+				$this->_rowMax = $rowMax;
+				
+				// store negativ name
+				$this->_floorNegativName = $floorNegativName;
+				
+				// store null name
+				$this->_floorNullName = $floorNullName;
+				
+				// store positiv name
+				$this->_floorPositivName = $floorPositivName;
+			}
 					
 			/**
 			 *  function to display room
@@ -55,14 +98,14 @@
 				if(isset($this->_rowCount) == FALSE || $this->_rowCount == $this->_rowMax)
 				{
 					// print start list
-					print '<ul class=\"rooms\">';
+					print '<ul class="rooms">';
 					
 					// reset row count
 					$this->_rowCount = 0;
 				}
 				
 				// print list element
-				print '<li><a href=\"index.php?mod=room\">' . $number . '</a></li>';
+				print '<li><a href="index.php?mod=room">' . $number . '</a></li>';
 				
 				// increase row count
 				$this->_rowCount++;			
@@ -75,14 +118,31 @@
 			 */
 			public function displayFloor($floorNumber)
 			{
-				// print end list
-				print '</ul>';
+				// floor name
+				$floorName;			
+			
+				// check floor number
+				if($floorNumber < 0)
+				{
+					// create floor name string
+					$floorName = ($floorNumber * -1) . ". " . $this->_floorNegativName;
+				}
+				else if($floorNumber == 0) 
+				{
+					// create floor name string
+					$floorName = $this->_floorNullName;
+				}
+				else if($floorNumber > 0)
+				{
+					// create floor name string
+					$floorName = $floorNumber . ". " . $this->_floorPositivName;
+				}
 				
 				// print floor number
-				print '<h2>Stockwerk ' . $floorNumber . '</h2>';
+				print '<h2> ' . $floorName . '</h2>';
 				
 				// print start list
-				print '<ul class=\"rooms\">';
+				print '<ul class="rooms">';
 				
 				// reset row count
 				$this->_rowCount = 0;
@@ -155,13 +215,22 @@
 			public function getRoomId()
 			{				
 			}
+			
+			/**
+			 *  function to get floor number
+			 * 
+			 *  @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getFloorNumber()
+			{	
+			}
 		}
 
 		// create view object
-		$view = new Room();
+		$view = new Room(9, 'Untergeschoss', 'Erdgeschoss', 'Obergeschoss');
 		
 		// create database
-		$database = new MockDatabase();
+		$database = new Database();
 		
 		// create controller object
 		$controller = new RoomController($view, $database);
@@ -169,25 +238,4 @@
 		// select the rooms
 		$controller->selectRooms();
 	?>
-	
-	
-	
-	<h2>Erdgeschoss</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R001</a></li>
-		<li><a href="index.php?mod=room">R002</a></li>
-		<li><a href="index.php?mod=room">R003</a></li>
-	</ul>
-	<h2>Stockwerk 1</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R101</a></li>
-		<li><a href="index.php?mod=room">R102</a></li>
-		<li><a href="index.php?mod=room">R103</a></li>
-	</ul>
-	<h2>Stockwerk 2</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R201</a></li>
-		<li><a href="index.php?mod=room">R202</a></li>
-		<li><a href="index.php?mod=room">R203</a></li>
-	</ul>
 </div>
