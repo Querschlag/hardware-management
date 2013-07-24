@@ -13,7 +13,7 @@
 	interface IDelivererController
 	{
 		/**
-		 * select all rooms and print the room on UI
+		 * select all Deliverers and print the room on UI
 		 *
 		 * @author Thomas Bayer <thomasbayer95@gmail.com>  
 		 */
