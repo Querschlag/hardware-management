@@ -38,6 +38,14 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
 		public function deleteComponent($id);
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id);
 		
 	}
 ?>

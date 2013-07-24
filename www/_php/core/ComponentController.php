@@ -139,8 +139,7 @@
 			$warranty = $this->_view->getComponentWarranty();
 			
 			// get component note
-			// $note = $this->_view->getComponentNote();
-			$note = "update notiz";
+			$note = $this->_view->getComponentNote();
 			
 			// get component supplier
 			$supplier = $this->_view->getComponentSupplier();
@@ -175,6 +174,27 @@
 			{
 				// delete component
 				$this->_database->deleteComponent($id);
+			}
+			else 
+			{
+				// set error to frontend
+				// $this->_view->setError();
+			}
+		}
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id)
+		{			
+			// check id,
+			if(isset($id))
+			{
+				// delete component
+				$this->_database->rejectionComponent($id);
 			}
 			else 
 			{

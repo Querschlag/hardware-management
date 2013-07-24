@@ -319,6 +319,16 @@
  		{
  			unset($this->_component[$id]);
  		}
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id) {
+			$this->_component[$id]->componentNote = "ausgemustert";
+		}
 		
 		/**
 		 * select all deliverers

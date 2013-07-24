@@ -310,6 +310,7 @@
 			
 			// update controller
 			$controller->updateComponent(1);
+			$controller->rejectionComponent(2);
 			
 			echo '<br /> <br />';
 			// select controller
