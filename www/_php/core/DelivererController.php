@@ -10,6 +10,10 @@
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
+	
+	// include IDelivererController
+	require_once('../interface/IDelivererController.php');
+	
 	class DelivererController implements IDelivererController
 	{
 		/**
@@ -25,13 +29,13 @@
 		/** 
 		 * default constructor
 		 */
-		function __construct($view) 
+		function __construct($view, $database) 
 		{
 			// store view
 			$this->_view = $view;
 			
 			// create database
-			// TODO 
+			$this->_database = $database;
 		}
 		
 		/**
@@ -75,19 +79,19 @@
 			$street = $this->_view->getDelivererStreet();
 			
 			// get zip code from frontend
-			$zipCode = $this->_view->getDelivererZipCode();
+			$zipCode = $this->_view->getDelivererZip();
 			
 			// get location from frontend
-			$location = $this->_view->getDelivererLocation();
+			$location = $this->_view->getDelivererCity();
 			
 			// get phone number from frontend
-			$phoneNumber = $this->_view->getDelivererPhoneNumber();
+			$phoneNumber = $this->_view->getDelivererTelephone();
 			
 			// get mobile number from frontend
-			$mobileNumber = $this->_view->getDelivererMobileNumber();
+			$mobileNumber = $this->_view->getDelivererMobile();
 			
 			// get fax number from frontend
-			$faxNumber = $this->_view->getDelivererFaxNumber();
+			$faxNumber = $this->_view->getDelivererFax();
 			
 			// get email from frontend
 			$email = $this->_view->getDelivererEmail();

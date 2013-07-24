@@ -122,7 +122,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * update deliverer
@@ -140,7 +140,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * delete deliverer
@@ -263,14 +263,49 @@
 		 public function getTransactionTypes();
 
 		 /**
-		 * select all Users
+		 * select TransactionTypeById
 		 * 
 		 * @param int $id id
 		 *
 		 * @return TransactionType
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypeById($id);		 
+		 public function getTransactionTypeById($id);	
+
+         /**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactions();
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionById($id);			 
 		   
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValues();
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValueEntityById($id);	
 		  
 }
