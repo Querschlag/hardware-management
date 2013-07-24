@@ -272,7 +272,7 @@
 		 */
 		 public function getTransactionTypeById($id);	
 
-/**
+         /**
 		 * select all Transaction
 		 * 
 		 * @return TransactionEntity[]
@@ -285,10 +285,27 @@
 		 * 
 		 * @param int $id id
 		 *
-		 * @return TransactionType
+		 * @return TransactionTypeEntity
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function getTransactionById($id);			 
 		   
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValues();
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValueEntityById($id);	
 		  
 }
