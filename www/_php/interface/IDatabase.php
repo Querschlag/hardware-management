@@ -248,6 +248,7 @@
 		 * 
 		 * @param int $id id
 		 * @param string $password password(blank)
+		 *
 		 * @return 1 - true (password correct)
 		 *			2 - false(password incorrect)
 		 * @author Daniel Schulz <schmoschu@gmail.com>
@@ -289,7 +290,43 @@
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function getTransactionById($id);			 
-		   
+		 
+         /**
+		 * insert Transaction
+		 *
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * update Transaction
+		 *
+	  	 * @param int $id id
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteTransaction($id);
+		 
 		 /**
 		 * select all ValidValue
 		 * 
@@ -303,9 +340,90 @@
 		 * 
 		 * @param int $id id
 		 *
-		 * @return TransactionTypeEntity
+		 * @return ValidValueEntity
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function getValidValueEntityById($id);	
-		  
+		 
+		 /**
+		 * select all ComponentAttributeEntitysFromComponentType
+		 *
+		 * componentAttributeComponentValue = NULL;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponentType();
+		 
+		 /**
+		 * select all ComponentAttributeFromComponent
+		 *
+		 * componentAttributeComponentValue = value;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponent();
+		 
+		  /**
+		 * select ComponentAttributesFromComponentTypeByComponentId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentId($id);
+		 
+		  /**
+		 * select ComponentAttributeFromComponentTypeByComponentTypeId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id);
+		 
+		 /**
+		 * insert ComponentAttribute
+		 *
+		 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * update Transaction
+		 *
+		 * @param int $id
+	  	 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteTransaction($id);
 }
