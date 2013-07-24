@@ -14,17 +14,27 @@
 	
 	<?php
 		// include IRoom
-		require_once('www.localhost/ifa/www/_php/interface/IRoom.php');
+		require_once('../_php/interface/IRoom.php');
 		
 		// include room controller
-		require_once('../../_php/core/RoomController.php');
+		require_once('../_php/core/RoomController.php');
 		
 		// include mock database
-		require_once('../../_php/test/MockDatabase.php');
+		require_once('../_php/test/MockDatabase.php');
 		
 		// include room entity
-		require_once('../../_php/entity/RoomEntity.php');
-	
+		require_once('../_php/entity/RoomEntity.php');
+
+		/**
+		* Room object
+		*
+		* Room object with functionality of IRoom
+		*
+		* @category 
+		* @package
+		* @author Johannes Alt <altjohannes510@gmail.com>
+		* @copyright 2013 B3ProjectGroup2
+		*/	
 		class Room implements IRoom
 		{
 			/**
@@ -161,7 +171,7 @@
 		$view = new Room();
 		
 		// create database
-		$database = new MockDatabase();
+		$database = new Database();
 		
 		// create controller object
 		$controller = new RoomController($view, $database);
@@ -169,25 +179,4 @@
 		// select the rooms
 		$controller->selectRooms();
 	?>
-	
-	
-	
-	<h2>Erdgeschoss</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R001</a></li>
-		<li><a href="index.php?mod=room">R002</a></li>
-		<li><a href="index.php?mod=room">R003</a></li>
-	</ul>
-	<h2>Stockwerk 1</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R101</a></li>
-		<li><a href="index.php?mod=room">R102</a></li>
-		<li><a href="index.php?mod=room">R103</a></li>
-	</ul>
-	<h2>Stockwerk 2</h2>
-	<ul class="rooms">
-		<li><a href="index.php?mod=room">R201</a></li>
-		<li><a href="index.php?mod=room">R202</a></li>
-		<li><a href="index.php?mod=room">R203</a></li>
-	</ul>
 </div>

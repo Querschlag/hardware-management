@@ -1,10 +1,10 @@
 <?php
 	
 	// include room controller
-	require_once('../interface/IRoomController.php');
+	require_once('../_php/interface/IRoomController.php');
 
 	// include room entity
-	require_once('../entity/RoomEntity.php');
+	require_once('../_php/entity/RoomEntity.php');
 
 	/**
 	* Controller for Rooms
@@ -73,14 +73,14 @@
 					// display room
 					$this->_view->displayRoom(
 						$room->roomId, 
-						sprintf("%d%02d", $room->roomFloor, $room->roomNumber), 
+						$room->roomNumber,
 						$room->roomName, 
 						$room->roomNote);	
 				}
-			}			
 				
 			// display room end
-			$this->_view->displayEnd();
+				$this->_view->displayRoomEnd();
+			}
 		}
 		
 		/**
@@ -93,11 +93,8 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number))
-			{
 				// get floor number
-				$floor = $this->getFloorNumberByNumber($number);
+			$floor = $this->_view->getFloorNumber();
 			
 				// get room name from frontend
 				$name = $this->_view->getRoomName();
@@ -117,12 +114,6 @@
 					$this->_view->setError();
 				}
 			}
-			else 
-			{
-				// set room number error
-				$this->_view->setRoomNumberError();
-			}
-		}
 		
 		/**
 		 *  function to update room
@@ -137,11 +128,8 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-			// check room number
-			if(strlen($number) == 3 && preg_match("[^\d]", $number))
-			{
 				// get floor number
-				$floor = $this->getFloorNumberByNumber($number);
+			$floor = $this->_view->getFloorNumber();
 			
 				// get room name from frontend
 				$name = $this->_view->getRoomName();
@@ -161,12 +149,6 @@
 					$this->_view->setError();
 				}
 			}
-			else 
-			{
-				// set room number error
-				$this->_view->setRoomNumberError();
-			}
-		}
 		
 		/**
 		 * function to delete room
@@ -189,33 +171,6 @@
 				// set error to frontend
 				$this->_view->setError();
 			}	
-		}
-		
-		/**
-		 *  function to get floor number by room number
-		 * 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
-		 */
-		private function getFloorNumberByNumber(&$number)
-		{
-			// floor number
-			$floor = null;
-			
-			// find all numbers in string
-			$found = preg_match("/[0-9]/", $number, $matches); 
-
-			// check found result
-			if($found == 1)
-			{
-				// get first number
-				$floor = $matches[0];
-				
-				// set number to 0
-				$number = $number - ($floor * 100);
-			}
-			
-			// return floor number
-			return $floor;			
 		}
 	}
 ?>
