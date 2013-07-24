@@ -263,14 +263,32 @@
 		 public function getTransactionTypes();
 
 		 /**
-		 * select all Users
+		 * select TransactionTypeById
 		 * 
 		 * @param int $id id
 		 *
 		 * @return TransactionType
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypeById($id);		 
+		 public function getTransactionTypeById($id);	
+
+/**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactions();
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionById($id);			 
 		   
 		  
 }
