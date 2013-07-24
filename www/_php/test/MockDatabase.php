@@ -205,7 +205,7 @@
 			$entity->componentRoom = 1;
 			$entity->componentName = 'CPU';
 			$entity->componentBuy = 14;
-			$entity->componentWarrenty = 14;
+			$entity->componentWarranty = 14;
 			$entity->componentNote = 'Notiz';
 			$entity->componentSupplier = 'INTEL';
 			$entity->componentType = 1;
@@ -249,7 +249,7 @@
 			$entity->componentBuy = $buy;
 			
 			// set name
-			$entity->componentWarrenty = $warranty;
+			$entity->componentWarranty = $warranty;
 			
 			// set note
 			$entity->componentNote = $note;
@@ -280,7 +280,32 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type){}
+		public function updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+		{			
+			// set data
+			$this->_component[$id]->componentDeliverer = $deliverer;
+			
+			// set number
+			$this->_component[$id]->componentRoom = $room;
+			
+			// set name
+			$this->_component[$id]->componentName = $name;
+			
+			// set note
+			$this->_component[$id]->componentBuy = $buy;
+			
+			// set name
+			$this->_component[$id]->componentWarranty = $warranty;
+			
+			// set note
+			$this->_component[$id]->componentNote = $note;
+			
+			// set name
+			$this->_component[$id]->componentProducer = $supplier;
+			
+			// set note
+			$this->_component[$id]->componentType = $type;
+		}
 		
 		/**
 		 * delete a component
@@ -290,7 +315,10 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
- 		public function deleteComponent($id){}
+ 		public function deleteComponent($id)
+ 		{
+ 			unset($this->_component[$id]);
+ 		}
 		
 		/**
 		 * select all deliverers
@@ -338,6 +366,39 @@
 		  * @return void
 		  */
 		 public function deleteDeliverer($id){}
+		 
+		 
+		 
+		 
+		 
+		 //USER GROUP ZEUG
+		 /**
+		  * delete deliverer
+		  * 
+		  * @return void
+		  */
+		 public function getUsergroups(){}
+		 
+		 /**
+		  * delete deliverer
+		  * 
+		  * @return void
+		  */
+		 public function insertUsergroup($name, $permission){}
+		 
+		 /**
+		  * delete deliverer
+		  * 
+		  * @return void
+		  */
+		 public function updateUsergroup($id, $name, $permission){}
+		 
+		 /**
+		  * delete deliverer
+		  * 
+		  * @return void
+		  */
+		 public function deleteUsergroup($id){}
 		
 	}
 ?>
