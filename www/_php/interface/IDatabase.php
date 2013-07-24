@@ -122,7 +122,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * update deliverer
@@ -140,7 +140,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * delete deliverer

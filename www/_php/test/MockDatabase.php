@@ -5,8 +5,11 @@
 	// include room entity
 	require_once('../entity/RoomEntity.php');
 	
-	// include room entity
+	// include component entity
 	require_once('../entity/ComponentEntity.php');
+	
+	// include deliverer entity
+	require_once('../entity/DelivererEntity.php');
 
 	/**
 	* Mock object room
@@ -17,6 +20,7 @@
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @author Thomas Michl <thomas.michl1988@gmail.com>
+	* @author Thomas Bayer <thomasbayer95@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class MockDatabase implements IDatabase
@@ -25,10 +29,16 @@
 		 *  storage for the last insert, update or delete room
 		 */
 		public $_rooms = array();
+		
 		/**
 		 *  storage for the last insert, update or delete component
 		 */
 		public $_component = array();
+		
+		/**
+		 *  storage for the last insert, update or delete deliverer
+		 */
+		public $_deliverers = array();
 				
 		/**
 		 *  function to insert room
@@ -297,7 +307,29 @@
 		 * 
 		 * @return void
 		 */
-		 public function getDeliverers(){}
+		 public function getDeliverers()
+		 {
+		 	// create first deliverer entity
+			$entity = new DelivererEntity();
+			
+			// set deliverer data
+			$entity->delivererId = 1;
+			$entity->delivererCompanyName = "Funkwerk";
+			$entity->delivererStreet = "Südwestpark 94";
+			$entity->delivererZip = "90449";
+			$entity->delivererCity = "Nürnberg";
+			$entity->delivererTelephone = "0911/208 3462";
+			$entity->delivererMobile = "0171/2310983";
+			$entity->delivererFax = "0911/208 3463";
+			$entity->delivererEmail = "info@funkwerk.de";
+			$entity->delivererCountry = "Deutschland";
+		
+			// add entity to array
+			$this->_deliverers[] = $entity;
+			
+			// return entites
+			return $this->_deliverers;
+		 }
 		 
 		 /**
 		  * insert deliverer
@@ -310,10 +342,29 @@
 		  * @param string $mobileNumber mobile number
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
+		  * @param string $country country 
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
+		 {
+		 	// create first deliverer entity
+			$entity = new DelivererEntity();
+			
+			$entity->delivererCompanyName = $companyName;
+			$entity->delivererStreet = $street;
+			$entity->delivererZip = $zipCode;
+			$entity->delivererCity = $location;
+			$entity->delivererTelephone = $phoneNumber;
+			$entity->delivererMobile = $mobileNumber;
+			$entity->delivererFax = $faxNumber;
+			$entity->delivererEmail = $email;
+			$entity->delivererCountry = $country;
+			
+			// store entity
+			$this->_deliverers[] = $entity;
+			
+		 }
 		 
 		 /**
 		  * update deliverer
@@ -330,7 +381,7 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country){}
 		 
 		 /**
 		  * delete deliverer
@@ -338,6 +389,48 @@
 		  * @return void
 		  */
 		 public function deleteDeliverer($id){}
+		 
+		 /**
+		 * select all Usergroups
+		 * 
+		 * @return UsergroupEntity[]
+		 */
+		 public function getUsergroups()
+		 {}
+		 
+		 /**
+		  * insert usergroup
+		  *
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function insertUsergroup($name, $permission)
+		 {}
+		 
+		 /**
+		  * update usergroup
+		  *
+	  	  * @param int $id id
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function updateUsergroup($id, $name, $permission)
+		 {}
+		 
+		 /**
+		  * delete usergroup
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function deleteUsergroup($id)
+		 {}
 		
 	}
 ?>

@@ -16,7 +16,7 @@
 		 * 
 		 * @author Thomas Bayer <thomasbayer95@gmail.com> 
 		 */
-		public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $mail, $country);
+		public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $email, $country);
 		
 		/**
 		* function to get Deliverer id
