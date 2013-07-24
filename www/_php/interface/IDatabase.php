@@ -187,4 +187,90 @@
 		  *			2 - false
 		  */
 		 public function deleteUsergroup($id);
+		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 */
+		 public function getUsergroupById($id);
+		 
+		 /**
+		 * select all Users
+		 * 
+		 * @return UserEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getUsers();
+		 
+		 /**
+		 * insert user
+		 *
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email	  
+		 *
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertUser($name, $userGroupId, $password, $email);
+		 
+		 /**
+		 * update user
+		 *
+	  	 * @param int $id id
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 
+		 /**
+		 * delete user
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteUser($id);
+		 
+		 /**
+		 * check if password for user is correct
+		 * 
+		 * @param int $id id
+		 * @param string $password password(blank)
+		 * @return 1 - true (password correct)
+		 *			2 - false(password incorrect)
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function checkUserPw($id, $password);
+		  
+		 /**
+		 * select all TransactionTypes
+		 * 
+		 * @return TransactionTypesEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypes();
+
+		 /**
+		 * select all Users
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypeById($id);		 
+		   
+		  
 }

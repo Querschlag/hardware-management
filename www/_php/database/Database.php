@@ -350,5 +350,119 @@
 							bg_id = ".$id.";";
 			return mysql_query($delete);
 		 }
+		 
+		 /**
+		 * select all Users
+		 * 
+		 * @return UserEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getUsers();
+		 {
+			$entityArray = array();
+			
+			$select = "Select * from benutzer order by b_id ASC;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new UserEntity();
+				$entity->userId = $row['b_id'];
+				$entity->userGroupId = $row['bg_id'];
+				$entity->userPw = $row['b_pw']		
+				$entity->userName = $row['b_name']		
+				$entity->userEmail = $row['b_email']			
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+		 
+		 /**
+		  * insert user
+		  *
+		  * @param string $name 
+		  * @param int $userGroupId	  
+		  * @param string $password (blank)
+		  * @param string $email	  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function insertUser($name, $userGroupId, $password, $email);
+		 {
+			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_email)
+								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."','".$email."');";
+										
+			return mysql_query($insert);
+		 }
+		 /**
+		  * update user
+		  *
+	  	  * @param int $id id
+		  * @param string $name 
+		  * @param int $userGroupId	  
+		  * @param string $password (blank)
+		  * @param string $email
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+          * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 {
+			 $update = "UPDATE benutzer 
+						   SET bg_id = ".$userGroupId.",
+							   b_pw = PASSWORD('".$password."'),
+							   b_name = '".$name."',
+							   b_email = '".$email."',
+							   
+							WHERE
+								b_id = ".$id.";";
+		 
+		 }
+		 /**
+		  * delete user
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function deleteUser($id);
+		 {
+			$delete ="DELETE FROM 
+							benutzer 
+						WHERE 
+							b_id = ".$id.";";
+			return mysql_query($delete);
+		 }
+		 /**
+		  * check if password for user is correct
+		  * 
+		  * @param int $id id
+		  * @param string $password password(blank)
+		  * @return true (password correct)
+		  *			false(password incorrect)
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		  public function checkUserPw($id, $password);
+		 {
+			$check = "Select 
+							Case When b_pw = PASSWORD('".$password."') then true else false END As Erg
+						FROM benutzer
+						WHERE b_id = ".$id.";";
+						
+			$Data = mysql_query($select);
+			if($Data["erg"] == "1")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		 }
+		 
 	}
 ?>

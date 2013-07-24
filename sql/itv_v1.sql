@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 23. Jul 2013 um 11:21
+-- Erstellungszeit: 24. Jul 2013 um 08:09
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
 CREATE TABLE IF NOT EXISTS `benutzergruppe` (
   `bg_id` int(11) NOT NULL AUTO_INCREMENT,
   `bg_name` varchar(40) NOT NULL,
-  `r_rechte` int(11) NOT NULL,
+  `bg_rechte` int(11) NOT NULL,
   PRIMARY KEY (`bg_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `lieferant` (
 
 CREATE TABLE IF NOT EXISTS `raeume` (
   `r_id` int(11) NOT NULL AUTO_INCREMENT,
-  `r_nr` int(11) DEFAULT NULL COMMENT 'z.B. r014, W304, etc.',
+  `r_nr` varchar(11) DEFAULT NULL COMMENT 'z.B. r014, W304, etc.',
   `r_etage` int(11) NOT NULL,
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
@@ -230,9 +230,7 @@ CREATE TABLE IF NOT EXISTS `vorgangsartenstatus` (
 
 CREATE TABLE IF NOT EXISTS `zulaessige_werte` (
   `zw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `zw_einheit` varchar(45) DEFAULT NULL,
-  `zw_min` int(11) NOT NULL,
-  `zw_max` int(11) NOT NULL,
+  `zw_wert` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`zw_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -287,8 +285,8 @@ ALTER TABLE `komponente_komponente`
 -- Constraints der Tabelle `vorgangsarten`
 --
 ALTER TABLE `vorgangsarten`
-  ADD CONSTRAINT `vorgangsarten_ibfk_2` FOREIGN KEY (`vs_id`) REFERENCES `vorgangsartenstatus` (`vs_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `vorgangsarten_ibfk_1` FOREIGN KEY (`b_id`) REFERENCES `benutzer` (`b_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `vorgangsarten_ibfk_1` FOREIGN KEY (`b_id`) REFERENCES `benutzer` (`b_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `vorgangsarten_ibfk_2` FOREIGN KEY (`vs_id`) REFERENCES `vorgangsartenstatus` (`vs_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
