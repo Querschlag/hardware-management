@@ -188,6 +188,15 @@
 		  */
 		 public function deleteUsergroup($id);
 		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 */
+		 public function getUsergroupById($id);
+		 
 		 /**
 		 * select all Users
 		 * 
