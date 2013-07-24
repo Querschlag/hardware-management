@@ -224,6 +224,11 @@ form p {
 	font-family:Latha ,sans-serif;
 }
 
+.logo {
+	width:200px;
+}
+
+
 
 /* lauch screen */
 #launch_menu{width:300px;margin:20px auto;color:#105CB6;}

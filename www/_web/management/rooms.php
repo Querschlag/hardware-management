@@ -1,24 +1,10 @@
+<?php namespace Template; ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php">Startseite</a></li>
 		<?php
-			require_once('php/additions.php');
-		
-			$menuItem = GET('menu');
-			
-			echo '<li>>> <a href="index.php?mod=rooms&menu=$menuItem">';
-			
-			if ($menuItem == 'scrap')
-				echo 'Ausmustern';
-			else if ($menuItem == 'maintenance')
-				echo 'Wartung';
-			else if ($menuItem == 'reporting')
-				echo 'Reporting';
-			else if ($menuItem == 'management')
-				echo 'Stammdaten';
-			
-			echo '</a></li>';
+			// add selected menu entry
+			include ('php/breadcrumb.php');
 		?>
 	</ul>
 </div>
@@ -191,20 +177,20 @@
 	
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R001</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R002</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R003</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 1); ?>">R001</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 2); ?>">R002</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 3); ?>">R003</a></li>
 	</ul>
 	<h2>Stockwerk 1</h2>
 	<ul class="rooms">
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R101</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R102</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R103</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 4); ?>">R101</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 5); ?>">R102</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 6); ?>">R103</a></li>
 	</ul>
 	<h2>Stockwerk 2</h2>
 	<ul class="rooms">
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R201</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R202</a></li>
-		<li><a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>">R203</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 7); ?>">R201</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 8); ?>">R202</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 9); ?>">R203</a></li>
 	</ul>
 </div>
