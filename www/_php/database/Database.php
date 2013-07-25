@@ -290,7 +290,7 @@
 				$entity = new UserGroupEntity();
 				$entity->userGroupId = $row['bg_id'];
 				$entity->userGroupName = $row['bg_name'];
-				$entity->userGroupPermisson = $row['bg_rechte']				
+				$entity->userGroupPermisson = $row['bg_rechte'];				
 				$entityArray[] = $entity;
 			}
 			
@@ -374,7 +374,7 @@
 			$entity = new UserGroupEntity();
 			$entity->userGroupId = $row['bg_id'];
 			$entity->userGroupName = $row['bg_name'];
-			$entity->userGroupPermisson = $row['bg_rechte']				
+			$entity->userGroupPermisson = $row['bg_rechte'];				
 						
 			return $entity;
 		 }
@@ -395,13 +395,39 @@
 				$entity = new UserEntity();
 				$entity->userId = $row['b_id'];
 				$entity->userGroupId = $row['bg_id'];
-				$entity->userPw = $row['b_pw']		
-				$entity->userName = $row['b_name']		
-				$entity->userEmail = $row['b_email']			
+				$entity->userPw = $row['b_pw'];
+				$entity->userName = $row['b_name'];
+				$entity->userFirstName = $row['b_vorname'];
+				$entity->userLastName = $row['b_nachname'];				
+				$entity->userEmail = $row['b_email'];
 				$entityArray[] = $entity;
 			}
 			
 			return $entityArray;
+		 }
+	
+	
+		  /**
+		 * select UserById
+		 * 
+		 * @return UserEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		  public function getUserById($id)
+		 {
+			$select = "SELECT * FROM benutzer WHERE b_id = ".$id.";";
+			$Data = mysql_query($select);
+			
+			$entity = new UserEntity();
+			$entity->userId = $Data['b_id'];
+			$entity->userGroupId = $Data['bg_id'];
+			$entity->userPw = $Data['b_pw'];
+			$entity->userName = $Data['b_name'];
+			$entity->userFirstName = $Data['b_vorname'];
+			$entity->userLastName = $Data['b_nachname'];				
+			$entity->userEmail = $Data['b_email'];
+				
+			return $entity;					
 		 }
 		 
 		 /**
@@ -410,7 +436,9 @@
 		  * @param string $name 
 		  * @param int $userGroupId	  
 		  * @param string $password (blank)
-		  * @param string $email	  
+		  * @param string $email
+		  * @param string $vorname	
+		  * @param string $nachname
 		  * 
 		  * @return 1 - true
 		  *			2 - false
@@ -418,8 +446,8 @@
 		  */
 		 public function insertUser($name, $userGroupId, $password, $email)
 		 {
-			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_email)
-								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."','".$email."');";
+			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_vorname, b_nachname, b_email)
+								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."', '".$vorname."', '".$nachname."' ,'".$email."');";
 										
 			return mysql_query($insert);
 		 }
@@ -431,6 +459,8 @@
 		  * @param int $userGroupId	  
 		  * @param string $password (blank)
 		  * @param string $email
+		  * @param string $vorname	
+		  * @param string $nachname
 		  * 
 		  * @return 1 - true
 		  *			2 - false
@@ -442,9 +472,13 @@
 						   SET bg_id = ".$userGroupId.",
 							   b_pw = PASSWORD('".$password."'),
 							   b_name = '".$name."',
+							   b_vorname = '".$vorname."',
+							   b_nachname = '".$nachname."',
 							   b_email = '".$email."'							   
 							WHERE
 								b_id = ".$id.";";
+								
+			return mysql_query($update);
 		 
 		 }
 		 /**
@@ -491,25 +525,29 @@
 		 }
 		 
 		 /**
-		 * select all TransactionTypes
+		 * select all ComponentTransactions
 		 * 
-		 * @return TransactionTypesEntity[]
+		 * @return ComponentTransactionEntity[]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getTransactionTypes()
+		 public function getComponentTransactions()
 		 {
 			$entityArray = array();
 			
 			$select = "SELECT 	*
-						FROM	vorgangsartenstatus
-						ORDER BY vs_id ASC;";
+						FROM	komp_vorgang
+						order by kom_id ASC;";
 						
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$entity = new TransactionTypeEntity();
-				$entity->transactionTypeId = $row['vs_id'];
-				$entity->transactionTypeName = $row['vs_bezeichnung'];
+				$entity = new ComponentTransactionEntity();
+				$entity->componentTransactionId = $row['kom_id'];
+				$entity->componentId = $row['k_id'];
+				$entity->transactionId = $row['v_id'];
+				$entity->componentTransactionuserId = $row['b_id'];
+				$entity->componentTransactionDate = $row['datum'];
+				$entity->componentTransactionComment = $row['comment'];
 				$entityArray[] = $entity;
 			}
 			
@@ -517,25 +555,97 @@
 		 }
 
 		 /**
-		 * select TransactionTypeById
+		 * select ComponentTransactionById
 		 * 
 		 * @param int $id id
 		 *
 		 * @return TransactionType
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getTransactionTypeById($id)	
+		 public function getComponentTransactionById($id)	
 		{
-			$select = "SELECT * FROM vorgangsartenstatus WHERE vs_id = ".$id.";";
+			$select = "SELECT * 
+					   FROM komp_vorgang 
+					   WHERE kom_id = ".$id.";";
 			
 			$Data = mysql_query($select);
 			
-			$entity = new TransactionTypeEntity();
-			$entity->transactionTypeId = $Data['vs_id'];
-			$entity->transactionTypeName = $Data['vs_bezeichnung'];
+			$entity = new ComponentTransactionEntity();
+			$entity->componentTransactionId = $Data['kom_id'];
+			$entity->componentId = $Data['k_id'];
+			$entity->transactionId = $Data['v_id'];
+			$entity->componentTransactionuserId = $Data['b_id'];
+			$entity->componentTransactionDate = $Data['datum'];
+			$entity->componentTransactionComment = $Data['comment'];
 									
 			return $entity;
 		}
+		
+		 /**
+		 * insert ComponentTransaction
+		 *
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
+		 {
+			 $insert ="INSERT INTO komp_vorgang 
+						(k_id, v_id, b_id, comment, datum)
+						VALUES(".$componentID.",".$transactionId.",".$userId.",".$comment.",".date." );";
+										
+			return mysql_query($insert);
+		 }
+		 /**
+		 * update ComponentTransaction
+		 *
+	  	 * @param int $id id
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Leon Geim<leon.geim@gmail.com> 
+		 */
+		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment);
+		 {
+			 $update = "UPDATE komp_vorgang 
+						   SET k_id = ".$componentId.",
+							   v_id = PASSWORD('".$transactionId."'),
+							   b_id = '".$userId."',
+							   comment = '".$comment."',
+							   datum = '".$date."'							   						   
+							WHERE
+								kom_id = ".$id.";";
+								
+			return mysql_query($update);
+		 }
+		 
+		 /**
+		 * delete ComponentTransaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function deleteComponentTransaction($id);
+		 {
+				$delete ="DELETE FROM 
+							komp_vorgang 
+						WHERE 
+							kom_id = ".$id.";";
+			return mysql_query($delete);
+		 }
+		 
          /**
 		 * select all Transaction
 		 * 
@@ -556,8 +666,6 @@
 				$entity = new TransactionEntity();
 				$entity->transactionId = $row['v_id'];
 				$entity->transactionDescription = $row['v_bezeichnung'];
-				$entity->transactionTypeId = $row['vs_id']		
-				$entity->userId = $row['b_id']		
 				$entityArray[] = $entity;
 			}
 			
@@ -582,10 +690,7 @@
 			
 			$entity = new TransactionEntity();
 			$entity->transactionId = $Data['v_id'];
-			$entity->transactionDescription = $Data['v_bezeichnung'];
-			$entity->transactionTypeId = $Data['vs_id']		
-			$entity->userId = $Data['b_id']		
-						
+			$entity->transactionDescription = $Data['v_bezeichnung'];						
 			return $entity;
 		 }
 		 
@@ -602,8 +707,8 @@
 		 */
 		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId)
 		 {
-			 $insert ="INSERT INTO vorgangsarten (v_bezeichnung, vs_id, b_id)
-								VALUES(".$transactionDescription.",".$transactionTypeId.",".$userId.");";
+			 $insert ="INSERT INTO vorgangsarten (v_bezeichnung)
+								VALUES(".$transactionDescription.");";
 										
 			return mysql_query($insert);
 		 }
@@ -623,9 +728,7 @@
 		 {
 			 $update = "UPDATE vorgangsarten 
 						   SET 
-								v_bezeichnung = ".$transactionDescription.",
-								vs_id = ".$transactionTypeId.",
-								b_id = ".$userId."							   
+								v_bezeichnung = ".$transactionDescription."				   
 							WHERE
 								v_id = ".$id.";";
 		 }
@@ -808,7 +911,7 @@
 		 */
 		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id)
 		 {
-			$select = "kat.kat_id, kat.kat_name, ka.ka_id
+			$select = "SELECT kat.kat_id, kat.kat_name, ka.ka_id
 					   FROM komponentenarten ka
 					   INNER JOIN kart_kattribut kar ON kar.komponentenarten_ka_id = ka.ka_id
 					   INNER JOIN komponentenattribute kat ON kat.kat_id = kar.komponentenattribute_kat_id
@@ -825,44 +928,6 @@
 			$entity->componentAttributeComponentValue = null;
 						
 			return $entity;
-		 }
-		 /**
-		 * insert ComponentAttribute
-		 *
-		 * @param string $componentAttributeName 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 * @param int $componentAttributeUncertaintId	  
-		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Leon Geim<leon.geim@gmail.com>
-		 */
-		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
-		 
-		 /**
-		 * update Transaction
-		 *
-		 * @param int $id
-	  	 * @param string $componentAttributeName 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 * @param int $componentAttributeUncertaintId	  
-		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Leon Geim<leon.geim@gmail.com>		  
-		 */
-		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
-		 
-		 /**
-		 * delete Transaction
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Leon Geim<leon.geim@gmail.com>
-		 */
-		 public function deleteTransaction($id);
-		 
+		 }		 
 	}
 ?>
