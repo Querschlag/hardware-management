@@ -12,23 +12,13 @@
 	class TransactionEntity
 	{
 		/**
-		 *  storage for the Transaction id
+		 *  storage for the UserGroup id
 		 */
 		public $transactionId;
 		
 		/**
-		 *  storage for the Transaction Description
+		 *  storage for the UserGroup name
 		 */
-		public $transactionDescription;	
-
-         /**
-		 *  storage for the transactionTypeId
-		 */
-		public $transactionTypeId;
-
-         /**
-		 *  storage for the userId
-	   	 */
-		public $userId;	         
+		public $transactionTypName;		
 	}
 ?>
