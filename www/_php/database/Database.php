@@ -17,7 +17,10 @@
 	{
 		public function __construct() 
 		{
-			$verbindung = mysql_connect("localhost", "root", "");
+			if(!(mysql_connect("localhost", "root", "")))
+			{				
+				mysql_connect("localhost", "project", "hallo123");
+			}
 			mysql_select_db("itv_v1");
 					
 		}
