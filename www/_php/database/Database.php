@@ -17,7 +17,7 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("10.9.4.57", "root", "")))
+			if(!(mysql_connect("10.9.4.57", "itv_v1", "")))
 			{				
 				mysql_connect("localhost", "root", "");
 			}
