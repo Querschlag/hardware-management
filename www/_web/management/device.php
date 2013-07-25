@@ -12,8 +12,8 @@
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=addComponent<?php echo '&menu=' . GET('menu');?>">Komponente hinzuf&uuml;gen</a>
 		<a class="right destructiveButton" href="index.php?mod=device<?php echo '&menu=' . GET('menu');?>">Ausmustern</a>
-		<a class="right" href="index.php?mod=create_room<?php echo '&menu=' . GET('menu');?>">Problem melden</a>
-		<a class="right" href="index.php?mod=create_room<?php echo '&menu=' . GET('menu');?>">Probleme: 2</a>
+		<a class="right" href="index.php?mod=reportProblem<?php echo '&menu=' . GET('menu');?>">Problem melden</a>
+		<a class="right" href="index.php?mod=fixProblem<?php echo '&menu=' . GET('menu');?>">Probleme beheben</a>
 		<div class="clearfix"></div>
 	</div>
 	<h2>Komponenten</h2>

@@ -54,6 +54,10 @@
 				return 'management/add_device.php';
 			if ($moduleName == 'addComponent')
 				return 'management/add_component.php';
+			if ($moduleName == 'reportProblem')
+				return 'management/reporting.php';
+			if ($moduleName == 'fixProblem')
+				return 'management/support.php';
 			
 				
 			if ($moduleName == 'user')
