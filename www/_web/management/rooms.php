@@ -1,4 +1,4 @@
-<?php namespace Template; ?>
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -16,6 +16,7 @@
 		<div class="clearfix"></div>
 	</div>
 	
+	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<?php
 	
 		// // include IRoom

@@ -1,3 +1,4 @@
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -9,7 +10,8 @@
 <div id="module">
 	<h2>Benutzer anlegen</h2>
 	<form action="index.php?mod=user" method="post">
-		<p>Benutzername</p><input name="name" type="text"/>
+		<p>Vorname</p><input name="firstName" type="text"/>
+		<p>Nachname</p><input name="lastName" type="text"/>
 		<p>Email</p><input name="email" type="email"/>
 		<p>Gruppe</p>
 		<select name="usergroup">
