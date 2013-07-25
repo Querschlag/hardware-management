@@ -1,6 +1,7 @@
-<?php
-
-	require_once('../interface/IDatabase.php');
+<?php	
+	// include database
+	if(file_exists('../interface/IDatabase.php')) require_once('../interface/IDatabase.php');
+	if(file_exists('../_php/interface/IDatabase.php')) require_once('../_php/interface/IDatabase.php');
 	
 	/**
 	* Database connection
@@ -16,7 +17,11 @@
 	{
 		public function __construct() 
 		{
-			$verbindung = mysql_connect("localhost", "root", "");
+			if(!(mysql_connect("10.9.4.57", "itv_v1", "")))
+			{				
+				mysql_connect("localhost", "root", "");
+			}
+			
 			mysql_select_db("itv_v1");
 					
 		}
@@ -25,7 +30,7 @@
 		/**
 		 *  function to get rooms
 		 *
-		 * @return RoomEntity[] 
+		 * @return Dictionary [problemCount(int), rooms(array)]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRooms()
@@ -46,7 +51,36 @@
 				$entityArray[] = $entity;
 			}
 			
-			return $entityArray;
+			$select  = "SELECT count(*) AS problemCount
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+			$Data = mysql_query($select);
+			
+			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+	
+		}
+		
+		/**
+		 *  function to get room by id
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoomByRoomId($id)
+		{
+			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			$entity = new RoomEntity();
+			$entity->roomId = $row['r_id'];
+			$entity->roomNumber = $row['r_nr'];
+			$entity->roomFloor = $row['r_etage'];
+			$entity->roomName = $row['r_bezeichnung'];
+			$entity->roomNote= $row['r_notiz'];
+			
+			return $entity;			
 		}
 		
 		/**
@@ -127,7 +161,7 @@
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
-								
+				$entity->componentIsDevice = $row['k_device'];
 				$entityArray[] = $entity;
 			}
 			
@@ -149,15 +183,15 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO raeume
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
-						k_hersteller,komponentenarten_ka_id) 
+						k_hersteller,komponentenarten_ka_id, k_device) 
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
-								'".$supplier."', ".$type.")";
+								'".$supplier."', ".$type.", ".$isDevice.")";
 			return mysql_query($insert);
 		}
 				
@@ -177,7 +211,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$update = "UPDATE komponente SET
 									lieferant_l_id= ".$deliverer.",
@@ -187,7 +221,8 @@
 									k_gewaehrleistungsdauer= ".$warranty.",
 									k_Notiz = '".note."',
 									k_hersteller = '".$supplier."',
-									komponentenarten_ka_id = ".$type."
+									komponentenarten_ka_id = ".$type.",
+									k_device = ".$isDevice."
 						WHERE
 									k_id = ".$id.";";
 									
@@ -204,11 +239,23 @@
 		 */
  		public function deleteComponent($id)
 		{
+			$delete = "DELETE FROM 
+							komponente_komponente
+						WHERE 
+							komponenten_k_id = ".$id.";";
+			mysql_query($delete);	
+
+			$delete = "DELETE FROM 
+							komponente_kattribut
+						WHERE 
+							komponenten_k_id = ".$id.";";
+			mysql_query($delete);				
+		
 			$delete ="DELETE FROM 
 							komponente 
 						WHERE 
 							k_id = ".$id.";";
-			return mysql_query($delete);
+			return mysql_query($delete);			
 		}
 		
 		/**
@@ -255,17 +302,18 @@
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, 
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$insert ="INSERT INTO lieferant (l_firmenname,l_strasse,
 												l_plz,l_ort,
 												l_tel,l_mobil,
-												l_fax,l_email)
+												l_fax,l_email,
+												l_land)
 								VALUES(	'".$companyName."','".$street."',
 										'".$zipCode."','".$location."',
 										'".$phoneNumber."','".$mobileNumber."',
-										'".$faxNumber."','".$email."');";
+										'".$faxNumber."','".$email."',
+										'".$country."');";
 										
 			return mysql_query($insert);
 		 }
@@ -285,8 +333,7 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location,
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$update = "UPDATE lieferant 
 					   SET l_firmenname = ".$companyName.",
@@ -296,7 +343,8 @@
 							l_tel= ".$phoneNumber.",
 							l_mobil= ".$mobileNumber.",
 							l_fax= ".$faxNumber.",
-							l_email= ".$email."
+							l_email= ".$email.",
+							l_land= ".$country."
 						WHERE
 							l_id = ".$id.";";
 							
@@ -412,7 +460,7 @@
 						ORDER BY bg_id ASC;";
 			
 			$Data = mysql_query($select);
-			$row = mysql_fetch_assoc($Data)
+			$row = mysql_fetch_assoc($Data);
 			
 			$entity = new UserGroupEntity();
 			$entity->userGroupId = $row['bg_id'];
@@ -474,6 +522,30 @@
 		 }
 		 
 		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function getUserByEmail($email)
+		 {
+			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
+			$Data = mysql_query($select);
+			
+			$entity = new UserEntity();
+			$entity->userId = $Data['b_id'];
+			$entity->userGroupId = $Data['bg_id'];
+			$entity->userPw = $Data['b_pw'];
+			$entity->userName = $Data['b_name'];
+			$entity->userFirstName = $Data['b_vorname'];
+			$entity->userLastName = $Data['b_nachname'];				
+			$entity->userEmail = $Data['b_email'];
+				
+			return $entity;		
+		 }
+		 
+		 /**
 		  * insert user
 		  *
 		  * @param string $name 
@@ -487,10 +559,10 @@
 		  *			2 - false
 		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function insertUser($name, $userGroupId, $password, $email)
+		 public function insertUser($name, $userGroupId, $firstname, $lastname, $password, $email)
 		 {
 			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_vorname, b_nachname, b_email)
-								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."', '".$vorname."', '".$nachname."' ,'".$email."');";
+								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."', '".$firstname."', '".$lastname."' ,'".$email."');";
 										
 			return mysql_query($insert);
 		 }
@@ -509,14 +581,14 @@
 		  *			2 - false
           * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function updateUser($id, $name, $userGroupId, $password, $email)
+		 public function updateUser($id, $name, $userGroupId, $firstname, $lastname, $password, $email)
 		 {
 			 $update = "UPDATE benutzer 
 						   SET bg_id = ".$userGroupId.",
 							   b_pw = PASSWORD('".$password."'),
 							   b_name = '".$name."',
-							   b_vorname = '".$vorname."',
-							   b_nachname = '".$nachname."',
+							   b_vorname = '".$firstname."',
+							   b_nachname = '".$lastname."',
 							   b_email = '".$email."'							   
 							WHERE
 								b_id = ".$id.";";
@@ -637,7 +709,7 @@
 		 *		   2 - false
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
+		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment)
 		 {
 			 $insert ="INSERT INTO komp_vorgang 
 						(k_id, v_id, b_id, comment, datum)
@@ -659,7 +731,7 @@
 		 *		   2 - false
          * @author Leon Geim<leon.geim@gmail.com> 
 		 */
-		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment);
+		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment)
 		 {
 			 $update = "UPDATE komp_vorgang 
 						   SET k_id = ".$componentId.",
@@ -680,7 +752,7 @@
 		 *		   2 - false
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function deleteComponentTransaction($id);
+		 public function deleteComponentTransaction($id)
 		 {
 				$delete ="DELETE FROM 
 							komp_vorgang 
@@ -972,5 +1044,216 @@
 						
 			return $entity;
 		 }		 
+		 
+		 /**
+		 * insert ComponentAttribute
+		 *
+		 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
+		 {
+			 $insert ="INSERT INTO komponentenattribute (kat_name)
+								VALUES(".$componentAttributeName.");";
+			 mysql_query($insert);
+			 
+			 $select = "SELECT MAX(kat_id) AS ID FROM komponentenattribute;";
+			 $Data = mysql_query($select);
+								
+			if($IsForComponent)
+			{
+				$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
+								VALUES(".$componentAttributeUncertaintId.", ".$Data["ID"].", '".$componentAttributeComponentValue."');";
+				mysql_query($insert);
+			}
+			else
+			{
+				$insert ="INSERT INTO kart_kattribut (komponentenarten_ka_id, komponentenattribute_kat_id)
+								VALUES(".$componentAttributeUncertaintId.", ".$Data["ID"].");";
+			 mysql_query($insert);
+			}
+										
+		 }
+		 
+		 
+		  /**
+		 * select all ComponentTypes
+		 * 
+		 * @return ComponentTypeEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentTypes()
+		 {
+		 	
+		 }
+
+		 /**
+		 * select ComponentTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentTypeEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentTypeById($id){}			 
+		 
+         /**
+		 * insert ComponentType
+		 *
+		 * @param string $typeName 
+		 * @param string $typeImagePath	
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function insertComponentType($typeName, $typeImagePath){}
+		 
+		 /**
+		 * get SubComponents by MasterComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>		  
+		 */
+		 public function getSubComponentbyComponentId($id){}
+		 
+			 
+		 /**
+		 * insert SubComponent
+		 *
+	  	 * @param int $componentId
+		 * @param int $subComponentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertSubComponent($componentId, $subComponentId)
+		 {
+			$insert ="INSERT INTO komponente_komponente (komponenten_k_id_aggregat, komponenten_k_id_teil)
+								VALUES(".$componentId.", ".$subComponentId.");";
+										
+			return mysql_query($insert);
+		 }
+		 
+		 /**
+		 * insert AttributeValue
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertAttributeValue($attributeId, $componentId, $value)
+		 {
+			$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
+								VALUES(".$attributeId.", ".$componentId.", ".$value.");";
+										
+			return mysql_query($insert);
+		 }
+		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponents()
+		 {
+			$nameArray = array();
+			
+			$select = "SELECT Distinct(k_name) as name FROM komponente order by k_name";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{				
+				$nameArray[] = $row["name"];
+			}
+			
+			return $nameArray;
+		 }
+	 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent){}
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id){}
+		 
+		 /**
+		  *  function to get user by user name
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByUsername($userName) { }
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId) { }
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password) { }
+		 
+		  /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>	  
+		 */
+		 public function getComponentDevices(){}
+		 
+		   /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentsWithoutDevices(){}
 	}
 ?>
