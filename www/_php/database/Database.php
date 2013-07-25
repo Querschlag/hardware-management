@@ -17,9 +17,9 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("localhost", "root", "")))
+			if(!(mysql_connect("10.9.4.57", "root", "")))
 			{				
-				mysql_connect("localhost", "project", "hallo123");
+				mysql_connect("10.9.4.57", "root", "");
 			}
 			mysql_select_db("itv_v1");
 					
@@ -518,6 +518,30 @@
 			$entity->userEmail = $Data['b_email'];
 				
 			return $entity;					
+		 }
+		 
+		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function getUserByEmail($email)
+		 {
+			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
+			$Data = mysql_query($select);
+			
+			$entity = new UserEntity();
+			$entity->userId = $Data['b_id'];
+			$entity->userGroupId = $Data['bg_id'];
+			$entity->userPw = $Data['b_pw'];
+			$entity->userName = $Data['b_name'];
+			$entity->userFirstName = $Data['b_vorname'];
+			$entity->userLastName = $Data['b_nachname'];				
+			$entity->userEmail = $Data['b_email'];
+				
+			return $entity;		
 		 }
 		 
 		 /**
