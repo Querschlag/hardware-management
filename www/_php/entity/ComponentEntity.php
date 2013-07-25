@@ -60,5 +60,10 @@
 		 *  storage flag for Device or component
 		 */
 		 public $componentIsDevice;
+		 
+		 /**
+		 *  storage flag for problems
+		 */
+		 public $componentHasProblems;
 	}
 ?>

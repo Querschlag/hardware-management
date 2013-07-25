@@ -14,7 +14,7 @@
 		/**
 		 *  function to get rooms
 		 *
-		 * @return RoomEntity[] 
+		 * @return Dictionary 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getRooms();
@@ -78,7 +78,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 				
 		/**
 		 * update a component
@@ -96,7 +96,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice);
 		
 		/**
 		 * delete a component
@@ -429,20 +429,7 @@
 		 */
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
-		 /**
-		 * update ComponentAttribute
-		 *
-		 * @param int $id
-	  	 * @param string $componentAttributeName 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 * @param int $componentAttributeUncertaintId	  
-		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 
 		 
 		 /**
 		 * delete ComponentAttribute
@@ -484,51 +471,7 @@
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertComponentType($typeName, $typeImagePath);
-		 
-		 /**
-		 * update ComponentType
-		 *
-	  	 * @param int $id id
-		 * @param string $typeName 	  
-		 * @param string $typeImagePath
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentType($id, $typeName, $typeImagePath);
-		 
-		 /**
-		 * delete Transaction
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentType($id);
-		 
-		 /**
-		 * get SubComponents by MasterComponentId
-		 *
-	  	 * @param int $id id
-		 * 
-		 * @return ComponentEntity[]
-		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function getSubComponentbyComponentId($id);
-		 
-		 /**
-		 * get MasterComponentId by SubComponentId
-		 *
-	  	 * @param int $id id
-		 * 
-		 * @return ComponentEntity[]
-		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function getMasterComponentbyComponentId($id);
+		 public function insertComponentType($typeName, $typeImagePath);	 
 		 
 		 		 /**
 		 * insert SubComponent
@@ -574,7 +517,24 @@
 		  * @author Johannes Alt <altjohannes510@gmail.com>
 		  */
 		 public function getUserByUsername($userName);
+		  /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>	  
+		 */
+		 public function getComponentDevices();
 		 
+		   /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentsWithoutDevices();
+
 		 /**
 		  *  function to get user by email adress
 		  * 
