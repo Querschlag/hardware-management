@@ -332,11 +332,16 @@
 
 		/**
 		 * delete a component
+		 * 
+		 * @param integer $id The components component id
 		 *
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function rejectionComponent($id) {
+				
+			// component room change to to stock
+			// component note change
 			$this->_component[$id]->componentNote = "ausgemustert";
 		}
 		
