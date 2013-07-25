@@ -429,20 +429,6 @@
 		 */
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
-		 
-		 
-		 /**
-		 * delete ComponentAttribute
-		 * 		
-		 * @param int id		 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentAttribute($id, $IsForComponent);
-		 
 		  /**
 		 * select all ComponentTypes
 		 * 
