@@ -18,13 +18,14 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getRooms();
-		
+
 		/**
-		 *  function to get room
-		 * 
-		 *  @author Johannes Alt <altjohannes510@gmail.com>
+		 *  function to get room by id
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
-		public function getRoom($roomId);
+		public function getRoomByRoomId($id);
 		
 		/**
 		 *  function to insert room
@@ -213,18 +214,30 @@
 		 public function getUsers();
 		 
 		 /**
+		 * select UserById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UserEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getUserById($id);
+		 
+		 /**
 		 * insert user
 		 *
 		 * @param string $name 
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email	  
+		 * @param string $vorname	
+		 * @param string $nachname
 		 *
 		 * @return 1 - true
 		 *			2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertUser($name, $userGroupId, $password, $email);
+		 public function insertUser($name, $userGroupId, $vorname, $nachname, $password, $email);
 		 
 		 /**
 		 * update user
@@ -234,12 +247,14 @@
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email
+		 * @param string $vorname	
+		 * @param string $nachname
 		 * 
 		 * @return 1 - true
 		 *			2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 public function updateUser($id, $name, $userGroupId, $vorname, $nachname, $password, $email);
 		 
 		 /**
 		 * delete user
@@ -263,22 +278,22 @@
 		 public function checkUserPw($id, $password);
 		  
 		 /**
-		 * select all TransactionTypes
+		 * select all ComponentTransactions
 		 * 
-		 * @return TransactionTypesEntity[]
+		 * @return ComponentTransactionEntity[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypes();
+		 public function getComponentTransactions();
 
 		 /**
-		 * select TransactionTypeById
+		 * select ComponentTransactionById
 		 * 
 		 * @param int $id id
 		 *
 		 * @return TransactionType
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypeById($id);	
+		 public function getComponentTransactionById($id);	
 
          /**
 		 * select all Transaction
@@ -299,40 +314,44 @@
 		 public function getTransactionById($id);			 
 		 
          /**
-		 * insert Transaction
+		 * insert ComponentTransaction
 		 *
-		 * @param string $transactionDescription 
-		 * @param int $transactionTypeId	  
-		 * @param string $userId
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
 		 *
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
 		 
 		 /**
-		 * update Transaction
+		 * update ComponentTransaction
 		 *
 	  	 * @param int $id id
-		 * @param string $transactionDescription 
-		 * @param int $transactionTypeId	  
-		 * @param string $userId
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
 		 * 
 		 * @return 1 - true
 		 *		   2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment);
 		 
 		 /**
-		 * delete Transaction
+		 * delete ComponentTransaction
 		 * 
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function deleteTransaction($id);
+		 public function deleteComponentTransaction($id);
 		 
 		 /**
 		 * select all ValidValue
@@ -395,4 +414,171 @@
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id);
-		 }
+		 
+		 /**
+		 * insert ComponentAttribute
+		 *
+		 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 
+		 /**
+		 * update ComponentAttribute
+		 *
+		 * @param int $id
+	  	 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent);
+		 
+		  /**
+		 * select all ComponentTypes
+		 * 
+		 * @return ComponentTypeEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypes();
+
+		 /**
+		 * select ComponentTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypeById($id);			 
+		 
+         /**
+		 * insert ComponentType
+		 *
+		 * @param string $typeName 
+		 * @param string $typeImagePath	
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertComponentType($typeName, $typeImagePath);
+		 
+		 /**
+		 * update ComponentType
+		 *
+	  	 * @param int $id id
+		 * @param string $typeName 	  
+		 * @param string $typeImagePath
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id);
+		 
+		 /**
+		 * update ComponentType
+		 *
+	  	 * @param int $id id
+		 * @param string $typeName 	  
+		 * @param string $typeImagePath
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 
+		 /**
+		 * get SubComponents by MasterComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getSubComponentbyComponentId($id);
+		 
+		 /**
+		 * get MasterComponentId by SubComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMasterComponentbyComponentId($id);
+		 
+		 		 /**
+		 * insert SubComponent
+		 *
+	  	 * @param int $componentId
+		 * @param int $subComponentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertSubComponent($componentId, $subComponentId);
+		 
+		 /**
+		 * insert AttributeValue
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertAttributeValue($attributeId, $componentId, $value);
+		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponents();
+		 
+		 
+		 
+}
