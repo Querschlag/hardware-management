@@ -627,7 +627,7 @@
 						FROM benutzer
 						WHERE b_id = ".$id.";";
 						
-			$Data = mysql_query($select);
+			$Data = mysql_query($check);
 			if($Data["erg"] == "1")
 			{
 				return true;
