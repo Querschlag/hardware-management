@@ -566,6 +566,43 @@
 		 */
 		 public function getDistinctComponents();
 		 
+		 /**
+		  *  function to get user by user name
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByUsername($userName);
 		 
+		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByEmail($email);
 		 
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId);
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password);
 }
