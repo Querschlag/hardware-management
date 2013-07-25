@@ -430,5 +430,56 @@
 		 */
 		 public function deleteComponentAttribute($id, $IsForComponent);
 		 
+		  /**
+		 * select all ComponentTypes
+		 * 
+		 * @return ComponentTypeEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypes();
+
+		 /**
+		 * select ComponentTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypeById($id);			 
+		 
+         /**
+		 * insert ComponentType
+		 *
+		 * @param string $typeName 
+		 * @param string $typeImagePath	
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertComponentType($typeName, $typeImagePath);
+		 
+		 /**
+		 * update ComponentType
+		 *
+	  	 * @param int $id id
+		 * @param string $typeName 	  
+		 * @param string $typeImagePath
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id);
 		 
 }
