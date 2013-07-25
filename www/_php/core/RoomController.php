@@ -73,7 +73,7 @@
 			if(isset($roomId))
 			{
 				// get room from databse
-				$room = $this->_database->getRoom($roomId);
+				$room = $this->_database->getRoomByRoomId($roomId);
 				
 				// check room
 				if(isset($room))
