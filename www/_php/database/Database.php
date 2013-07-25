@@ -107,11 +107,31 @@
 		 * function to get components
 		 * 
 		 * @return components
-		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getComponents()
 		{
+			$entityArray = array();
 			
+			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new RoomEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdauer'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+								
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
 		}
 		
 		/**
@@ -127,11 +147,18 @@
 		 * @param integer $type The components type
 		 * 
 		 * @return void
-		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
 		{
-			
+			$insert = "INSERT INTO raeume
+						(lieferant_l_id, lieferant_r_id, k_name,
+						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
+						k_hersteller,komponentenarten_ka_id) 
+						VALUES(".$deliverer.", ".$room.", '".$name."',
+								".$date.", ".$warranty.", '".$note."',
+								'".$supplier."', ".$type.")";
+			return mysql_query($insert);
 		}
 				
 		/**
@@ -148,11 +175,23 @@
 		 * @param integer $type The components type
 		 *
 		 * @return void
-		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
 		{
-		
+			$update = "UPDATE komponente SET
+									lieferant_l_id= ".$deliverer.",
+									lieferant_r_id = ".$room.",
+									k_name = '".$name."',
+									k_einkaufsdatum = ".$date.",
+									k_gewaehrleistungsdauer= ".$warranty.",
+									k_Notiz = '".note."',
+									k_hersteller = '".$supplier."',
+									komponentenarten_ka_id = ".$type."
+						WHERE
+									k_id = ".$id.";";
+									
+			return mysql_query($update);
 		}
 		
 		/**
@@ -161,11 +200,15 @@
 		 * @param integer $id The components component id
 		 *
 		 * @return void
-		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
  		public function deleteComponent($id)
 		{
-			
+			$delete ="DELETE FROM 
+							komponente 
+						WHERE 
+							k_id = ".$id.";";
+			return mysql_query($delete);
 		}
 		
 		/**
