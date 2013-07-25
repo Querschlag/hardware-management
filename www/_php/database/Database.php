@@ -192,7 +192,7 @@
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
 								'".$supplier."', ".$type.", ".$isDevice.")";
-			return mysql_query($insert);
+			return mysql_query($insert) or die(mysql_error());
 		}
 				
 		/**

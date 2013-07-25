@@ -30,7 +30,7 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 			 */
-			public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type){}
+			public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
 			
 			/**
 			 *  function to get component id
@@ -93,7 +93,17 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentTypes(){}
+			public function getComponentTypes() 
+			{
+				return $_POST['btnSubmit'];
+			}
+			
+			/**
+			 * function to get component types 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentIsDevice(){}
 			
 			/**
 			 * function to set error
@@ -182,6 +192,8 @@
 		else if ($step == 2) 
 		{
 			
+			$controller->insertComponent();
+			
 			echo '
 			<!-- Device creation wizard - Step 2 -->
 			<form action="index.php?mod=storeDevice" method="post">
@@ -211,12 +223,12 @@
 		}
 		else
 		{
-	
+			//get devices id's
 			echo '
 			<!-- Device creation wizard - Step 1 -->
 			<form class="deviceSelection" action="index.php?mod=storeDevice" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/BluRayPlayer_Disc.png" /><p>Blu-ray Player</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Computer.png" /><p>Computer</p></div>
+				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Computer.png" value="12" /><p>Computer</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/HomeServer.png" /><p>Server</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/InkjetPrinter.png" /><p>Drucker</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Modem_Blue.png" /><p>Modem</p></div>
@@ -231,4 +243,5 @@
 		
 		}
 	?>
+</div>
 </div>
