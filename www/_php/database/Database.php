@@ -17,7 +17,10 @@
 	{
 		public function __construct() 
 		{
-			$verbindung = mysql_connect("localhost", "root", "");
+			if(!(mysql_connect("localhost", "root", "")))
+			{				
+				mysql_connect("localhost", "project", "hallo123");
+			}
 			mysql_select_db("itv_v1");
 					
 		}
@@ -1158,5 +1161,66 @@
 			
 			return $nameArray;
 		 }
+	 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent){}
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id){}
+		 
+		 /**
+		  *  function to get user by user name
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByUsername($userName) { }
+		 
+		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByEmail($email) { }
+		 
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId) { }
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password) { }
 	}
 ?>
