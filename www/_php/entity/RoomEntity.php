@@ -35,5 +35,10 @@
 		 * storage for the room note
 		 */
 		public $roomNote;
+		
+			/*
+		 * storage for the room note
+		 */
+		public $roomHasProblems;
 	}
 ?>

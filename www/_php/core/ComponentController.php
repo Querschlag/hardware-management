@@ -1,10 +1,12 @@
 <?php
 
-	// include room controller
-	require_once('../interface/IComponentController.php');
-
-	// include room entity
-	require_once('../entity/ComponentEntity.php');
+	// include component controller
+	if(file_exists('../interface/IComponentController.php')) require_once('../interface/IComponentController.php');
+	if(file_exists('../_php/interface/IComponentController.php')) require_once('../_php/interface/IComponentController.php');
+	
+	// include component entity
+	if(file_exists('../entity/ComponentEntity.php')) require_once('../entity/ComponentEntity.php');
+	if(file_exists('../_php/entity/ComponentEntity.php')) require_once('../_php/entity/ComponentEntity.php');
 	
 	/**
 	* Controller for Components
@@ -105,8 +107,17 @@
 			// check room number and room name
 			if($deliverer && $room && $name && $warranty && $buy && $supplier && $type)
 			{
-				// insert room
+				// insert component
 				$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+				
+				// insert component main or sub
+				// $this->_database->insertComponentComponent($aggregatId, $partId, $khkId);
+				
+				// insert component transaction
+				$this->_database->insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
+				
+				
+				
 			}
 			else 
 			{
@@ -201,6 +212,6 @@
 				// set error to frontend
 				// $this->_view->setError();
 			}
-		}	
+		}
 	}
 ?>

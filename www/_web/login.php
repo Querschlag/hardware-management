@@ -53,6 +53,10 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
+		<?php
+			
+		?>
+
         <div id="top-menu"></div>
 
 		<div id="header"></div>
