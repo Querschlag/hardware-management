@@ -1284,7 +1284,7 @@
 				$entity->componentHasProblems= $row['r_notiz'];
 				
 				$entityArray[] = $entity;
-				*/
+				
 			}
 			
 			$select  = "SELECT count(*) AS problemCount
@@ -1294,6 +1294,7 @@
 			$Data = mysql_query($select);
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+			*/
 		 }
 		 
 		   /**
