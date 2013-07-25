@@ -46,7 +46,14 @@
 				
 				$entityArray[] = $entity;
 			}
-			return {['problemCount':27, 'rooms':$entityArray]};
+			
+			$select  = "SELECT count(*) AS problemCount
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+			$Data = mysql_query($select);
+			
+			return {['problemCount':$Data["problemCount"], 'rooms':$entityArray]};
 	
 		}
 		
