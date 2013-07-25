@@ -536,17 +536,40 @@
 		 public function getMasterComponentbyComponentId($id);
 		 
 		 		 /**
-		 * get MasterComponentId by SubComponentId
+		 * insert SubComponent
 		 *
-	  	 * @param int $id id
+	  	 * @param int $componentId
+		 * @param int $subComponentId
 		 * 
-		 * @return ComponentEntity
+		 * @return 1 - true
+		 *		   2 - false
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function getMasterComponentbyComponentId($id);
+		 public function insertSubComponent($componentId, $subComponentId);
 		 
+		 /**
+		 * insert AttributeValue
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertAttributeValue($attributeId, $componentId, $value);
 		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponents();
 		 
 		 
 		 
