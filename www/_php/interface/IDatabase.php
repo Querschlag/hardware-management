@@ -401,7 +401,7 @@
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
 		 /**
 		 * update Transaction
@@ -416,14 +416,19 @@
 		 *		   2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
 		 /**
 		 * delete Transaction
-		 * 
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function deleteTransaction($id);
+		 public function deleteComponentAttribute($id, $IsForComponent);
+		 
+		 
 }
