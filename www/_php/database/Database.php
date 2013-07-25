@@ -972,5 +972,166 @@
 						
 			return $entity;
 		 }		 
+		 
+		 /**
+		 * insert ComponentAttribute
+		 *
+		 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 {
+			 $insert ="INSERT INTO komponentenattribute (kat_name)
+								VALUES(".$componentAttributeName.");";
+			 mysql_query($insert);
+			 
+			 $select = "SELECT MAX(kat_id) AS ID FROM komponentenattribute;";
+			 $Data = mysql_query($select);
+								
+			if($IsForComponent)
+			{
+				$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
+								VALUES(".$componentAttributeUncertaintId.", ".$Data["ID"].", '".$componentAttributeComponentValue."');";
+				mysql_query($insert);
+			}
+			else
+			{
+				$insert ="INSERT INTO kart_kattribut (komponentenarten_ka_id, komponentenattribute_kat_id)
+								VALUES(".$componentAttributeUncertaintId.", ".$Data["ID"].");";
+			 mysql_query($insert);
+			}
+										
+			return mysql_query($insert);
+		 }
+		 /**
+		 * update ComponentAttribute
+		 *
+		 * @param int $id
+	  	 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent);
+		 
+		  /**
+		 * select all ComponentTypes
+		 * 
+		 * @return ComponentTypeEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypes();
+
+		 /**
+		 * select ComponentTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypeById($id);			 
+		 
+         /**
+		 * insert ComponentType
+		 *
+		 * @param string $typeName 
+		 * @param string $typeImagePath	
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertComponentType($typeName, $typeImagePath);
+		 
+		 /**
+		 * update ComponentType
+		 *
+	  	 * @param int $id id
+		 * @param string $typeName 	  
+		 * @param string $typeImagePath
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id);
+		 
+		 /**
+		 * update ComponentType
+		 *
+	  	 * @param int $id id
+		 * @param string $typeName 	  
+		 * @param string $typeImagePath
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 
+		 /**
+		 * get SubComponents by MasterComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getSubComponentbyComponentId($id);
+		 
+		 /**
+		 * get MasterComponentId by SubComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMasterComponentbyComponentId($id);
+		 
+		 		 /**
+		 * get MasterComponentId by SubComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMasterComponentbyComponentId($id);
 	}
 ?>
