@@ -1,10 +1,12 @@
 <?php
 	
 	// include room controller
-	require_once('../_php/interface/IRoomController.php');
-
+	if(file_exists('../interface/IRoomController.php')) require_once('../interface/IRoomController.php');
+	if(file_exists('../_php/interface/IRoomController.php')) require_once('../_php/interface/IRoomController.php');
+	
 	// include room entity
-	require_once('../_php/entity/RoomEntity.php');
+	if(file_exists('../entity/RoomEntity.php')) require_once('../entity/RoomEntity.php');
+	if(file_exists('../_php/entity/RoomEntity.php')) require_once('../_php/entity/RoomEntity.php');
 
 	/**
 	* Controller for Rooms
@@ -29,6 +31,11 @@
 		 */
 		private $_database;
 		
+		/**
+		 *  storage for the error count
+		 */
+		private $_errorCount = 0;
+		
 		/** 
 		 * default constructor
 		 */
@@ -39,6 +46,49 @@
 
 			// store database
 			$this->_database = $database;
+		}
+		
+		/**
+		 *  function to get count of errors
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getErrorCount()
+		{
+			// return error count
+			return $this->_errorCount;
+		}
+		
+		/** 
+		 * Select a room and print the room on UI
+		 * 
+		 *  @author Johannes Alt <altjohannes@gmail.com>
+		 */
+		public function selectRoom()
+		{
+			// get room id
+			$roomId = $this->_view->getRoomId();
+			
+			// check room id
+			if(isset($roomId))
+			{
+				// get room from databse
+				$room = $this->_database->getRoom($roomId);
+				
+				// check room
+				if(isset($room))
+				{
+					// display floor
+					$this->_view->displayFloor($room->roomFloor);
+					
+					// display room
+					$this->_view->displayRoom(
+						$room->roomId, 
+						$room->roomNumber,
+						$room->roomName, 
+						$room->roomNote);
+				}
+			}	
 		}
 		
 		/**
@@ -78,7 +128,7 @@
 						$room->roomNote);	
 				}
 				
-			// display room end
+				// display room end
 				$this->_view->displayRoomEnd();
 			}
 		}
@@ -93,27 +143,40 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-				// get floor number
+			// get floor number
 			$floor = $this->_view->getFloorNumber();
 			
-				// get room name from frontend
-				$name = $this->_view->getRoomName();
+			// get room name from frontend
+			$name = $this->_view->getRoomName();
 				
-				// get room note from frontend
-				$note = $this->_view->getRoomNote();
+			// get room note from frontend
+			$note = $this->_view->getRoomNote();
+									
+			// check room number and room name and floor number
+			if(isset($number) && strlen($number) > 0 && !empty($name) && isset($floor) && strlen($floor) > 0)
+			{
+				// insert room
+				$result = $this->_database->insertRoom($floor, $number, $name, $note);
 				
-				// check room number and room name
-				if(isset($number) && !empty($name))
+				// check result
+				if($result == FALSE)
 				{
-					// insert room
-					$result = $this->_database->insertRoom($floor, $number, $name, $note);
-				}
-				else 
-				{
-					// set error to frontend
+					// set error
 					$this->_view->setError();
+					
+					// increase error count
+					$this->_errorCount++;
 				}
 			}
+			else 
+			{
+				// set error to frontend
+				$this->_view->setRequiredDataError();
+				
+				// increase error count
+				$this->_errorCount++;
+			}
+		}
 		
 		/**
 		 *  function to update room
@@ -128,27 +191,40 @@
 			// get room number from frontend
 			$number = $this->_view->getRoomNumber();
 			
-				// get floor number
+			// get floor number
 			$floor = $this->_view->getFloorNumber();
 			
-				// get room name from frontend
-				$name = $this->_view->getRoomName();
+			// get room name from frontend
+			$name = $this->_view->getRoomName();
 				
-				// get room note from frontend
-				$note = $this->_view->getRoomNote();
+			// get room note from frontend
+			$note = $this->_view->getRoomNote();
 				
-				// check room id, room number and romm name
-				if(isset($id) && !empty($name))
+			// check room id, room number and romm name
+			if(isset($number) && strlen($number) > 0  && !empty($name) && isset($floor) && strlen($floor) > 0)
+			{
+				// update room
+				$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
+					
+				// check result
+				if($result == FALSE)
 				{
-					// update room
-					$result = $this->_database->updateRoom($id, $floor, $number, $name, $note);
-				}
-				else 
-				{
-					// set error to frontend
+					// set error
 					$this->_view->setError();
+					
+					// increase error count
+					$this->_errorCount++;
 				}
 			}
+			else 
+			{
+				// set error to frontend
+				$this->_view->setRequiredDataError();
+				
+				// increase error count
+				$this->_errorCount++;
+			}
+		}
 		
 		/**
 		 * function to delete room
@@ -165,11 +241,24 @@
 			{
 				// delete room
 				$result = $this->_database->deleteRoom($id);
+				
+				// check result
+				if($result == FALSE)
+				{
+					// set error
+					$this->_view->setError();
+					
+					// increase error count
+					$this->_errorCount++;
+				}
 			}
 			else 
 			{
 				// set error to frontend
 				$this->_view->setError();
+				
+				// increase error count
+				$this->_errorCount++;
 			}	
 		}
 	}

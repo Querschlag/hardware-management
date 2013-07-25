@@ -16,6 +16,30 @@
 	{
 		static function moduleForName($moduleName)
 		{
+			if ($moduleName == 'order')
+				return 'order/order.php';
+			if ($moduleName == 'modifyOrder')
+				return 'order/modify_order.php';
+			if ($moduleName == 'confirmOrder')
+				return 'order/confirm_order.php';
+			if ($moduleName == 'reorderOrder')
+				return 'order/reorder_order.php';
+			if ($moduleName == 'placeOrder')
+				return 'order/place_order.php';
+			if ($moduleName == 'order_device')
+				return 'order/order_device.php';
+			if ($moduleName == 'order_component')
+				return 'order/order_component.php';
+			
+			if ($moduleName == 'stock')
+				return 'stock/stock.php';
+			if ($moduleName == 'store')
+				return 'stock/store.php';
+			if ($moduleName == 'storeDevice')
+				return 'stock/store_device.php';
+			if ($moduleName == 'storeComponent')
+				return 'stock/store_component.php';
+			
 			if ($moduleName == 'rooms')
 				return 'management/rooms.php';
 			if ($moduleName == 'room')
@@ -24,19 +48,30 @@
 				return 'management/device.php';
 			if ($moduleName == 'component')
 				return 'management/component.php';
-			if ($moduleName == 'create_room')
+			if ($moduleName == 'createRoom')
 				return 'management/create_room.php';
-			if ($moduleName == 'create_device')
-				return 'management/create_device.php';
-			if ($moduleName == 'create_component')
-				return 'management/create_component.php';
+			if ($moduleName == 'addDevice')
+				return 'management/add_device.php';
+			if ($moduleName == 'addComponent')
+				return 'management/add_component.php';
+			if ($moduleName == 'change_room')
+				return 'management/create_room.php';			
+			if ($moduleName == 'delete_room')
+				return 'management/delete_room.php';
+				
+			if ($moduleName == 'user')
+				return 'user/user.php';
+			if ($moduleName == 'editUser')
+				return 'user/edit_user.php';
+			if ($moduleName == 'createUser')
+				return 'user/create_user.php';
 
 			
+			// default module
 			$userGroup = SESSION('userGroup');
 			if ($userGroup != null)
 			{
-				if ($userGroup == 1)
-					return 'management/rooms.php';
+				return 'launch_menu.php';
 			} else {
 				return null;
 			}

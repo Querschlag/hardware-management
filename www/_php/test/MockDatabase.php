@@ -1,12 +1,15 @@
 <?php
 	// include idatabase interface
-	require_once('../interface/IDatabase.php');
-	
+	if(file_exists('../interface/IDatabase.php')) require_once('../interface/IDatabase.php');
+	if(file_exists('../_php/interface/IDatabase.php')) require_once('../_php/interface/IDatabase.php');
+		
 	// include room entity
-	require_once('../entity/RoomEntity.php');
-	
+	if(file_exists('../entity/RoomEntity.php')) require_once('../entity/RoomEntity.php');
+	if(file_exists('../_php/entity/RoomEntity.php')) require_once('../_php/entity/RoomEntity.php');
+		
 	// include room entity
-	require_once('../entity/ComponentEntity.php');
+	if(file_exists('../entity/ComponentEntity.php')) require_once('../entity/ComponentEntity.php');
+	if(file_exists('../_php/entity/ComponentEntity.php')) require_once('../_php/entity/ComponentEntity.php');
 
 	/**
 	* Mock object room
@@ -16,6 +19,7 @@
 	* @category 
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
+	* @author Thomas Michl <thomas.michl1988@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class MockDatabase implements IDatabase
@@ -90,7 +94,7 @@
 			// set room data
 			$entity->roomId = 1;
 			$entity->roomFloor = 2;
-			$entity->roomNumber = 14;
+			$entity->roomNumber = '214';
 			$entity->roomName = 'Medien IT-Raum';
 			$entity->roomNote = 'IT Raum der Mediendesigner';
 
@@ -103,7 +107,7 @@
 			// set room data
 			$entity->roomId = 2;
 			$entity->roomFloor = 1;
-			$entity->roomNumber = 2;
+			$entity->roomNumber = '102';
 			$entity->roomName = 'Unterrichtsraum';
 
 			// add entity to array
@@ -115,7 +119,7 @@
 			// set room data
 			$entity->roomId = 3;
 			$entity->roomFloor = 0;
-			$entity->roomNumber = 1;
+			$entity->roomNumber = '001';
 			$entity->roomName = 'Labor';
 			$entity->roomNote = '';
 
@@ -128,13 +132,43 @@
 			// set room data
 			$entity->roomId = 4;
 			$entity->roomFloor = 3;
-			$entity->roomNumber = 0;
+			$entity->roomNumber = '001';
 
 			// add entity to array
 			$this->_rooms[] = $entity;
 			
 			// return entites
 			return $this->_rooms;
+		}
+		
+		/**
+		 *  function to get room
+		 * 
+		 *  @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoom($roomId)
+		{
+			// storage for the rooms
+			$retVal = NULL;
+			
+			// get rooms
+			$this->getRooms();
+			
+			// iteration over all rooms
+			foreach($this->_rooms as $room)
+			{
+				// check id of the value
+				if($room->roomId == $roomId)
+				{	
+					// set room
+					$retVal = $room;
+				
+					// break
+					break;
+				}
+			}
+			
+			return $retVal;
 		}
 		
 		/**
@@ -173,11 +207,6 @@
 					break;
 				}
 			}
-			// check room
-			if(isset($room))
-			{
-				
-			}
 		}
 		
 		/**
@@ -185,7 +214,22 @@
 		 * 
 		 * @param int $id The Room id.
 		 */
-		public function deleteRoom($id){}
+		public function deleteRoom($id)
+		{
+			// iteration over all rooms
+			foreach($this->_rooms as $key => $room)
+			{
+				// check id of the value
+				if($room->roomId == $id)
+				{	
+					// set room
+					$this->_rooms[$key] = NULL;
+				
+					// break
+					break;
+				}
+			}			
+		}
 		
 		/**
 		 * function to get components
@@ -230,7 +274,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponents($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 		{
 			// store data in room entity
 			$entity = new ComponentEntity();
@@ -239,13 +283,13 @@
 			$entity->componentDeliverer = $deliverer;
 			
 			// set number
-			$entity->componentRoom = $number;
+			$entity->componentRoom = $room;
 			
 			// set name
 			$entity->componentName = $name;
 			
 			// set note
-			$entity->componentDate = $buy;
+			$entity->componentBuy = $buy;
 			
 			// set name
 			$entity->componentWarrenty = $warranty;
@@ -338,5 +382,42 @@
 		  */
 		 public function deleteDeliverer($id){}
 		
+		/**
+		 * select all Usergroups
+		 * 
+		 * @return UsergroupEntity[]
+		 */
+		 public function getUsergroups(){}
+		 
+		 /**
+		  * insert usergroup
+		  *
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function insertUsergroup($name, $permission){}
+		 
+		 /**
+		  * update usergroup
+		  *
+	  	  * @param int $id id
+		  * @param string $name usergroup name 
+		  * @param int $permission number which displayed the Rights of the usergroup 		  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function updateUsergroup($id, $name, $permission){}
+		 
+		 /**
+		  * delete usergroup
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  */
+		 public function deleteUsergroup($id) {}
 	}
 ?>

@@ -12,17 +12,6 @@
 	*/
 	class UserController implements IUserController
 	{
-		/**
-		 *  function to hash password
-		 * 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
-		 */
-		private function hashPassword($password)
-		{
-			// return hashed password
-			return hash('md5', $password);
-		}
-		
 		/** 
 		 *  function to generate password
 		 */
@@ -60,10 +49,7 @@
 			
 			// get password
 			$password = $this->_view->getPassword();
-			
-			// hash password
-			$password = $this->hashPassword($password);
-			
+						
 			// get user with username from db
 			$user = $this->_database->getUserByUsername($username);
 		}				
@@ -127,7 +113,7 @@
 				$confirmLink = sprintf('%s?id=%d,', $_SERVER['PHP_SELF'], $this->_database->getNextUserId());
 				
 				// create password
-				$password = $this->hashPassword($this->generatePassword());
+				$password = $this->generatePassword();
 				
 				// get lost password message
 				$message = sprintf($this->_view->getMessage(), $username, $confirmLink);
@@ -196,7 +182,7 @@
 					preg_match("/[0-9]/", $password1))
 				{
 					// create new user
-					$result = $this->_database->insertUser($username, $this->hashPassword($password1), $groupId, TRUE);
+					$result = $this->_database->insertUser($username, $password1, $groupId, TRUE);
 					
 					// check result
 					if($result == FALSE)
@@ -250,7 +236,7 @@
 					preg_match("/[0-9]/", $password1))
 				{
 					// update password
-					$result = $this->_database->updateUserPassword($userId, $this->hashPassword($password1));
+					$result = $this->_database->updateUserPassword($userId, $password1);
 					
 					// check result
 					if($result == FALSE)

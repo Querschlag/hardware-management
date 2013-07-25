@@ -126,7 +126,7 @@
 				/**
 				 *  function to display room
 				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com> 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
 				public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 				{

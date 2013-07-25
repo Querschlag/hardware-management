@@ -19,6 +19,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/content.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -39,19 +42,20 @@
         ?>
 
 		<div id="header">
-			<div id="top_nav">
-				<?php
-					//Include top navigation
-					include('nav.html');
-				?>
-			</div>
 			<div id="search_bar">
 				<form action="index.php" method="get">
 					<input name="search" ="text" />
 					<input name="btnSearch" type="submit" value="Suchen" />
 				</form>
 			</div>
-			<div class="clear"></div>
+			<div class="clearfix"></div>
+			<div id="top_nav">
+				<h1><a href="./">Hardware Verwaltung - B3 F&uuml;rth</a></h1>
+				<?php
+					//Include top navigation
+					include('nav.html');
+				?>
+			</div>
 		</div>
 		<div id="content">
 			<?php
@@ -64,6 +68,8 @@
 					include($module);
 			?>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">B3ProjectGroup2</a>
+		</div>
     </body>
 </html>
