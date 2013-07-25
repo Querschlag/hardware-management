@@ -185,7 +185,7 @@
 		 */
 		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
-			$insert = "INSERT INTO raeume
+			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
 						k_hersteller,komponentenarten_ka_id, k_device) 
@@ -1090,7 +1090,21 @@
 		 */
 		 public function getComponentTypes()
 		 {
-		 	
+			$arrayEntity = array();
+		 	$select = "SELECT *
+					   FROM komponentenarten;";
+					   
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentTypeEntity();
+				$entity->typeId = $Data['ka_id'];
+				$entity->typeName = $Data['ka_komponentenart'];
+				$entity->typeImagePath = $Data['ka_link'];
+				$arrayEntity[] = $entity;
+			}
+						
+			return $arrayEntity;
 		 }
 
 		 /**
@@ -1186,27 +1200,6 @@
 			
 			return $nameArray;
 		 }
-	 
-		 /**
-		 * delete ComponentAttribute
-		 * 		
-		 * @param int id		 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentAttribute($id, $IsForComponent){}
-		 
-		 /**
-		 * delete Transaction
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentType($id){}
 		 
 		 /**
 		  *  function to get user by user name
@@ -1215,7 +1208,25 @@
 		  * 
 		  * @author Johannes Alt <altjohannes510@gmail.com>
 		  */
-		 public function getUserByUsername($userName) { }
+		 public function getUserByUsername($userName) 
+		 { 
+			$select = "SELECT * FROM benutzer
+						WHERE
+							b_name = ".$userName.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entity = new UserEntity();
+			$entity->userId = $Data['b_id'];
+			$entity->userGroupId = $Data['bg_id'];
+			$entity->userPw = $Data['b_pw'];
+			$entity->userName = $Data['b_name'];
+			$entity->userFirstName = $Data['b_firstname'];
+			$entity->userLastName = $Data['b_lastname'];
+			$entity->userEmail = $Data['b_email'];
+						
+			return $entity;
+		 }
 		 /** 
 		  *  function to update user role
 		  * 
@@ -1245,7 +1256,45 @@
 		 *
          * @author Leon Geim<leon.geim@gmail.com>	  
 		 */
-		 public function getComponentDevices(){}
+		 public function getComponentDevices()
+		 {
+		 /*
+			$entityArray = array();
+			
+						FROM komponente kom
+			$select = "SELECT *,  (Select v_id, Max(k_id) 
+									FROM kom_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									GROUP BY v_id)
+						WHERE k_device = 1;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['r_id'];
+				$entity->componentDeliverer = $row['r_nr'];
+				$entity->componentRoom = $row['r_etage'];
+				$entity->componentName = $row['r_bezeichnung'];
+				$entity->componentBuy= $row['r_notiz'];
+				$entity->componentWarranty = $row['r_etage'];
+				$entity->componentNote = $row['r_bezeichnung'];
+				$entity->componentSupplier= $row['r_notiz'];
+				$entity->componentType = $row['r_etage'];
+				$entity->componentIsDevice = $row['r_bezeichnung'];
+				$entity->componentHasProblems= $row['r_notiz'];
+				
+				$entityArray[] = $entity;
+				*/
+			}
+			
+			$select  = "SELECT count(*) AS problemCount
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+			$Data = mysql_query($select);
+			
+			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+		 }
 		 
 		   /**
 		 * get DistinctComponents
