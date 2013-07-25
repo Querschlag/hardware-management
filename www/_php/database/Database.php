@@ -359,7 +359,7 @@
 		 * @return UsergroupEntity
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getUsergroupBYId($id);
+		 public function getUsergroupBYId($id)
 		 {			
 			$select = "SELECT * 
 					   FROM 
@@ -384,7 +384,7 @@
 		 * @return UserEntity[]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getUsers();
+		 public function getUsers()
 		 {
 			$entityArray = array();
 			
@@ -416,7 +416,7 @@
 		  *			2 - false
 		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function insertUser($name, $userGroupId, $password, $email);
+		 public function insertUser($name, $userGroupId, $password, $email)
 		 {
 			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_email)
 								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."','".$email."');";
@@ -436,14 +436,13 @@
 		  *			2 - false
           * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 public function updateUser($id, $name, $userGroupId, $password, $email)
 		 {
 			 $update = "UPDATE benutzer 
 						   SET bg_id = ".$userGroupId.",
 							   b_pw = PASSWORD('".$password."'),
 							   b_name = '".$name."',
-							   b_email = '".$email."',
-							   
+							   b_email = '".$email."'							   
 							WHERE
 								b_id = ".$id.";";
 		 
@@ -455,7 +454,7 @@
 		  *			2 - false
 		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function deleteUser($id);
+		 public function deleteUser($id)
 		 {
 			$delete ="DELETE FROM 
 							benutzer 
@@ -472,7 +471,7 @@
 		  *			false(password incorrect)
 		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		  public function checkUserPw($id, $password);
+		  public function checkUserPw($id, $password)
 		 {
 			$check = "SELECT 
 							Case When b_pw = PASSWORD('".$password."') then true else false END As Erg
@@ -490,6 +489,380 @@
 			}
 			
 		 }
+		 
+		 /**
+		 * select all TransactionTypes
+		 * 
+		 * @return TransactionTypesEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getTransactionTypes()
+		 {
+			$entityArray = array();
+			
+			$select = "SELECT 	*
+						FROM	vorgangsartenstatus
+						ORDER BY vs_id ASC;";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new TransactionTypeEntity();
+				$entity->transactionTypeId = $row['vs_id'];
+				$entity->transactionTypeName = $row['vs_bezeichnung'];
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+
+		 /**
+		 * select TransactionTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getTransactionTypeById($id)	
+		{
+			$select = "SELECT * FROM vorgangsartenstatus WHERE vs_id = ".$id.";";
+			
+			$Data = mysql_query($select);
+			
+			$entity = new TransactionTypeEntity();
+			$entity->transactionTypeId = $Data['vs_id'];
+			$entity->transactionTypeName = $Data['vs_bezeichnung'];
+									
+			return $entity;
+		}
+         /**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getTransactions()
+		 {
+			$entityArray = array();
+			
+			$select = "SELECT 	*
+						FROM	vorgangsarten
+						ORDER BY v_id ASC;";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new TransactionEntity();
+				$entity->transactionId = $row['v_id'];
+				$entity->transactionDescription = $row['v_bezeichnung'];
+				$entity->transactionTypeId = $row['vs_id']		
+				$entity->userId = $row['b_id']		
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getTransactionById($id)			 
+		 {
+			$select = "SELECT 	*
+						FROM	vorgangsarten
+						WHERE v_id = ".$id.";";
+						
+			$Data = mysql_query($select);
+			
+			$entity = new TransactionEntity();
+			$entity->transactionId = $Data['v_id'];
+			$entity->transactionDescription = $Data['v_bezeichnung'];
+			$entity->transactionTypeId = $Data['vs_id']		
+			$entity->userId = $Data['b_id']		
+						
+			return $entity;
+		 }
+		 
+         /**
+		 * insert Transaction
+		 *
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId)
+		 {
+			 $insert ="INSERT INTO vorgangsarten (v_bezeichnung, vs_id, b_id)
+								VALUES(".$transactionDescription.",".$transactionTypeId.",".$userId.");";
+										
+			return mysql_query($insert);
+		 }
+		 /**
+		 * update Transaction
+		 *
+	  	 * @param int $id id
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Leon Geim<leon.geim@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId)
+		 {
+			 $update = "UPDATE vorgangsarten 
+						   SET 
+								v_bezeichnung = ".$transactionDescription.",
+								vs_id = ".$transactionTypeId.",
+								b_id = ".$userId."							   
+							WHERE
+								v_id = ".$id.";";
+		 }
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function deleteTransaction($id)
+		 {
+			$delete ="DELETE FROM 
+							vorgangsarten 
+						WHERE 
+							v_id = ".$id.";";
+			return mysql_query($delete);
+		 }
+		 
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getValidValues()
+		 {
+			$entityArray = array();
+			
+			$select = "SELECT 	*
+						FROM	zulaessige_werte
+						ORDER BY zw_id ASC;";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ValidValueEntity();
+				$entity->validValueId = $row['zw_id'];
+				$entity->validValueValue = $row['zw_wert'];
+					
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ValidValueEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getValidValueEntityById($id)	
+		 {
+			$select = "SELECT 	*
+						FROM	zulaessige_werte
+						WHERE zw_id = ".$id.";";
+						
+			$Data = mysql_query($select);
+			$entity = new ValidValueEntity();
+			$entity->validValueId = $Data['zw_id'];
+			$entity->validValueValue = $Data['zw_wert'];
+								
+			return $entity;
+		 }
+		 /**
+		 * select all ComponentAttributeEntitysFromComponentType
+		 *
+		 * componentAttributeComponentValue = NULL;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponentType()
+		 {
+			$entityArray = array();
+		 
+			$select = "SELECT kat.kat_id, kat.kat_name, ka.ka_id
+					   FROM komponentenarten ka
+					   INNER JOIN kart_kattribut kar ON kar.komponentenarten_ka_id = ka.ka_id
+					   INNER JOIN komponentenattribute kat ON kat.kat_id = kar.komponentenattribute_kat_id";
+					   
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentAttributeEntity();
+				$entity->componentAttributeId = $row['kat_id'];
+				$entity->componentAttributeName = $row['kat_name'];
+				$entity->componentAttributeIsFromComponent = false;
+				$entity->componentAttributeUncertaintId = $row['ka_id'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+					   
+					   
+		 }
+		 
+		 /**
+		 * select all ComponentAttributeFromComponent
+		 *
+		 * componentAttributeComponentValue = value;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponent()
+		 {
+			$entityArray = array();
+		 
+			$select = "SELECT kat.kat_id, kat.kat_name, kom.k_id, koat.khkat_wert
+						FROM komponente kom
+						INNER JOIN komponente_kattribut koat ON koat.komponenten_k_id = kom.k_id
+						INNER JOIN komponentenattribut kat ON kat.kat_id = koat.komponentenattribute_kat_id";
+					   
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentAttributeEntity();
+				$entity->componentAttributeId = $row['kat_id'];
+				$entity->componentAttributeName = $row['kat_name'];
+				$entity->componentAttributeIsFromComponent = true;
+				$entity->componentAttributeUncertaintId = $row['k_id'];
+				$entity->componentAttributeComponentValue = $row['khkat_wert'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+		 
+		 
+		  /**
+		 * select ComponentAttributesFromComponentTypeByComponentId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentId($id)
+		 {
+			$select = "SELECT 
+							kom.k_id, koat.khkat_wert, kat.kat_id, kat.kat_name
+						FROM komponente kom
+						INNER JOIN komponentenarten kar ON kom.komponentenarten_ka_id = kar.ka_id
+						INNER JOIN kart_kattribut kart ON kart.komponentenarten_ka_id = kar.ka_id
+						INNER JOIN komponentenattribute kat ON kat.kat_id = kart.komponentenattribute_kat_id
+						INNER JOIN komponente_kattribut koat ON koat.komponentenattribute_kat_id = kat.kat_id AND
+																koat.komponenten_k_id = kom.k_id
+						WHERE
+							kom.k_id = ".$id.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entity = new ComponentAttributeEntity();
+			$entity->componentAttributeId = $Data['kat_id'];
+			$entity->componentAttributeName = $Data['kat_name'];
+			$entity->componentAttributeIsFromComponent = true;
+			$entity->componentAttributeUncertaintId = $Data['k_id'];
+			$entity->componentAttributeComponentValue = $Data['khkat_wert'];
+						
+			return $entity;
+		 }
+		 
+		  /**
+		 * select ComponentAttributeFromComponentTypeByComponentTypeId
+		 *
+		 * componentAttributeComponentValue = Null;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id)
+		 {
+			$select = "kat.kat_id, kat.kat_name, ka.ka_id
+					   FROM komponentenarten ka
+					   INNER JOIN kart_kattribut kar ON kar.komponentenarten_ka_id = ka.ka_id
+					   INNER JOIN komponentenattribute kat ON kat.kat_id = kar.komponentenattribute_kat_id
+						WHERE
+							ka.ka_id = ".$id.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entity = new ComponentAttributeEntity();
+			$entity->componentAttributeId = $Data['kat_id'];
+			$entity->componentAttributeName = $Data['kat_name'];
+			$entity->componentAttributeIsFromComponent = true;
+			$entity->componentAttributeUncertaintId = $Data['ka_id'];
+			$entity->componentAttributeComponentValue = null;
+						
+			return $entity;
+		 }
+		 /**
+		 * insert ComponentAttribute
+		 *
+		 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * update Transaction
+		 *
+		 * @param int $id
+	  	 * @param string $componentAttributeName 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 * @param int $componentAttributeUncertaintId	  
+		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Leon Geim<leon.geim@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function deleteTransaction($id);
 		 
 	}
 ?>
