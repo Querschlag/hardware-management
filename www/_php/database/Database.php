@@ -32,7 +32,7 @@
 		{   
 			$entityArray = array();
 			
-			$select = "Select * from raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -177,7 +177,7 @@
 		 {
 		 	$entityArray = array();
 			
-			$select = "Select * from lieferant order by l_id ASC;";
+			$select = "SELECT * FROM lieferant order by l_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -283,7 +283,7 @@
 		 {
 			$entityArray = array();
 			
-			$select = "Select * from benutzergruppe order by bg_id ASC;";
+			$select = "SELECT * FROM benutzergruppe order by bg_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -351,6 +351,33 @@
 			return mysql_query($delete);
 		 }
 		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getUsergroupBYId($id);
+		 {			
+			$select = "SELECT * 
+					   FROM 
+							benutzergruppe 
+						WHERE 
+							bg_id = ".$id." 
+						ORDER BY bg_id ASC;";
+			
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data)
+			
+			$entity = new UserGroupEntity();
+			$entity->userGroupId = $row['bg_id'];
+			$entity->userGroupName = $row['bg_name'];
+			$entity->userGroupPermisson = $row['bg_rechte']				
+						
+			return $entity;
+		 }
 		 /**
 		 * select all Users
 		 * 
@@ -361,7 +388,7 @@
 		 {
 			$entityArray = array();
 			
-			$select = "Select * from benutzer order by b_id ASC;";
+			$select = "SELECT * FROM benutzer order by b_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -447,7 +474,7 @@
 		  */
 		  public function checkUserPw($id, $password);
 		 {
-			$check = "Select 
+			$check = "SELECT 
 							Case When b_pw = PASSWORD('".$password."') then true else false END As Erg
 						FROM benutzer
 						WHERE b_id = ".$id.";";
