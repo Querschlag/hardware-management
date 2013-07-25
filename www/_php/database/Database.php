@@ -1258,30 +1258,32 @@
 		 */
 		 public function getComponentDevices()
 		 {
-		 /*
+		 
 			$entityArray = array();
 			
 						FROM komponente kom
-			$select = "SELECT *,  (Select v_id, Max(k_id) 
-									FROM kom_vorgang kova 
+			$select = "SSELECT kom.*,  CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
 									WHERE kova.k_id = kom.k_id
-									GROUP BY v_id)
-						WHERE k_device = 1;";
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom
+						WHERE kom.k_device = 1;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
 				$entity = new ComponentEntity();
-				$entity->componentId = $row['r_id'];
-				$entity->componentDeliverer = $row['r_nr'];
-				$entity->componentRoom = $row['r_etage'];
-				$entity->componentName = $row['r_bezeichnung'];
-				$entity->componentBuy= $row['r_notiz'];
-				$entity->componentWarranty = $row['r_etage'];
-				$entity->componentNote = $row['r_bezeichnung'];
-				$entity->componentSupplier= $row['r_notiz'];
-				$entity->componentType = $row['r_etage'];
-				$entity->componentIsDevice = $row['r_bezeichnung'];
-				$entity->componentHasProblems= $row['r_notiz'];
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier= $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems= $row['v_id'];
 				
 				$entityArray[] = $entity;
 				
@@ -1294,7 +1296,7 @@
 			$Data = mysql_query($select);
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
-			*/
+			
 		 }
 		 
 		   /**
