@@ -25,4 +25,5 @@
 		 *  storage for the deliverer street
 		 */
 		public $userGroupPermisson;
+	}
 ?>

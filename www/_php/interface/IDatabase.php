@@ -129,7 +129,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * update deliverer
@@ -147,7 +147,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email);
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
 		 /**
 		  * delete deliverer
@@ -194,4 +194,205 @@
 		  *			2 - false
 		  */
 		 public function deleteUsergroup($id);
-}
+		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 */
+		 public function getUsergroupById($id);
+		 
+		 /**
+		 * select all Users
+		 * 
+		 * @return UserEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getUsers();
+		 
+		 /**
+		 * insert user
+		 *
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email	  
+		 *
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertUser($name, $userGroupId, $password, $email);
+		 
+		 /**
+		 * update user
+		 *
+	  	 * @param int $id id
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 
+		 /**
+		 * delete user
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteUser($id);
+		 
+		 /**
+		 * check if password for user is correct
+		 * 
+		 * @param int $id id
+		 * @param string $password password(blank)
+		 *
+		 * @return 1 - true (password correct)
+		 *			2 - false(password incorrect)
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function checkUserPw($id, $password);
+		  
+		 /**
+		 * select all TransactionTypes
+		 * 
+		 * @return TransactionTypesEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypes();
+
+		 /**
+		 * select TransactionTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypeById($id);	
+
+         /**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactions();
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionById($id);			 
+		 
+         /**
+		 * insert Transaction
+		 *
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * update Transaction
+		 *
+	  	 * @param int $id id
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteTransaction($id);
+		 
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValues();
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ValidValueEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValueEntityById($id);	
+		 
+		 /**
+		 * select all ComponentAttributeEntitysFromComponentType
+		 *
+		 * componentAttributeComponentValue = NULL;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponentType();
+		 
+		 /**
+		 * select all ComponentAttributeFromComponent
+		 *
+		 * componentAttributeComponentValue = value;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponent();
+		 
+		  /**
+		 * select ComponentAttributesFromComponentTypeByComponentId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentId($id);
+		 
+		  /**
+		 * select ComponentAttributeFromComponentTypeByComponentTypeId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id);
+		 }

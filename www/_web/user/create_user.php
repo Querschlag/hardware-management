@@ -10,7 +10,7 @@
 	<h2>Benutzer anlegen</h2>
 	<form action="index.php?mod=user" method="post">
 		<p>Benutzername</p><input name="name" type="text"/>
-		<p>Passwort</p><input name="name" type="password"/>
+		<p>Email</p><input name="email" type="email"/>
 		<p>Gruppe</p>
 		<select name="usergroup">
 			<optgroup label="W&auml;hle eine Gruppe"></optgroup>
@@ -22,6 +22,6 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="Anlegen" />
-		<input onClick="location.href = 'index.php?mod=user'"; type="button" value="Abbrechen" />
+		<input  type="button" value="Abbrechen" onClick="location.href = 'index.php?mod=user'" />
 	</form>
 </div>

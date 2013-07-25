@@ -30,14 +30,22 @@
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
-		public function updateComponent();
+		public function updateComponent($id);
 		
 		/**
 		 * function to delete component
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function deleteComponent();
+		public function deleteComponent($id);
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id);
 		
 	}
 ?>

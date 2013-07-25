@@ -1,8 +1,12 @@
+<?php namespace Template; ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
 		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=rooms">R&auml;ume</a></li>
+		<?php
+			// add selected menu entry
+			include ('php/nav_menuItem.php');
+		?>
 		<li>>> <a href="index.php?mod=room">R001</a></li>
 		<li>>> <a href="index.php?mod=device">PC001</a></li>
 		<li>>> <a href="index.php?mod=component">Komponenten</a></li>

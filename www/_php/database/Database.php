@@ -17,10 +17,8 @@
 		public function __construct() 
 		{
 			$verbindung = mysql_connect("localhost", "root", "");
-			mysql_select_db("itv_v1");
-					
-		}
-		
+			mysql_select_db("itv_v1");					
+		}		
 	
 		/**
 		 *  function to get rooms
@@ -32,7 +30,7 @@
 		{   
 			$entityArray = array();
 			
-			$select = "Select * from raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -203,7 +201,7 @@
 		 {
 		 	$entityArray = array();
 			
-			$select = "Select * from lieferant order by l_id ASC;";
+			$select = "SELECT * FROM lieferant order by l_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -239,7 +237,7 @@
 		  * @return void
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, 
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+										$phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$insert ="INSERT INTO lieferant (l_firmenname,l_strasse,
 												l_plz,l_ort,
@@ -269,7 +267,7 @@
 		  * @return void
 		  */
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location,
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+										$phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$update = "UPDATE lieferant 
 					   SET l_firmenname = ".$companyName.",
@@ -309,7 +307,7 @@
 		 {
 			$entityArray = array();
 			
-			$select = "Select * from benutzergruppe order by bg_id ASC;";
+			$select = "SELECT * FROM benutzergruppe order by bg_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -376,5 +374,306 @@
 							bg_id = ".$id.";";
 			return mysql_query($delete);
 		 }
+		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getUsergroupBYId($id)
+		 {			
+			$select = "SELECT * 
+					   FROM 
+							benutzergruppe 
+						WHERE 
+							bg_id = ".$id." 
+						ORDER BY bg_id ASC;";
+			
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			$entity = new UserGroupEntity();
+			$entity->userGroupId = $row['bg_id'];
+			$entity->userGroupName = $row['bg_name'];
+			$entity->userGroupPermisson = $row['bg_rechte'];			
+						
+			return $entity;
+		 }
+		 /**
+		 * select all Users
+		 * 
+		 * @return UserEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getUsers()
+		 {
+			$entityArray = array();
+			
+			$select = "SELECT * FROM benutzer order by b_id ASC;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new UserEntity();
+				$entity->userId = $row['b_id'];
+				$entity->userGroupId = $row['bg_id'];
+				$entity->userPw = $row['b_pw'];
+				$entity->userName = $row['b_name'];		
+				$entity->userEmail = $row['b_email'];			
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
+		 
+		 /**
+		  * insert user
+		  *
+		  * @param string $name 
+		  * @param int $userGroupId	  
+		  * @param string $password (blank)
+		  * @param string $email	  
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function insertUser($name, $userGroupId, $password, $email)
+		 {
+			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_email)
+								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."','".$email."');";
+										
+			return mysql_query($insert);
+		 }
+		 /**
+		  * update user
+		  *
+	  	  * @param int $id id
+		  * @param string $name 
+		  * @param int $userGroupId	  
+		  * @param string $password (blank)
+		  * @param string $email
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+          * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function updateUser($id, $name, $userGroupId, $password, $email)
+		 {
+			 $update = "UPDATE benutzer 
+						   SET bg_id = ".$userGroupId.",
+							   b_pw = PASSWORD('".$password."'),
+							   b_name = '".$name."',
+							   b_email = '".$email."',
+							   
+							WHERE
+								b_id = ".$id.";";
+		 
+		 }
+		 /**
+		  * delete user
+		  * 
+		  * @return 1 - true
+		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		 public function deleteUser($id)
+		 {
+			$delete ="DELETE FROM 
+							benutzer 
+						WHERE 
+							b_id = ".$id.";";
+			return mysql_query($delete);
+		 }
+		 /**
+		  * check if password for user is correct
+		  * 
+		  * @param int $id id
+		  * @param string $password password(blank)
+		  * @return true (password correct)
+		  *			false(password incorrect)
+		  * @author Leon Geim<leon.geim@gmail.com>
+		  */
+		  public function checkUserPw($id, $password)
+		 {
+			$check = "SELECT 
+							Case When b_pw = PASSWORD('".$password."') then true else false END As Erg
+						FROM benutzer
+						WHERE b_id = ".$id.";";
+						
+			$Data = mysql_query($select);
+			if($Data["erg"] == "1")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			
+		 }
+		 
+		 
+		 /**
+		 * select all TransactionTypes
+		 * 
+		 * @return TransactionTypesEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypes()
+		 {
+		 }
+
+		 /**
+		 * select TransactionTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypeById($id)
+		 {
+		 }	
+
+         /**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactions()
+		 {
+		 }
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionById($id)
+		 {
+		 }			 
+		 
+         /**
+		 * insert Transaction
+		 *
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId)
+		 {
+		 }
+		 
+		 /**
+		 * update Transaction
+		 *
+	  	 * @param int $id id
+		 * @param string $transactionDescription 
+		 * @param int $transactionTypeId	  
+		 * @param string $userId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId)
+		 {
+		 }
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteTransaction($id)
+		 {
+		 }
+		 
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValues()
+		 {
+		 }
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ValidValueEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValueEntityById($id)
+		 {
+		 }	
+		 
+		 /**
+		 * select all ComponentAttributeEntitysFromComponentType
+		 *
+		 * componentAttributeComponentValue = NULL;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponentType()
+		 {
+		 }
+		 
+		 /**
+		 * select all ComponentAttributeFromComponent
+		 *
+		 * componentAttributeComponentValue = value;
+		 *
+		 * @return ComponentAttributeEntitys[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributesFromComponent()
+		 {
+		 }
+		 
+		  /**
+		 * select ComponentAttributesFromComponentTypeByComponentId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentId($id)
+		 {
+		 }
+		 
+		  /**
+		 * select ComponentAttributeFromComponentTypeByComponentTypeId
+		 *
+		 * componentAttributeComponentValue = Value;
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentAttributeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentAttributeFromComponentTypeByComponentTypeId($id) 
+		 {
+		 }		 
 	}
 ?>

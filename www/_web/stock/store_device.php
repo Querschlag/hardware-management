@@ -85,10 +85,17 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<p>Bezeichnung</p><input name="device_name" type="text"/>
 				<br>
-				<p>Lieferant</p><input name="supplier" type="text"/>
+				<p>Lieferant</p>
+				<select name="supplier">
+					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
+						<option value="0">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+						<option value="2">Lieferant 1</option>
+						<option value="3">Lieferant 1</option>
+				</select>
 				<p>Hersteller</p><input name="manufactor" type="text"/>
-				<p>Kaufdatum</p><input name="purchaseDate" type="text"/>
-				<p>Gew&auml;hrleistung</p><input name="warranty" type="text"/>
+				<p>Kaufdatum</p><input name="purchaseDate" type="date"/>
+				<p>Gew&auml;hrleistung in Jahren</p><input name="warranty" type="number"/>
 				<p>Notiz</p><textarea name="description" rows=6 cols=30></textarea>
 				<input name="step" value="3" type="hidden" />
 				<br>

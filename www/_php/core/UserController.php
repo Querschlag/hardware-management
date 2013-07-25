@@ -12,6 +12,26 @@
 	*/
 	class UserController implements IUserController
 	{
+		/**
+		 *  storage for the view
+		 */
+		private $_view;
+
+		/**
+		 *  storage for the database
+		 */		
+		private $_database;
+		
+		/**
+		 *  paramized constructor
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function __construct()
+		{
+			
+		}
+		
 		/** 
 		 *  function to generate password
 		 */

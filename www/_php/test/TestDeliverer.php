@@ -81,6 +81,11 @@
 				 */
 				private $_delivererCountry;
 				
+				/**
+				 *  storage for the deliverer 
+				 */
+				public $_deliverers;
+				
 				public function __construct($delivererId, $delivererCompanyName, $delivererStreet, $delivererZip, $delivererCity, $delivererTelephone, $delivererMobile, $delivererFax, $delivererEmail, $delivererCountry) 
 				{
 					// id
@@ -122,7 +127,7 @@
 				 * 
 				 * @author Thomas Bayer <thomasbayer95@gmail.com>
 				 */
-				public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $mail, $country)
+				public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $email, $country)
 				{
 					// print display Deliverer
 					print $id . ' ' . $companyName . ' ' . $street . ' ' . $zip . ' ' . $city . ' ' . $telephone . ' ' . $mobile . ' ' . $fax . ' ' . $email . ' ' . $country . '<br/>';
@@ -161,7 +166,7 @@
 					$entity->delivererCountry = $country;
 					
 					// store Deliverer
-					$this->_Deliverers[] = $entity;
+					$this->_deliverers[] = $entity;
 				}
 				
 				/**
@@ -310,43 +315,43 @@
 			$controller->selectDeliverers();
 			
 			// iteration over all db Deliverers
-			foreach($database->_Deliverers as $dbDeliverer)
+			foreach($database->_deliverers as $dbDeliverer)
 			{
 				// found flag
 				$found = FALSE;
 				
 				// iteration over all view Deliverers
-				foreach($view->_Deliverers as $viewDeliverer)
+				foreach($view->_deliverers as $viewDeliverer)
 				{
 					// check Deliverer id
-					if($dbDeliverer->DelivererId == $viewDeliverer->DelivererId)
+					if($dbDeliverer->delivererId == $viewDeliverer->delivererId)
 					{
 						// check company name
-						assert($dbDeliverer->DelivererCompanyName == $viewDeliverer->DelivererCompanyName);
+						assert($dbDeliverer->delivererCompanyName == $viewDeliverer->delivererCompanyName);
 						
 						// check street
-						assert($dbDeliverer->DelivererStreet == $viewDeliverer->DelivererStreet);
+						assert($dbDeliverer->delivererStreet == $viewDeliverer->delivererStreet);
 						
 						// check
-						assert($dbDeliverer->DelivererZip == $viewDeliverer->DelivererZip);
+						assert($dbDeliverer->delivererZip == $viewDeliverer->delivererZip);
 						
 						// check
-						assert($dbDeliverer->DelivererCity == $viewDeliverer->DelivererCity);
+						assert($dbDeliverer->delivererCity == $viewDeliverer->delivererCity);
 						
 						// check
-						assert($dbDeliverer->DelivererTelephone == $viewDeliverer->DelivererTelephone);
+						assert($dbDeliverer->delivererTelephone == $viewDeliverer->delivererTelephone);
 						
 						// check
-						assert($dbDeliverer->DelivererMobile == $viewDeliverer->DelivererMobile);
+						assert($dbDeliverer->delivererMobile == $viewDeliverer->delivererMobile);
 						
 						// check
-						assert($dbDeliverer->DelivererFax == $viewDeliverer->DelivererFax);
+						assert($dbDeliverer->delivererFax == $viewDeliverer->delivererFax);
 						
 						// check
-						assert($dbDeliverer->DelivererEmail == $viewDeliverer->DelivererEmail);
+						assert($dbDeliverer->delivererEmail == $viewDeliverer->delivererEmail);
 						
 						// check
-						assert($dbDeliverer->DelivererCountry == $viewDeliverer->DelivererCountry);
+						assert($dbDeliverer->delivererCountry == $viewDeliverer->delivererCountry);
 						
 						
 						// set found

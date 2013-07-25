@@ -11,7 +11,7 @@
 	if(file_exists('../entity/ComponentEntity.php')) require_once('../entity/ComponentEntity.php');
 	if(file_exists('../_php/entity/ComponentEntity.php')) require_once('../_php/entity/ComponentEntity.php');
 
-	/**
+		/**
 	* Mock object room
 	*
 	* Mock object for the room
@@ -20,6 +20,7 @@
 	* @package
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @author Thomas Michl <thomas.michl1988@gmail.com>
+	* @author Thomas Bayer <thomasbayer95@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	class MockDatabase implements IDatabase
@@ -28,10 +29,16 @@
 		 *  storage for the last insert, update or delete room
 		 */
 		public $_rooms = array();
+		
 		/**
 		 *  storage for the last insert, update or delete component
 		 */
 		public $_component = array();
+		
+		/**
+		 *  storage for the last insert, update or delete deliverer
+		 */
+		public $_deliverers = array();
 				
 		/**
 		 *  function to insert room
@@ -248,7 +255,7 @@
 			$entity->componentRoom = 1;
 			$entity->componentName = 'CPU';
 			$entity->componentBuy = 14;
-			$entity->componentWarrenty = 14;
+			$entity->componentWarranty = 14;
 			$entity->componentNote = 'Notiz';
 			$entity->componentSupplier = 'INTEL';
 			$entity->componentType = 1;
@@ -292,7 +299,7 @@
 			$entity->componentBuy = $buy;
 			
 			// set name
-			$entity->componentWarrenty = $warranty;
+			$entity->componentWarranty = $warranty;
 			
 			// set note
 			$entity->componentNote = $note;
@@ -323,7 +330,32 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type){}
+		public function updateComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+		{			
+			// set data
+			$this->_component[$id]->componentDeliverer = $deliverer;
+			
+			// set number
+			$this->_component[$id]->componentRoom = $room;
+			
+			// set name
+			$this->_component[$id]->componentName = $name;
+			
+			// set note
+			$this->_component[$id]->componentBuy = $buy;
+			
+			// set name
+			$this->_component[$id]->componentWarranty = $warranty;
+			
+			// set note
+			$this->_component[$id]->componentNote = $note;
+			
+			// set name
+			$this->_component[$id]->componentProducer = $supplier;
+			
+			// set note
+			$this->_component[$id]->componentType = $type;
+		}
 		
 		/**
 		 * delete a component
@@ -333,14 +365,49 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
- 		public function deleteComponent($id){}
+ 		public function deleteComponent($id)
+ 		{
+ 			unset($this->_component[$id]);
+ 		}
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id) {
+			$this->_component[$id]->componentNote = "ausgemustert";
+		}
 		
 		/**
 		 * select all deliverers
 		 * 
 		 * @return void
 		 */
-		 public function getDeliverers(){}
+		 public function getDeliverers()
+		 {
+		 	// create first deliverer entity
+			$entity = new DelivererEntity();
+			
+			// set deliverer data
+			$entity->delivererId = 1;
+			$entity->delivererCompanyName = "Funkwerk";
+			$entity->delivererStreet = "Südwestpark 94";
+			$entity->delivererZip = "90449";
+			$entity->delivererCity = "Nürnberg";
+			$entity->delivererTelephone = "0911/208 3462";
+			$entity->delivererMobile = "0171/2310983";
+			$entity->delivererFax = "0911/208 3463";
+			$entity->delivererEmail = "info@funkwerk.de";
+			$entity->delivererCountry = "Deutschland";
+		
+			// add entity to array
+			$this->_deliverers[] = $entity;
+			
+			// return entites
+			return $this->_deliverers;
+		 }
 		 
 		 /**
 		  * insert deliverer
@@ -353,10 +420,29 @@
 		  * @param string $mobileNumber mobile number
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
+		  * @param string $country country 
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
+		 {
+		 	// create first deliverer entity
+			$entity = new DelivererEntity();
+			
+			$entity->delivererCompanyName = $companyName;
+			$entity->delivererStreet = $street;
+			$entity->delivererZip = $zipCode;
+			$entity->delivererCity = $location;
+			$entity->delivererTelephone = $phoneNumber;
+			$entity->delivererMobile = $mobileNumber;
+			$entity->delivererFax = $faxNumber;
+			$entity->delivererEmail = $email;
+			$entity->delivererCountry = $country;
+			
+			// store entity
+			$this->_deliverers[] = $entity;
+			
+		 }
 		 
 		 /**
 		  * update deliverer
@@ -373,7 +459,7 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email){}
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country){}
 		 
 		 /**
 		  * delete deliverer
@@ -381,14 +467,14 @@
 		  * @return void
 		  */
 		 public function deleteDeliverer($id){}
-		
-		/**
+
+		/*
 		 * select all Usergroups
 		 * 
 		 * @return UsergroupEntity[]
 		 */
 		 public function getUsergroups(){}
-		 
+
 		 /**
 		  * insert usergroup
 		  *
@@ -411,7 +497,7 @@
 		  *			2 - false
 		  */
 		 public function updateUsergroup($id, $name, $permission){}
-		 
+
 		 /**
 		  * delete usergroup
 		  * 
@@ -419,5 +505,126 @@
 		  *			2 - false
 		  */
 		 public function deleteUsergroup($id) {}
+	 
+		 
+		  /**
+		 * select the Usergroup by id
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UsergroupEntity
+		 */
+		 public function getUsergroupById($id){}
+		 
+		 /**
+		 * select all Users
+		 * 
+		 * @return UserEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getUsers(){}
+		 
+		 /**
+		 * insert user
+		 *
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email	  
+		 *
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function insertUser($name, $userGroupId, $password, $email){}
+		 
+		 /**
+		 * update user
+		 *
+	  	 * @param int $id id
+		 * @param string $name 
+		 * @param int $userGroupId	  
+		 * @param string $password (blank)
+		 * @param string $email
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function updateUser($id, $name, $userGroupId, $password, $email){}
+		 
+		 /**
+		 * delete user
+		 * 
+		 * @return 1 - true
+		 *			2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteUser($id){}
+		 
+		 /**
+		 * check if password for user is correct
+		 * 
+		 * @param int $id id
+		 * @param string $password password(blank)
+		 * @return 1 - true (password correct)
+		 *			2 - false(password incorrect)
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function checkUserPw($id, $password){}
+		  
+		 /**
+		 * select all TransactionTypes
+		 * 
+		 * @return TransactionTypesEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypes(){}
+
+		 /**
+		 * select TransactionTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionTypeById($id){}	
+
+         /**
+		 * select all Transaction
+		 * 
+		 * @return TransactionEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactions(){}
+
+		 /**
+		 * select TransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getTransactionById($id){}			 
+		   
+		 /**
+		 * select all ValidValue
+		 * 
+		 * @return ValidValueEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValues(){}
+
+		 /**
+		 * select ValidValueById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getValidValueEntityById($id){}
 	}
 ?>

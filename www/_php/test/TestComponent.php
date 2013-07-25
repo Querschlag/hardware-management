@@ -126,7 +126,7 @@
 				/**
 				 *  function to display room
 				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
+		 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 				 */
 				public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 				{
@@ -136,16 +136,35 @@
 					// create room entity
 					$entity = new ComponentEntity();
 					
-					// set data
+					// set id
 					$entity->componentId = $id;
 					
-					// set data
+					// set deliverer
 					$entity->componentDeliverer = $deliverer;
 					
-					// set name
+					// set room
 					$entity->componentRoom = $room;
 					
-					// store room
+					// set name
+					$entity->componentName = $name;
+					
+					// set buy
+					$entity->componentBuy = $buy;
+					
+					// set warranty
+					$entity->componentWarranty = $warranty;
+					
+					// set note
+					$entity->componentNote = $note;
+					
+					// set supplier
+					$entity->componentSupplier = $supplier;
+					
+					// set type
+					$entity->componentType = $type;
+					
+					
+					// store component
 					$this->_components[] = $entity;
 				}
 				
@@ -261,19 +280,45 @@
 			
 			<?php
 
-			$view = new MockComponent(1, 1, 1, 'CPU', 12312312, 12312314, 'Notiz', 'INTEL', 1);
+			//create component
+			$view = new MockComponent(3, 1, 1, 'CPU', 12312312, 12312314, 'Notiz', 'INTEL', 1);
 			$database = new MockDatabase();
 			
 			// create controller
 			$controller = new ComponentController($view, $database);
 			
+			//insert component
+			$controller->insertComponent();
+
+			//create component
+			$view = new MockComponent(2, 2, 1, 'Grafikkarte', 12312315, 12312318, 'Notiz', 'NVIDEA', 1);
+			
+			// create controller
+			$controller = new ComponentController($view, $database);
+			
+			//insert component
+			$controller->insertComponent();
+			
 			// select controller
 			$controller->selectComponents();
 			
+			
 			foreach($database->_component as $dbComponents)
 			{
-				var_dump($dbComponents);
+				
 			}
+			
+			// update controller
+			$controller->updateComponent(1);
+			$controller->rejectionComponent(2);
+			
+			echo '<br /> <br />';
+			// select controller
+			$controller->selectComponents();
+			
+			$controller->deleteComponent(0);
+			echo '<br /> <br />';
+			$controller->selectComponents();
 			
 		?>
 	</body>

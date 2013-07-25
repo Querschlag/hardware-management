@@ -20,6 +20,8 @@
 		} else {
 			echo 'Falscher Benutzername oder Passwort.';
 		}
+	} else {
+		echo 'Bitte geben Sie Ihre Zugangsdaten ein.';
 	}
 ?>
 

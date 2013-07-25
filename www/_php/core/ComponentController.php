@@ -121,11 +121,8 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function updateComponent()
-		{
-			// get unique deliverer id
-			$id = $this->_view->getComponentId();
-			
+		public function updateComponent($id)
+		{			
 			// get component deliverer
 			$deliverer = $this->_view->getComponentDeliverer();
 			
@@ -170,16 +167,34 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
-		public function deleteComponent()
-		{
-			// get unique component id
-			$id = $this->_view->getComponentId();
-			
+		public function deleteComponent($id)
+		{			
 			// check id,
 			if(isset($id))
 			{
 				// delete component
 				$this->_database->deleteComponent($id);
+			}
+			else 
+			{
+				// set error to frontend
+				// $this->_view->setError();
+			}
+		}
+
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function rejectionComponent($id)
+		{			
+			// check id,
+			if(isset($id))
+			{
+				// delete component
+				$this->_database->rejectionComponent($id);
 			}
 			else 
 			{

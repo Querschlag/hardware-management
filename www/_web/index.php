@@ -50,7 +50,7 @@
 			</div>
 			<div class="clearfix"></div>
 			<div id="top_nav">
-				<h1><a href="./">Hardware Verwaltung - B3 F&uuml;rth</a></h1>
+				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
 				<?php
 					//Include top navigation
 					include('nav.html');
@@ -63,13 +63,16 @@
 				 * Include module content
 				 */
 				 
-				$module = \template\ModuleImporter::moduleForName(GET('mod'));
+				$module = \Template\ModuleImporter::moduleForName(GET('mod'));
 				if ($module != null)
 					include($module);
 			?>
 		</div>
 		<div id="footer">
-			Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">B3ProjectGroup2</a>
+			<p>
+				Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">IFA11B2 IT-Team2</a>
+			</p>
+			<img class="logo" src="img/Logo_team2_int.png" alt="IFA11B2 - IT-Team2 Logo" />
 		</div>
     </body>
 </html>
