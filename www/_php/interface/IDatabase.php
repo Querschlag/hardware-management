@@ -404,7 +404,7 @@
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
 		 /**
-		 * update Transaction
+		 * update ComponentAttribute
 		 *
 		 * @param int $id
 	  	 * @param string $componentAttributeName 
@@ -419,7 +419,7 @@
 		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
 		 /**
-		 * delete Transaction
+		 * delete ComponentAttribute
 		 * 		
 		 * @param int id		 
 		 * @param bool $IsForComponent - true Component false ComponentType
