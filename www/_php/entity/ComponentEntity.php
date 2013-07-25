@@ -55,5 +55,10 @@
 		 *  storage for the component type
 		 */
 		public $componentType;
+		
+		/**
+		 *  storage flag for Device or component
+		 */
+		 public $componentIsDevice;
 	}
 ?>
