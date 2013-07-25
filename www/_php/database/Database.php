@@ -49,7 +49,7 @@
 				
 				$entityArray[] = $entity;
 			}
-			return {['problemCount':27, 'rooms':$entityArray]};
+			// return {['problemCount':27, 'rooms':$entityArray]};
 	
 		}
 		
@@ -1154,5 +1154,37 @@
 			
 			return $nameArray;
 		 }
+		 
+		 
+		 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent){}
+		 
+		  /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>	  
+		 */
+		 public function getComponentDevices(){}
+		 
+		   /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentsWithoutDevices(){}
 	}
 ?>
