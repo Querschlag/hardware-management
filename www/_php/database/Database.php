@@ -434,7 +434,7 @@
 						ORDER BY bg_id ASC;";
 			
 			$Data = mysql_query($select);
-			$row = mysql_fetch_assoc($Data)
+			$row = mysql_fetch_assoc($Data);
 			
 			$entity = new UserGroupEntity();
 			$entity->userGroupId = $row['bg_id'];
@@ -659,7 +659,7 @@
 		 *		   2 - false
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
+		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment)
 		 {
 			 $insert ="INSERT INTO komp_vorgang 
 						(k_id, v_id, b_id, comment, datum)
@@ -681,7 +681,7 @@
 		 *		   2 - false
          * @author Leon Geim<leon.geim@gmail.com> 
 		 */
-		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment);
+		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment)
 		 {
 			 $update = "UPDATE komp_vorgang 
 						   SET k_id = ".$componentId.",
@@ -702,7 +702,7 @@
 		 *		   2 - false
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function deleteComponentTransaction($id);
+		 public function deleteComponentTransaction($id)
 		 {
 				$delete ="DELETE FROM 
 							komp_vorgang 
@@ -1007,7 +1007,7 @@
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
 		 {
 			 $insert ="INSERT INTO komponentenattribute (kat_name)
 								VALUES(".$componentAttributeName.");";
