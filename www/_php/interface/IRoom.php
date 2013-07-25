@@ -61,11 +61,11 @@
 		public function setError();
 		
 		/**
-		 * function to set room number erro
+		 *  function to set required data error
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
-		public function setRoomNumberError();
+		public function setRequiredDataError();
 		
 		/**
 		 * function to get room id
@@ -73,5 +73,12 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getRoomId();
+		
+		/** 
+		 *  function to get floor number
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getFloorNumber();
 	}
 ?>

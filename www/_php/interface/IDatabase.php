@@ -18,6 +18,14 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getRooms();
+
+		/**
+		 *  function to get room by id
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoomByRoomId($id);
 		
 		/**
 		 *  function to insert room
