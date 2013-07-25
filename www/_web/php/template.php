@@ -62,6 +62,14 @@
 				return 'user/edit_user.php';
 			if ($moduleName == 'createUser')
 				return 'user/create_user.php';
+			
+			
+			if ($moduleName == 'supplier')
+				return 'supplier/supplier.php';
+			if ($moduleName == 'editSupplier')
+				return 'supplier/edit_supplier.php';
+			if ($moduleName == 'createSupplier')
+				return 'supplier/create_supplier.php';
 
 			
 			// default module

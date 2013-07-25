@@ -11,7 +11,7 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=createRoom<?php echo '&menu=' . GET('menu');?>">Raum hinzuf&uuml;gen</a>
-		<a class="right" href="index.php?mod=order">Lieferanten</a>
+		<a class="right" href="index.php?mod=supplier">Lieferanten</a>
 		<a class="right" href="index.php?mod=user">Benutzer</a>
 		<div class="clearfix"></div>
 	</div>
