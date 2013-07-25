@@ -1009,6 +1009,7 @@
 										
 			return mysql_query($insert);
 		 }
+		 
 		 /**
 		 * update ComponentAttribute
 		 *
@@ -1023,18 +1024,6 @@
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
-		 
-		 /**
-		 * delete ComponentAttribute
-		 * 		
-		 * @param int id		 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentAttribute($id, $IsForComponent);
 		 
 		  /**
 		 * select all ComponentTypes
@@ -1078,15 +1067,6 @@
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function updateComponentType($id, $typeName, $typeImagePath);
-		 
-		 /**
-		 * delete Transaction
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentType($id);
 		 
 		 /**
 		 * update ComponentType
@@ -1133,5 +1113,65 @@
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function getMasterComponentbyComponentId($id);
+		 
+		 /**
+		 * insert SubComponent
+		 *
+	  	 * @param int $componentId
+		 * @param int $subComponentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertSubComponent($componentId, $subComponentId)
+		 {
+			$insert ="INSERT INTO komponente_komponente (komponenten_k_id_aggregat, komponenten_k_id_teil)
+								VALUES(".$componentId.", ".$subComponentId.");";
+										
+			return mysql_query($insert);
+		 }
+		 
+		 /**
+		 * insert AttributeValue
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertAttributeValue($attributeId, $componentId, $value)
+		 {
+			$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
+								VALUES(".$attributeId.", ".$componentId.", ".$value.");";
+										
+			return mysql_query($insert);
+		 }
+		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponents()
+		 {
+			$nameArray = array();
+			
+			$select = "SELECT Distinct(k_name) as name FROM komponente order by k_name";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{				
+				$nameArray[] = $row["name"];
+			}
+			
+			return $nameArray;
+		 }
 	}
 ?>
