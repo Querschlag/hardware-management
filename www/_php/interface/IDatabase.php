@@ -237,7 +237,7 @@
 		 *			2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertUser($name, $userGroupId, $vorname, $nachname, $password, $email);
+		 public function insertUser($name, $userGroupId, $firstname, $lastname, $password, $email);
 		 
 		 /**
 		 * update user
@@ -507,19 +507,6 @@
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function deleteComponentType($id);
-		 
-		 /**
-		 * update ComponentType
-		 *
-	  	 * @param int $id id
-		 * @param string $typeName 	  
-		 * @param string $typeImagePath
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentType($id, $typeName, $typeImagePath);
 		 
 		 /**
 		 * get SubComponents by MasterComponentId
