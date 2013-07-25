@@ -222,12 +222,14 @@
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email	  
+		 * @param string $vorname	
+		 * @param string $nachname
 		 *
 		 * @return 1 - true
 		 *			2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertUser($name, $userGroupId, $password, $email);
+		 public function insertUser($name, $userGroupId, $vorname, $nachname, $password, $email);
 		 
 		 /**
 		 * update user
@@ -237,12 +239,14 @@
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email
+		 * @param string $vorname	
+		 * @param string $nachname
 		 * 
 		 * @return 1 - true
 		 *			2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 public function updateUser($id, $name, $userGroupId, $vorname, $nachname, $password, $email);
 		 
 		 /**
 		 * delete user

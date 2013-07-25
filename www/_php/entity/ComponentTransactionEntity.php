@@ -29,17 +29,17 @@
 		/**
 		 *  storage for the userId
 	   	 */
-		public $userId;
+		public $componentTransactionuserId;
 
          /**
 		 *  storage for the date
 	   	 */
-		public $date;	
+		public $componentTransactionDate;	
 
 		/**
 		 *  storage for the comment
 	   	 */
-		public $comment;
+		public $componentTransactionComment;
 
 		
 	}
