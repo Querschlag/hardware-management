@@ -1,6 +1,7 @@
-<?php
-
-	require_once('../interface/IDatabase.php');
+<?php	
+	// include database
+	if(file_exists('../interface/IDatabase.php')) require_once('../interface/IDatabase.php');
+	if(file_exists('../_php/interface/IDatabase.php')) require_once('../_php/interface/IDatabase.php');
 	
 	/**
 	* Database connection
@@ -171,7 +172,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
 		{
 			$insert = "INSERT INTO raeume
 						(lieferant_l_id, lieferant_r_id, k_name,
@@ -277,17 +278,18 @@
 		  * 
 		  * @return void
 		  */
-		 public function insertDeliverer($companyName, $street, $zipCode, $location, 
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$insert ="INSERT INTO lieferant (l_firmenname,l_strasse,
 												l_plz,l_ort,
 												l_tel,l_mobil,
-												l_fax,l_email)
+												l_fax,l_email,
+												l_land)
 								VALUES(	'".$companyName."','".$street."',
 										'".$zipCode."','".$location."',
 										'".$phoneNumber."','".$mobileNumber."',
-										'".$faxNumber."','".$email."');";
+										'".$faxNumber."','".$email."',
+										'".$country."');";
 										
 			return mysql_query($insert);
 		 }
@@ -307,8 +309,7 @@
 		  * 
 		  * @return void
 		  */
-		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location,
-										$phoneNumber, $mobileNumber, $faxNumber, $email)
+		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$update = "UPDATE lieferant 
 					   SET l_firmenname = ".$companyName.",
@@ -318,7 +319,8 @@
 							l_tel= ".$phoneNumber.",
 							l_mobil= ".$mobileNumber.",
 							l_fax= ".$faxNumber.",
-							l_email= ".$email."
+							l_email= ".$email.",
+							l_land= ".$country."
 						WHERE
 							l_id = ".$id.";";
 							
@@ -509,10 +511,10 @@
 		  *			2 - false
 		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function insertUser($name, $userGroupId, $password, $email)
+		 public function insertUser($name, $userGroupId, $firstname, $lastname, $password, $email)
 		 {
 			 $insert ="INSERT INTO benutzer (bg_id, b_pw, b_name, b_vorname, b_nachname, b_email)
-								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."', '".$vorname."', '".$nachname."' ,'".$email."');";
+								VALUES(".$userGroupId.",PASSWORD('".$password."'),'".$name."', '".$firstname."', '".$lastname."' ,'".$email."');";
 										
 			return mysql_query($insert);
 		 }
@@ -531,14 +533,14 @@
 		  *			2 - false
           * @author Leon Geim<leon.geim@gmail.com>
 		  */
-		 public function updateUser($id, $name, $userGroupId, $password, $email)
+		 public function updateUser($id, $name, $userGroupId, $firstname, $lastname, $password, $email)
 		 {
 			 $update = "UPDATE benutzer 
 						   SET bg_id = ".$userGroupId.",
 							   b_pw = PASSWORD('".$password."'),
 							   b_name = '".$name."',
-							   b_vorname = '".$vorname."',
-							   b_nachname = '".$nachname."',
+							   b_vorname = '".$firstname."',
+							   b_nachname = '".$lastname."',
 							   b_email = '".$email."'							   
 							WHERE
 								b_id = ".$id.";";
@@ -1045,7 +1047,10 @@
 		 *		   2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
+		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
+		 {
+		 	
+		 }
 		 
 		  /**
 		 * select all ComponentTypes
@@ -1053,7 +1058,10 @@
 		 * @return ComponentTypeEntity[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentTypes();
+		 public function getComponentTypes()
+		 {
+		 	
+		 }
 
 		 /**
 		 * select ComponentTypeById
@@ -1063,7 +1071,7 @@
 		 * @return ComponentTypeEntity
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentTypeById($id);			 
+		 public function getComponentTypeById($id){}			 
 		 
          /**
 		 * insert ComponentType
@@ -1075,7 +1083,7 @@
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertComponentType($typeName, $typeImagePath);
+		 public function insertComponentType($typeName, $typeImagePath){}
 		 
 		 /**
 		 * update ComponentType
@@ -1088,20 +1096,7 @@
 		 *		   2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateComponentType($id, $typeName, $typeImagePath);
-		 
-		 /**
-		 * update ComponentType
-		 *
-	  	 * @param int $id id
-		 * @param string $typeName 	  
-		 * @param string $typeImagePath
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentType($id, $typeName, $typeImagePath);
+		 public function updateComponentType($id, $typeName, $typeImagePath){}
 		 
 		 /**
 		 * get SubComponents by MasterComponentId
@@ -1112,7 +1107,7 @@
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function getSubComponentbyComponentId($id);
+		 public function getSubComponentbyComponentId($id){}
 		 
 		 /**
 		 * get MasterComponentId by SubComponentId
@@ -1123,18 +1118,7 @@
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function getMasterComponentbyComponentId($id);
-		 
-		 		 /**
-		 * get MasterComponentId by SubComponentId
-		 *
-	  	 * @param int $id id
-		 * 
-		 * @return ComponentEntity
-		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function getMasterComponentbyComponentId($id);
+		 public function getMasterComponentbyComponentId($id){}
 		 
 		 /**
 		 * insert SubComponent
@@ -1195,5 +1179,26 @@
 			
 			return $nameArray;
 		 }
+		 
+		 /**
+		 * delete ComponentAttribute
+		 * 		
+		 * @param int id		 
+		 * @param bool $IsForComponent - true Component false ComponentType
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentAttribute($id, $IsForComponent){}
+		 
+		 /**
+		 * delete Transaction
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function deleteComponentType($id){}
 	}
 ?>

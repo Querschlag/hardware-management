@@ -11,6 +11,22 @@
 	<?php
 		require_once('php/additions.php');
 		
+		// include IRoom
+		require_once('../_php/interface/IComponent.php');
+		
+		// include room controller
+		require_once('../_php/core/ComponentController.php');
+		
+		// include mock database
+		require_once('../_php/database/Database.php');
+		
+		// include room entity
+		require_once('../_php/entity/ComponentEntity.php');
+		
+		class Component implements IComponent {
+			
+		}
+		
 		$step = POST('step');
 		
 		if ($step == 6) 
