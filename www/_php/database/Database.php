@@ -26,7 +26,7 @@
 		/**
 		 *  function to get rooms
 		 *
-		 * @return RoomEntity[] 
+		 * @return Dictionary [problemCount(int), rooms(array)]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRooms()
@@ -46,8 +46,8 @@
 				
 				$entityArray[] = $entity;
 			}
-			
-			return $entityArray;
+			return {['problemCount':27, 'rooms':$entityArray]};
+	
 		}
 		
 		/**
@@ -150,7 +150,7 @@
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
-								
+				$entity->componentIsDevice = $row['k_device'];
 				$entityArray[] = $entity;
 			}
 			
@@ -172,15 +172,15 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO raeume
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
-						k_hersteller,komponentenarten_ka_id) 
+						k_hersteller,komponentenarten_ka_id, k_device) 
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
-								'".$supplier."', ".$type.")";
+								'".$supplier."', ".$type.", ".$isDevice.")";
 			return mysql_query($insert);
 		}
 				
@@ -200,7 +200,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$update = "UPDATE komponente SET
 									lieferant_l_id= ".$deliverer.",
@@ -210,7 +210,8 @@
 									k_gewaehrleistungsdauer= ".$warranty.",
 									k_Notiz = '".note."',
 									k_hersteller = '".$supplier."',
-									komponentenarten_ka_id = ".$type."
+									komponentenarten_ka_id = ".$type.",
+									k_device = ".$isDevice."
 						WHERE
 									k_id = ".$id.";";
 									
@@ -227,11 +228,23 @@
 		 */
  		public function deleteComponent($id)
 		{
+			$delete = "DELETE FROM 
+							komponente_komponente
+						WHERE 
+							komponenten_k_id = ".$id.";";
+			mysql_query($delete);	
+
+			$delete = "DELETE FROM 
+							komponente_kattribut
+						WHERE 
+							komponenten_k_id = ".$id.";";
+			mysql_query($delete);				
+		
 			$delete ="DELETE FROM 
 							komponente 
 						WHERE 
 							k_id = ".$id.";";
-			return mysql_query($delete);
+			return mysql_query($delete);			
 		}
 		
 		/**
@@ -1007,7 +1020,7 @@
 		 *
 		 * @return 1 - true
 		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
 		 {
@@ -1031,32 +1044,14 @@
 			 mysql_query($insert);
 			}
 										
-			return mysql_query($insert);
 		 }
 		 
-		 /**
-		 * update ComponentAttribute
-		 *
-		 * @param int $id
-	  	 * @param string $componentAttributeName 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 * @param int $componentAttributeUncertaintId	  
-		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentAttribute($id, $componentAttributeName, $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
-		 {
-		 	
-		 }
 		 
 		  /**
 		 * select all ComponentTypes
 		 * 
 		 * @return ComponentTypeEntity[]
-		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getComponentTypes()
 		 {
@@ -1069,7 +1064,7 @@
 		 * @param int $id id
 		 *
 		 * @return ComponentTypeEntity
-		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getComponentTypeById($id){}			 
 		 
@@ -1081,22 +1076,9 @@
 		 *
 		 * @return 1 - true
 		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function insertComponentType($typeName, $typeImagePath){}
-		 
-		 /**
-		 * update ComponentType
-		 *
-	  	 * @param int $id id
-		 * @param string $typeName 	  
-		 * @param string $typeImagePath
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateComponentType($id, $typeName, $typeImagePath){}
 		 
 		 /**
 		 * get SubComponents by MasterComponentId
@@ -1105,21 +1087,11 @@
 		 * 
 		 * @return ComponentEntity[]
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim<leon.geim@gmail.com>		  
 		 */
 		 public function getSubComponentbyComponentId($id){}
 		 
-		 /**
-		 * get MasterComponentId by SubComponentId
-		 *
-	  	 * @param int $id id
-		 * 
-		 * @return ComponentEntity[]
-		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function getMasterComponentbyComponentId($id){}
-		 
+			 
 		 /**
 		 * insert SubComponent
 		 *
@@ -1179,26 +1151,5 @@
 			
 			return $nameArray;
 		 }
-		 
-		 /**
-		 * delete ComponentAttribute
-		 * 		
-		 * @param int id		 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentAttribute($id, $IsForComponent){}
-		 
-		 /**
-		 * delete Transaction
-		 * 
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentType($id){}
 	}
 ?>
