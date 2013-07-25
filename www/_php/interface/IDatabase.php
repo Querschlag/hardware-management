@@ -78,7 +78,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 				
 		/**
 		 * update a component
@@ -96,7 +96,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice);
 		
 		/**
 		 * delete a component

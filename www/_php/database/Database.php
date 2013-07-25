@@ -149,6 +149,7 @@
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
 								
 				$entityArray[] = $entity;
 			}
@@ -171,15 +172,15 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function insertComponents($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO raeume
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
-						k_hersteller,komponentenarten_ka_id) 
+						k_hersteller,komponentenarten_ka_id, k_device) 
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
-								'".$supplier."', ".$type.")";
+								'".$supplier."', ".$type.", ".$isDevice.")";
 			return mysql_query($insert);
 		}
 				
@@ -199,7 +200,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$update = "UPDATE komponente SET
 									lieferant_l_id= ".$deliverer.",
@@ -209,7 +210,8 @@
 									k_gewaehrleistungsdauer= ".$warranty.",
 									k_Notiz = '".note."',
 									k_hersteller = '".$supplier."',
-									komponentenarten_ka_id = ".$type."
+									komponentenarten_ka_id = ".$type.",
+									k_device = ".$isDevice."
 						WHERE
 									k_id = ".$id.";";
 									
