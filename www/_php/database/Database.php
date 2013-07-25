@@ -17,7 +17,10 @@
 	{
 		public function __construct() 
 		{
-			$verbindung = mysql_connect("localhost", "root", "");
+			if(!(mysql_connect("localhost", "root", "")))
+			{				
+				mysql_connect("localhost", "project", "hallo123");
+			}
 			mysql_select_db("itv_v1");
 					
 		}
@@ -172,7 +175,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO raeume
 						(lieferant_l_id, lieferant_r_id, k_name,
@@ -200,7 +203,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type)
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$update = "UPDATE komponente SET
 									lieferant_l_id= ".$deliverer.",
