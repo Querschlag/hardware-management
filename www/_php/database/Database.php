@@ -50,6 +50,28 @@
 		}
 		
 		/**
+		 *  function to get room by id
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoomByRoomId($id)
+		{
+			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			$entity = new RoomEntity();
+			$entity->roomId = $row['r_id'];
+			$entity->roomNumber = $row['r_nr'];
+			$entity->roomFloor = $row['r_etage'];
+			$entity->roomName = $row['r_bezeichnung'];
+			$entity->roomNote= $row['r_notiz'];
+			
+			return $entity;			
+		}
+		
+		/**
 		 *  function to insert room
 		 * 
 		 * @param int $floor The Room etage.

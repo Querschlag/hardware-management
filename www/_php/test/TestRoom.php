@@ -6,18 +6,24 @@
 					
 		<?php
 			
+			mail('alt.johannes@gmx.net', 'Subject', 'Message');
+			
 			// include IRoom
-			require_once('../interface/IRoom.php');
+			if(file_exists('../interface/IRoom.php')) require_once('../interface/IRoom.php');
+			if(file_exists('../_php/interface/IRoom.php')) require_once('../_php/interface/IRoom.php');
 		
 			// include room controller
-			require_once('../core/RoomController.php');
+			if(file_exists('../core/RoomController.php')) require_once('../core/RoomController.php');
+			if(file_exists('../_php/core/RoomController.php')) require_once('../_php/core/RoomController.php');
 			
-			// include mock database
-			require_once('../test/MockDatabase.php');
-		
+			// include mock database			
+			if(file_exists('../test/MockDatabase.php')) require_once('../test/MockDatabase.php');
+			if(file_exists('../_php/test/MockDatabase.php')) require_once('../_php/test/MockDatabase.php');
+			
 			// include room entity
-			require_once('../entity/RoomEntity.php');
-		
+			if(file_exists('../entity/RoomEntity.php')) require_once('../entity/RoomEntity.php');
+			if(file_exists('../_php/entity/RoomEntity.php')) require_once('../_php/entity/RoomEntity.php');
+					
 			/**
 			* Mock object room
 			*
@@ -56,9 +62,14 @@
 				public $_rooms;
 				
 				/** 
+				 * storage for the floor number
+				 */
+				private $_floor;
+				
+				/** 
 				 * default constructor
 				 */
-				public function __construct($id, $number, $name, $note) 
+				public function __construct($id, $floor, $number, $name, $note) 
 				{
 					// store id
 					$this->_id = $id;
@@ -71,6 +82,9 @@
 					
 					// store note
 					$this->_note = $note;
+					
+					// store floor number
+					$this->_floor = $floor;
 					
 					// set assert options
 					assert_options(ASSERT_BAIL, 1);
@@ -104,6 +118,26 @@
 					// store room
 					$this->_rooms[] = $entity;
 				}
+				
+				
+				/**
+				 *  function to display floor
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayFloor($floorNumber)
+				{
+					// store floor number
+					$this->_floor = $floorNumber;
+				}
+				
+				/**
+				*  function to display room end
+				* 
+				*  @author Johannes Alt <altjohannes@gmail.com>
+				*/
+				public function displayRoomEnd()  { }
+		
 				
 				/**
 				 *  function to get room number
@@ -149,13 +183,13 @@
 				}
 				
 				/**
-				 * function to set room number erro
+				 *  function to set required data error
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
-				public function setRoomNumberError()
+				public function setRequiredDataError()
 				{
-					assert(!(strlen($this->_number) == 3 && preg_match("[^\d]", $this->number, $matches)));
+					assert(!(isset($number) && strlen($number) > 0 && !empty($name) && isset($floor) && strlen($floor) > 0));
 				}
 				
 				/**
@@ -168,13 +202,64 @@
 					// return room id
 					return $this->_id;
 				}
+				
+				/** 
+				 *  function to get floor number
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getFloorNumber()
+				{
+					// return floor number
+					return $this->_floor;
+				}
+				
+				/**
+				 *  function to compare if room is equal
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function Equal($room)
+				{
+					// check floor
+					assert($room->roomFloor == $this->_floor);
+					
+					// check number
+					assert($room->roomNumber == $this->_number);
+					
+					// check name
+					assert($room->roomName == $this->_name);
+					
+					// check note
+					assert($room->roomNote == $this->_note);
+				}
+				
+				/**
+				 *  function to compare if room is not equal
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function NotEqual($room)
+				{
+					// check floor
+					assert($room->roomFloor != $this->_floor);
+					
+					// check number
+					assert($room->roomNumber != $this->_number);
+					
+					// check name
+					assert($room->roomName != $this->_name);
+					
+					// check note
+					assert($room->roomNote != $this->_note);					
+				}
 			}
 		?>		
 
-		<b>Select Test</b><br/>
+		<b>Select Test 1</b><br/>
 		<?php  
 			// create view and database
-			$view = new MockRoom(1, '1', 'Religion', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, 1, '1', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -195,15 +280,9 @@
 					// check room id
 					if($dbRoom->roomId == $viewRoom->roomId)
 					{
-						// check name
-						assert($dbRoom->roomName == $viewRoom->roomName);
-						
-						// check note
-						assert($dbRoom->roomNote == $viewRoom->roomNote);
-						
-						// check room number
-						assert(sprintf("%d%02d", $dbRoom->roomFloor, $dbRoom->roomNumber) == $viewRoom->roomNumber);	
-						
+						// check for equal room
+						// $view->Equal($dbRoom);
+
 						// set found
 						$found = TRUE;
 					}
@@ -211,15 +290,55 @@
 				
 				// check found flag
 				assert($found);
-			}			
+			}
+						
+			// print success
+			print 'Success';			
 		?>
+
+		<br/>
+
+		<b>Select Test 2</b><br/>
+		<?php  
+			// create view and database
+			$view = new MockRoom(1, 1, '1', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view, $database);
+			
+			// select controller
+			$room = $controller->selectRoom();
+			
+			// print success
+			print 'Success';
+		?>
+
+		<br/>
+
+		<b>Select Test 3</b><br/>
+		<?php  
+			// create view and database
+			$view = new MockRoom(1000, 1, '1', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view, $database);
+			
+			// select controller
+			$room = $controller->selectRoom();
+										
+			// print success
+			print 'Success';
+		?>
+
 
 		<br/>
 		
 		<b>Insert Test 1 (Room Number '1')</b><br/>
 		<?php  
 			// create view and database
-			$view = new MockRoom(1, '1', 'Religion', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, '', '101', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -240,7 +359,7 @@
 		<b>Insert Test 2 (Room Number '01')</b><br/>
 		<?php  
 			// create view and database
-			$view = new MockRoom(1, '01', 'Religion', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, '01', '', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -261,7 +380,7 @@
 		<b>Insert Test 3 (Room Number '001')</b><br/>
 		<?php  
 			// create view and database
-			$view = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -274,10 +393,7 @@
 			assert(isset($database->_rooms[0]));
 			
 			// check insert parameter
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view->getRoomNote());
+			$view->Equal($database->_rooms[0]);
 						
 			// print success
 			print 'Success';
@@ -285,52 +401,10 @@
 		
 		<br/>
 		
-		<b>Insert Test 4 (Room Number '001a')</b><br/>
+		<b>Insert Test 4 (Name '')</b><br/>
 		<?php  
 			// create view and database
-			$view = new MockRoom(1, '001a', 'Religion', 'Nur für Frau Leutsch');
-			$database = new MockDatabase();
-			
-			// create controller
-			$controller = new RoomController($view, $database);
-			
-			// select controller
-			$controller->insertRoom();
-						
-			// check last insert file
-			assert(isset($database->_rooms[0]) == FALSE);
-						
-			// print success
-			print 'Success';
-		?>
-		
-		<br/>
-		
-		<b>Insert Test 5 (Room Number '')</b><br/>
-		<?php  
-			// create view and database
-			$view = new MockRoom(1, '', 'Religion', 'Nur für Frau Leutsch');
-			$database = new MockDatabase();
-			
-			// create controller
-			$controller = new RoomController($view, $database);
-			
-			// select controller
-			$controller->insertRoom();
-						
-			// check last insert file
-			assert(isset($database->_rooms[0]) == FALSE);
-						
-			// print success
-			print 'Success';
-		?>
-		
-		<br/>
-		
-		<b>Insert Test 6 (Name '')</b><br/>
-		<?php  
-			// create view and database
-			$view = new MockRoom(1, '001', '', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, '0', '001', '', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -351,7 +425,7 @@
 		<b>Update Test 1 (Update!)</b><br/>
 		<?php
 			// create view and database
-			$view = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$view = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -362,13 +436,10 @@
 						
 			// check last insert file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view->getRoomNote());
+			$view->Equal($database->_rooms[0]);
 			
 			// create new view and controller with new data
-			$view = new MockRoom(0, '101', 'Religion', '');
+			$view = new MockRoom(0, '1', '1', 'Religion', '');
 			$controller = new RoomController($view, $database);
 			
 			// update room
@@ -376,11 +447,8 @@
 
 			// check update file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 1);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view->getRoomNote());			
-
+			$view->Equal($database->_rooms[0]);
+			
 			// print success
 			print 'Success';
 		?>
@@ -390,7 +458,7 @@
 		<b>Update Test 2 (No Update!)</b><br/>
 		<?php
 			// create view and database
-			$view1 = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$view1 = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -401,13 +469,10 @@
 						
 			// check last insert file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view1->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());
+			$view1->Equal($database->_rooms[0]);
 			
 			// create new view and controller with new data
-			$view2 = new MockRoom(0, '555', '', '');
+			$view2 = new MockRoom(0, '', '555', '', '');
 			$controller = new RoomController($view2, $database);
 			
 			// update room
@@ -415,11 +480,9 @@
 
 			// check update file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view1->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());			
-
+			$view1->Equal($database->_rooms[0]);
+			$view2->NotEqual($database->_rooms[0]);
+			
 			// print success
 			print 'Success';
 		?>
@@ -429,7 +492,7 @@
 		<b>Update Test 3 (No Update!)</b><br/>
 		<?php
 			// create view and database
-			$view1 = new MockRoom(1, '001', 'Religion', 'Nur für Frau Leutsch');
+			$view1 = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
 			$database = new MockDatabase();
 			
 			// create controller
@@ -440,13 +503,10 @@
 						
 			// check last insert file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view1->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());
+			$view1->Equal($database->_rooms[0]);
 			
 			// create new view and controller with new data
-			$view2 = new MockRoom(0, '55', 'Reli', '');
+			$view2 = new MockRoom(0, '', '55', 'Reli', '');
 			$controller = new RoomController($view2, $database);
 			
 			// update room
@@ -454,11 +514,74 @@
 
 			// check update file
 			assert(isset($database->_rooms[0]) == TRUE);
-			assert($database->_rooms[0]->roomFloor == 0);
-			assert($database->_rooms[0]->roomNumber == 1);
-			assert($database->_rooms[0]->roomName == $view1->getRoomName());
-			assert($database->_rooms[0]->roomNote == $view1->getRoomNote());	
+			$view1->Equal($database->_rooms[0]);
+			$view2->NotEqual($database->_rooms[0]);
+			
+			// print success
+			print 'Success';
+		?>
+		
+		
+		<br/>
+		
+		<b>Delete Test 1 (Delete!)</b><br/>
+		<?php
+			// create view and database
+			$view1 = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view1, $database);
+			
+			// insert room
+			$controller->insertRoom();
+						
+			// check last insert file
+			assert(isset($database->_rooms[0]) == TRUE);
+			$view1->Equal($database->_rooms[0]);
+			
+			// create new view and controller with new data
+			$view2 = new MockRoom($database->_rooms[0]->roomId, '', '', '', '');
+			$controller = new RoomController($view2, $database);
+			
+			// update room
+			$controller->deleteRoom();
 
+			// check update file
+			assert(isset($database->_rooms[0]) == FALSE);
+			
+			// print success
+			print 'Success';
+		?>
+
+		<br/>
+
+		<b>Delete Test 2 (No Delete!)</b><br/>
+		<?php
+			// create view and database
+			$view1 = new MockRoom(1, '0', '1', 'Religion', 'Nur für Frau Leutsch');
+			$database = new MockDatabase();
+			
+			// create controller
+			$controller = new RoomController($view1, $database);
+			
+			// insert room
+			$controller->insertRoom();
+						
+			// check last insert file
+			assert(isset($database->_rooms[0]) == TRUE);
+			$view1->Equal($database->_rooms[0]);
+			
+			// create new view and controller with new data
+			$view2 = new MockRoom(($database->_rooms[0]->roomId + 1), '', '', '', '');
+			$controller = new RoomController($view2, $database);
+			
+			// update room
+			$controller->deleteRoom();
+
+			// check update file
+			assert(isset($database->_rooms[0]) == TRUE);
+			
 			// print success
 			print 'Success';
 		?>

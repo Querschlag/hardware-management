@@ -12,11 +12,25 @@
 	interface IRoomController
 	{
 		/**
+		 *  function to get count of errors
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getErrorCount();
+		
+		/**
 		 *  Select all rooms and print the room on UI
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com> 
 		 */
 		public function selectRooms();
+		
+		/** 
+		 * Select a room and print the room on UI
+		 * 
+		 *  @author Johannes Alt <altjohannes@gmail.com>
+		 */
+		public function selectRoom();
 		
 		/**
 		 *  function insert a new room
