@@ -13,9 +13,35 @@
 		
 		$step = POST('step');
 		
-		if ($step == 6) 
+		if ($step == 7) 
 		{
 			header('location:index.php?mod=stock');
+		}
+		else if ($step == 6) 
+		{
+			$room = POST('room');
+		
+			if($room == 0)
+			{
+				header('location:index.php?mod=stock');
+			}
+			else 
+			{
+				echo '
+				<!-- Device adding wizard - Step 3 -->
+				<h4>Benennung</h4>
+				<form action="index.php?mod=storeDevice" method="post">
+					<p>1</p><input name="attribute2" type="text" value="PC004"/>
+					<p>2</p><input name="attribute2" type="text" value="PC005"/>
+					<input name="step" value="7" type="hidden" />
+					<br>
+					<br>
+					<input name="btnSubmit" type="submit" value="Speichern" />
+					<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+				</form>
+				';
+			}
+				
 		}
 		else if ($step == 5) 
 		{
@@ -26,10 +52,27 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<p>Anzahl</p><input name="itemCount" type="text"/>
 				<input name="step" value="6" type="hidden" />
+				<p>Raum</p>
+				<select name="room">
+						<option value="0">Lager</option>
+					<optgroup label="Erdgeschoss"></optgroup>
+						<option value="1">R001</option>
+						<option value="2">R002</option>
+						<option value="3">R003</option>
+					<optgroup label="Stockwerk 1"></optgroup>
+						<option value="4">R101</option>
+						<option value="5">R102</option>
+						<option value="6">R103</option>	
+					<optgroup label="Stockwerk 2"></optgroup>
+						<option value="7">R201</option>
+						<option value="8">R202</option>
+						<option value="9">R203</option>
+						
+				</select>
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Anlegen" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -54,7 +97,7 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<input name="step" value="5" type="hidden" />
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -72,7 +115,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -101,9 +144,9 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
-			<div class="clearfix" />
+			<div class="clearfix"></div>
 			';
 		
 		}
@@ -122,8 +165,8 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
-				<div class="clearfix" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+				<div class="clearfix"></div>
 			</form>
 			';
 		
