@@ -19,7 +19,7 @@
 		{
 			if(!(mysql_connect("10.9.4.57", "itv_v1", "")))
 			{				
-				mysql_connect("localhost", "root", "");
+				mysql_connect("localhost", "itv_v1", "");
 			}
 			
 			mysql_select_db("itv_v1");
@@ -846,6 +846,8 @@
 								v_bezeichnung = ".$transactionDescription."				   
 							WHERE
 								v_id = ".$id.";";
+								
+			return mysql_query($update);
 		 }
 		 /**
 		 * delete Transaction
@@ -1115,7 +1117,24 @@
 		 * @return ComponentTypeEntity
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getComponentTypeById($id){}			 
+		 public function getComponentTypeById($id)
+		 {
+			$select = "SELECT ka_id, ka_komponentenart, ka_link
+					   FROM komponentenarten
+						WHERE
+							ka_id = ".$id.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entity = new ComponentTypeEntity();
+			$entity->typeId = $Data['ka_id'];
+			$entity->typeName = $Data['ka_komponentenart'];
+			$entity->typeImagePath = $Data['ka_link'];
+						
+			return $entity;
+		 }
+
+		 
 		 
          /**
 		 * insert ComponentType
@@ -1127,7 +1146,14 @@
 		 *		   2 - false
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function insertComponentType($typeName, $typeImagePath){}
+		 public function insertComponentType($typeName, $typeImagePath)
+		 {
+			 $insert ="INSERT INTO komponentenarten (ka_komponentenart, ka_link)
+								VALUES('".$typeName."', '".typeImagePath."');";
+										
+			return mysql_query($insert);
+		 }
+		 
 		 
 		 /**
 		 * get SubComponents by MasterComponentId
@@ -1138,7 +1164,36 @@
 		 *
          * @author Leon Geim<leon.geim@gmail.com>		  
 		 */
-		 public function getSubComponentbyComponentId($id){}
+		 public function getSubComponentbyComponentId($id)
+		 {
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente_komponente sub
+						INNER JOIN komponente kom ON kom.k_id = sub.komponenten_k_id_teil
+						WHERE
+							sub.komponenten_k_id_aggregat = ".$id.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entity = new ComponentEntity();
+			$entity->componentId = $Data['k_id'];
+			$entity->componentDeliverer = $Data['lieferant_l_id'];
+			$entity->componentRoom = $Data['lieferant_r_id'];
+			$entity->componentName = $Data['k_name'];
+			$entity->componentBuy = $Data['k_einkaufsdatum'];
+			$entity->componentWarranty = $Data['k_gewaehrleistungsdauert'];
+			$entity->componentNote = $Data['k_notiz'];
+			$entity->componentSupplier = $Data['k_hersteller'];
+			$entity->componentType = $Data['komponentenarten_ka_id'];
+			$entity->componentIsDevice = $Data['k_device'];
+			$entity->componentHasProblems = $Data['v_id'];
+						
+			return $entity;
+		 }
+		 
 		 
 			 
 		 /**
@@ -1261,8 +1316,8 @@
 		 
 			$entityArray = array();
 			
-						FROM komponente kom
-			$select = "SSELECT kom.*,  CASE WHEN (Select v_id
+						
+			$select = "SELECT kom.*,  CASE WHEN (Select v_id
 									FROM komp_vorgang kova 
 									WHERE kova.k_id = kom.k_id
 									Order by Datum DESC
@@ -1292,7 +1347,8 @@
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
 						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
-						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
+						WHERE kom.k_device = 1;";
 			$Data = mysql_query($select);
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
@@ -1306,6 +1362,46 @@
 		 *
          * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getComponentsWithoutDevices(){}
+		 public function getComponentsWithoutDevices()
+		 {
+			$entityArray = array();
+			
+						
+			$select = "SELECT kom.*,  CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom
+						WHERE kom.k_device = 0;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier= $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems= $row['v_id'];
+				
+				$entityArray[] = $entity;
+				
+			}
+			
+			$select  = "SELECT count(*) AS problemCount
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
+						WHERE kom.k_device = 0;";
+			$Data = mysql_query($select);
+			
+			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+		 }
 	}
 ?>
