@@ -555,7 +555,7 @@
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function getMaintenances();
+		 public function getMaintenances($count=0);
 		 
 		 /**
 		 * get Maintenances Rooms
