@@ -10,6 +10,19 @@
 	</ul>
 </div>
 <div id="module">
+	<!--
+		//TODO
+		
+		When providing this form with functionality, please modify the 'mod' parameter to point to the current
+		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
+		user,room,device,component,supplier and so on.
+		
+		After doing your update and validation stuff use this:
+		
+			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+		
+		to redirect to the page where you came or started the wizard from.
+	-->
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<form method="post">
 		

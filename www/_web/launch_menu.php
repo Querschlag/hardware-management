@@ -21,7 +21,7 @@
 			}
 			
 			if ($userPermission == 1) {
-				echo '<div class="tile"><a href="index.php?mod=user">Benutzer</a></div>';
+				echo '<div class="tile"><a href="index.php?mod=user&menu=management">Benutzer</a></div>';
 			}
 		?>
 	</div>

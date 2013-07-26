@@ -10,9 +10,9 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="left" href="index.php?mod=createRoom<?php echo '&menu=' . GET('menu');?>">Raum hinzuf&uuml;gen</a>
-		<a class="right" href="index.php?mod=supplier">Lieferanten</a>
-		<a class="right" href="index.php?mod=user">Benutzer</a>
+		<a class="left" href="index.php<?php echo navParams( array('mod' => 'createRoom'), false ); ?>">Raum hinzuf&uuml;gen</a>
+		<a class="right" href="index.php<?php echo navParams( array('mod' => 'supplier'), false ); ?>">Lieferanten</a>
+		<a class="right" href="index.php<?php echo navParams( array('mod' => 'user'), false ); ?>">Benutzer</a>
 		<div class="clearfix"></div>
 	</div>
 	
