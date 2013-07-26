@@ -537,6 +537,12 @@
 			$select = "SELECT * FROM benutzer WHERE b_id = ".$id.";";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
+			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
+			
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
@@ -561,6 +567,12 @@
 			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
+			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
+			
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
@@ -1278,7 +1290,7 @@
 		  * 
 		  * @return UserEntity
 		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
 		 public function getUserByUsername($userName) 
 		 { 
@@ -1288,6 +1300,10 @@
 			$Data = mysql_query($select);			
 			$row = mysql_fetch_assoc($Data);
 			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
