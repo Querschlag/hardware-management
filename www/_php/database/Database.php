@@ -908,14 +908,15 @@
 		 * @return ComponentAttributeEntitys[]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponentType()
+		 public function getComponentAttributesFromComponentType($id)
 		 {
 			$entityArray = array();
 		 
 			$select = "SELECT kat.kat_id, kat.kat_name, ka.ka_id
 					   FROM komponentenarten ka
 					   INNER JOIN kart_kattribut kar ON kar.komponentenarten_ka_id = ka.ka_id
-					   INNER JOIN komponentenattribute kat ON kat.kat_id = kar.komponentenattribute_kat_id";
+					   INNER JOIN komponentenattribute kat ON kat.kat_id = kar.komponentenattribute_kat_id
+					   WHERE ka.ka_id = ".$id.";";
 					   
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
@@ -942,14 +943,15 @@
 		 * @return ComponentAttributeEntitys[]
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponent()
+		 public function getComponentAttributesFromComponent($id)
 		 {
 			$entityArray = array();
 		 
 			$select = "SELECT kat.kat_id, kat.kat_name, kom.k_id, koat.khkat_wert
 						FROM komponente kom
 						INNER JOIN komponente_kattribut koat ON koat.komponenten_k_id = kom.k_id
-						INNER JOIN komponentenattribut kat ON kat.kat_id = koat.komponentenattribute_kat_id";
+						INNER JOIN komponentenattribute kat ON kat.kat_id = koat.komponentenattribute_kat_id
+						WHERE kom.k_id = ".$id.";";
 					   
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
@@ -960,6 +962,7 @@
 				$entity->componentAttributeIsFromComponent = true;
 				$entity->componentAttributeUncertaintId = $row['k_id'];
 				$entity->componentAttributeComponentValue = $row['khkat_wert'];
+				$entity->componentAttributeValidValue = $row['khkat_wert'];
 				
 				$entityArray[] = $entity;
 			}
