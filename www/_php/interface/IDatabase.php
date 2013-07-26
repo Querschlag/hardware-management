@@ -529,4 +529,24 @@
 		  * @author Johannes Alt <altjohannes510@gmail.com>
 		  */
 		 public function getUserByEmail($email);
+		 
+		  /**
+		  *  function to get Number Of Problems from devices
+		  * 
+		  * @return NumberOfProblems
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getNumberComponentProblems($email);
+		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentTypeEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponentTypes();
+		 
+		 
 }
