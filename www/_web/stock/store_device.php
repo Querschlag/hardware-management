@@ -78,12 +78,9 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentName() {
-<<<<<<< HEAD
-				return '';
-=======
+			public function getComponentName() 
+			{
 				return POST('device_name');
->>>>>>> d068dd5aca6e71e11b8a82223276cdf0c4183d25
 			}
 				
 			/**
@@ -103,11 +100,7 @@
 			 */
 			public function getComponentWarranty()
 			{
-<<<<<<< HEAD
-				return ((strtotime($_POST['buy'])) + ($_POST['warranty'] * 31536000));
-=======
-				return (time() + (POST('warranty') * 86400));
->>>>>>> d068dd5aca6e71e11b8a82223276cdf0c4183d25
+				return (strtotime($_POST['buy']) + (POST('warranty') * 86400));
 			}
 				
 			/**

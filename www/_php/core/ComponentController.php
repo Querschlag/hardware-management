@@ -237,7 +237,7 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function insertAttributes($attributeId, $componentId, $value) {
-			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
+			$this->_database->insertAttributeValue($attributeId, $componentId, $value);
 		}
 	}
 ?>
