@@ -22,7 +22,7 @@
 	*/
 	class ComponentController implements IComponentController
 	{
-			/**
+		/**
 		 *  storage for the dialog
 		 */
 		private $_view;
@@ -128,7 +128,8 @@
 				// // set error to frontend
 				// $this->_view->setError();
 			// }
-			$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			$id = $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			$this->_view
 		}	
 		
 		/**

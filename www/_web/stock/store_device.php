@@ -15,13 +15,13 @@
 		// include IRoom
 		require_once('../_php/interface/IComponent.php');
 		
-		// include room controller
+		// include component controller
 		require_once('../_php/core/ComponentController.php');
 		
-		// include mock database
+		// include database
 		require_once('../_php/database/Database.php');
 		
-		// include room entity
+		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
 		class Component implements IComponent 
@@ -40,7 +40,17 @@
 			 */
 			public function getComponentId()
 			{
-				
+				return $_POST['k_id'];
+			}
+			 
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentId($k_id)
+			{
+				$_POST['k_id'] = $k_id;
 			}
 			
 			/**
