@@ -50,7 +50,7 @@
 			 */
 			public function getComponentDeliverer()
 			{
-				return $_POST['deliverer'];
+				return POST('deliverer');
 			}
 				
 			/** 
@@ -60,7 +60,7 @@
 			 */
 			public function getComponentRoom()
 			{
-				return isset($_POST['room']) ? $_POST['room'] : 1;
+				return POST('room') ? POST('room') : 1;
 			}
 				
 			/**
@@ -69,7 +69,7 @@
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
 			public function getComponentName() {
-				return $_POST['device_name'];
+				return POST('device_name');
 			}
 				
 			/**
@@ -79,7 +79,7 @@
 			 */
 			public function getComponentBuy()
 			{
-				return strtotime($_POST['buy']);
+				return strtotime(POST('buy'));
 			}
 				
 			/**
@@ -89,7 +89,7 @@
 			 */
 			public function getComponentWarranty()
 			{
-				return (time() + ($_POST['warranty'] * 86400));
+				return (time() + (POST('warranty') * 86400));
 			}
 				
 			/**
@@ -99,7 +99,7 @@
 			 */
 			public function getComponentNote()
 			{
-				return $_POST['note'];
+				return POST('note');
 			}
 				
 			/**
@@ -109,7 +109,7 @@
 			 */
 			public function getComponentSupplier()
 			{
-				return $_POST['supplier'];
+				return POST('supplier');
 			}
 				
 			/**
@@ -119,7 +119,7 @@
 			 */
 			public function getComponentTypes() 
 			{
-				return $_POST['type'];
+				return POST('type');
 			}
 			
 			/**
@@ -129,7 +129,7 @@
 			 */
 			public function getComponentIsDevice()
 			{
-				return $_POST['device'];
+				return POST('device');
 			}
 			
 			/**
