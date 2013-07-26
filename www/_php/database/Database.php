@@ -1258,7 +1258,7 @@
 		 public function insertAttributeValue($attributeId, $componentId, $value)
 		 {
 			$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
-								VALUES(".$attributeId.", ".$componentId.", '".$value."');";
+								VALUES(".$componentId.",".$attributeId.", '".$value."');";
 										
 			return mysql_query($insert) or die(mysql_error());
 			

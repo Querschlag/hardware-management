@@ -12,7 +12,7 @@
 	<?php
 		require_once('php/additions.php');
 		
-		// include IRoom
+		// include IComponent
 		require_once('../_php/interface/IComponent.php');
 		
 		// include component controller
@@ -80,7 +80,7 @@
 			 */
 			public function getComponentName() 
 			{
-				return POST('device_name');
+				return POST('device_name') ? '' : '';
 			}
 				
 			/**
@@ -228,6 +228,7 @@
 		}
 		else if ($step == 4) 
 		{
+			//Set session variable
 			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
 			{
 				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
@@ -239,7 +240,7 @@
 			
 				<input name="step" value="4" type="hidden" />
 				<input type="hidden" name="id" value="'.$view->getComponentId().'">				
-				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
+				<input name="device_name" value="'.POST('device_name').'" type="hidden"/>
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -267,7 +268,7 @@
 				<input type="hidden" name="componentAttribute[]" value="14" />
 				<input name="attributeValue[]" type="text" value="4GHz" />
 				<input name="step" value="4" type="hidden" />
-				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
+				<input name="device_name" value="'.POST('device_name').'" type="hidden"/>
 				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
 				<br>
 				<br>
@@ -278,7 +279,129 @@
 
 		}
 		else if ($step == 2)
-		{	
+		{
+			// include IComponent
+			require_once('../_php/interface/IDeliverer.php');
+			
+			// include component controller
+			require_once('../_php/core/DelivererController.php');
+			
+			// include database
+			require_once('../_php/database/Database.php');
+			
+			// include component entity
+			require_once('../_php/entity/DelivererEntity.php');
+			
+			class Deliverer implements IDeliverer 
+			{
+				/**
+				 *  function to display Deliverer
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com> 
+				 */
+				public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $email, $country){}
+				
+				/**
+				* function to get Deliverer id
+				* 
+				* @author Thomas Bayer <thomasbayer95@gmail.com>
+				*/
+				public function getDelivererId(){}
+			
+				
+				/**
+				 *  function to get Deliverer campany name
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCompanyName(){}
+			
+				/** 
+				 *  function to get Deliverer street
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererStreet(){}
+			
+					
+				/**
+				 * function to get Deliverer zip 
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererZip(){}
+				
+				
+				/**
+				 * function to get Deliverer city
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCity(){}
+				
+				
+				/**
+				 * function to get Deliverer telephone 
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererTelephone(){}
+				
+				
+				/**
+				 * function to get Deliverer mobile
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererMobile(){}
+				
+				
+				/**
+				 * function to get Deliverer fax
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererFax(){}
+				
+				
+				/**
+				 * function to get Deliverer email
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererEmail(){}
+				
+				
+				/**
+				 * function to get Deliverer country
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCountry(){}
+				
+					
+				/**
+				 * function to set error
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */			
+				public function setError(){}
+				
+				/**
+				 * function to set Deliverer email
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function setDelivererEmailError(){}
+			}
+
+			$dcontroller = new DelivererController($view, $database);
+			
+			$deliverer = $controller->getDeliverer();
+			
+			var_dump($deliverer);
+			
+			die();
 			echo '
 			<!-- Device creation wizard - Step 2 -->
 			<form action="index.php?mod=storeDevice" method="post">

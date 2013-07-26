@@ -204,5 +204,12 @@
 				$this->_view->setError();
 			}
 		}
+		
+		/**
+		 * 
+		 */
+		 public function getDeliverer() {
+		 	return $this->_database->getDeliverers();
+		 }
 	}
 ?>

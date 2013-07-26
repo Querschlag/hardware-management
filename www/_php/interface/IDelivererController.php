@@ -39,5 +39,12 @@
 		 * @author Thomas Bayer <thomasbayer95@gmail.com>  
 		 */
 		public function deleteDeliverer();
+		
+		/**
+		 * delete a deliverer
+		 *
+		 * @author Thomas Bayer <thomasbayer95@gmail.com>  
+		 */
+		public function getDeliverer();
 	}
 ?>
