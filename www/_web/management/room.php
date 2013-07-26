@@ -55,6 +55,15 @@
 				{
 				}
 				
+				/** 
+		 		*  function to display problem count
+		 		* 
+		 		* @author Johannes Alt <altjohannes510@gmail.com>
+		 		*/
+				public function displayProblemCount($count) 
+				{
+				}
+				
 				/**
 				 *  function to display room end
 				 * 
@@ -243,7 +252,7 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=addDevice<?php echo '&menu=' . GET('menu');?>">Ger&auml;t hinzuf&uuml;gen</a>		
-		<a class="right" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
+		<a class="right destructiveButton" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
 		<a class="right" href="index.php?mod=change_room&roomId=<?php echo GET('roomId'); echo '&menu=' . GET('menu');?>">Raum bearbeiten</a>				
 		<div class="clearfix"></div>
 	</div>
