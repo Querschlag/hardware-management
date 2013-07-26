@@ -1075,7 +1075,7 @@
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
 		 {
 			 $insert ="INSERT INTO komponentenattribute (kat_name)
-								VALUES(".$componentAttributeName.");";
+								VALUES('".$componentAttributeName."');";
 			 mysql_query($insert);
 			 
 			 $select = "SELECT MAX(kat_id) AS ID FROM komponentenattribute;";
