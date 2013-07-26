@@ -581,5 +581,20 @@
 		 */
 		 public function getMaintenancesFromComponent($id, $count=0);
 		 
+		  /**
+		 * insert insertMaintenance.
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertMaintenance($maintenanceId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate);
+		 
+		 
 		 
 }
