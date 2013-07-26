@@ -34,8 +34,10 @@
 		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
+		 *
+		 * @return Room Id
 		 */
-		public function insertRoom($floor, $number, $name, $note);
+		 public function insertRoom($floor, $number, $name, $note);
 		
 		/**
 		 *  function to update room
@@ -75,7 +77,7 @@
 		 * @param string $supplier The components supplier
 		 * @param integer $type The components type
 		 * 
-		 * @return void
+		 @return ComponentID(int)
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
 		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
@@ -127,8 +129,7 @@
 		  * @param string $faxNumber fax number
 		  * @param string $email email 
 		  * 
-		  * @return 1 - true
-		  *			2 - false
+		  * @return Deliverer Id
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country);
 		 
@@ -171,8 +172,7 @@
 		  * @param string $name usergroup name 
 		  * @param int $permission number which displayed the Rights of the usergroup 		  
 		  * 
-		  * @return 1 - true
-		  *			2 - false
+		  * @return Usergroup Id
 		  */
 		 public function insertUsergroup($name, $permission);
 		 
@@ -250,8 +250,7 @@
 		 * @param string $vorname	
 		 * @param string $nachname
 		 * 
-		 * @return 1 - true
-		 *			2 - false
+		 * @return User Id
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function updateUser($id, $name, $userGroupId, $vorname, $nachname, $password, $email);
@@ -322,8 +321,7 @@
 		 * @param int $transactionId
 		 * @param int $date
 		 *
-		 * @return 1 - true
-		 *		   2 - false
+		 * @return ComponentTransaction Id
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
@@ -374,22 +372,26 @@
 		 /**
 		 * select all ComponentAttributeEntitysFromComponentType
 		 *
+		 * @param int $id
+		 *
 		 * componentAttributeComponentValue = NULL;
 		 *
 		 * @return ComponentAttributeEntitys[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponentType();
+		 public function getComponentAttributesFromComponentType($id);
 		 
 		 /**
 		 * select all ComponentAttributeFromComponent
+		 *
+		 * @param int $id
 		 *
 		 * componentAttributeComponentValue = value;
 		 *
 		 * @return ComponentAttributeEntitys[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponent();
+		 public function getComponentAttributesFromComponent($id);
 		 
 		  /**
 		 * select ComponentAttributesFromComponentTypeByComponentId
@@ -423,25 +425,10 @@
 		 * @param int $componentAttributeUncertaintId	  
 		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
 		 *
-		 * @return 1 - true
-		 *		   2 - false
+		 * @return ComponentAttribute Id
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
-		 
-		 
-		 
-		 /**
-		 * delete ComponentAttribute
-		 * 		
-		 * @param int id		 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-		 * @author Daniel Schulz <schmoschu@gmail.com>
-		 */
-		 public function deleteComponentAttribute($id, $IsForComponent);
 		 
 		  /**
 		 * select all ComponentTypes
@@ -467,8 +454,7 @@
 		 * @param string $typeName 
 		 * @param string $typeImagePath	
 		 *
-		 * @return 1 - true
-		 *		   2 - false
+		 * @return ComponentType Id
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function insertComponentType($typeName, $typeImagePath);	 
@@ -479,8 +465,7 @@
 	  	 * @param int $componentId
 		 * @param int $subComponentId
 		 * 
-		 * @return 1 - true
-		 *		   2 - false
+		 * @return SubComponent ID
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
@@ -544,25 +529,57 @@
 		  */
 		 public function getUserByEmail($email);
 		 
-		 /** 
-		  *  function to update user role
+		  /**
+		  *  function to get Number Of Problems from devices
 		  * 
-		  * @return TRUE / FALSE
-		  * @param int $userId id of user
-		  * @param int $groupId id of group
+		  * @return NumberOfProblems
 		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  * @author Daniel Schulz <schmoschu@gmail.com>
 		  */
-		 public function updateUserRole($userId, $groupId);
+		 public function getNumberComponentProblems();
 		 
-		 /** 
-		  *  function to update user password
+		 /**
+		  *  function to get Components in Storage
 		  * 
-		  * @return TRUE / FALSE
-		  * @param int $userId id of user
-		  * @param string $password new password of user
+		  * @return ComponentEntity[]
 		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
-		 public function updateUserPassword($userId, $password);
+		 public function getDistinctComponentsInStorage($roomId);
+		 
+		 	 
+		 /**
+		 * get Maintenances
+		 * 
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenances();
+		 
+		 /**
+		 * get Maintenances Rooms
+		 * 
+		 * @param int $id roomId
+		 * @param int $count last x-rows
+		 *
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenancesFromRoom($id, $count=0);
+		 
+		 /**
+		 * get Maintenances component
+		 * 
+		 * @param int $id componentId
+		 * @param int $count last x-rows
+		 *
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenancesFromComponent($id, $count=0);
+		 
+		 
 }

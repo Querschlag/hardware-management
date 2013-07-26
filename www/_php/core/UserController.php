@@ -1,4 +1,12 @@
 <?php
+	// include user controller
+	if(file_exists('../interface/IUserController.php')) require_once('../interface/IUserController.php');
+	if(file_exists('../_php/interface/IUserController.php')) require_once('../_php/interface/IUserController.php');
+	
+	// include user entity
+	if(file_exists('../entity/UserEntity.php')) require_once('../entity/UserEntity.php');
+	if(file_exists('../_php/entity/UserEntity.php')) require_once('../_php/entity/UserEntity.php');
+
 	/**
 	* Controller for Users
 	*
@@ -69,7 +77,7 @@
 									preg_match("/[A-Z]/", $password1) &&
 									preg_match("/[0-9]/", $password1);
 
-			}while($passwordPolice == FALSE);
+			} while($passwordPolice == FALSE);
 		
 		    // return the password
 			return $password;
@@ -81,7 +89,7 @@
 		 *  @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function logIn()
-		{
+		{			
 			// get user name (user email)
 			$username = $this->_view->getUserName();
 			
@@ -96,12 +104,22 @@
 			{
 				// check user password
 				$result = $this->_database->checkUserPw($user->userId, $password);
-				
+						
 				// check password
 				if($result == FALSE)
 				{
 					// set password error
 					$this->_view->setPasswordError();
+				}
+				else 
+				{
+					// display user on ui
+					$this->_view->displayUser(	$user->userId, 
+												$user->userGroupId, 
+												$user->userName, 
+												$user->userFirstName,
+												$user->userLastName,
+												$user->userEmail);
 				}
 			}
 			else 
@@ -221,7 +239,10 @@
 			$userEmail = $this->_database->getUserByEmail($email);
 			
 			// check if user already exist
-			if(isset($userUserName) == FALSE && isset($userEmail) == FALSE)
+			if(	isset($userUserName) == FALSE && isset($userEmail) == FALSE &&
+				empty($firstName) == FALSE && empty($lastName) && 
+			   	empty($firstName) == FALSE && empty($lastName) == FALSE &&
+			   	isset($groupId))
 			{
 				// create password
 				$password = $this->generatePassword();
@@ -268,7 +289,7 @@
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
-		public function updatePassword()
+		public function updateUser()
 		{
 			// get user id
 			$userId = $this->_view->getUserId();
@@ -279,66 +300,51 @@
 			// check if person exist
 			if(isset($user) == TRUE)
 			{
+				// get username 
+				$username = $this->_view->getUserName();
+				
+				// get first name
+				$firstName = $this->_view->getFirstName();
+				
+				// get last name
+				$lastName = $this->_view->getLastName();
+				
+				// get email
+				$email = $this->_view->getEmail();
+				
+				// get group id
+				$groupId = $this->_view->getGroupId();
+				
 				// get password 
-				$password1 = $this->_view->getPassword1();
+				$password1 = $this->_view->getPassword();
 			
 				// get confirm password
 				$password2 = $this->_view->getPassword2();
 				
-				// check password
-				if(	empty($password1) == FALSE && 
-					empty($password2) == FALSE && 
-					$password1 == $password2 &&
-					strlen($password1) >= 6 &&
-					preg_match("/[a-z]/", $password1) && 
-					preg_match("/[A-Z]/", $password1) &&
-					preg_match("/[0-9]/", $password1))
+				// check entered data
+			   if(	empty($username) == FALSE && empty($email) == FALSE && 
+			   		empty($firstName) == FALSE && empty($lastName) == FALSE &&
+					isset($groupId))
 				{
-					// update password
-					$result = $this->_database->updateUserPassword($userId, $password1);
-					
-					// check result
-					if($result == FALSE)
+					// check password
+					if(	empty($password1) == FALSE && 
+						empty($password2) == FALSE && 
+						$password1 == $password2 &&
+						strlen($password1) >= 6 &&
+						preg_match("/[a-z]/", $password1) && 
+						preg_match("/[A-Z]/", $password1) &&
+						preg_match("/[0-9]/", $password1))
 					{
-						// set error information
-						$this->_view->setError();
+						// update password
+						$result = $this->_database->updateUserPassword($userId, $password1);
+						
+						// check result
+						if($result == FALSE)
+						{
+							// set error information
+							$this->_view->setError();
+						}
 					}
-				}
-			}
-			else
-			{
-				// set user not exist error
-				$this->_view->setNotExistError();							
-			}
-		}
-
-		/**
-		 *  function to update role
-		 * 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
-		 */
-		public function updateRole()
-		{
-			// get user id
-			$userId = $this->_view->getUserId();
-			
-			// get user
-			$user = $this->_database->getUserById($userId);
-			
-			// check if person exist
-			if(isset($user) == TRUE)
-			{
-				// get group id
-				$groupId = $this->_view->getGroupId();
-				
-				// update role
-				$result = $this->_database->updateUserRole($userId, $groupId);					
-				
-				// check result
-				if($result == FALSE)
-				{
-					// set error information
-					$this->_view->setError();
 				}
 			}
 			else
