@@ -65,7 +65,7 @@
 		 *  function to get room by id
 		 *
 		 * @return RoomEntity[] 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRoomByRoomId($id)
 		{
@@ -90,6 +90,8 @@
 		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
+		 *
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function insertRoom($floor, $number, $name, $note)
 		{
@@ -107,6 +109,7 @@
 		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function updateRoom($id, $floor, $number, $name, $note)
 		{
@@ -127,6 +130,7 @@
 		 *  function to delete room
 		 * 
 		 * @param int $id The Room id.
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function deleteRoom($id)
 		{
