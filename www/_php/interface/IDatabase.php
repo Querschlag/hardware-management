@@ -593,7 +593,7 @@
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function insertMaintenance($maintenanceId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate);
+		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate);
 		 
 		   /**
 		 * insert insertMaintenance.

@@ -1608,6 +1608,32 @@
 			}
 			
 			return $entityArray;
+		}
+
+ /**
+		 * insert insertMaintenance.
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate)
+		{
+			$insert = "INSERT INTO komp_vorgang (k_id, v_id, b_id, comment, datum)
+						VALUES (".$componentId.", ".$transactionId.", ".$userId.", ".$maintenanceComment.", ".$maintenanceDate.");";
+						
+			mysql_query($insert);
+			
+			$select = "SELECT MAX(kom_id) as ID from komp_vorgang;";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			return $row["ID"];
 		}		 
 	}
 ?>
