@@ -147,7 +147,13 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
+			$select = "SELECT * , CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+					FROM komponente 
+					ORDER BY k_id asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -162,6 +168,7 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
@@ -262,6 +269,7 @@
 		 * select all deliverers
 		 * 
 		 * @return Array
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getDeliverers()
 		 {
@@ -301,6 +309,7 @@
 		  * @param string $email email 
 		  * 
 		  * @return void
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
@@ -332,6 +341,7 @@
 		  * @param string $email email 
 		  * 
 		  * @return void
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
@@ -355,6 +365,7 @@
 		  * delete deliverer
 		  * 
 		  * @return void
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function deleteDeliverer($id)
 		 {
@@ -369,6 +380,7 @@
 		 * select all Usergroups
 		 * 
 		 * @return UsergroupEntity[]
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getUsergroups()
 		 {
@@ -397,6 +409,7 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function insertUsergroup($name, $permission)
 		 {
@@ -415,6 +428,7 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function updateUsergroup($id, $name, $permission)
 		 {
@@ -432,6 +446,7 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
+		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function deleteUsergroup($id)
 		 {
@@ -1267,7 +1282,7 @@
 		 { 
 			$select = "SELECT * FROM benutzer
 						WHERE
-							b_name = ".$userName.";";
+							b_name = '".$userName."';";
 					   
 			$Data = mysql_query($select);
 			
