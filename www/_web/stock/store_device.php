@@ -15,13 +15,13 @@
 		// include IRoom
 		require_once('../_php/interface/IComponent.php');
 		
-		// include room controller
+		// include component controller
 		require_once('../_php/core/ComponentController.php');
 		
-		// include mock database
+		// include database
 		require_once('../_php/database/Database.php');
 		
-		// include room entity
+		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
 		class Component implements IComponent 
@@ -40,7 +40,17 @@
 			 */
 			public function getComponentId()
 			{
-				
+				return $_POST['k_id'];
+			}
+			 
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentId($k_id)
+			{
+				$_POST['k_id'] = $k_id;
 			}
 			
 			/**
@@ -50,7 +60,7 @@
 			 */
 			public function getComponentDeliverer()
 			{
-				return $_POST['deliverer'];
+				return POST('deliverer');
 			}
 				
 			/** 
@@ -60,7 +70,7 @@
 			 */
 			public function getComponentRoom()
 			{
-				return isset($_POST['room']) ? $_POST['room'] : 1;
+				return POST('room') ? POST('room') : 1;
 			}
 				
 			/**
@@ -68,8 +78,9 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentName() {
-				return $_POST['device_name'];
+			public function getComponentName() 
+			{
+				return POST('device_name');
 			}
 				
 			/**
@@ -79,7 +90,7 @@
 			 */
 			public function getComponentBuy()
 			{
-				return strtotime($_POST['buy']);
+				return strtotime(POST('buy'));
 			}
 				
 			/**
@@ -89,7 +100,7 @@
 			 */
 			public function getComponentWarranty()
 			{
-				return (time() + ($_POST['warranty'] * 86400));
+				return (strtotime($_POST['buy']) + (POST('warranty') * 86400));
 			}
 				
 			/**
@@ -99,7 +110,7 @@
 			 */
 			public function getComponentNote()
 			{
-				return $_POST['note'];
+				return POST('note');
 			}
 				
 			/**
@@ -109,7 +120,7 @@
 			 */
 			public function getComponentSupplier()
 			{
-				return $_POST['supplier'];
+				return POST('supplier');
 			}
 				
 			/**
@@ -119,7 +130,7 @@
 			 */
 			public function getComponentTypes() 
 			{
-				return $_POST['type'];
+				return POST('type');
 			}
 			
 			/**
@@ -129,7 +140,7 @@
 			 */
 			public function getComponentIsDevice()
 			{
-				return $_POST['device'];
+				return POST('device');
 			}
 			
 			/**
@@ -217,17 +228,18 @@
 		}
 		else if ($step == 4) 
 		{
-	
+			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			{
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+			}
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<ul class="components">
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-			</ul>
 			<form action="index.php?mod=storeComponent" method="post">
+			
 				<input name="step" value="4" type="hidden" />
+				<input type="hidden" name="id" value="'.$view->getComponentId().'">				
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -243,14 +255,20 @@
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			die();
+			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p><input name="attribute1" type="text"/>
-				<p>Attribut 2</p><input name="attribute2" type="text"/>
+				<p>Attribut 1</p>
+				<input type="hidden" name="componentAttribute[]" value="9" />
+				<input name="attributeValue[]" type="text" value="4 GB RAM" />
+				<p>Attribut 2</p>
+				<input type="hidden" name="componentAttribute[]" value="14" />
+				<input name="attributeValue[]" type="text" value="4GHz" />
 				<input name="step" value="4" type="hidden" />
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
+				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />

@@ -26,6 +26,13 @@
 		public function getComponentId();
 		
 		/**
+		 *  function to set component id
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function setComponentId($id);
+		
+		/**
 		 *  function to get component deliverer
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>
