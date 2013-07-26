@@ -26,9 +26,6 @@
 		
 		// include room entity
 		require_once('../_php/entity/RoomEntity.php');
-		
-		// include room class
-		require_once('/management/class/room.class.php');
 	
 		// create view object
 		$view = new Room($_POST);
@@ -234,6 +231,13 @@
 			public function getRoomId()
 			{
 			}
+			
+			/** 
+			 *  function to display problem count
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function displayProblemCount($count);
 		}
 
 		// create view object
