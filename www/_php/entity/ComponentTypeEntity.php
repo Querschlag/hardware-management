@@ -9,7 +9,7 @@
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/	
-	class DelivererEntity
+	class ComponentTypeEntity
 	{
 		/**
 		 *  storage for the type id

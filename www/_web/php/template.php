@@ -54,6 +54,10 @@
 				return 'management/add_device.php';
 			if ($moduleName == 'addComponent')
 				return 'management/add_component.php';
+			if ($moduleName == 'reportProblem')
+				return 'management/reporting.php';
+			if ($moduleName == 'fixProblem')
+				return 'management/support.php';
 			
 				
 			if ($moduleName == 'user')
@@ -62,6 +66,14 @@
 				return 'user/edit_user.php';
 			if ($moduleName == 'createUser')
 				return 'user/create_user.php';
+			
+			
+			if ($moduleName == 'supplier')
+				return 'supplier/supplier.php';
+			if ($moduleName == 'editSupplier')
+				return 'supplier/edit_supplier.php';
+			if ($moduleName == 'createSupplier')
+				return 'supplier/create_supplier.php';
 
 			
 			// default module

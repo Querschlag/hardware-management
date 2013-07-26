@@ -11,173 +11,230 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=createRoom<?php echo '&menu=' . GET('menu');?>">Raum hinzuf&uuml;gen</a>
-		<a class="right" href="index.php?mod=order">Lieferanten</a>
+		<a class="right" href="index.php?mod=supplier">Lieferanten</a>
 		<a class="right" href="index.php?mod=user">Benutzer</a>
 		<div class="clearfix"></div>
 	</div>
 	
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<?php
+		// include room controller
+		require_once('../_php/core/RoomController.php');
+		
+		// include mock database
+		require_once('../_php/database/Database.php');
+		
+		// include room entity
+		require_once('../_php/entity/RoomEntity.php');
+		
+		// include room class
+		require_once('/management/class/room.class.php');
 	
-		// // include IRoom
-		// require_once('../_php/interface/IRoom.php');
-// 		
-		// // include room controller
-		// require_once('../_php/core/RoomController.php');
-// 		
-		// // include mock database
-		// require_once('../_php/test/MockDatabase.php');
-// 		
-		// // include room entity
-		// require_once('../_php/entity/RoomEntity.php');
-// 	
-		// class Room implements IRoom
-		// {
-			// /**
-			 // *  storage for the row max
-			 // */
-			// private $_rowMax = 3;
-// 			
-			// /** 
-			 // *  storage for the row count
-			 // */
-			// private $_rowCount;
-// 					
-			// /**
-			 // *  function to display room
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com> 
-			 // */
-			// public function displayRoom($id, $number, $name, $note)
-			// {
-				// // check row count
-				// if($this->_rowCount == $this->_rowMax)
-				// {
-					// // print end list
-					// print '</ul>';					
-				// }
-// 				
-				// // check row count
-				// if(isset($this->_rowCount) == FALSE || $this->_rowCount == $this->_rowMax)
-				// {
-					// // print start list
-					// print '<ul class=\"rooms\">';
-// 					
-					// // reset row count
-					// $this->_rowCount = 0;
-				// }
-// 				
-				// // print list element
-				// print '<li><a href=\"index.php?mod=room\">' . $number . '</a></li>';
-// 				
-				// // increase row count
-				// $this->_rowCount++;			
-			// }
-// 		
-			// /**
-			 // *  function to display floor
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function displayFloor($floorNumber)
-			// {
-				// // print end list
-				// print '</ul>';
-// 				
-				// // print floor number
-				// print '<h2>Stockwerk ' . $floorNumber . '</h2>';
-// 				
-				// // print start list
-				// print '<ul class=\"rooms\">';
-// 				
-				// // reset row count
-				// $this->_rowCount = 0;
-			// }
-// 			
-			// /**
-			 // *  function to display room end
-			 // * 
-			 // *  @author Johannes Alt <altjohannes@gmail.com>
-			 // */
-			// public function displayRoomEnd()
-			// {
-				// // print end list
-				// print '</ul>';
-// 				
-				// // reset row count
-				// $this->_rowCount = 0;
-			// }
-// 		
-			// /**
-			 // *  function to get room number
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function getRoomNumber()
-			// {			
-			// }
-// 			
-			// /** 
-			 // *  function to get room name
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function getRoomName()
-			// {				
-			// }
-// 			
-			// /**
-			 // * function to get room note 
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function getRoomNote()
-			// {				
-			// }
-// 			
-			// /**
-			 // * function to set error
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */			
-			// public function setError()
-			// {				
-			// }
-// 		
-			// /**
-			 // * function to set room number erro
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function setRoomNumberError()
-			// {				
-			// }
-// 		
-			// /**
-			 // * function to get room id
-			 // * 
-			 // * @author Johannes Alt <altjohannes510@gmail.com>
-			 // */
-			// public function getRoomId()
-			// {				
-			// }
-		// }
-// 
-		// // create view object
-		// $view = new Room();
-// 		
-		// // create database
-		// $database = new MockDatabase();
-// 		
-		// // create controller object
-		// $controller = new RoomController($view, $database);
-// 		
-		// // select the rooms
-		// $controller->selectRooms();
+		// create view object
+		$view = new Room($_POST);
+		
+		// create database
+		$database = new Database();
+		
+		// create controller object
+		$controller = new RoomController($view, $database);	
+			
+		// select room to change
+		$controller->selectRoom();	
+
+		/**
+		* Room object
+		*
+		* Room object with functionality of IRoom
+		*
+		* @category 
+		* @package
+		* @author Johannes Alt <altjohannes510@gmail.com>
+		* @copyright 2013 B3ProjectGroup2
+		*/	
+		class Room implements IRoom
+		{
+			/**
+			 *  storage for the row max
+			 */
+			 
+			private $_rowMax = 7;
+			
+			/** 
+			 *  storage for the row count
+			 */
+			private $_rowCount;
+								
+			/**
+			 *  function to display room
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com> 
+			 */
+			public function displayRoom($id, $number, $name, $note)
+			{
+				// check row count
+				if($this->_rowCount == $this->_rowMax)
+				{
+					// print end list
+					print '</ul>';					
+				}
+				
+				// check row count
+				if(isset($this->_rowCount) == FALSE || $this->_rowCount == $this->_rowMax)
+				{
+					// print start list
+					print '<ul class="rooms">';
+					
+					// reset row count
+					$this->_rowCount = 0;
+				}
+				
+				// print list element
+				print '<li><a href="index.php?mod=room&roomId=' . $id .'"&menu=management>' . $number . '</a></li>';
+				
+				// increase row count
+				$this->_rowCount++;			
+			}
+		
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function displayFloor($floorNumber)
+			{
+				// print end list
+				print '</ul>';
+				
+				// check floor number
+				if($floorNumber == 0)
+				{
+					// print floor name
+					print '<h2>Erdgeschoss</h2>';
+				}
+				else if($floorNumber > 0)
+				{
+					// print floor name
+					print '<h2>' . $floorNumber . '. Obergeschoss</h2>';
+				}
+				else 
+				{
+					// print floor nmae
+					print '<h2>' . ($floorNumber * -1) . ' Untergeschoss</h2>';
+				}
+				
+				// print start list
+				print '<ul class="rooms">';
+				
+				// reset row count
+				$this->_rowCount = 0;
+			}
+			
+			/**
+			 *  function to display room end
+			 * 
+			 *  @author Johannes Alt <altjohannes@gmail.com>
+			 */
+			public function displayRoomEnd()
+			{
+				// print end list
+				print '</ul>';
+				
+				// reset row count
+				$this->_rowCount = 0;
+			}
+		
+			/**
+			 *  function to get room number
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getRoomNumber()
+			{
+				// return return value
+				return $_POST['number'];			
+			}
+			
+			/** 
+			 *  function to get room name
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getRoomName()
+			{
+				// return return value
+				return $_POST['name'];		
+			}
+			
+			/**
+			 * function to get room note 
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getRoomNote()
+			{
+				// return return value
+				return $_POST['note'];				
+			}
+			
+		   /** 
+		 	*  function to get floor number
+		 	* 
+		 	* @author Johannes Alt <altjohannes510@gmail.com>
+			*/
+			public function getFloorNumber()
+			{
+				// return return value
+				return $_POST['floor'];
+			}
+			
+			/**
+			 * function to set error
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */			
+			public function setError()
+			{
+				// print unknown error message
+				print '<b><p><span class="require">Unbekannter Fehler! 
+						Bitte versuchen Sie es später nocheinmal</span></p></b>';		
+			}
+		
+		   /**
+		 	*  function to set required data error
+		 	* 
+		 	* @author Johannes Alt <altjohannes510@gmail.com>
+		 	*/
+			public function setRequiredDataError()
+			{
+				// print error message
+				print '<b><p><span class="require">Pflichtfelder k&ouml;nnen nicht leer sein.</span></p></b>';
+			}
+				
+			/**
+			 * function to get room id
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getRoomId()
+			{
+			}
+		}
+
+		// create view object
+		$view = new Room($_POST);
+		
+		// create database
+		$database = new Database();
+		
+		// create controller object
+		$controller = new RoomController($view, $database);
+				
+		// select the rooms
+		$controller->selectRooms();
 	?>
 	
-	
-	
+	<!-- mock rooms
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">
 		<li><a href="index.php<?php echo navParams(null, 'room', 1); ?>">R001</a></li>
@@ -196,4 +253,5 @@
 		<li><a href="index.php<?php echo navParams(null, 'room', 8); ?>">R202</a></li>
 		<li><a href="index.php<?php echo navParams(null, 'room', 9); ?>">R203</a></li>
 	</ul>
+	-->
 </div>

@@ -32,6 +32,16 @@
 		public $userName;
 		
 		/**
+		 *  storage for the first name
+		 */
+		public $userFirstName;
+		
+		/**
+		 *  storage for the last name
+		 */
+		public $userLastName;
+		
+		/**
 		 *  storage for the user email-adress
 		 */
 		public $userEmail;		

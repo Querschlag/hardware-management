@@ -14,10 +14,18 @@
 		/**
 		 *  function to get rooms
 		 *
-		 * @return RoomEntity[] 
+		 * @return Dictionary 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getRooms();
+
+		/**
+		 *  function to get room by id
+		 *
+		 * @return RoomEntity[] 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoomByRoomId($id);
 		
 		/**
 		 *  function to insert room
@@ -70,7 +78,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 				
 		/**
 		 * update a component
@@ -88,7 +96,7 @@
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>   
 		 */
-		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type);
+		public function updateComponent($id, $deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice);
 		
 		/**
 		 * delete a component
@@ -206,18 +214,30 @@
 		 public function getUsers();
 		 
 		 /**
+		 * select UserById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return UserEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getUserById($id);
+		 
+		 /**
 		 * insert user
 		 *
 		 * @param string $name 
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email	  
+		 * @param string $vorname	
+		 * @param string $nachname
 		 *
 		 * @return 1 - true
 		 *			2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertUser($name, $userGroupId, $password, $email);
+		 public function insertUser($name, $userGroupId, $firstname, $lastname, $password, $email);
 		 
 		 /**
 		 * update user
@@ -227,12 +247,14 @@
 		 * @param int $userGroupId	  
 		 * @param string $password (blank)
 		 * @param string $email
+		 * @param string $vorname	
+		 * @param string $nachname
 		 * 
 		 * @return 1 - true
 		 *			2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateUser($id, $name, $userGroupId, $password, $email);
+		 public function updateUser($id, $name, $userGroupId, $vorname, $nachname, $password, $email);
 		 
 		 /**
 		 * delete user
@@ -256,22 +278,22 @@
 		 public function checkUserPw($id, $password);
 		  
 		 /**
-		 * select all TransactionTypes
+		 * select all ComponentTransactions
 		 * 
-		 * @return TransactionTypesEntity[]
+		 * @return ComponentTransactionEntity[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypes();
+		 public function getComponentTransactions();
 
 		 /**
-		 * select TransactionTypeById
+		 * select ComponentTransactionById
 		 * 
 		 * @param int $id id
 		 *
 		 * @return TransactionType
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getTransactionTypeById($id);	
+		 public function getComponentTransactionById($id);	
 
          /**
 		 * select all Transaction
@@ -292,40 +314,44 @@
 		 public function getTransactionById($id);			 
 		 
          /**
-		 * insert Transaction
+		 * insert ComponentTransaction
 		 *
-		 * @param string $transactionDescription 
-		 * @param int $transactionTypeId	  
-		 * @param string $userId
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
 		 *
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 public function insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
 		 
 		 /**
-		 * update Transaction
+		 * update ComponentTransaction
 		 *
 	  	 * @param int $id id
-		 * @param string $transactionDescription 
-		 * @param int $transactionTypeId	  
-		 * @param string $userId
+		 * @param string $comment 
+		 * @param int $componentId	
+         * @param int $userId		 
+		 * @param int $transactionId
+		 * @param int $date
 		 * 
 		 * @return 1 - true
 		 *		   2 - false
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
+		 public function updateComponentTransaction($id, $componentId, $userId, $transactionId, $date, $comment);
 		 
 		 /**
-		 * delete Transaction
+		 * delete ComponentTransaction
 		 * 
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function deleteTransaction($id);
+		 public function deleteComponentTransaction($id);
 		 
 		 /**
 		 * select all ValidValue
@@ -401,29 +427,128 @@
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function insertTransaction($transactionDescription, $transactionTypeId, $userId);
+		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue);
 		 
-		 /**
-		 * update Transaction
-		 *
-		 * @param int $id
-	  	 * @param string $componentAttributeName 
-		 * @param bool $IsForComponent - true Component false ComponentType
-		 * @param int $componentAttributeUncertaintId	  
-		 * @param string $componentAttributeComponentValue - Null if IsForComponent = false
-		 *
-		 * @return 1 - true
-		 *		   2 - false
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
-		 */
-		 public function updateTransaction($id, $transactionDescription, $transactionTypeId, $userId);
-		 
-		 /**
-		 * delete Transaction
+		  /**
+		 * select all ComponentTypes
 		 * 
+		 * @return ComponentTypeEntity[]
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypes();
+
+		 /**
+		 * select ComponentTypeById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return ComponentTypeEntity
+		 * @author Daniel Schulz <schmoschu@gmail.com>
+		 */
+		 public function getComponentTypeById($id);			 
+		 
+         /**
+		 * insert ComponentType
+		 *
+		 * @param string $typeName 
+		 * @param string $typeImagePath	
+		 *
 		 * @return 1 - true
 		 *		   2 - false
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function deleteTransaction($id);
+		 public function insertComponentType($typeName, $typeImagePath);	 
+		 
+		 		 /**
+		 * insert SubComponent
+		 *
+	  	 * @param int $componentId
+		 * @param int $subComponentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertSubComponent($componentId, $subComponentId);
+		 
+		 /**
+		 * insert AttributeValue
+		 *
+	  	 * @param int $attributeId
+		 * @param int $componentId
+		 * @param int $value
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function insertAttributeValue($attributeId, $componentId, $value);
+		 
+		 /**
+		 * get DistinctComponents
+		 * 
+		 * @return ComponentEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponents();
+		 
+		 /**
+		  *  function to get user by user name
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByUsername($userName);
+		  /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>	  
+		 */
+		 public function getComponentDevices();
+		 
+		   /**
+		 * get DistinctComponents
+		 * 
+		 * @return Dictionary 
+		 *
+         * @author Leon Geim<leon.geim@gmail.com>
+		 */
+		 public function getComponentsWithoutDevices();
+
+		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByEmail($email);
+		 
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId);
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password);
 }

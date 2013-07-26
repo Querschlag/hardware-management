@@ -1,17 +1,17 @@
 <?php
 	// include idatabase interface
-	require_once('../interface/IDatabase.php');
-	
+	if(file_exists('../interface/IDatabase.php')) require_once('../interface/IDatabase.php');
+	if(file_exists('../_php/interface/IDatabase.php')) require_once('../_php/interface/IDatabase.php');
+		
 	// include room entity
-	require_once('../entity/RoomEntity.php');
-	
-	// include component entity
-	require_once('../entity/ComponentEntity.php');
-	
-	// include deliverer entity
-	require_once('../entity/DelivererEntity.php');
+	if(file_exists('../entity/RoomEntity.php')) require_once('../entity/RoomEntity.php');
+	if(file_exists('../_php/entity/RoomEntity.php')) require_once('../_php/entity/RoomEntity.php');
+		
+	// include room entity
+	if(file_exists('../entity/ComponentEntity.php')) require_once('../entity/ComponentEntity.php');
+	if(file_exists('../_php/entity/ComponentEntity.php')) require_once('../_php/entity/ComponentEntity.php');
 
-	/**
+		/**
 	* Mock object room
 	*
 	* Mock object for the room
@@ -101,7 +101,7 @@
 			// set room data
 			$entity->roomId = 1;
 			$entity->roomFloor = 2;
-			$entity->roomNumber = 14;
+			$entity->roomNumber = '214';
 			$entity->roomName = 'Medien IT-Raum';
 			$entity->roomNote = 'IT Raum der Mediendesigner';
 
@@ -114,7 +114,7 @@
 			// set room data
 			$entity->roomId = 2;
 			$entity->roomFloor = 1;
-			$entity->roomNumber = 2;
+			$entity->roomNumber = '102';
 			$entity->roomName = 'Unterrichtsraum';
 
 			// add entity to array
@@ -126,7 +126,7 @@
 			// set room data
 			$entity->roomId = 3;
 			$entity->roomFloor = 0;
-			$entity->roomNumber = 1;
+			$entity->roomNumber = '001';
 			$entity->roomName = 'Labor';
 			$entity->roomNote = '';
 
@@ -139,13 +139,43 @@
 			// set room data
 			$entity->roomId = 4;
 			$entity->roomFloor = 3;
-			$entity->roomNumber = 0;
+			$entity->roomNumber = '001';
 
 			// add entity to array
 			$this->_rooms[] = $entity;
 			
 			// return entites
 			return $this->_rooms;
+		}
+		
+		/**
+		 *  function to get room
+		 * 
+		 *  @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getRoom($roomId)
+		{
+			// storage for the rooms
+			$retVal = NULL;
+			
+			// get rooms
+			$this->getRooms();
+			
+			// iteration over all rooms
+			foreach($this->_rooms as $room)
+			{
+				// check id of the value
+				if($room->roomId == $roomId)
+				{	
+					// set room
+					$retVal = $room;
+				
+					// break
+					break;
+				}
+			}
+			
+			return $retVal;
 		}
 		
 		/**
@@ -184,11 +214,6 @@
 					break;
 				}
 			}
-			// check room
-			if(isset($room))
-			{
-				
-			}
 		}
 		
 		/**
@@ -196,7 +221,22 @@
 		 * 
 		 * @param int $id The Room id.
 		 */
-		public function deleteRoom($id){}
+		public function deleteRoom($id)
+		{
+			// iteration over all rooms
+			foreach($this->_rooms as $key => $room)
+			{
+				// check id of the value
+				if($room->roomId == $id)
+				{	
+					// set room
+					$this->_rooms[$key] = NULL;
+				
+					// break
+					break;
+				}
+			}			
+		}
 		
 		/**
 		 * function to get components
@@ -332,11 +372,16 @@
 
 		/**
 		 * delete a component
+		 * 
+		 * @param integer $id The components component id
 		 *
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function rejectionComponent($id) {
+				
+			// component room change to to stock
+			// component note change
 			$this->_component[$id]->componentNote = "ausgemustert";
 		}
 		
@@ -427,15 +472,14 @@
 		  * @return void
 		  */
 		 public function deleteDeliverer($id){}
-		 
-		 /**
+
+		/*
 		 * select all Usergroups
 		 * 
 		 * @return UsergroupEntity[]
 		 */
-		 public function getUsergroups()
-		 {}
-		 
+		 public function getUsergroups(){}
+
 		 /**
 		  * insert usergroup
 		  *
@@ -445,8 +489,7 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function insertUsergroup($name, $permission)
-		 {}
+		 public function insertUsergroup($name, $permission){}
 		 
 		 /**
 		  * update usergroup
@@ -458,18 +501,16 @@
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function updateUsergroup($id, $name, $permission)
-		 {}
-		 
+		 public function updateUsergroup($id, $name, $permission){}
+
 		 /**
 		  * delete usergroup
 		  * 
 		  * @return 1 - true
 		  *			2 - false
 		  */
-		 public function deleteUsergroup($id)
-		 {}
-		 
+		 public function deleteUsergroup($id) {}
+	 
 		 
 		  /**
 		 * select the Usergroup by id
@@ -590,5 +631,45 @@
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
 		 public function getValidValueEntityById($id){}
+		 
+		 		 /**
+		  *  function to get user by user name
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByUsername($userName) { }
+		 
+		 /**
+		  *  function to get user by email adress
+		  * 
+		  * @return UserEntity
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function getUserByEmail($email) { }
+		 
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId) { }
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password) { }
 	}
 ?>
