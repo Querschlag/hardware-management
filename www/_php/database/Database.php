@@ -17,12 +17,31 @@
 	{
 		public function __construct() 
 		{
-			if(!(@mysql_connect("10.9.4.51", "itv_v1", "")))
-			{			
+			/**
+			 * Checks connection to the main mySQL server.
+			 * 
+			 * If working locally with no access to this server, this will reduce the
+			 * time the application would need to connect to the none accessable server,
+			 * before using the local fallback.
+			 * 
+			 * If there are any problem in production environment, please increase the
+			 * timeout and/or server ports to avoid the local fallback.
+			 * 
+			 */
+			
+			$timeout = 0.5;
+			$port = 80;
+			 
+			$fp = @fsockopen("http://10.9.4.51", $port, $errno, $errstr, $timeout);
+			if (!$fp) {
+			    //echo "$errstr ($errno)<br />\n";
 				mysql_connect("localhost", "itv_v1", "");
+			} else {
+				echo 'Server is reachable';
+				mysql_connect("10.9.4.51", "itv_v1", "");
 			}
+			
 			mysql_select_db("itv_v1");
-					
 		}
 		
 	
