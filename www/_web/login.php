@@ -1,26 +1,5 @@
 <?php
-	
 	require_once('php/additions.php');
-	
-	$username = POST('username');
-	$password = POST('password');
-	
-	//echo 'username: ' . $username . '| password: ' . $password;
-	if ($username != null && $password != null)
-	{
-		//echo 'valid username and password';
-		// Login with backend connector class
-		if (true)
-		{
-			session_start();
-			$_SESSION['userGroup'] = 1;
-			$_SESSION['username'] = $username;
-		} else {
-			
-		}
-	} else {
-		echo 'Bitte geben Sie Ihre Zugangsdaten ein.';
-	}
 ?>
 
 <!DOCTYPE html>
@@ -95,9 +74,10 @@
 		 		*/
 				public function displayUser($id, $groupId, $name, $firstName, $lastName, $email)
 				{
+					echo 'here';
 					session_start();
-					$_SESSION['userGroup'] = $id;
-					$_SESSION['username'] = $name;
+					$_SESSION['userPermission'] = 1;
+					$_SESSION['username'] = $username;
 					
 					header( "Location: index.php" );
 				}
