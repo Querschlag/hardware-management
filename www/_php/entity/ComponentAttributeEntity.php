@@ -36,5 +36,10 @@
 		 */
 		public $componentAttributeComponentValue;
 		
+		/**
+		 *  storage for the Value if Component -> ComponentAttribute
+		 */
+		public $componentAttributeValidValue[];
+		
 	}
 ?>

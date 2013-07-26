@@ -1,3 +1,4 @@
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -6,9 +7,8 @@
 			include ('php/breadcrumb.php');
 		?>
 
-		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
-		<li>>> <a href="index.php?mod=createSupplier"></a></li>
+		<li><a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="index.php?mod=editSupplier">Lieferant bearbeiten</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -21,6 +21,7 @@
 		<p>Firmenname</p><input name="name" type="text"/>
 		<p>Postleitzahl</p><input name="Plz" type="text"/>
 		<p>Ort</p><input name="Ort" type="text"/>
+		<p>Land</p><input name="Land" type="text"/>
 		<p>Telefon</p><input name="Tel" type="text"/>
 		<p>Mobiltelefon</p><input name="Mobil" type="text"/>
 		<p>Fax</p><input name="fax" type="text"/>
