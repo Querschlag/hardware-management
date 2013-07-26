@@ -24,7 +24,7 @@
 	* @author Johannes Alt <altjohannes510@gmail.com>
 	* @copyright 2013 B3ProjectGroup2
 	*/	
-	class Room implements IRoom
+	class BreadcrumbRoom implements IRoom
 	{
 		/**
 		 *  storage for the room name
@@ -144,7 +144,7 @@
 	}
 
 	// create view object
-	$view = new Room($_POST);
+	$view = new BreadcrumbRoom($_POST);
 	
 	// create database
 	$database = new Database();

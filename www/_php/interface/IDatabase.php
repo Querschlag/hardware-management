@@ -75,7 +75,7 @@
 		 * @param string $supplier The components supplier
 		 * @param integer $type The components type
 		 * 
-		 * @return void
+		 @return ComponentID(int)
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
 		public function insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
