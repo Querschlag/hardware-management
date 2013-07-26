@@ -15,13 +15,13 @@
 		// include IRoom
 		require_once('../_php/interface/IComponent.php');
 		
-		// include room controller
+		// include component controller
 		require_once('../_php/core/ComponentController.php');
 		
-		// include mock database
+		// include database
 		require_once('../_php/database/Database.php');
 		
-		// include room entity
+		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
 		class Component implements IComponent 
@@ -40,7 +40,17 @@
 			 */
 			public function getComponentId()
 			{
-				
+				return $_POST['k_id'];
+			}
+			 
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentId($k_id)
+			{
+				$_POST['k_id'] = $k_id;
 			}
 			
 			/**
@@ -50,7 +60,7 @@
 			 */
 			public function getComponentDeliverer()
 			{
-				return $_POST['deliverer'];
+				return POST('deliverer');
 			}
 				
 			/** 
@@ -60,7 +70,7 @@
 			 */
 			public function getComponentRoom()
 			{
-				return isset($_POST['room']) ? $_POST['room'] : 1;
+				return POST('room') ? POST('room') : 1;
 			}
 				
 			/**
@@ -68,8 +78,9 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentName() {
-				return $_POST['device_name'];
+			public function getComponentName() 
+			{
+				return POST('device_name');
 			}
 				
 			/**
@@ -79,7 +90,7 @@
 			 */
 			public function getComponentBuy()
 			{
-				return strtotime($_POST['buy']);
+				return strtotime(POST('buy'));
 			}
 				
 			/**
@@ -89,7 +100,7 @@
 			 */
 			public function getComponentWarranty()
 			{
-				return (time() + ($_POST['warranty'] * 86400));
+				return (strtotime($_POST['buy']) + (POST('warranty') * 86400));
 			}
 				
 			/**
@@ -99,7 +110,7 @@
 			 */
 			public function getComponentNote()
 			{
-				return $_POST['note'];
+				return POST('note');
 			}
 				
 			/**
@@ -109,7 +120,7 @@
 			 */
 			public function getComponentSupplier()
 			{
-				return $_POST['supplier'];
+				return POST('supplier');
 			}
 				
 			/**
@@ -119,7 +130,7 @@
 			 */
 			public function getComponentTypes() 
 			{
-				return $_POST['type'];
+				return POST('type');
 			}
 			
 			/**
@@ -129,7 +140,7 @@
 			 */
 			public function getComponentIsDevice()
 			{
-				return $_POST['device'];
+				return POST('device');
 			}
 			
 			/**
@@ -151,9 +162,35 @@
 		
 		$step = POST('step');
 		
-		if ($step == 6) 
+		if ($step == 7) 
 		{
 			header('location:index.php?mod=stock');
+		}
+		else if ($step == 6) 
+		{
+			$room = POST('room');
+		
+			if($room == 0)
+			{
+				header('location:index.php?mod=stock');
+			}
+			else 
+			{
+				echo '
+				<!-- Device adding wizard - Step 3 -->
+				<h4>Benennung</h4>
+				<form action="index.php?mod=storeDevice" method="post">
+					<p>1</p><input name="attribute2" type="text" value="PC004"/>
+					<p>2</p><input name="attribute2" type="text" value="PC005"/>
+					<input name="step" value="7" type="hidden" />
+					<br>
+					<br>
+					<input name="btnSubmit" type="submit" value="Speichern" />
+					<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+				</form>
+				';
+			}
+				
 		}
 		else if ($step == 5) 
 		{
@@ -164,27 +201,45 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<p>Anzahl</p><input name="itemCount" type="text"/>
 				<input name="step" value="6" type="hidden" />
+				<p>Raum</p>
+				<select name="room">
+						<option value="0">Lager</option>
+					<optgroup label="Erdgeschoss"></optgroup>
+						<option value="1">R001</option>
+						<option value="2">R002</option>
+						<option value="3">R003</option>
+					<optgroup label="Stockwerk 1"></optgroup>
+						<option value="4">R101</option>
+						<option value="5">R102</option>
+						<option value="6">R103</option>	
+					<optgroup label="Stockwerk 2"></optgroup>
+						<option value="7">R201</option>
+						<option value="8">R202</option>
+						<option value="9">R203</option>
+						
+				</select>
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Anlegen" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
 		}
 		else if ($step == 4) 
 		{
-	
+			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			{
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+			}
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<ul class="components">
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-			</ul>
 			<form action="index.php?mod=storeComponent" method="post">
+			
 				<input name="step" value="4" type="hidden" />
+				<input type="hidden" name="id" value="'.$view->getComponentId().'">				
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -192,7 +247,7 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<input name="step" value="5" type="hidden" />
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -200,18 +255,24 @@
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			die();
+			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p><input name="attribute1" type="text"/>
-				<p>Attribut 2</p><input name="attribute2" type="text"/>
+				<p>Attribut 1</p>
+				<input type="hidden" name="componentAttribute[]" value="9" />
+				<input name="attributeValue[]" type="text" value="4 GB RAM" />
+				<p>Attribut 2</p>
+				<input type="hidden" name="componentAttribute[]" value="14" />
+				<input name="attributeValue[]" type="text" value="4GHz" />
 				<input name="step" value="4" type="hidden" />
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
+				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -241,9 +302,9 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 			</form>
-			<div class="clearfix" />
+			<div class="clearfix"></div>
 			';
 		
 		}
@@ -263,8 +324,8 @@
 				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="device" value="1" type="hidden">
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
-				<div class="clearfix" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+				<div class="clearfix"></div>
 			</form>
 			';
 		

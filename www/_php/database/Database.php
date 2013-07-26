@@ -193,7 +193,7 @@
 		 * @return ComponentID(int)
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
@@ -537,6 +537,12 @@
 			$select = "SELECT * FROM benutzer WHERE b_id = ".$id.";";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
+			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
+			
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
@@ -561,6 +567,12 @@
 			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
+			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
+			
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
@@ -946,6 +958,7 @@
 		 public function getComponentAttributesFromComponent($id)
 		 {
 			$entityArray = array();
+			$entitySubArray = array();
 		 
 			$select = "SELECT kat.kat_id, kat.kat_name, kom.k_id, koat.khkat_wert
 						FROM komponente kom
@@ -969,8 +982,10 @@
 				$DataSubSelect = mysql_query($select);
 				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
 				{
-					$entity->componentAttributeValidValue[] = $rowSubSelect['zw_wert'];
+					$entitySubArray[] = $rowSubSelect['zw_wert'];
 				}
+				echo var_export($entitySubArray);
+				$entity->componentAttributeValidValue = $entitySubArray;
 				$entityArray[] = $entity;
 			}
 			
@@ -1060,7 +1075,7 @@
 		 public function insertComponentAttribute($componentAttributeName , $IsForComponent, $componentAttributeUncertaintId, $componentAttributeComponentValue)
 		 {
 			 $insert ="INSERT INTO komponentenattribute (kat_name)
-								VALUES(".$componentAttributeName.");";
+								VALUES('".$componentAttributeName."');";
 			 mysql_query($insert);
 			 
 			 $select = "SELECT MAX(kat_id) AS ID FROM komponentenattribute;";
@@ -1243,9 +1258,9 @@
 		 public function insertAttributeValue($attributeId, $componentId, $value)
 		 {
 			$insert ="INSERT INTO komponente_kattribut (komponenten_k_id, komponentenattribute_kat_id, khkat_wert)
-								VALUES(".$attributeId.", ".$componentId.", ".$value.");";
+								VALUES(".$attributeId.", ".$componentId.", '".$value."');";
 										
-			return mysql_query($insert);
+			return mysql_query($insert) or die(mysql_error());
 			
 		 }
 		 
@@ -1275,7 +1290,7 @@
 		  * 
 		  * @return UserEntity
 		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
 		 public function getUserByUsername($userName) 
 		 { 
@@ -1285,6 +1300,10 @@
 			$Data = mysql_query($select);			
 			$row = mysql_fetch_assoc($Data);
 			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
 			$entity = new UserEntity();
 			$entity->userId = $row['b_id'];
 			$entity->userGroupId = $row['bg_id'];
@@ -1292,7 +1311,7 @@
 			$entity->userName = $row['b_name'];
 			$entity->userFirstName = $row['b_vorname'];
 			$entity->userLastName = $row['b_nachname'];				
-			$entity->userEmail = $row['b-email'];
+			$entity->userEmail = $row['b_email'];
 						
 			return $entity;
 		 }
@@ -1452,8 +1471,9 @@
 				$entity->componentHasProblems= $row['v_id'];
 				
 				$entityArray[] = $entity;
-				
 			}
+			
+			return $entityArray;
 		}
 
 	 
@@ -1461,11 +1481,41 @@
 		 * get Maintenances
 		 * 
 		 * @return MaintenanceEntitiy[]
+		 * @param int $count last x-rows
 		 *
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
-		 public function getMaintenances()
-		 {}
+		 public function getMaintenances($count=0)
+		 {
+			$entityArray = array();
+		 
+		 $limit;
+		 if($count > 0)
+		 {
+			$limit = "LIMIT ".$count.";";
+		 }
+		 else
+		 {
+			$limit = ";";
+		 }
+			$select = "SELECT * FROM komp_vorgang ORDER BY kom_id DESC '".
+						$limit . "'";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new MaintenanceEntity();
+				$entity->maintenanceId = $row['kom_id'];
+				$entity->componentId = $row['k_id'];
+				$entity->transactionId = $row['v_id'];
+				$entity->maintenanceComment = $row['comment'];
+				$entity->maintenanceDate= $row['datum'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
 		 
 		 /**
 		 * get Maintenances Rooms
@@ -1478,7 +1528,41 @@
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function getMaintenancesFromRoom($id, $count=0)
-		 {}
+		 {
+			$entityArray = array();
+		 
+			$limit;
+			if($count > 0)
+			{
+				$limit = "LIMIT ".$count.";";
+			}
+			else
+			{
+				$limit = ";";
+			}
+		 
+			$select = "SELECT kova.kom_id, kova.k_id, kova.v_id, kova.comment, kova.datum
+							FROM raeume rae
+							INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+							INNER JOIN komp_vorgang kova ON kova.k_id = kom.k_id
+							WHERE rae.r_id = ".$id." ORDER BY kova.kom_id DESC '".
+							$limit. "'";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new MaintenanceEntity();
+				$entity->maintenanceId = $row['kom_id'];
+				$entity->componentId = $row['k_id'];
+				$entity->transactionId = $row['v_id'];
+				$entity->maintenanceComment = $row['comment'];
+				$entity->maintenanceDate= $row['datum'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		 }
 		 
 		 /**
 		 * get Maintenances component
@@ -1491,6 +1575,39 @@
          * @author Daniel Schulz <schmoschu@gmail.com>		  
 		 */
 		 public function getMaintenancesFromComponent($id, $count=0)
-		{}		 
+		{
+			$entityArray = array();
+		 
+			$limit;
+			if($count > 0)
+			{
+				$limit = "LIMIT ".$count.";";
+			}
+			else
+			{
+				$limit = ";";
+			}
+			
+			$select = "SELECT kova.kom_id, kova.k_id, kova.v_id, kova.comment, kova.datu
+							FROM komponente kom
+							INNER JOIN komp_vorgang kova ON kova.k_id = kom.k_id
+							WHERE kom.k_id = ".$id." ORDER BY kova.kom_id DESC '".
+							$limit."'";
+						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new MaintenanceEntity();
+				$entity->maintenanceId = $row['kom_id'];
+				$entity->componentId = $row['k_id'];
+				$entity->transactionId = $row['v_id'];
+				$entity->maintenanceComment = $row['comment'];
+				$entity->maintenanceDate= $row['datum'];
+				
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		}		 
 	}
 ?>

@@ -62,6 +62,7 @@
 				<form action="login.php" method="post">
 					<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>"></input>
 					<p>Passwort</p><input name="password" type="password" />
+					<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
 					<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
 					
 					<?php
@@ -99,6 +100,15 @@
 					$_SESSION['username'] = $name;
 					
 					header( "Location: index.php" );
+				}
+		
+				/**
+				 *  function to display user group
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayGroup($id, $name, $permisson)
+				{
 				}
 				
 				/**
