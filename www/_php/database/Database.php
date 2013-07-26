@@ -962,8 +962,15 @@
 				$entity->componentAttributeIsFromComponent = true;
 				$entity->componentAttributeUncertaintId = $row['k_id'];
 				$entity->componentAttributeComponentValue = $row['khkat_wert'];
-				$entity->componentAttributeValidValue = $row['khkat_wert'];
 				
+				$select = "SELECT zw_wert FROM zulaessige_werte zw 
+							INNER JOIN kattribut_zulaessiger_wert kazw ON kazw.zulaessige_werte_zw_id = zw_id
+							WHERE kazw.komponentenattribute_kat_id = ".$row['kat_id'].";";
+				$DataSubSelect = mysql_query($select);
+				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
+				{
+					$entity->componentAttributeValidValue[] = $rowSubSelect['zw_wert'];
+				}
 				$entityArray[] = $entity;
 			}
 			
