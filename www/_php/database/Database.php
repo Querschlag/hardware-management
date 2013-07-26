@@ -17,7 +17,7 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("10.9.4.57", "itv_v1", "")))
+			if(!(mysql_connect("10.9.4.51", "itv_v1", "")))
 			{				
 				mysql_connect("localhost", "itv_v1", "");
 			}
@@ -1261,7 +1261,7 @@
 		  * 
 		  * @return UserEntity
 		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  * @author Leon Geim<leon.geim@gmail.com>	
 		  */
 		 public function getUserByUsername($userName) 
 		 { 
@@ -1282,27 +1282,6 @@
 						
 			return $entity;
 		 }
-		 /** 
-		  *  function to update user role
-		  * 
-		  * @return TRUE / FALSE
-		  * @param int $userId id of user
-		  * @param int $groupId id of group
-		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
-		  */
-		 public function updateUserRole($userId, $groupId) { }
-		 
-		 /** 
-		  *  function to update user password
-		  * 
-		  * @return TRUE / FALSE
-		  * @param int $userId id of user
-		  * @param string $password new password of user
-		  * 
-		  * @author Johannes Alt <altjohannes510@gmail.com>
-		  */
-		 public function updateUserPassword($userId, $password) { }
 		 
 		  /**
 		 * get DistinctComponents
