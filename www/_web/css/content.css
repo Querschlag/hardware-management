@@ -181,14 +181,6 @@ hr {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#33d6d6d6',GradientType=0 ); /* IE6-8 */
 }
 
-#information {
-	float:left;
-}
-
-#login {
-	float:right;
-}
-
 table {
 	border:1px solid #ddd;
 	border-spacing:2px;
