@@ -77,7 +77,7 @@
 				}
 				
 				// print list element
-				print '<li><a href="index.php?mod=room&roomId=' . $id .'"&menu=management>' . $number . '</a></li>';
+				print '<li><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 				
 				// increase row count
 				$this->_rowCount++;			
