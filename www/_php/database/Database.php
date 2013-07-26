@@ -1397,5 +1397,25 @@
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
 		 }
+		 
+		 /**
+		  *  function to get Number Of Problems from devices
+		  * 
+		  * @return NumberOfProblems
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getNumberComponentProblems($email)
+		 {}	 
+		 
+		 /**
+		 * get DistinctComponentTypes
+		 * 
+		 * @return ComponentTypeEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponentTypes()
+		 {}
 	}
 ?>
