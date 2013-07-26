@@ -13,6 +13,13 @@
 	interface IUser
 	{
 		/**
+		 *  function to display user
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function displayUser($id, $groupId, $name, $firstName, $lastName, $email);
+		
+		/**
 		 *  function to get user name
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
