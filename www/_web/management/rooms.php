@@ -27,8 +27,6 @@
 		// include room entity
 		require_once('../_php/entity/RoomEntity.php');
 	
-		
-
 		/**
 		* Room object
 		*
@@ -77,7 +75,7 @@
 				}
 				
 				// print list element
-				print '<li><a href="index.php?mod=room&roomId=' . $id .'"&menu=management>' . $number . '</a></li>';
+				print '<li><a href="index.php?mod=room&room=' . $id .'"&menu=management>' . $number . '</a></li>';
 				
 				// increase row count
 				$this->_rowCount++;			
