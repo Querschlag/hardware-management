@@ -237,25 +237,25 @@
 	<div id="action_bar">
 		<a class="left" href="index.php?mod=addDevice<?php echo '&menu=' . GET('menu');?>">Ger&auml;t hinzuf&uuml;gen</a>		
 		<a class="right destructiveButton" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
-		<a class="right" href="index.php?mod=changeRoom&roomId=<?php echo GET('roomId'); echo '&menu=' . GET('menu');?>">Raum bearbeiten</a>				
+		<a class="right" href="index.php?mod=change_room&roomId=<?php echo GET('roomId'); echo '&menu=' . GET('menu');?>">Raum bearbeiten</a>				
 		<div class="clearfix"></div>
 	</div>
 	
 	<h2>Computer</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams( array('mod' => 'device', 'device' => 1) ); ?>">PC001</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 2)); ?>">PC002</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 3)); ?>">PC003</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 1); ?>">PC001</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 2); ?>">PC002</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 3); ?>">PC003</a></li>
 	</ul>
 	<h2>Drucker</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 4)); ?>">HP MP105</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 5)); ?>">Canon i350</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 4); ?>">HP MP105</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 5); ?>">Canon i350</a></li>
 	</ul>
 	<h2>Router</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 6)); ?>">DLINK 1</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 8)); ?>">FritzBox!</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 6); ?>">DLINK 1</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 7); ?>">DLINK 2</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'device', null, 8); ?>">FritzBox!</a></li>
 	</ul>
 </div>

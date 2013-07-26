@@ -11,59 +11,29 @@
 	 * @copyright 2013 IFA11B2 IT-Team2
 	 */
 
-	function navParams($params)
+	function navParams($params, $menu = null, $modul = null, $roomId = null, $deviceId = null, $componentId = null)
 	{
-		$menu = (isset($params['menu'])) ? $params['menu'] : null;
+		foreach ($params as $param) {
+			
+		}
 		if ($menu == null)
 			$menu = GET('menu');
-		
-		// add menu parameter
-		$paramString = '?menu=' . $menu;
-		
-		$modul = (isset($params['mod'])) ? $params['mod'] : null;
 		if ($modul == null)
-			$modul = GET('modul');
-		// add menu parameter
-		if ($modul != null)
-			$paramString .= '&mod=' . $modul;
+			$modul = GET('mod');
+		if ($roomId == null)
+			$roomId = GET('room');
+		if ($deviceId == null)
+			$deviceId = GET('device');
+		if ($componentId == null)
+			$componentId = GET('component');
 		
-		$room = (isset($params['room'])) ? $params['room'] : null;
-		if ($room == null)
-			$room = GET('room');
-		// add room parameter
-		if ($room != null)
-			$paramString .= '&room=' . $room;
+		$params = '?menu=' . $menu;
+		if ($modul) $params .= '&mod=' . $modul;
+		if ($roomId) $params .= '&room=' . $roomId; 
+		if ($deviceId) $params .= '&device=' . $deviceId; 
+		if ($componentId) $params .= '&component=' . $componentId; 
 		
-		$device = (isset($params['device'])) ? $params['device'] : null;
-		if ($device == null)
-			$device = GET('device');
-		// add device parameter
-		if ($device != null)
-			$paramString .= '&device=' . $device;
-		
-		$component = (isset($params['component'])) ? $params['component'] : null;
-		if ($component == null)
-			$component = GET('component');
-		// add component parameter
-		if ($component != null)
-			$paramString .= '&component=' . $component;
-		
-		$supplier = (isset($params['supplier'])) ? $params['supplier'] : null;
-		if ($supplier == null)
-			$supplier = GET('supplier');
-		// add supplier parameter
-		if ($supplier != null)
-			$paramString .= '&supplier=' . $supplier;
-		
-		$user = (isset($params['user'])) ? $params['user'] : null;
-		if ($user == null)
-			$user = GET('user');
-		// add user parameter
-		if ($user != null)
-			$paramString .= '&user=' . $user;
-
-		
-		return $paramString;
+		return $params;
 	}
 	
 	

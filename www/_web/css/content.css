@@ -262,7 +262,7 @@ form p {
 
 /* module Rooms */
 .rooms {list-style:none;}
-.rooms li {width:118px; display:inline-block;}
+.rooms li {width:80px; display:inline-block;}
 
 /* module Device */
 .components {list-style:none;}
@@ -284,3 +284,34 @@ form p {
 /* module Rooms */
 .orders {list-style:none}
 .orders li {padding:5px;}
+
+
+/*stepprogressbar 
+/* autor Philipp Schmidkunz
+ */
+.activeStep { 
+font-weight: bold;
+font-style: italic; 
+float: left;
+width: 6em;
+min-height: 3em;
+margin: 0px 0.6em;
+padding-left: 2.2em;
+color: rgb(153, 153, 153);
+list-style-type: none; 
+font-size: 10px ;
+}
+.inactiveStep { 
+font-style: italic;
+float: left;
+width: 6em;
+min-height: 3em;
+margin: 0px 0.6em;
+padding-left: 2.2em;
+color: rgb(153, 153, 153);
+list-style-type: none;
+font-size: 10px ;
+}
+.stepImage {width: 20px;margin: 10%}
+.stepTitle {float: right;}
+.oneActive{background-image:url('img/stepprogress/Number_green_1.png'); }

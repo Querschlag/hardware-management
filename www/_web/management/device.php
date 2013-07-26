@@ -18,9 +18,9 @@
 	</div>
 	<h2>Komponenten</h2>
 	<ul class="components">
-		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 1)); ?>">Komponente 1</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 2)); ?>">Komponente 2</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 3)); ?>">Komponente 3</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 1); ?>">Komponente 1</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 2); ?>">Komponente 2</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 3); ?>">Komponente 3</a></li>
 	</ul>
 	<hr>
 	<h2>Wartungshistorie</h2>
