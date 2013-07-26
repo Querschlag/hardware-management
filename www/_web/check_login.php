@@ -9,7 +9,7 @@
 	
 	session_start();
 
-	if ( !isset($_SESSION['userGroup']) || $_SESSION['userGroup'] == null)
+	if ( !isset($_SESSION['userPermission']) || $_SESSION['userPermission'] == null)
 	{	
 		// Redirect to login page
 		header('location:login.php');
