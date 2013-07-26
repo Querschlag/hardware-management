@@ -88,6 +88,15 @@
 				{
 				}
 			
+				/** 
+		 		*  function to display problem count
+		 		* 
+		 		* @author Johannes Alt <altjohannes510@gmail.com>
+		 		*/
+				public function displayProblemCount($count) 
+				{
+				}
+			
 				/**
 				 *  function to get room number
 				 * 
@@ -174,7 +183,7 @@
 			}
 			
 			// create view object
-			$view = new Room($_POST);
+			$view = new Room();
 			
 			// create database
 			$database = new Database();

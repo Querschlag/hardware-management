@@ -38,56 +38,79 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentId(){}
+			public function getComponentId()
+			{
+				
+			}
 			
 			/**
 			 *  function to get component deliverer
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentDeliverer(){}
+			public function getComponentDeliverer()
+			{
+				return $_POST['deliverer'];
+			}
 				
 			/** 
 			 *  function to get component room
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentRoom(){}
+			public function getComponentRoom()
+			{
+				return isset($_POST['room']) ? $_POST['room'] : 1;
+			}
 				
 			/**
 			 * function to get component name 
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentName(){}
+			public function getComponentName() {
+				return $_POST['device_name'];
+			}
 				
 			/**
 			 * function to get component buying date 
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentBuy(){}
+			public function getComponentBuy()
+			{
+				return strtotime($_POST['buy']);
+			}
 				
 			/**
 			 * function to get component warranty 
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentWarranty(){}
+			public function getComponentWarranty()
+			{
+				return (time() + ($_POST['warranty'] * 86400));
+			}
 				
 			/**
 			 * function to get component note 
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentNote(){}
+			public function getComponentNote()
+			{
+				return $_POST['note'];
+			}
 				
 			/**
 			 * function to get component supplier 
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentSupplier(){}
+			public function getComponentSupplier()
+			{
+				return $_POST['supplier'];
+			}
 				
 			/**
 			 * function to get component types 
@@ -96,7 +119,7 @@
 			 */
 			public function getComponentTypes() 
 			{
-				return $_POST['btnSubmit'];
+				return $_POST['type'];
 			}
 			
 			/**
@@ -104,7 +127,10 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
-			public function getComponentIsDevice(){}
+			public function getComponentIsDevice()
+			{
+				return $_POST['device'];
+			}
 			
 			/**
 			 * function to set error
@@ -173,8 +199,8 @@
 		}
 		else if ($step == 3) 
 		{
-			// $controller->insertComponent();
-			// die();
+			$controller->insertComponent();
+			die();
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
@@ -190,29 +216,28 @@
 			';
 
 		}
-		else if ($step == 2) 
-		{
-			
-			$controller->insertComponent();
-			
+		else if ($step == 2)
+		{	
 			echo '
 			<!-- Device creation wizard - Step 2 -->
 			<form action="index.php?mod=storeDevice" method="post">
 				<p>Bezeichnung</p><input name="device_name" type="text"/>
 				<br>
 				<p>Lieferant</p>
-				<select name="supplier">
+				<select name="deliverer">
 					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
-						<option value="0">Lieferant 1</option>
 						<option value="1">Lieferant 1</option>
-						<option value="2">Lieferant 1</option>
-						<option value="3">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
 				</select>
-				<p>Hersteller</p><input name="manufactor" type="text"/>
-				<p>Kaufdatum</p><input name="purchaseDate" type="date"/>
+				<p>Hersteller</p><input name="supplier" type="text"/>
+				<p>Kaufdatum</p><input name="buy" type="date"/>
 				<p>Gew&auml;hrleistung in Jahren</p><input name="warranty" type="number"/>
-				<p>Notiz</p><textarea name="description" rows=6 cols=30></textarea>
+				<p>Notiz</p><textarea name="note" rows=6 cols=30></textarea>
 				<input name="step" value="3" type="hidden" />
+				<input type="hidden" name="type" value="'.$view->getComponentTypes().'">
+				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'">
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
@@ -228,14 +253,15 @@
 			echo '
 			<!-- Device creation wizard - Step 1 -->
 			<form class="deviceSelection" action="index.php?mod=storeDevice" method="post">
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/BluRayPlayer_Disc.png" /><p>Blu-ray Player</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Computer.png" value="12" /><p>Computer</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/HomeServer.png" /><p>Server</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/InkjetPrinter.png" /><p>Drucker</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Modem_Blue.png" /><p>Modem</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/NetBook.png" /><p>Notebook</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
-				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/BluRayPlayer_Disc.png" /><p>Blu-ray Player</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/Computer.png" value="12" /><p>Computer</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/HomeServer.png" /><p>Server</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/InkjetPrinter.png" /><p>Drucker</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/Modem_Blue.png" /><p>Modem</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/NetBook.png" /><p>Notebook</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
+				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
+				<input name="device" value="1" type="hidden">
 				<input name="step" value="2" type="hidden" />
 				<input onClick="location.href = \'index.php?mod=stock\'"; type="button" value="Abbrechen" />
 				<div class="clearfix" />

@@ -144,6 +144,21 @@
 				$this->_rowCount = 0;
 			}
 		
+			/** 
+	 		*  function to display problem count
+	 		* 
+	 		* @author Johannes Alt <altjohannes510@gmail.com>
+	 		*/
+			public function displayProblemCount($count) 
+			{
+				// check count
+				if($count > 0)
+				{
+					// set problem count message
+					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
+				}				
+			}
+		
 			/**
 			 *  function to get room number
 			 * 
