@@ -1483,7 +1483,7 @@
 		 * @return MaintenanceEntitiy[]
 		 * @param int $count last x-rows
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>		  
 		 */
 		 public function getMaintenances($count=0)
 		 {
@@ -1525,7 +1525,7 @@
 		 *
 		 * @return MaintenanceEntitiy[]
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>  
 		 */
 		 public function getMaintenancesFromRoom($id, $count=0)
 		 {
@@ -1572,7 +1572,7 @@
 		 *
 		 * @return MaintenanceEntitiy[]
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>
 		 */
 		 public function getMaintenancesFromComponent($id, $count=0)
 		{
@@ -1620,7 +1620,7 @@
 		 * @return 1 - true
 		 *		   2 - false
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>
 		 */
 		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate)
 		{
@@ -1635,5 +1635,21 @@
 			
 			return $row["ID"];
 		}		 
+		
+		  /**
+		 * insert insertMaintenance.
+		 *
+	  	 * @param int $componentId componentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>
+		 */
+		 public function takeOutOfService($componentId)
+		 {
+			//Verschieben von Komponenten in Lager
+			//Man bekommt nen Device und all Komponenten werden ins Lager verschoben	
+		 }
 	}
 ?>
