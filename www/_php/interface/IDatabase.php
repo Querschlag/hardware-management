@@ -372,22 +372,26 @@
 		 /**
 		 * select all ComponentAttributeEntitysFromComponentType
 		 *
+		 * @param int $id
+		 *
 		 * componentAttributeComponentValue = NULL;
 		 *
 		 * @return ComponentAttributeEntitys[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponentType();
+		 public function getComponentAttributesFromComponentType($id);
 		 
 		 /**
 		 * select all ComponentAttributeFromComponent
+		 *
+		 * @param int $id
 		 *
 		 * componentAttributeComponentValue = value;
 		 *
 		 * @return ComponentAttributeEntitys[]
 		 * @author Daniel Schulz <schmoschu@gmail.com>
 		 */
-		 public function getComponentAttributesFromComponent();
+		 public function getComponentAttributesFromComponent($id);
 		 
 		  /**
 		 * select ComponentAttributesFromComponentTypeByComponentId
@@ -542,6 +546,40 @@
 		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
 		 public function getDistinctComponentsInStorage($roomId);
+		 
+		 	 
+		 /**
+		 * get Maintenances
+		 * 
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenances();
+		 
+		 /**
+		 * get Maintenances Rooms
+		 * 
+		 * @param int $id roomId
+		 * @param int $count last x-rows
+		 *
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenancesFromRoom($id, $count=0);
+		 
+		 /**
+		 * get Maintenances component
+		 * 
+		 * @param int $id componentId
+		 * @param int $count last x-rows
+		 *
+		 * @return MaintenanceEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getMaintenancesFromComponent($id, $count=0);
 		 
 		 
 }
