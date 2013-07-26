@@ -39,7 +39,7 @@
 		/**
 		 *  storage for the Value if Component -> ComponentAttribute
 		 */
-		public $componentAttributeValidValue[];
+		public $componentAttributeValidValue = array();
 		
 	}
 ?>
