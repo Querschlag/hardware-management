@@ -1,4 +1,5 @@
 <?php
+	require_once('php/navigation.php');
 	
 	require_once('php/additions.php');
 		
