@@ -2,8 +2,8 @@
 <div id="breadcrumb_nav">
 	<ul>
 		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=user">Lieferant</a></li>
-		<li>>> <a href="index.php?mod=createUser">Lieferant anlegen</a></li>
+		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="index.php?mod=createSupplier">Lieferant anlegen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -12,6 +12,7 @@
 		<p>Firmenname</p><input name="name" type="text"/>
 		<p>Postleitzahl</p><input name="Plz" type="text"/>
 		<p>Ort</p><input name="Ort" type="text"/>
+		<p>Land</p><input name="Land" type="text"/>
 		<p>Telefon</p><input name="Tel" type="text"/>
 		<p>Mobiltelefon</p><input name="Mobil" type="text"/>
 		<p>Fax</p><input name="fax" type="text"/>
