@@ -64,7 +64,7 @@
 		 *  function to get room by id
 		 *
 		 * @return RoomEntity[] 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function getRoomByRoomId($id)
 		{
@@ -89,6 +89,8 @@
 		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
+		 *
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function insertRoom($floor, $number, $name, $note)
 		{
@@ -106,6 +108,7 @@
 		 * @param int $number The Room number.
 		 * @param string $name The Room name.
 		 * @param string $note The Room note.
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function updateRoom($id, $floor, $number, $name, $note)
 		{
@@ -126,6 +129,7 @@
 		 *  function to delete room
 		 * 
 		 * @param int $id The Room id.
+		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function deleteRoom($id)
 		{
@@ -179,7 +183,7 @@
 		 * @param string $supplier The components supplier
 		 * @param integer $type The components type
 		 * 
-		 * @return void
+		 * @return ComponentID(int)
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
@@ -191,7 +195,14 @@
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
 								'".$supplier."', ".$type.", ".$isDevice.")";
-			return mysql_query($insert) or die(mysql_error());
+			mysql_query($insert) or die(mysql_error());
+			
+			$select = "SELECT k_id FROM komponente
+						ORDER BY k_id desc LIMIT 1";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+						
+			return $row["k_id"];
 		}
 				
 		/**
