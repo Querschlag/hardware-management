@@ -182,7 +182,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
+		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,

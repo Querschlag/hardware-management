@@ -129,8 +129,6 @@
 				// $this->_view->setError();
 			// }
 			$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
-			
-			die('insert');
 		}	
 		
 		/**

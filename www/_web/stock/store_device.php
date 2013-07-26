@@ -69,7 +69,7 @@
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
 			 */
 			public function getComponentName() {
-				return $_POST['device_name'];
+				return '';
 			}
 				
 			/**
@@ -178,13 +178,10 @@
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<ul class="components">
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-				<li>Komponente 1</li>
-			</ul>
 			<form action="index.php?mod=storeComponent" method="post">
+			
 				<input name="step" value="4" type="hidden" />
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -200,14 +197,16 @@
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			die();
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p><input name="attribute1" type="text"/>
-				<p>Attribut 2</p><input name="attribute2" type="text"/>
+				<p>Attribut 1</p>
+				<input name="attribute[]" type="text"/>
+				<p>Attribut 2</p>
+				<input name="attribute[]" type="text"/>
 				<input name="step" value="4" type="hidden" />
+				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
