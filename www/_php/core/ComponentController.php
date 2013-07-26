@@ -109,25 +109,25 @@
 			$isDevice = $this->_view->getComponentIsDevice();
 			
 			// check room number and room name
-			if($deliverer && $room && $name && $warranty && $buy && $supplier && $type)
-			{
-				// insert component
-				$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type,$isDevice);
-				
-				// insert component main or sub
-				// $this->_database->insertComponentComponent($aggregatId, $partId, $khkId);
-				
-				// insert component transaction
-				$this->_database->insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
-				
-				
-				
-			}
-			else 
-			{
-				// set error to frontend
-				$this->_view->setError();
-			}
+			// if($deliverer && $room && $name && $warranty && $buy && $supplier && $type)
+			// {
+				// // insert component
+				// $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type,$isDevice);
+// 				
+				// // insert component main or sub
+				// // $this->_database->insertComponentComponent($aggregatId, $partId, $khkId);
+// 				
+				// // insert component transaction
+				// $this->_database->insertComponentTransaction($componentId, $userId, $transactionId, $date, $comment);
+// 				
+// 				
+// 				
+			// }
+			// else 
+			// {
+				// // set error to frontend
+				// $this->_view->setError();
+			// }
 			$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 			
 			die('insert');

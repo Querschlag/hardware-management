@@ -21,7 +21,6 @@
 			{				
 				mysql_connect("localhost", "itv_v1", "");
 			}
-			
 			mysql_select_db("itv_v1");
 					
 		}
@@ -151,13 +150,7 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * , CASE WHEN (Select v_id
-									FROM komp_vorgang kova 
-									WHERE kova.k_id = kom.k_id
-									Order by Datum DESC
-               						LIMIT 1) = 2 then true else false end as v_id
-					FROM komponente 
-					ORDER BY k_id asc;";
+			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -172,7 +165,6 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
-				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
@@ -194,7 +186,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
+		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
@@ -273,7 +265,6 @@
 		 * select all deliverers
 		 * 
 		 * @return Array
-		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getDeliverers()
 		 {
@@ -313,7 +304,6 @@
 		  * @param string $email email 
 		  * 
 		  * @return void
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function insertDeliverer($companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
@@ -345,7 +335,6 @@
 		  * @param string $email email 
 		  * 
 		  * @return void
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
@@ -369,7 +358,6 @@
 		  * delete deliverer
 		  * 
 		  * @return void
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function deleteDeliverer($id)
 		 {
@@ -384,7 +372,6 @@
 		 * select all Usergroups
 		 * 
 		 * @return UsergroupEntity[]
-		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		 public function getUsergroups()
 		 {
@@ -413,7 +400,6 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function insertUsergroup($name, $permission)
 		 {
@@ -432,7 +418,6 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function updateUsergroup($id, $name, $permission)
 		 {
@@ -450,7 +435,6 @@
 		  * 
 		  * @return 1 - true
 		  *			2 - false
-		  * @author Leon Geim<leon.geim@gmail.com>
 		  */
 		 public function deleteUsergroup($id)
 		 {
@@ -647,7 +631,9 @@
 						WHERE b_id = ".$id.";";
 						
 			$Data = mysql_query($check);
-			if($Data["erg"] == "1")
+			$row = mysql_fetch_assoc($Data);
+			
+			if($row["Erg"] == "1")
 			{
 				return true;
 			}
@@ -1280,27 +1266,49 @@
 		  * 
 		  * @return UserEntity
 		  * 
-		  * @author Leon Geim<leon.geim@gmail.com>	
+		  * @author Johannes Alt <altjohannes510@gmail.com>
 		  */
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE
-							b_name = '".$userName."';";
+						WHERE b_name = '".$userName."';";
 					   
 			$Data = mysql_query($select);
 			
+			$row = mysql_fetch_assoc($Data);
+			
 			$entity = new UserEntity();
-			$entity->userId = $Data['b_id'];
-			$entity->userGroupId = $Data['bg_id'];
-			$entity->userPw = $Data['b_pw'];
-			$entity->userName = $Data['b_name'];
-			$entity->userFirstName = $Data['b_firstname'];
-			$entity->userLastName = $Data['b_lastname'];
-			$entity->userEmail = $Data['b_email'];
+			$entity->userId = $row['b_id'];
+			$entity->userGroupId = $row['bg_id'];
+			$entity->userPw = $row['b_pw'];
+			$entity->userName = $row['b_name'];
+			$entity->userFirstName = $row['b_vorname'];
+			$entity->userLastName = $row['b_nachname'];				
+			$entity->userEmail = $row['b-email'];
 						
 			return $entity;
 		 }
+		 /** 
+		  *  function to update user role
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param int $groupId id of group
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserRole($userId, $groupId) { }
+		 
+		 /** 
+		  *  function to update user password
+		  * 
+		  * @return TRUE / FALSE
+		  * @param int $userId id of user
+		  * @param string $password new password of user
+		  * 
+		  * @author Johannes Alt <altjohannes510@gmail.com>
+		  */
+		 public function updateUserPassword($userId, $password) { }
 		 
 		  /**
 		 * get DistinctComponents
@@ -1401,5 +1409,25 @@
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
 		 }
+		 
+		 /**
+		  *  function to get Number Of Problems from devices
+		  * 
+		  * @return NumberOfProblems
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getNumberComponentProblems($email)
+		 {}	 
+		 
+		 /**
+		 * get DistinctComponentTypes
+		 * 
+		 * @return ComponentTypeEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponentTypes()
+		 {}
 	}
 ?>

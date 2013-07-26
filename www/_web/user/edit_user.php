@@ -9,7 +9,7 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="right destructiveButton" href="index.php?mod=user">Benutzer l&ouml;schen</a>
+		<a class="right destructiveButton" href="javascript:void(0)">Benutzer l&ouml;schen</a>
 		<div class="clearfix"></div>
 	</div>
 	<h2>Otto (Systembetreuer)</h2>
@@ -25,5 +25,74 @@
 		<br>
 		<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
 		<input onClick="location.href = 'index.php?mod=user'"; type="button" value="Abbrechen" />
+		
+		<div id="dialog" title="Benutzer l&ouml;schen?">
+	<p>Sind Sie sicher, dass Sie den Benutzer "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
+</div>
+
+
+	<script>
+		$(function() { $('#dialog').hide(); } );
+	
+		$(function() {
+			$('#btnDeleteRoom').on('click', function()
+				{
+				    $("#dialog").dialog({
+				        autoOpen: true,
+				        minWidth: 400,
+				        width: 400,
+				        buttons: 
+				        [
+				            	{
+				            		text: "Benutzer löschen",
+				            		name: "btnYes",
+				            		class: "destructiveButton",
+				                	click: function () 
+				                		{  	
+											var ajax = $.ajax
+												(
+													{
+														async: false,
+														type: "POST",
+														url: window.location,
+														data: { btnYes: true },	
+													}										
+												);	
+												
+											ajax.done
+											(
+												function()
+												{
+													window.location = "index.php?mod=rooms";
+												}
+											);				
+										}
+								},
+				            	{
+				            		text: "Abbrechen",
+				            		name: "btnNo",
+				                	click: function () { $(this).dialog("close"); }
+								}
+				        ],
+				        modal: true,
+				        overlay: 
+				        {
+				            opacity: 0.5,
+				            background: "black"
+				        }
+				    });
+				});
+		});
+	</script>
+	
+	<?php	
+			// check yes button
+			if(isset($_POST['btnYes']))
+			{
+				// delete room
+				$controller->deleteRoom();	
+			}
+	?>
+		
 	</form>
 </div>

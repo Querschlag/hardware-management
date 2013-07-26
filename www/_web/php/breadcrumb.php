@@ -51,6 +51,15 @@
 		{
 		}
 		
+		/** 
+		 *  function to display problem count
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function displayProblemCount($count)
+		{
+		}
+		
 		/**
 		 *  function to display room end
 		 * 

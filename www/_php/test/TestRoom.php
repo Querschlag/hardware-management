@@ -6,8 +6,6 @@
 					
 		<?php
 			
-			mail('alt.johannes@gmx.net', 'Subject', 'Message');
-			
 			// include IRoom
 			if(file_exists('../interface/IRoom.php')) require_once('../interface/IRoom.php');
 			if(file_exists('../_php/interface/IRoom.php')) require_once('../_php/interface/IRoom.php');
@@ -130,6 +128,13 @@
 					// store floor number
 					$this->_floor = $floorNumber;
 				}
+				
+			   /** 
+		 		*  function to display problem count
+		 		* 
+		 		* @author Johannes Alt <altjohannes510@gmail.com>
+		 		*/
+				public function displayProblemCount($count) { }
 				
 				/**
 				*  function to display room end
