@@ -17,7 +17,7 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("10.9.4.57", "itv_v1", "")))
+			if(!(mysql_connect("10.9.4.51", "itv_v1", "")))
 			{				
 				mysql_connect("localhost", "itv_v1", "");
 			}
@@ -628,7 +628,9 @@
 						WHERE b_id = ".$id.";";
 						
 			$Data = mysql_query($check);
-			if($Data["erg"] == "1")
+			$row = mysql_fetch_assoc($Data);
+			
+			if($row["Erg"] == "1")
 			{
 				return true;
 			}
@@ -1266,19 +1268,20 @@
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE
-							b_name = ".$userName.";";
+						WHERE b_name = '".$userName."';";
 					   
 			$Data = mysql_query($select);
 			
+			$row = mysql_fetch_assoc($Data);
+			
 			$entity = new UserEntity();
-			$entity->userId = $Data['b_id'];
-			$entity->userGroupId = $Data['bg_id'];
-			$entity->userPw = $Data['b_pw'];
-			$entity->userName = $Data['b_name'];
-			$entity->userFirstName = $Data['b_firstname'];
-			$entity->userLastName = $Data['b_lastname'];
-			$entity->userEmail = $Data['b_email'];
+			$entity->userId = $row['b_id'];
+			$entity->userGroupId = $row['bg_id'];
+			$entity->userPw = $row['b_pw'];
+			$entity->userName = $row['b_name'];
+			$entity->userFirstName = $row['b_vorname'];
+			$entity->userLastName = $row['b_nachname'];				
+			$entity->userEmail = $row['b-email'];
 						
 			return $entity;
 		 }

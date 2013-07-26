@@ -102,8 +102,6 @@
 			// check user
 			if(isset($user))
 			{
-				print $user->userId;
-				
 				// check user password
 				$result = $this->_database->checkUserPw($user->userId, $password);
 						
