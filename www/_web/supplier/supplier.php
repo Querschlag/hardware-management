@@ -6,6 +6,8 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
+	
+		<li><a href="index.php?mod=supplier">Lieferant</a></li>
 	</ul>
 </div>
 <div id="module">

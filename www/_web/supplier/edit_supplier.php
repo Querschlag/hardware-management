@@ -7,9 +7,8 @@
 			include ('php/breadcrumb.php');
 		?>
 
-		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
-		<li>>> <a href="index.php?mod=createSupplier"></a></li>
+		<li><a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="index.php?mod=editSupplier">Lieferant bearbeiten</a></li>
 	</ul>
 </div>
 <div id="module">
