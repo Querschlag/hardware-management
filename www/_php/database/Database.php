@@ -21,7 +21,6 @@
 			{				
 				mysql_connect("localhost", "itv_v1", "");
 			}
-			
 			mysql_select_db("itv_v1");
 					
 		}
@@ -183,7 +182,7 @@
 		 * @return void
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
-		public function insertComponent($deliverer, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
+		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
 		{
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
@@ -1406,5 +1405,25 @@
 			
 			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
 		 }
+		 
+		 /**
+		  *  function to get Number Of Problems from devices
+		  * 
+		  * @return NumberOfProblems
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getNumberComponentProblems($email)
+		 {}	 
+		 
+		 /**
+		 * get DistinctComponentTypes
+		 * 
+		 * @return ComponentTypeEntitiy[]
+		 *
+         * @author Daniel Schulz <schmoschu@gmail.com>		  
+		 */
+		 public function getDistinctComponentTypes()
+		 {}
 	}
 ?>
