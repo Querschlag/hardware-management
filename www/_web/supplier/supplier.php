@@ -1,3 +1,4 @@
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>	
@@ -5,6 +6,8 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
+	
+		<li><a href="index.php?mod=supplier">Lieferant</a></li>
 	</ul>
 </div>
 <div id="module">
