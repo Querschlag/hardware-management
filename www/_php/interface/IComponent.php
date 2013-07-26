@@ -16,7 +16,7 @@
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
-		public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+		public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 		
 		/**
 		 *  function to get component id
@@ -80,6 +80,13 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>
 		 */
 		public function getComponentTypes();
+			
+		/**
+		 * function to get component types 
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function getComponentIsDevice();
 		
 		/**
 		 * function to set error

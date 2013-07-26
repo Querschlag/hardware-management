@@ -68,7 +68,8 @@
 					$component->componentWarranty,
 					$component->componentNote,
 					$component->componentSupplier,
-					$component->componentType);
+					$component->componentType,
+					$component->componentIsDevice);
 			}
 		}
 		
@@ -79,7 +80,7 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function insertComponent()
-		{			
+		{
 			// get component deliverer
 			$deliverer = $this->_view->getComponentDeliverer();
 			
@@ -104,11 +105,14 @@
 			// get component type
 			$type = $this->_view->getComponentTypes();
 			
+			// get component type
+			$isDevice = $this->_view->getComponentIsDevice();
+			
 			// check room number and room name
 			if($deliverer && $room && $name && $warranty && $buy && $supplier && $type)
 			{
 				// insert component
-				$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type);
+				$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type,$isDevice);
 				
 				// insert component main or sub
 				// $this->_database->insertComponentComponent($aggregatId, $partId, $khkId);
@@ -124,6 +128,9 @@
 				// set error to frontend
 				$this->_view->setError();
 			}
+			$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			
+			die('insert');
 		}	
 		
 		/**
