@@ -22,7 +22,7 @@
 	*/
 	class ComponentController implements IComponentController
 	{
-			/**
+		/**
 		 *  storage for the dialog
 		 */
 		private $_view;
@@ -128,9 +128,8 @@
 				// // set error to frontend
 				// $this->_view->setError();
 			// }
-			$this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
-			
-			die('insert');
+			$id = $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			$this->_view->setComponentId($id);
 		}	
 		
 		/**
@@ -219,6 +218,26 @@
 				// set error to frontend
 				// $this->_view->setError();
 			}
+		}
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function selectAttributesByType($type) {
+			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
+		}
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function insertAttributes($attributeId, $componentId, $value) {
+			$this->_database->insertAttributeValue($attributeId, $componentId, $value);
 		}
 	}
 ?>
