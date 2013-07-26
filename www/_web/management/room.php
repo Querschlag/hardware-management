@@ -1,5 +1,4 @@
-<form method="post" id="form">
-
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -158,25 +157,10 @@
 				
 			// select room to change
 			$controller->selectRoom();		
-			
-			$menuItem = GET('menu');
-			
-			echo '<li>>> <a href="index.php?mod=rooms&menu='. $menuItem . '">';
-			
-			print $menuItem;
-			
-			if ($menuItem == 'scrap')
-				echo 'Ausmustern';
-			else if ($menuItem == 'maintenance')
-				echo 'Wartung';
-			else if ($menuItem == 'reporting')
-				echo 'Reporting';
-			else if ($menuItem == 'management')
-				echo 'Stammdaten'; 
-							
-			echo '</a></li>';
+
+			// Breadcrumb navigation
+			include('php/breadcrumb.php');
 		?>
-		<li>>> <a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>"><?php echo $view->getRoomNumber(); ?></a></li>
 	</ul>
 </div>
 
@@ -185,59 +169,59 @@
 </div>
 
 
-	<script>
-		$(function() { $('#dialog').hide(); } );
-	
-		$(function() {
-			$('#btnDeleteRoom').on('click', function()
-				{
-				    $("#dialog").dialog({
-				        autoOpen: true,
-				        minWidth: 430,
-				        width: 430,
-				        buttons: 
-				        [
-				            	{
-				            		text: "Raum & Geräte löschen",
-				            		name: "btnYes",
-				            		class: "destructiveButton",
-				                	click: function () 
-				                		{  	
-											var ajax = $.ajax
-												(
-													{
-														async: false,
-														type: "POST",
-														url: window.location,
-														data: { btnYes: true },	
-													}										
-												);	
-												
-											ajax.done
+<script>
+	$(function() { $('#dialog').hide(); } );
+
+	$(function() {
+		$('#btnDeleteRoom').on('click', function()
+			{
+			    $("#dialog").dialog({
+			        autoOpen: true,
+			        minWidth: 430,
+			        width: 430,
+			        buttons: 
+			        [
+			            	{
+			            		text: "Raum & Geräte löschen",
+			            		name: "btnYes",
+			            		class: "destructiveButton",
+			                	click: function () 
+			                		{  	
+										var ajax = $.ajax
 											(
-												function()
 												{
-													window.location = "index.php?mod=rooms";
-												}
-											);				
-										}
-								},
-				            	{
-				            		text: "Abbrechen",
-				            		name: "btnNo",
-				                	click: function () { $(this).dialog("close"); }
-								}
-				        ],
-				        modal: true,
-				        overlay: 
-				        {
-				            opacity: 0.5,
-				            background: "black"
-				        }
-				    });
-				});
-		});
-	</script>
+													async: false,
+													type: "POST",
+													url: window.location,
+													data: { btnYes: true },	
+												}										
+											);	
+											
+										ajax.done
+										(
+											function()
+											{
+												window.location = "index.php?mod=rooms";
+											}
+										);				
+									}
+							},
+			            	{
+			            		text: "Abbrechen",
+			            		name: "btnNo",
+			                	click: function () { $(this).dialog("close"); }
+							}
+			        ],
+			        modal: true,
+			        overlay: 
+			        {
+			            opacity: 0.5,
+			            background: "black"
+			        }
+			    });
+			});
+	});
+</script>
 	
 <?php	
 		// check yes button
@@ -275,4 +259,3 @@
 		<li><a href="index.php<?php echo navParams(null, 'device', null, 8); ?>">FritzBox!</a></li>
 	</ul>
 </div>
-</form>
