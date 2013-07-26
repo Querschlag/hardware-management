@@ -47,5 +47,13 @@
 		 */
 		public function rejectionComponent($id);
 		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function selectAttributesByType($type);
+		
 	}
 ?>
