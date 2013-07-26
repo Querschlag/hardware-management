@@ -28,9 +28,16 @@
 		/**
 		*  function to display room end
 		* 
-		*  @author Johannes Alt <altjohannes@gmail.com>
+		*  @author Johannes Alt <altjohannes510@gmail.com>
 		*/
 		public function displayRoomEnd();
+		
+		/** 
+		 *  function to display problem count
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function displayProblemCount($count);
 		
 		/**
 		 *  function to get room number

@@ -1,4 +1,4 @@
-
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -16,10 +16,8 @@
 		<div class="clearfix"></div>
 	</div>
 	
+	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<?php
-		// include IRoom
-		require_once('../_php/interface/IRoom.php');
-		
 		// include room controller
 		require_once('../_php/core/RoomController.php');
 		
@@ -28,6 +26,21 @@
 		
 		// include room entity
 		require_once('../_php/entity/RoomEntity.php');
+		
+		// include room class
+		require_once('/management/class/room.class.php');
+	
+		// create view object
+		$view = new Room($_POST);
+		
+		// create database
+		$database = new Database();
+		
+		// create controller object
+		$controller = new RoomController($view, $database);	
+			
+		// select room to change
+		$controller->selectRoom();	
 
 		/**
 		* Room object
@@ -131,6 +144,21 @@
 				$this->_rowCount = 0;
 			}
 		
+			/** 
+	 		*  function to display problem count
+	 		* 
+	 		* @author Johannes Alt <altjohannes510@gmail.com>
+	 		*/
+			public function displayProblemCount($count) 
+			{
+				// check count
+				if($count > 0)
+				{
+					// set problem count message
+					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
+				}				
+			}
+		
 			/**
 			 *  function to get room number
 			 * 
@@ -220,4 +248,25 @@
 		// select the rooms
 		$controller->selectRooms();
 	?>
+	
+	<!-- mock rooms
+	<h2>Erdgeschoss</h2>
+	<ul class="rooms">
+		<li><a href="index.php<?php echo navParams(null, 'room', 1); ?>">R001</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 2); ?>">R002</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 3); ?>">R003</a></li>
+	</ul>
+	<h2>Stockwerk 1</h2>
+	<ul class="rooms">
+		<li><a href="index.php<?php echo navParams(null, 'room', 4); ?>">R101</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 5); ?>">R102</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 6); ?>">R103</a></li>
+	</ul>
+	<h2>Stockwerk 2</h2>
+	<ul class="rooms">
+		<li><a href="index.php<?php echo navParams(null, 'room', 7); ?>">R201</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 8); ?>">R202</a></li>
+		<li><a href="index.php<?php echo navParams(null, 'room', 9); ?>">R203</a></li>
+	</ul>
+	-->
 </div>

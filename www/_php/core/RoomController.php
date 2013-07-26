@@ -104,11 +104,22 @@
 			// create floor array
 			$floors = array();
 			
-			// iteration over all rooms
-			foreach($rooms as $room)
+			// check rooms
+			if(isset($rooms['rooms']))
+			{			
+				// iteration over all rooms
+				foreach($rooms['rooms'] as $room)
+				{
+					// add room to floor list
+					$floors[$room->roomFloor][] = $room;					
+				}
+			}
+			
+			// check problem count
+			if(isset($rooms['problemCount']))
 			{
-				// add room to floor list
-				$floors[$room->roomFloor][] = $room;					
+				// display problems
+				$this->_view->displayProblemCount($rooms['problemCount']);
 			}
 			
 			// iteration over all floors

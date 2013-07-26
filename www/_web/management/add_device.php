@@ -1,14 +1,12 @@
+<?php require_once('php/navigation.php'); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php">Startseite</a></li>
 		<?php
 			// add selected menu entry
-			include ('php/nav_menuItem.php');
+			include ('php/breadcrumb.php');
 		?>
-		<li>>> <a href="index.php?mod=room">R001</a></li>
-		<li>>> <a href="index.php?mod=device">Ger&auml;te</a></li>
-		<li>>> <a href="index.php?mod=create_device">Ger&auml;t hinzuf&uuml;gen</a></li>
+		<li>>> <a href="index.php<?php echo navParams(null, 'create_device'); ?>">Ger&auml;t hinzuf&uuml;gen</a></li>
 	</ul>
 </div>
 <div id="module">

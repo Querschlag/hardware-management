@@ -145,7 +145,7 @@
 			$this->_rooms[] = $entity;
 			
 			// return entites
-			return $this->_rooms;
+			return array('problemCount' => 0, 'rooms' => $this->_rooms);
 		}
 		
 		/**
