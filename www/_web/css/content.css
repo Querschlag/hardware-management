@@ -31,6 +31,30 @@ hr {
 	margin-bottom:30px;
 }
 
+input {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+select {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+textarea {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
 #header {
 	height:80px;
 	padding-top:40px;
@@ -97,14 +121,6 @@ hr {
 #search_bar {
 	margin-right:20px;
 	float:right;
-}
-
-#search_bar input {
-	border: 1px solid #ccc;
-	-border-radius: 10px;
-  	-webkit-border-radius: 10px;
-  	border-radius: 10px;
-  	padding:2px 8px;
 }
 
 #content {
