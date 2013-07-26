@@ -100,6 +100,15 @@
 					
 					header( "Location: index.php" );
 				}
+		
+				/**
+				 *  function to display user group
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayGroup($id, $name, $permisson)
+				{
+				}
 				
 				/**
 				 *  function to get user name
