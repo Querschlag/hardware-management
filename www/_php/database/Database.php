@@ -183,7 +183,7 @@
 		 * @param string $supplier The components supplier
 		 * @param integer $type The components type
 		 * 
-		 * @return void
+		 * @return ComponentID(int)
 		 * @author Leon Geim<leon.geim@gmail.com>
 		 */
 		public function insertComponent($deliverer = NULL, $room, $name, $date, $warranty, $note, $supplier, $type, $isDevice)
@@ -195,7 +195,14 @@
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
 								'".$supplier."', ".$type.", ".$isDevice.")";
-			return mysql_query($insert) or die(mysql_error());
+			mysql_query($insert) or die(mysql_error());
+			
+			$select = "SELECT k_id FROM komponente
+						ORDER BY k_id desc LIMIT 1";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+						
+			return $row["k_id"];
 		}
 				
 		/**
