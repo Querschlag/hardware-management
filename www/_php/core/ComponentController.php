@@ -227,7 +227,17 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function selectAttributesByType($type) {
-			return $this->_database->getComponentAttributesFromComponentType($type);
+			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
+		}
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function insertAttributes($attributeId, $componentId, $value) {
+			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
 		}
 	}
 ?>

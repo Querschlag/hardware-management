@@ -184,7 +184,10 @@
 		}
 		else if ($step == 4) 
 		{
-	
+			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			{
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+			}
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
@@ -215,13 +218,13 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				<p>Attribut 1</p>
 				<input type="hidden" name="componentAttribute[]" value="9" />
-				<input name="attribute[]" type="text" value="4 GB RAM" />
+				<input name="attributeValue[]" type="text" value="4 GB RAM" />
 				<p>Attribut 2</p>
 				<input type="hidden" name="componentAttribute[]" value="14" />
-				<input name="attribute[]" type="text" value="4GHz" />
+				<input name="attributeValue[]" type="text" value="4GHz" />
 				<input name="step" value="4" type="hidden" />
 				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
-				<input type="hidden" name="id" value="'.$view->getComponentId().'">	
+				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
