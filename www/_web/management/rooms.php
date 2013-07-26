@@ -27,17 +27,7 @@
 		// include room entity
 		require_once('../_php/entity/RoomEntity.php');
 	
-		// create view object
-		$view = new Room($_POST);
 		
-		// create database
-		$database = new Database();
-		
-		// create controller object
-		$controller = new RoomController($view, $database);	
-			
-		// select room to change
-		$controller->selectRoom();	
 
 		/**
 		* Room object
@@ -232,14 +222,8 @@
 			{
 			}
 			
-			/** 
-			 *  function to display problem count
-			 * 
-			 * @author Johannes Alt <altjohannes510@gmail.com>
-			 */
-			public function displayProblemCount($count);
 		}
-
+		
 		// create view object
 		$view = new Room($_POST);
 		
