@@ -4,7 +4,7 @@
 	<ul>
 		<li><a href="index.php">Startseite</a></li>
 		<li>>> <a href="index.php?mod=stock">Neubeschaffung</a></li>
-		<li>>> <a href="index.php?mod=storeComponent">Ger&auml;t anlegen</a></li>
+		<li>>> <a href="index.php?mod=storeComponent">Komponente anlegen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -27,20 +27,20 @@
 		
 		$step = POST('step');
 		
-		if ($step == 3) 
+		if ($step == 4) 
 		{
 			header('location:index.php?mod=stock');
 		}
-		else if ($step == 2) 
+		else if ($step == 3) 
 		{
 	
 			echo '
-			<!-- Device creation wizard - Step 3 -->
+			<!-- Component creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeComponent" method="post">
 				<p>Attribut 1</p><input name="attribute1" type="text"/>
 				<p>Attribut 2</p><input name="attribute2" type="text"/>
-				<input name="step" value="3" type="hidden" />
+				<input name="step" value="4" type="hidden" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Anlegen" />
@@ -49,11 +49,43 @@
 			';
 
 		}
+		else if ($step == 2) 
+		{
+	
+			echo '
+			<!-- Component creation wizard - Step 2 -->
+			<form action="index.php?mod=storeComponent" method="post">
+				<p>Bezeichnung</p><input name="device_name" type="text"/>
+				<br>
+				<p>Lieferant</p>
+				<select name="deliverer">
+					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
+						<option value="1">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+						<option value="1">Lieferant 1</option>
+				</select>
+				<p>Hersteller</p><input name="supplier" type="text"/>
+				<p>Kaufdatum</p><input name="buy" type="date"/>
+				<p>Gew&auml;hrleistung in Jahren</p><input name="warranty" type="number"/>
+				<p>Notiz</p><textarea name="note" rows=6 cols=30></textarea>
+				<input name="step" value="3" type="hidden" />
+				<input type="hidden" name="type" value="">
+				<input type="hidden" name="device" value="">
+				<br>
+				<br>
+				<input name="btnSubmit" type="submit" value="Weiter" />
+				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+			</form>
+			<div class="clearfix"></div>
+			';
+
+		}
 		else
 		{
 	
 			echo '
-			<!-- Device creation wizard - Step 1 -->
+			<!-- Component creation wizard - Step 1 -->
 			<form class="deviceSelection" action="index.php?mod=storeComponent" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Chip1.png" /><p>Prozessor</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/EthernetCable.png" /><p>Ethernet Kabel</p></div>
