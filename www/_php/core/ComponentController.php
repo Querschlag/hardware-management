@@ -129,7 +129,7 @@
 				// $this->_view->setError();
 			// }
 			$id = $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
-			$this->_view
+			$this->_view->setComponentId($id);
 		}	
 		
 		/**
@@ -218,6 +218,16 @@
 				// set error to frontend
 				// $this->_view->setError();
 			}
+		}
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function selectAttributesByType($type) {
+			return $this->_database->getComponentAttributesFromComponentType($type);
 		}
 	}
 ?>
