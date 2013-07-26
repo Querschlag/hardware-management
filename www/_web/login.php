@@ -68,6 +68,7 @@
 				<form action="login.php" method="post">
 					<p>Benutzername</p><input name="username" type="text" />
 					<p>Passwort</p><input name="password" type="text" />
+					<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
 					<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
 				</form>
 			</div>
