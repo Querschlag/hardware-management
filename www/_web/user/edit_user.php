@@ -40,7 +40,7 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
-		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'"; type="button" value="Abbrechen" />
+		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" type="button" value="Abbrechen" />
 	</form>
 	
 		<div id="dialog" title="Benutzer l&ouml;schen?">

@@ -53,10 +53,6 @@
 			<div class="clearfix"></div>
 			<div id="top_nav">
 				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
-				<?php
-					//Include top navigation
-					include('nav.html');
-				?>
 			</div>
 		</div>
 		<div id="content">

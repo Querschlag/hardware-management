@@ -6,7 +6,7 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
-		<li>>> <a href="index.php<?php echo navParams(null, 'create_device'); ?>">Ger&auml;t hinzuf&uuml;gen</a></li>
+		<li>>> <a href="index.php<?php echo navParams(array ('mod' => 'create_device')); ?>">Ger&auml;t hinzuf&uuml;gen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -31,7 +31,7 @@
 		
 		if ($step == 4) 
 		{
-			header('location:index.php?mod=room');
+			header('location:index.php' . navParams(array('mod' => 'room')) );
 		}
 		else if ($step == 3) 
 		{
@@ -43,14 +43,14 @@
 			echo '
 			<!-- Device adding wizard - Step 3 -->
 			<h4>Benennung</h4>
-			<form action="index.php?mod=addDevice" method="post">
+			<form action="index.php'. navParams(array('mod' => 'addDevice')) .'" method="post">
 				<p>1</p><input name="attribute2" type="text" value="PC004"/>
 				<p>2</p><input name="attribute2" type="text" value="PC005"/>
 				<input name="step" value="4" type="hidden" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
-				<input onClick="location.href = \'index.php?mod=room\'" type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php'. navParams(array('mod' => 'room')) .'\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -60,7 +60,7 @@
 			
 			echo '
 			<!-- Device adding wizard - Step 2 -->
-			<form action="index.php?mod=addDevice" method="post">
+			<form action="index.php'. navParams(array('mod' => 'addDevice')) .'" method="post">
 				<p>Ger&auml;t w&auml;hlen</p>
 				<select name="device">
 					<optgroup label="Ger&auml;t w&auml;hlen"></optgroup>
@@ -73,7 +73,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
-				<input onClick="location.href = \'index.php?mod=room\'" type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php'. navParams(array('mod' => 'room')) .'\'" type="button" value="Abbrechen" />
 			</form>
 			<div class="clearfix"></div>
 			';
@@ -84,7 +84,7 @@
 	
 			echo '
 			<!-- Device adding wizard - Step 1 -->
-			<form class="deviceSelection" action="index.php?mod=addDevice" method="post">
+			<form class="deviceSelection" action="index.php'. navParams(array('mod' => 'addDevice')) .'" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/BluRayPlayer_Disc.png" /><p>Blu-ray Player</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Computer.png" /><p>Computer</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/HomeServer.png" /><p>Server</p></div>
@@ -96,7 +96,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/add-button.png" /><p>Typ hinzuf&uuml;gen</p></div>
 				<input name="step" value="2" type="hidden" />
 				<div class="clearfix"></div>
-				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=room\'" type="button" value="Abbrechen" /></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php'. navParams(array('mod' => 'room')) .'\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		

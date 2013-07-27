@@ -243,21 +243,21 @@
 	<!-- mock rooms
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 1); ?>">R001</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 2); ?>">R002</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 3); ?>">R003</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R001</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R002</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R003</a></li>
 	</ul>
 	<h2>Stockwerk 1</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 4); ?>">R101</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 5); ?>">R102</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 6); ?>">R103</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R101</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R102</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R103</a></li>
 	</ul>
 	<h2>Stockwerk 2</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 7); ?>">R201</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 8); ?>">R202</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 9); ?>">R203</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R201</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R202</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R203</a></li>
 	</ul>
 	-->
 </div>

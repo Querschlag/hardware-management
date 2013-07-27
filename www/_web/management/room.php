@@ -201,7 +201,7 @@
 										(
 											function()
 											{
-												window.location = "index.php?mod=rooms";
+												window.location = 'index.php' . navParams(array('mod' => 'rooms'));
 											}
 										);				
 									}

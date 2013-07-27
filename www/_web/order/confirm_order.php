@@ -17,6 +17,6 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="Ins Lager verschieben" />
-		<input onClick="location.href = 'index.php?mod=modifyOrder&id=1'"; type="button" value="Abbrechen" />
+		<input onClick="location.href = 'index.php?mod=modifyOrder&id=1'" type="button" value="Abbrechen" />
 	</form>
 </div>

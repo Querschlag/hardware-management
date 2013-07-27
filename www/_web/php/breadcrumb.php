@@ -156,9 +156,6 @@
 	// select room to change
 	$controller->selectRoom();		
 
-			
-	/*<li>>> <a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>"><?php echo $view->getRoomNumber(); ?></a></li>
-	*/
 	
 	/**
 	 * Breadcrumb composer

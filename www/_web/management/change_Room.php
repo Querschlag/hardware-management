@@ -237,7 +237,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// no redirect
-					header( "Location: index.php?mod=rooms" );
+					header( 'Location: index.php'. navParams(array('mod' => 'changeRoom')) );
 				}
 			}
 			else if(isset($_POST['btnChangeSubmit']))
@@ -249,7 +249,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// redirect
-					header( "Location: index.php?mod=rooms" );
+					header( 'Location: index.php'. navParams(array('mod' => 'rooms')) );
 				}				
 			}
 		?>
@@ -268,7 +268,7 @@
 				print '<input name="btnAddSubmit" type="submit" value="Hinzuf&uuml;gen" />';					
 			}
 		?>
-		<input onClick="location.href = 'index.php?mod=rooms'"; type="button" value="Abbrechen" />	
+		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'rooms')); ?>'" type="button" value="Abbrechen" />	
 
 	</form>
 </div>
