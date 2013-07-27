@@ -16,10 +16,9 @@
 	<h2>Eigenschaften</h2>
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<form action="index.php?mod=device" method="post">
-		<p>Attribut 1</p><input name="attribut1" type="text" />
-		<p>Attribut 2</p><input name="attribut1" type="text" />
-		<p>Attribut 3</p><input name="attribut1" type="text" />
-		<input name="btnSubmit" type="submit" value="Speichern" />
+		<p>Attribut 1</p><input name="attribut1" type="text" disabled=""/>
+		<p>Attribut 2</p><input name="attribut1" type="text" disabled=""/>
+		<p>Attribut 3</p><input name="attribut1" type="text" disabled=""/>
 	</form>
 
 </div>

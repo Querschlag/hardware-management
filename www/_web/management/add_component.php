@@ -6,7 +6,7 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
-		<li>>> <a href="index.php<?php echo navParams(null, 'create_component'); ?>">Komponente hinzuf&uuml;gen</a></li>
+		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'create_component')); ?>">Komponente hinzuf&uuml;gen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -31,7 +31,7 @@
 		
 		if ($step == 3) 
 		{
-			header('location:index.php?mod=device');
+			header('location:index.php' . navParams(array('mod' => 'device')) );
 		}
 		else if ($step == 2) 
 		{
@@ -39,7 +39,7 @@
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponente w&auml;hlen</h4>
-			<form action="index.php?mod=addComponent" method="post">
+			<form action="index.php' . navParams(array('mod' => 'addComponent')) . '" method="post">
 				<p>Komponente</p>
 				<select name="device">
 					<optgroup label="Komponente w&auml;hlen"></optgroup>
@@ -52,7 +52,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Speichern" />
-				<input onClick="location.href = \'index.php?mod=device\'" type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php' . navParams(array('mod' => 'device')) .'\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -62,7 +62,7 @@
 	
 			echo '
 			<!-- Device creation wizard - Step 1 -->
-			<form class="deviceSelection" action="index.php?mod=addComponent" method="post">
+			<form class="deviceSelection" action="index.php' . navParams(array('mod' => 'addComponent')) . '" method="post">
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Chip1.png" /><p>Prozessor</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/EthernetCable.png" /><p>Ethernet Kabel</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Motherboard.png" /><p>Motherboard</p></div>
@@ -70,7 +70,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/add-button.png" /><p>Typ hinzuf&uuml;gen</p></div>
 				<input name="step" value="2" type="hidden" />
 				<div class="clearfix"></div>
-				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=device\'" type="button" value="Abbrechen" /></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php' . navParams(array('mod' => 'device')) .'\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		

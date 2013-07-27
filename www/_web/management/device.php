@@ -10,17 +10,17 @@
 </div>
 <div id="module">
 	<div id="action_bar"><!-- Params -->
-		<a class="left" href="index.php?mod=addComponent<?php echo '&menu=' . GET('menu');?>">Komponente hinzuf&uuml;gen</a>
-		<a class="right destructiveButton" href="index.php?mod=device<?php echo '&menu=' . GET('menu');?>">Ausmustern</a>
-		<a class="right" href="index.php?mod=reportProblem<?php echo '&menu=' . GET('menu');?>">Problem melden</a>
-		<a class="right" href="index.php?mod=fixProblem<?php echo '&menu=' . GET('menu');?>">Probleme beheben</a>
+		<a class="left" href="index.php<?php echo navParams(array('mod' => 'addComponent')); ?>">Komponente hinzuf&uuml;gen</a>
+		<a class="right destructiveButton" href="index.php<?php echo navParams(array('mod' => 'device')); ?>">Ausmustern</a>
+		<a class="right" href="index.php<?php echo navParams(array('mod' => 'reportProblem')); ?>">Problem melden</a>
+		<a class="right" href="index.php<?php echo navParams(array('mod' => 'fixProblem')); ?>">Problem beheben</a>
 		<div class="clearfix"></div>
 	</div>
 	<h2>Komponenten</h2>
 	<ul class="components">
-		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 1); ?>">Komponente 1</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 2); ?>">Komponente 2</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'component', null, null, 3); ?>">Komponente 3</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 1)); ?>">Komponente 1</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 2)); ?>">Komponente 2</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 3)); ?>">Komponente 3</a></li>
 	</ul>
 	<hr>
 	<h2>Wartungshistorie</h2>
