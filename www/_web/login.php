@@ -247,10 +247,9 @@
 			</div>
 		</div>
 		<div id="footer">
-			<p>
-				Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">IFA11B2 IT-Team2</a>
-			</p>
-			<img class="logo" src="img/Logo_team2_int.png" alt="IFA11B2 - IT-Team2 Logo" />
+			<?php
+				include('footer.html');
+			?>
 		</div>
     </body>
 </html>

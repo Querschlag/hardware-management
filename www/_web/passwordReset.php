@@ -38,6 +38,10 @@
 		</div>
 			<div class="clear"></div>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			<?php
+				include('footer.html');
+			?>
+		</div>
     </body>
 </html>
