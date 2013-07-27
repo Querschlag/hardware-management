@@ -60,7 +60,7 @@
 				 */
 				protected function displayActionButtonSupplier()
 				{
-					echo '<a class="right" href="index.php' . navParams( array("mod" => "supplier"), false ) . '>">Lieferanten</a>';
+					echo '<a class="right" href="index.php' . navParams( array("mod" => "supplier"), false ) . '">Lieferanten</a>';
 				}
 				
 				/**
