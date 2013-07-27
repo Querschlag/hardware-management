@@ -11,7 +11,7 @@
 	 * @copyright 2013 IFA11B2 IT-Team2
 	 */
 
-	function navParams($params, $autoAppendIds = true)
+	function navParams($params = array(), $autoAppendIds = true)
  	{
 		$menu = (isset($params['menu'])) ? $params['menu'] : null;
  		if ($menu == null)
@@ -22,7 +22,7 @@
 		
 		$modul = (isset($params['mod'])) ? $params['mod'] : null;
  		if ($modul == null && $autoAppendIds)
-			$modul = GET('modul');
+			$modul = GET('mod');
 		// add menu parameter
 		if ($modul != null)
 			$paramString .= '&mod=' . $modul;
