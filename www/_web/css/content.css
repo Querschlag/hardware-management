@@ -278,6 +278,11 @@ form p {
 	box-shadow:         3px 3px 3px 1px #ccc;
 }
 
+.cancelButton {
+	margin:20px auto 0 auto;
+	width: 95px;
+}
+
 /* module Rooms */
 .rooms {list-style:none;}
 .rooms li {width:118px; display:inline-block;}
@@ -289,10 +294,8 @@ form p {
 .support_event li {padding:5px;}
 
 /* module Create Device */
-.deviceButton {float:left;margin:0px 20px;}
-.deviceButton p {text-align:center;}
+.deviceButton {float:left;margin:0px 20px;text-align:center;width:89px;height:140px;}
 .deviceButton input {height:64; width:64;border:0;}
-.deviceSelection {height:250px}
 
 /* module Create Device */
 #order_selction {width:100%;margin:60px 0;text-align:center;}
