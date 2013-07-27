@@ -168,13 +168,13 @@
 	<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
 </div>
 
-
-<script>
+<script language="JavaScript" type="text/javascript">
 	$(function() { $('#dialog').hide(); } );
 
 	$(function() {
-		$('#btnDeleteRoom').on('click', function()
+		$('.btnDeleteRoom').on('click', function()
 			{
+				alert('hi');
 			    $("#dialog").dialog({
 			        autoOpen: true,
 			        minWidth: 430,
@@ -182,7 +182,7 @@
 			        buttons: 
 			        [
 			            	{
-			            		text: "Raum & Geräte löschen",
+			            		text: "Raum & Ger&auml;te l&ouml;schen",
 			            		name: "btnYes",
 			            		class: "destructiveButton",
 			                	click: function () 
@@ -236,8 +236,8 @@
 <div id="module">
 	<div id="action_bar">
 		<a class="left" href="index.php<?php echo navParams(array('mod' => 'addDevice')); ?>">Ger&auml;t hinzuf&uuml;gen</a>		
-		<a class="right destructiveButton" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
-		<a class="right" href="index.php<?php echo navParams(array('mod' => 'changeRoom')); ?>">Raum bearbeiten</a>				
+		<a class="right destructiveButton btnDeleteRoom" href="javascript:void(0);">Raum l&ouml;schen</a>
+		<a class="right" href="index.php<?php echo navParams(array('mod' => 'modifyRoom')); ?>">Raum bearbeiten</a>				
 		<div class="clearfix"></div>
 	</div>
 	

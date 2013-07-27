@@ -49,8 +49,8 @@
 				return 'management/room.php';
 			if ($moduleName == 'createRoom')
 				return 'management/create_room.php';
-			if ($moduleName == 'changeRoom')
-				return 'management/change_room.php';
+			if ($moduleName == 'modifyRoom')
+				return 'management/modify_room.php';
 				
 			if ($moduleName == 'device')
 				return 'management/device.php';
