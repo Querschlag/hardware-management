@@ -12,7 +12,7 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="right destructiveButton" href="javascript:void(0)">Benutzer l&ouml;schen</a>
+		<a class="right destructiveButton" id="btnDeleteUser" href="javascript:void(0);">Benutzer l&ouml;schen</a>
 		<div class="clearfix"></div>
 	</div>
 	<h2>Otto (Systembetreuer)</h2>
@@ -51,7 +51,7 @@
 		$(function() { $('#dialog').hide(); } );
 	
 		$(function() {
-			$('#btnDeleteRoom').on('click', function()
+			$('#btnDeleteUser').on('click', function()
 				{
 				    $("#dialog").dialog({
 				        autoOpen: true,
@@ -79,7 +79,7 @@
 											(
 												function()
 												{
-													window.location = "index.php?mod=rooms";
+													window.location = "index.php?mod=user";
 												}
 											);				
 										}
@@ -106,7 +106,7 @@
 			if(isset($_POST['btnYes']))
 			{
 				// delete room
-				$controller->deleteRoom();	
+				$controller->deleteUser();	
 			}
 	?>
 	

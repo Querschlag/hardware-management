@@ -214,6 +214,15 @@
 					 * @author Johannes Alt <altjohannes510@gmail.com>
 					 */
 			 		public function getPassword2() {}
+					
+					/**
+					 *  function to get message
+					 * 
+					 *  @author Johannes Alt <altjohannes510@gmx.net>
+					 */
+					public function getMessage()
+					{
+					}
 				}
 	
 				// create view object
