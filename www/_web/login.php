@@ -1,26 +1,5 @@
 <?php
-	
 	require_once('php/additions.php');
-	
-	$username = POST('username');
-	$password = POST('password');
-	
-	//echo 'username: ' . $username . '| password: ' . $password;
-	if ($username != null && $password != null)
-	{
-		//echo 'valid username and password';
-		// Login with backend connector class
-		if (true)
-		{
-			session_start();
-			$_SESSION['userGroup'] = 1;
-			$_SESSION['username'] = $username;
-		} else {
-			
-		}
-	} else {
-		echo 'Bitte geben Sie Ihre Zugangsdaten ein.';
-	}
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +10,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Hardware Management</title>
-        <meta name="description" content="">
+        <title>IT Verwaltung - B3 F&uuml;rth</title>
+        <meta name="description" content="Tool for tracking hardware devices and components in an educational environment.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/ico" href="favicon.ico">
@@ -51,209 +30,226 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
-        <div id="top-menu"></div>
-
-		<div id="header"></div>
-		<div id="content">
-			<div id="information">
-				<h1>Hardware Management B3</h1>
-			</div>
-			<div id="login">
-				<form action="login.php" method="post">
-					<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>"></input>
-					<p>Passwort</p><input name="password" type="password" />
-					<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
-					<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
-					
-					<?php
-			// include IUser
-			require_once('../_php/interface/IUser.php');
-			
-			// include user controller
-			require_once('../_php/core/UserController.php');
-			
-			// include database
-			require_once('../_php/database/Database.php');
-		
-			/**
-			 * Class for User
-			 *
-			 * Class for Insert, Update and Delete User
-			 *
-			 * @category 
-			 * @package
-			 * @author Johannes Alt <altjohannes510@gmail.com>
-			 * @author Thomas Bayer <thomasbayer95@gmail.com>
-			 * @copyright 2013 B3ProjectGroup2
-			 */
-			class User implements IUser
-			{
-				/**
-		 		*  function to display user
-		 		* 
-		 		* @author Johannes Alt <altjohannes510@gmail.com>
-		 		*/
-				public function displayUser($id, $groupId, $name, $firstName, $lastName, $email)
-				{
-					session_start();
-					$_SESSION['userGroup'] = $id;
-					$_SESSION['username'] = $name;
-					
-					header( "Location: index.php" );
-				}
-		
-				/**
-				 *  function to display user group
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function displayGroup($id, $name, $permisson)
-				{
-				}
-				
-				/**
-				 *  function to get user name
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getUserName() 
-				{
-					// return user name
-					return $_POST['username'];	
-				}
-				
-				/**
-				 *  function to get password
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getPassword() 
-				{
-					// return password
-					return $_POST['password'];
-				}
-				
-				/**
-				 *  function to set password error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function setPasswordError() 
-				{
-					// set error text
-					print '<b><p><span class="require">Falscher Benutzername oder Passwort.</span></p></b>';
-				}
-		
-				/**
-				 *  function to set user don't exist error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function setNotExistError() 
-				{
-					// set error text
-					print '<b><p><span class="require">Falscher Benutzername oder Passwort.</span></p></b>';
-				}
-				
-				/**
-				 *  function to get user id
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getUserId() {}
-				
-				/**
-				 *  function to get email adress
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getEmail() {}
-				
-				/**
-				 *  function to get subject of mail
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getSubject() {}
-		
-				/**
-				 *  function to set email not send error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function setEmailNotSend() {}
-		
-				/**
-				 *  function to set success information
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function setSuccess() {}
-		
-				/**
-				 *  function to get first name
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getFirstName() {}
-		
-				/**
-				 *  function to get last name
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getLastName() {}
-		
-				/**
-				 *  function to get group id
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getGroupId() {}
-				
-				/**
-				 *  function to set error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-		 		public function setError() {}				
-		
-				/** 
-				 *  function to set user exist error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-		 		public function setExistError() {}
-		
-		 		/**
-				 *  function to get confirm password
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-		 		public function getPassword2() {}
-			}
-
-			// create view object
-			$view = new User();
-			
-			// create database
-			$database = new Database();
-			
-			// create controller object
-			$controller = new UserController($view, $database);
-			
-			// check button
-			if(isset($_POST['btnLogin']))
-			{
-				// log in user
-				$controller->logIn();
-			}				
-		?>
-
-				</form>
-			</div>
-			<div class="clear"></div>
+		<div id="header">
+			<div id="top_nav">
+	        	<h1><a href="./login.php">IT Verwaltung - B3 F&uuml;rth</a></h1>
+	        </div>
 		</div>
-		<div id="footer"></div>
+		<div id="content">
+			<div id="module">
+				<div id="login">
+					<div id="information">
+						<h2>Anmeldung</h2>
+					</div>
+					<form action="login.php" method="post">
+						<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>"></input>
+						<p>Passwort</p><input name="password" type="password" />
+						<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
+						<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
+						
+						<?php
+				// include IUser
+				require_once('../_php/interface/IUser.php');
+				
+				// include user controller
+				require_once('../_php/core/UserController.php');
+				
+				// include database
+				require_once('../_php/database/Database.php');
+			
+				/**
+				 * Class for User
+				 *
+				 * Class for Insert, Update and Delete User
+				 *
+				 * @category 
+				 * @package
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 * @copyright 2013 B3ProjectGroup2
+				 */
+				class User implements IUser
+				{
+					/**
+			 		*  function to display user
+			 		* 
+			 		* @author Johannes Alt <altjohannes510@gmail.com>
+			 		*/
+					public function displayUser($id, $groupId, $name, $firstName, $lastName, $email)
+					{
+						echo 'here';
+						session_start();
+						$_SESSION['userPermission'] = 1;
+						$_SESSION['username'] = $username;
+						
+						header( "Location: index.php" );
+					}
+			
+					/**
+					 *  function to display user group
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function displayGroup($id, $name, $permisson)
+					{
+					}
+					
+					/**
+					 *  function to get user name
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getUserName() 
+					{
+						// return user name
+						return $_POST['username'];	
+					}
+					
+					/**
+					 *  function to get password
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getPassword() 
+					{
+						// return password
+						return $_POST['password'];
+					}
+					
+					/**
+					 *  function to set password error
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function setPasswordError() 
+					{
+						// set error text
+						print '<b><p><span class="require">Falscher Benutzername oder Passwort.</span></p></b>';
+					}
+			
+					/**
+					 *  function to set user don't exist error
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function setNotExistError() 
+					{
+						// set error text
+						print '<b><p><span class="require">Falscher Benutzername oder Passwort.</span></p></b>';
+					}
+					
+					/**
+					 *  function to get user id
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getUserId() {}
+					
+					/**
+					 *  function to get email adress
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getEmail() {}
+					
+					/**
+					 *  function to get subject of mail
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getSubject() {}
+			
+					/**
+					 *  function to set email not send error
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function setEmailNotSend() {}
+			
+					/**
+					 *  function to set success information
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function setSuccess() {}
+			
+					/**
+					 *  function to get first name
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getFirstName() {}
+			
+					/**
+					 *  function to get last name
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getLastName() {}
+			
+					/**
+					 *  function to get group id
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+					public function getGroupId() {}
+					
+					/**
+					 *  function to set error
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+			 		public function setError() {}				
+			
+					/** 
+					 *  function to set user exist error
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+			 		public function setExistError() {}
+			
+			 		/**
+					 *  function to get confirm password
+					 * 
+					 * @author Johannes Alt <altjohannes510@gmail.com>
+					 */
+			 		public function getPassword2() {}
+					
+					/**
+					 *  function to get message
+					 * 
+					 *  @author Johannes Alt <altjohannes510@gmx.net>
+					 */
+					public function getMessage()
+					{
+					}
+				}
+	
+				// create view object
+				$view = new User();
+				
+				// create database
+				$database = new Database();
+				
+				// create controller object
+				$controller = new UserController($view, $database);
+				
+				// check button
+				if(isset($_POST['btnLogin']))
+				{
+					// log in user
+					$controller->logIn();
+				}				
+			?>
+	
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<?php
+				include('footer.html');
+			?>
+		</div>
     </body>
 </html>

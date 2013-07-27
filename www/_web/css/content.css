@@ -1,7 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Nunito:400,700);
+
 body {
-	width:800px;
-	margin:auto;
-	font-family:Arial, Verdana, sans-serif;
+	min-width:453px;
+	max-width:800px;
+	margin:0 auto;
+	font-family:'Nunito', Arial, Verdana, sans-serif;
 }
 
 .left {
@@ -31,13 +34,36 @@ hr {
 	margin-bottom:30px;
 }
 
+input {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+select {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+textarea {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
 #header {
 	height:80px;
 	padding-top:40px;
 }
 
 #top_nav {
-	width:600px;
 	margin:0 auto;
 }
 
@@ -99,14 +125,6 @@ hr {
 	float:right;
 }
 
-#search_bar input {
-	border: 1px solid #ccc;
-	-border-radius: 10px;
-  	-webkit-border-radius: 10px;
-  	border-radius: 10px;
-  	padding:2px 8px;
-}
-
 #content {
 	clear: both;
 	margin-top:40px;
@@ -131,13 +149,17 @@ hr {
 	border-bottom:1px solid #ccc;
 }
 
+
 #breadcrumb_nav ul {
+	padding-left:50px;
 	margin: 4px 0px;
 	list-style:none;
 }
 
 #breadcrumb_nav ul li {
 	display:inline;
+	color:#555;
+	text-shadow: 1px 1px white, -1px -1px #ddd;
 }
 
 #module {
@@ -148,6 +170,10 @@ hr {
 	-border-radius: 10px;
   	-webkit-border-radius: 10px;
   	border-radius: 10px;
+  	
+  	-moz-box-shadow:    0px 1px 2px 0px #bbb;
+	-webkit-box-shadow: 0px 1px 2px 0px #bbb;
+	box-shadow:         0px 1px 2px 0px #bbb;
 }
 
 #action_bar {
@@ -156,13 +182,20 @@ hr {
 	border-bottom:2px solid #ddd;
 }
 
+#action_bar a.left {
+	margin-right:10px;
+}
+
+#action_bar a.right {
+	margin-left:10px;
+}
+
 #action_bar a, #action_bar button {
 	border:1px solid #999;
 	color:#444;
 	font-weight:bold;
 	padding:2px 4px;
 	background-color: #ddd;
-	margin-right:10px;
 	
 	-border-radius: 6px;
   	-webkit-border-radius: 6px;
@@ -179,14 +212,6 @@ hr {
 	background: -ms-linear-gradient(top,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#33d6d6d6',GradientType=0 ); /* IE6-8 */
-}
-
-#information {
-	float:left;
-}
-
-#login {
-	float:right;
 }
 
 table {
@@ -221,7 +246,6 @@ form p {
 	margin-top:20px;
 	font-size:13px;
 	text-align:center;
-	font-family:Latha ,sans-serif;
 }
 
 .require { color:red; }
@@ -232,7 +256,7 @@ form p {
 
 /* lauch screen */
 #launch_menu{width:300px;margin:20px auto;color:#105CB6;}
-.tile {
+.tile a {
 	background-color:#ccc;
 	text-align:center;
 	margin:15px 0;
@@ -242,27 +266,33 @@ form p {
   	-webkit-border-radius: 10px;
   	border-radius: 10px;
 	font-size:22px;
+	
+	display: block;
 
 	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s;
     -webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
     -o-transition: color 0.5s, background-color 0.5s, -o-transform 0.5s;
     transition: color 0.5s, background-color 0.5s, transform 0.5s;
 }
-.tile:hover {
+.tile a:hover {
 	transform: scale(1.05);
 	background-color: #999;
-	color:#105CB6;
+	color:#fff;
 	border:2px solid #eee;
 	
 	-moz-box-shadow:    3px 3px 3px 1px #ccc;
 	-webkit-box-shadow: 3px 3px 3px 1px #ccc;
 	box-shadow:         3px 3px 3px 1px #ccc;
 }
-.tile:hover a {color:#fff;}
+
+.cancelButton {
+	margin:20px auto 0 auto;
+	width: 95px;
+}
 
 /* module Rooms */
 .rooms {list-style:none;}
-.rooms li {width:80px; display:inline-block;}
+.rooms li {width:118px; display:inline-block;}
 
 /* module Device */
 .components {list-style:none;}
@@ -271,9 +301,8 @@ form p {
 .support_event li {padding:5px;}
 
 /* module Create Device */
-.deviceButton {float:left;margin:0px 20px;}
+.deviceButton {float:left;margin:0px 20px;text-align:center;width:89px;height:140px;}
 .deviceButton input {height:64; width:64;border:0;}
-.deviceSelection {height:250px}
 
 /* module Create Device */
 #order_selction {width:100%;margin:60px 0;text-align:center;}

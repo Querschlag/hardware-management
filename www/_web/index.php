@@ -10,8 +10,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Hardware Management</title>
-        <meta name="description" content="">
+        <title>IT Verwaltung - B3 F&uuml;rth</title>
+        <meta name="description" content="Tool for tracking hardware devices and components in an educational environment.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/ico" href="favicon.ico">
@@ -29,9 +29,11 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+		<!--
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+       -->
         
         <?php
         	/*
@@ -42,19 +44,17 @@
         ?>
 
 		<div id="header">
+			<!--
 			<div id="search_bar">
 				<form action="index.php" method="get">
 					<input name="search" type="search" />
 					<input name="btnSearch" type="submit" value="Suchen" />
 				</form>
 			</div>
+			-->
 			<div class="clearfix"></div>
 			<div id="top_nav">
 				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
-				<?php
-					//Include top navigation
-					include('nav.html');
-				?>
 			</div>
 		</div>
 		<div id="content">
@@ -69,10 +69,9 @@
 			?>
 		</div>
 		<div id="footer">
-			<p>
-				Copyright &copy; 2013 <a href="https://github.com/Querschlag/hardware-management">IFA11B2 IT-Team2</a>
-			</p>
-			<img class="logo" src="img/Logo_team2_int.png" alt="IFA11B2 - IT-Team2 Logo" />
+			<?php
+				include('footer.html');
+			?>
 		</div>
     </body>
 </html>

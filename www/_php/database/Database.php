@@ -17,12 +17,31 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("10.9.4.51", "itv_v1", "")))
-			{				
+			/**
+			 * Checks connection to the main mySQL server.
+			 * 
+			 * If working locally with no access to this server, this will reduce the
+			 * time the application would need to connect to the none accessable server,
+			 * before using the local fallback.
+			 * 
+			 * If there are any problem in production environment, please increase the
+			 * timeout and/or server ports to avoid the local fallback.
+			 * 
+			 */
+			
+			$timeout = 0.5;
+			$port = 80;
+			 
+			$fp = @fsockopen("http://10.9.4.51", $port, $errno, $errstr, $timeout);
+			if (!$fp) {
+			    //echo "$errstr ($errno)<br />\n";
 				mysql_connect("localhost", "itv_v1", "");
+			} else {
+				echo 'Server is reachable';
+				mysql_connect("10.9.4.51", "itv_v1", "");
 			}
+			
 			mysql_select_db("itv_v1");
-					
 		}
 		
 	
@@ -1483,7 +1502,7 @@
 		 * @return MaintenanceEntitiy[]
 		 * @param int $count last x-rows
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>		  
 		 */
 		 public function getMaintenances($count=0)
 		 {
@@ -1525,7 +1544,7 @@
 		 *
 		 * @return MaintenanceEntitiy[]
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>  
 		 */
 		 public function getMaintenancesFromRoom($id, $count=0)
 		 {
@@ -1572,7 +1591,7 @@
 		 *
 		 * @return MaintenanceEntitiy[]
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>
 		 */
 		 public function getMaintenancesFromComponent($id, $count=0)
 		{
@@ -1620,7 +1639,7 @@
 		 * @return 1 - true
 		 *		   2 - false
 		 *
-         * @author Daniel Schulz <schmoschu@gmail.com>		  
+         * @author Leon Geim <leon.geim@gmail.com>
 		 */
 		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate)
 		{
@@ -1635,5 +1654,21 @@
 			
 			return $row["ID"];
 		}		 
+		
+		  /**
+		 * insert insertMaintenance.
+		 *
+	  	 * @param int $componentId componentId
+		 * 
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>
+		 */
+		 public function takeOutOfService($componentId)
+		 {
+			//Verschieben von Komponenten in Lager
+			//Man bekommt nen Device und all Komponenten werden ins Lager verschoben	
+		 }
 	}
 ?>

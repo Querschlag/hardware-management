@@ -3,13 +3,13 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Jul 2013 um 13:48
+-- Erstellungszeit: 26. Jul 2013 um 12:29
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-SET foreign_key_checks = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,20 +32,27 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
   `b_id` int(11) NOT NULL AUTO_INCREMENT,
   `bg_id` int(11) NOT NULL,
   `b_pw` varchar(255) NOT NULL DEFAULT 'PASSWORD',
-  `Vorname` varchar(40) NOT NULL,
-  `Nachname` varchar(40) NOT NULL,
+  `b_vorname` varchar(40) NOT NULL,
+  `b_nachname` varchar(40) NOT NULL,
   `b_name` varchar(40) NOT NULL,
-  `b-email` varchar(255) NOT NULL,
+  `b_email` varchar(255) NOT NULL,
   PRIMARY KEY (`b_id`),
   KEY `bg_id` (`bg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `Vorname`, `Nachname`, `b_name`, `b-email`) VALUES
-(8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', '');
+INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`) VALUES
+(8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', ''),
+(9, 5, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com'),
+(10, 5, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', ''),
+(11, 5, '*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29', 'Thomas', 'Bayer', 'thomas.bayer', 'thomasbayer95@gmail.com'),
+(17, 5, '*C519D9F81EFE5C77B3C94A67119B98A4C17711EB', 'Philipp', 'Schmidkunz', 'philipp.schmidkunz', 'philippschmidkunz@googlemail.com'),
+(18, 6, '*E2C277BAA637E2E323FEA3A03F2E409B374D8827', 'Adrian', 'Geuss', 'adrian.geuss', 'adriangeuss@gmail.com'),
+(19, 5, '*6892D460CC3543A87AC6F13DE339B62EFBDDBCA0', 'Thomas', 'Bayer2', 'thomas.bayer2', 'thomas.bayer@test.com'),
+(20, 6, '*51B76DE2A6FC620B72FA100C6BBC5A84694FE894', 'Thomas', 'Michl', 'thomas.michl', 'thomas.michl1988@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -58,14 +65,16 @@ CREATE TABLE IF NOT EXISTS `benutzergruppe` (
   `bg_name` varchar(40) NOT NULL,
   `bg_rechte` int(11) NOT NULL,
   PRIMARY KEY (`bg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Daten für Tabelle `benutzergruppe`
 --
 
 INSERT INTO `benutzergruppe` (`bg_id`, `bg_name`, `bg_rechte`) VALUES
-(5, 'Lehrer', 2);
+(5, 'Lehrer', 3),
+(6, 'Systembetreuer', 1),
+(7, 'Azubis', 2);
 
 -- --------------------------------------------------------
 
@@ -192,27 +201,40 @@ INSERT INTO `kattribut_zulaessiger_wert` (`komponentenattribute_kat_id`, `zulaes
 
 CREATE TABLE IF NOT EXISTS `komponente` (
   `k_id` int(11) NOT NULL AUTO_INCREMENT,
-  `lieferant_l_id` int(11) NOT NULL,
-  `lieferant_r_id` int(11) NOT NULL,
-  `k_name` varchar(40) NOT NULL,
+  `lieferant_l_id` int(11) DEFAULT NULL,
+  `lieferant_r_id` int(11) DEFAULT NULL,
+  `k_name` varchar(40) DEFAULT NULL,
   `k_einkaufsdatum` int(11) DEFAULT NULL,
   `k_gewaehrleistungsdauer` int(11) DEFAULT NULL,
   `k_notiz` varchar(1024) DEFAULT NULL,
   `k_hersteller` varchar(45) DEFAULT NULL,
-  `komponentenarten_ka_id` int(11) NOT NULL,
+  `komponentenarten_ka_id` int(11) DEFAULT NULL,
+  `k_device` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`k_id`),
   KEY `fk_komponenten_haendler` (`lieferant_l_id`),
   KEY `fk_komponenten_raeume1` (`lieferant_r_id`),
   KEY `fk_komponenten_komponentenarten1` (`komponentenarten_ka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Daten für Tabelle `komponente`
 --
 
-INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, `k_einkaufsdatum`, `k_gewaehrleistungsdauer`, `k_notiz`, `k_hersteller`, `komponentenarten_ka_id`) VALUES
-(1, 1, 1, 'XT-801', 2052013, 30, NULL, 'Siemens', 3),
-(2, 1, 1, 'GTX-560', 25072013, 12, NULL, 'Nvidia', 12);
+INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, `k_einkaufsdatum`, `k_gewaehrleistungsdauer`, `k_notiz`, `k_hersteller`, `komponentenarten_ka_id`, `k_device`) VALUES
+(1, 1, 1, 'XT-801', 2052013, 30, NULL, 'Siemens', 2, 0),
+(2, 1, 1, 'GTX-560', 25072013, 12, NULL, 'Nvidia', 12, 0),
+(3, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 0),
+(4, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 1),
+(11, 1, 1, '', 1374789600, 1406325600, 'advavadv', 'hp', 12, 1),
+(12, 1, 1, '', 1374789600, 1437861600, '', 'hp', 12, 1),
+(13, 1, 1, 'sasda', 1372716000, 1375002269, 'qw', 'asdasda', 12, 1),
+(14, 1, 1, '', 1374789600, 1375002387, '', '', 12, 1),
+(15, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1),
+(16, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1),
+(17, 1, 1, 'testtesttest', 1374789600, 1374962400, 'asdvasvasdv', 'hp', 12, 1),
+(18, 1, 1, '', 1372716000, 1372716000, '', '', 12, 1),
+(19, 1, 1, '', 1373320800, 1373320800, '', '', 12, 1),
+(20, 1, 1, '', 1372802400, 1372802400, '', '', 12, 1);
 
 -- --------------------------------------------------------
 
@@ -255,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `komponentenattribute` (
   `kat_id` int(11) NOT NULL AUTO_INCREMENT,
   `kat_name` varchar(40) NOT NULL,
   PRIMARY KEY (`kat_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
 -- Daten für Tabelle `komponentenattribute`
@@ -296,7 +318,9 @@ INSERT INTO `komponentenattribute` (`kat_id`, `kat_name`) VALUES
 (32, 'LTE'),
 (33, '3D-Fähig'),
 (34, 'Typ'),
-(35, 'Kühlung');
+(35, 'Kühlung'),
+(36, 'twest'),
+(37, 'twest');
 
 -- --------------------------------------------------------
 
@@ -318,8 +342,13 @@ CREATE TABLE IF NOT EXISTS `komponente_kattribut` (
 --
 
 INSERT INTO `komponente_kattribut` (`komponenten_k_id`, `komponentenattribute_kat_id`, `khkat_wert`) VALUES
-(1, 6, '2400 Ghz'),
-(2, 15, '2');
+(1, 2, 'KAT 3'),
+(1, 35, ''),
+(1, 36, ''),
+(1, 37, '123'),
+(2, 15, '2'),
+(17, 9, '4 GB RAM'),
+(17, 14, '4GHz');
 
 -- --------------------------------------------------------
 
@@ -343,15 +372,25 @@ CREATE TABLE IF NOT EXISTS `komponente_komponente` (
 --
 
 CREATE TABLE IF NOT EXISTS `komp_vorgang` (
+  `kom_id` int(11) NOT NULL AUTO_INCREMENT,
   `k_id` int(11) NOT NULL,
   `v_id` int(11) NOT NULL,
   `b_id` int(11) NOT NULL,
   `comment` varchar(1024) NOT NULL,
   `datum` int(11) NOT NULL,
+  PRIMARY KEY (`kom_id`),
   KEY `k_id` (`k_id`),
   KEY `v_id` (`v_id`),
   KEY `b_id` (`b_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Daten für Tabelle `komp_vorgang`
+--
+
+INSERT INTO `komp_vorgang` (`kom_id`, `k_id`, `v_id`, `b_id`, `comment`, `datum`) VALUES
+(1, 1, 2, 8, '', 0),
+(2, 4, 2, 8, '', 2121212);
 
 -- --------------------------------------------------------
 
@@ -371,7 +410,7 @@ CREATE TABLE IF NOT EXISTS `lieferant` (
   `l_email` varchar(45) DEFAULT NULL,
   `l_land` char(40) NOT NULL,
   PRIMARY KEY (`l_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `lieferant`
@@ -517,4 +556,4 @@ ALTER TABLE `komp_vorgang`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-SET foreign_key_checks = 1;
+SET FOREIGN_KEY_CHECKS=1;

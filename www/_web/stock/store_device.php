@@ -9,6 +9,19 @@
 </div>
 <div id="module">
 	<h3>Ger&auml;t anlegen</h3>
+	<!--
+		//TODO
+		
+		When providing this form with functionality, please modify the 'mod' parameter to point to the current
+		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
+		user,room,device,component,supplier and so on.
+		
+		After doing your update and validation stuff use this:
+		
+			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+		
+		to redirect to the page where you came or started the wizard from.
+	-->
 	<?php
 		require_once('php/additions.php');
 		
@@ -324,12 +337,11 @@
 				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="device" value="1" type="hidden">
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 				<div class="clearfix"></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		
 		}
 	?>
-</div>
 </div>
