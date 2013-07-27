@@ -185,7 +185,7 @@
 	// FIXME: Load names for selected room, device, component from database
 	if (GET('room'))
 		echo '<li> >> <a href="index.php' .
-		navParams( array('mod' => 'rooms', 'room' => GET('room')), false ) .
+		navParams( array('mod' => 'room', 'room' => GET('room')), false ) .
 		'">R001</a></li>';
 	if (GET('device'))
 		echo '<li> >> <a href="index.php' . 
@@ -193,6 +193,6 @@
 		'">PC001</a></li>'; 
 	if (GET('component'))
 		echo '<li> >> <a href="index.php' .
-		navParams( array('mod' => 'device', 'room' => GET('room'), 'device' => GET('device'), 'component' => GET('component')), false ) .
+		navParams( array('mod' => 'component', 'room' => GET('room'), 'device' => GET('device'), 'component' => GET('component')), false ) .
 		'">Komponente 1</a></li>';
 ?>
