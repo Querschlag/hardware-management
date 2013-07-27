@@ -269,20 +269,22 @@ form p {
 	
 	display: block;
 
-	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s;
-    -webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
-    -o-transition: color 0.5s, background-color 0.5s, -o-transform 0.5s;
-    transition: color 0.5s, background-color 0.5s, transform 0.5s;
+	-moz-transition: color 0.1s, background-color 0.1s, -moz-transform 0.1s;
+    -webkit-transition: color 0.1s, background-color 0.1s, -webkit-transform 0.1s;
+    -o-transition: color 0.1s, background-color 0.1s, -o-transform 0.1s;
+    transition: color 0.1s, background-color 0.1s, transform 0.1s;
 }
 .tile a:hover {
-	transform: scale(1.05);
+	transform: scale(1.0);
 	background-color: #999;
-	color:#fff;
+	color:#eee;
 	border:2px solid #eee;
 	
 	-moz-box-shadow:    3px 3px 3px 1px #ccc;
 	-webkit-box-shadow: 3px 3px 3px 1px #ccc;
 	box-shadow:         3px 3px 3px 1px #ccc;
+	
+	text-shadow:  2px 2px #777;
 }
 
 .cancelButton {
