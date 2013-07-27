@@ -26,10 +26,12 @@
 				return 'order/reorder_order.php';
 			if ($moduleName == 'placeOrder')
 				return 'order/place_order.php';
+			
 			if ($moduleName == 'order_device')
 				return 'order/order_device.php';
 			if ($moduleName == 'order_component')
 				return 'order/order_component.php';
+			
 			
 			if ($moduleName == 'stock')
 				return 'stock/stock.php';
@@ -40,26 +42,31 @@
 			if ($moduleName == 'storeComponent')
 				return 'stock/store_component.php';
 			
+			
 			if ($moduleName == 'rooms')
 				return 'management/rooms.php';
 			if ($moduleName == 'room')
 				return 'management/room.php';
-			if ($moduleName == 'changeRoom')
-				return 'management/create_room.php';
-			if ($moduleName == 'device')
-				return 'management/device.php';
-			if ($moduleName == 'component')
-				return 'management/component.php';
 			if ($moduleName == 'createRoom')
 				return 'management/create_room.php';
+			if ($moduleName == 'changeRoom')
+				return 'management/change_room.php';
+				
+			if ($moduleName == 'device')
+				return 'management/device.php';
 			if ($moduleName == 'addDevice')
 				return 'management/add_device.php';
+			
+			if ($moduleName == 'component')
+				return 'management/component.php';
 			if ($moduleName == 'addComponent')
 				return 'management/add_component.php';
+			
 			if ($moduleName == 'reportProblem')
 				return 'management/reporting.php';
 			if ($moduleName == 'fixProblem')
 				return 'management/support.php';
+			
 			
 				
 			if ($moduleName == 'user')
@@ -68,6 +75,7 @@
 				return 'user/edit_user.php';
 			if ($moduleName == 'createUser')
 				return 'user/create_user.php';
+				
 			
 			
 			if ($moduleName == 'supplier')

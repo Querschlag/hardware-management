@@ -139,7 +139,7 @@
 					$retVal = NULL;					
 					
 					// check and set room id
-					if(isset($_GET['roomId'])) $retVal = $_GET['roomId'];
+					if(isset($_GET['room'])) $retVal = $_GET['room'];
 					
 					// return value
 					return $retVal;
@@ -235,9 +235,9 @@
 
 <div id="module">
 	<div id="action_bar">
-		<a class="left" href="index.php?mod=addDevice<?php echo '&menu=' . GET('menu');?>">Ger&auml;t hinzuf&uuml;gen</a>		
+		<a class="left" href="index.php<?php echo navParams(array('mod' => 'addDevice')); ?>">Ger&auml;t hinzuf&uuml;gen</a>		
 		<a class="right destructiveButton" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
-		<a class="right" href="index.php?mod=changeRoom&roomId=<?php echo GET('roomId'); echo '&menu=' . GET('menu');?>">Raum bearbeiten</a>				
+		<a class="right" href="index.php<?php echo navParams(array('mod' => 'changeRoom')); ?>">Raum bearbeiten</a>				
 		<div class="clearfix"></div>
 	</div>
 	

@@ -6,7 +6,7 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
-		<li>>> <a href="index.php<?php echo navParams(); ?>">Raum hinzuf&uuml;gen</a></li>
+		<li>>> <a href="index.php<?php echo navParams(); ?>">Raum &auml;ndern</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -27,10 +27,14 @@
 	<form method="post">
 		
 		<?php
-
-			// print site header
-			print '<h3>Raum hinzuf&uuml;gen</h3>';					
 		
+			// check room id
+			if(isset($_GET['room']))
+			{
+				// print site header
+				print '<h3>Raum &auml;ndern</h3>';				
+			}
+			
 			// include IRoom
 			require_once('../_php/interface/IRoom.php');
 			
@@ -233,7 +237,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// no redirect
-					header( "Location: index.php" . navParams() );
+					header( "Location: index.php?mod=rooms" );
 				}
 			}
 			else if(isset($_POST['btnChangeSubmit']))
@@ -245,7 +249,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// redirect
-					header( "Location: index.php" . navParams(array('mod' => 'rooms')) );
+					header( "Location: index.php?mod=rooms" );
 				}				
 			}
 		?>
