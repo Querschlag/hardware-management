@@ -117,8 +117,8 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/Smartphone.png" /><p>Mobiles Ger&auml;t</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=order\'" type="button" value="Abbrechen" />
 				<div class="clearfix"></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=order\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		

@@ -337,12 +337,11 @@
 				<div class="deviceButton"><input name="type" type="image" src="img/device_icons/TVSetRetro.png" /><p>Fernseher</p></div>
 				<input name="device" value="1" type="hidden">
 				<input name="step" value="2" type="hidden" />
-				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
 				<div class="clearfix"></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		
 		}
 	?>
-</div>
 </div>

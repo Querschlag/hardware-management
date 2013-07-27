@@ -93,7 +93,7 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/RCAConnector_Plug.png" /><p>Audio Anschluss</p></div>
 				<input name="step" value="2" type="hidden" />
 				<div class="clearfix"></div>
-				<input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" />
+				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		
