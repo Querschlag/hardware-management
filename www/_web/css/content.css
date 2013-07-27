@@ -1,8 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Nunito:400,700);
 
 body {
-	width:800px;
-	margin:auto;
+	min-width:453px;
+	max-width:800px;
+	margin:0 auto;
 	font-family:'Nunito', Arial, Verdana, sans-serif;
 }
 
@@ -63,7 +64,6 @@ textarea {
 }
 
 #top_nav {
-	width:600px;
 	margin:0 auto;
 }
 
@@ -149,13 +149,17 @@ textarea {
 	border-bottom:1px solid #ccc;
 }
 
+
 #breadcrumb_nav ul {
+	padding-left:50px;
 	margin: 4px 0px;
 	list-style:none;
 }
 
 #breadcrumb_nav ul li {
 	display:inline;
+	color:#555;
+	text-shadow: 1px 1px white, -1px -1px #ddd;
 }
 
 #module {
@@ -257,8 +261,6 @@ form p {
 	font-size:22px;
 	
 	display: block;
-	height: 100%;
-	width: 100%;
 
 	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s;
     -webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
@@ -288,6 +290,7 @@ form p {
 
 /* module Create Device */
 .deviceButton {float:left;margin:0px 20px;}
+.deviceButton p {text-align:center;}
 .deviceButton input {height:64; width:64;border:0;}
 .deviceSelection {height:250px}
 
