@@ -40,22 +40,29 @@
 			 * Login check
 			 */
 			 
+			if (isset($_GET['logout']))
+			{
+			 	session_start();
+				session_destroy();
+			}
+			 
 			 include('check_login.php')
         ?>
 
 		<div id="header">
-			<!--
-			<div id="search_bar">
-				<form action="index.php" method="get">
-					<input name="search" type="search" />
-					<input name="btnSearch" type="submit" value="Suchen" />
-				</form>
+
+			<div id="user_bar">
+				<?php
+					// Include user logout
+					include('userbar.php');
+				?>
 			</div>
-			-->
 			<div class="clearfix"></div>
+			
 			<div id="top_nav">
 				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
 			</div>
+			
 		</div>
 		<div id="content">
 			<?php
@@ -70,6 +77,7 @@
 		</div>
 		<div id="footer">
 			<?php
+				// Include page footer
 				include('footer.html');
 			?>
 		</div>

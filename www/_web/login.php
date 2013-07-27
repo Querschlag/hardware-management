@@ -77,10 +77,11 @@
 			 		*/
 					public function displayUser($id, $groupId, $name, $firstName, $lastName, $email)
 					{
-						echo 'here';
 						session_start();
 						$_SESSION['userPermission'] = 1;
-						$_SESSION['username'] = $username;
+						//$_SESSION['username'] = $username;
+						// FIXME: Delete me when username available
+						$_SESSION['username'] = $firstName . ' ' . $lastName;
 						
 						header( "Location: index.php" );
 					}
