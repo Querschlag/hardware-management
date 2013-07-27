@@ -1,4 +1,9 @@
-<?php require_once('php/navigation.php'); ?>
+<?php
+	require_once('php/navigation.php'); 
+
+	// Workaround: Replaces usage of GET parameter 'menu'
+	$_SESSION['selectedMainMenuItem'] = GET('menu');
+?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>

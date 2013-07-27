@@ -16,6 +16,8 @@
 		$menu = (isset($params['menu'])) ? $params['menu'] : null;
  		if ($menu == null)
  			$menu = GET('menu');
+		if ($menu == null)
+			$menu = SESSION('selectedMainMenuItem');
 		
 		// add menu parameter
 		$paramString = '?menu=' . $menu;
