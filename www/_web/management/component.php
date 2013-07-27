@@ -10,7 +10,110 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="right destructiveButton" href="index.php<?php echo navParams(array('mod' => 'device')); ?>">Ausmustern</a>
+		
+		<?php
+			
+			require_once('php/actionbar.php');
+			
+			/**
+			* RoomsActionBarController class
+			*
+			* Controller displaying actionbar buttons for rooms
+			*
+			* @category 
+			* @package
+			* @author Adrian Geuss <adriangeuss@gmail.com>
+			* @copyright 2013 IFA11B2 IT-Team2
+			*/
+			
+			class RoomsActionBarController extends ActionBarController
+			{
+		
+				/**
+				 *  function action button for adding a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddRoom() {}
+				
+				/**
+				 *  function action button for user management 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonUserManagement() {}
+				
+				/**
+				 *  function action button for supplier
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonSupplier() {}
+				
+				/**
+				 *  function action button for adding a device
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddDevice() {}
+				
+				/**
+				 *  function action button for editing a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonEditRoom() {}
+				
+				/**
+				 *  function action button for deleting a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonDeleteRoom() {}
+				
+				/**
+				 *  function action button for adding a component 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddComponent() {}
+				
+				/**
+				 *  function action button for fixing a problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonFixProblem() {}
+				
+				/**
+				 *  function action button for reporting problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonReportProblem() {}
+				
+				/**
+				 *  function action button for scraping a device 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapDevice() {}
+				
+				/**
+				 *  function action button for scraping a component
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapComponent()
+				{
+					echo '<a class="right destructiveButton" href="index.php' . navParams(array('mod' => 'device')) .'">Ausmustern</a>';
+				}
+			}
+			
+			$actionbar = new RoomsActionBarController( array('menu' => menuItem(), 'mod' => GET('mod')) );
+			$actionbar->displayActionBar();
+		?>
+		
 		<div class="clearfix"></div>
 	</div>
 	<h2>Eigenschaften</h2>

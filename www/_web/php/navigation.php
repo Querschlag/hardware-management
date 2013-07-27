@@ -92,4 +92,22 @@
 		return '';
 	}
 	
+	
+	/**
+	 * Returns the menu item for the current url
+	 * 
+	 * @return string
+	 * @author Adrian Geuss <adriangeuss@gmail.com>
+	 * @copyright 2013 IFA11B2 IT-Team2
+	 */
+	 
+	function menuItem()
+	{
+		$menu = GET('menu');
+		if ($menu == null)
+			$menu = SESSION('selectedMainMenuItem');
+		
+		return $menu;
+	}
+	
 ?>

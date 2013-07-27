@@ -182,13 +182,20 @@ textarea {
 	border-bottom:2px solid #ddd;
 }
 
+#action_bar a.left {
+	margin-right:10px;
+}
+
+#action_bar a.right {
+	margin-left:10px;
+}
+
 #action_bar a, #action_bar button {
 	border:1px solid #999;
 	color:#444;
 	font-weight:bold;
 	padding:2px 4px;
 	background-color: #ddd;
-	margin-right:10px;
 	
 	-border-radius: 6px;
   	-webkit-border-radius: 6px;
