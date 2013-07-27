@@ -50,7 +50,9 @@
         ?>
 
 		<div id="header">
-
+			<div id="top_nav">
+				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
+			</div>
 			<div id="user_bar">
 				<?php
 					// Include user logout
@@ -58,11 +60,6 @@
 				?>
 			</div>
 			<div class="clearfix"></div>
-			
-			<div id="top_nav">
-				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
-			</div>
-			
 		</div>
 		<div id="content">
 			<?php
