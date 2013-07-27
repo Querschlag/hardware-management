@@ -238,9 +238,11 @@
 			$controller->selectDeliverers();
 		?>
 	</div>
+	<!--
 	<h2>Lieferanten</h2>
 	<ul class="orders">
 		<li style="background-color: #eee"><a href="index.php<?php echo navParams(array('mod' => 'editSupplier', 'supplier' => 1)) ?>">DHL</a></li>
 		<li style="background-color: #ddd"><a href="index.php<?php echo navParams(array('mod' => 'editSupplier', 'supplier' => 2)) ?>">Kondrad</a></li>
 	</ul>
+	-->
 </div>
