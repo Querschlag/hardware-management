@@ -10,8 +10,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Hardware Management</title>
-        <meta name="description" content="">
+        <title>IT Verwaltung - B3 F&uuml;rth</title>
+        <meta name="description" content="Tool for tracking hardware devices and components in an educational environment.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/ico" href="favicon.ico">

@@ -26,7 +26,7 @@
 	<h2>Wartungshistorie</h2>
 	<ul class="support_event">
 		<li style="background-color:#eee">12.07.2013 - Wartungsfall gemeldet: Geh&auml;use kaputt</li>
-		<li style="background-color:#ddd">15.07.2013 - Bearbeitung durch Azubi (Otto)</li>
-		<li style="background-color:#eee">17.07.2013 - Wartungsfall behoben.</li>
+		<li style="background-color:#ddd">15.07.2013 - Bearbeitung durch Otto (Azubi)</li>
+		<li style="background-color:#eee">15.07.2013 - Wartungsfall behoben.</li>
 	</ul>
 </div>
