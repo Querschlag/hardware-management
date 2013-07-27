@@ -243,7 +243,7 @@
 	
 	<h2>Computer</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams( array('mod' => 'device', 'device' => 1) ); ?>">PC001</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 2)); ?>">PC002</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 3)); ?>">PC003</a></li>
 	</ul>

@@ -2,9 +2,12 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=user">Benutzer</a></li>
-		<li>>> <a href="index.php?mod=createUser">Benutzer anlegen</a></li>
+		<?php
+			// add selected menu entry
+			include ('php/breadcrumb.php');
+		?>
+		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'user'), false) ?>">Benutzer</a></li>
+		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'editUser')) ?>">Benutzer bearbeiten</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -13,7 +16,20 @@
 		<div class="clearfix"></div>
 	</div>
 	<h2>Otto (Systembetreuer)</h2>
-	<form action="index.php?mod=user" method="post">
+	<!--
+		//TODO
+		
+		When providing this form with functionality, please modify the 'mod' parameter to point to the current
+		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
+		user,room,device,component,supplier and so on.
+		
+		After doing your update and validation stuff use this:
+		
+			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+		
+		to redirect to the page where you came or started the wizard from.
+	-->
+	<form action="index.php<?php echo navParams(array('mod' => 'user'), false) ?>" method="post">
 		<select name="usergroup">
 			<optgroup label="W&auml;hle eine Gruppe"></optgroup>
 				<option value="0">Systembetreuer</option>
@@ -24,12 +40,12 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
-		<input onClick="location.href = 'index.php?mod=user'"; type="button" value="Abbrechen" />
-		
+		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'"; type="button" value="Abbrechen" />
+	</form>
+	
 		<div id="dialog" title="Benutzer l&ouml;schen?">
 	<p>Sind Sie sicher, dass Sie den Benutzer "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
 </div>
-
 
 	<script>
 		$(function() { $('#dialog').hide(); } );
@@ -93,6 +109,5 @@
 				$controller->deleteUser();	
 			}
 	?>
-		
-	</form>
+	
 </div>

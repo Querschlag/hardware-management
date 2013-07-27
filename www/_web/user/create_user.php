@@ -2,9 +2,12 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
-		<li><a href="index.php">Startseite</a></li>
-		<li>>> <a href="index.php?mod=user">Benutzer</a></li>
-		<li>>> <a href="index.php?mod=createUser">Benutzer anlegen</a></li>
+		<?php
+			// add selected menu entry
+			include ('php/breadcrumb.php');
+		?>
+		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'user'), false) ?>">Benutzer</a></li>
+		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'createUser'), false) ?>">Benutzer anlegen</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -221,6 +224,21 @@
 		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>
 		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>
 		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>
+	<!--
+		//TODO
+		
+		When providing this form with functionality, please modify the 'mod' parameter to point to the current
+		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
+		user,room,device,component,supplier and so on.
+		
+		After doing your update and validation stuff use this:
+		
+			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+		
+		to redirect to the page where you came or started the wizard from.
+		
+		<form action="index.php<?php echo navParams(array('mod' => 'user'), false) ?>" method="post">
+	-->
 		<p>Gruppe</p>
 		<select name="usergroup">
 			<optgroup label="W&auml;hle eine Gruppe"></optgroup>
@@ -229,8 +247,7 @@
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="Anlegen" />
-		<input  type="button" value="Abbrechen" onClick="location.href = 'index.php?mod=user'" />
-		
+		<input  type="button" value="Abbrechen" onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" />		
 		<?php
 			// check button
 			if(isset($_POST['btnSubmit']))

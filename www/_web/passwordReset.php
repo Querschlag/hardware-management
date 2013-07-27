@@ -21,13 +21,19 @@
     	
  <div id="top-menu"></div>
 
-		<div id="header"></div>
+		<div id="header">
+			<div id="top_nav">
+	        	<h1><a href="./login.php">IT Verwaltung - B3 F&uuml;rth</a></h1>
+	        </div>
+		</div>
 		<div id="content">
-			<div id="information">
-				<h1>Passwort zurücksetzen</h1>
+			<div id="module">
+				<h2>Passwort zur&uuml;cksetzen</h2>
 				<form action="login.php" method="post">
 					<p>E-Mail:</p><input name="Mail" type="text" />
-					<p><input name="btnReset" type="submit" value="Passwort rücksetzen"/></p>
+					<p>&nbsp;</p>
+					<input name="btnReset" type="submit" value="Passwort zur&uuml;cksetzen"/>
+					<input onClick="location.href = 'login.php'" type="button" value="Zur&uuml;ck" />
 				</form>
 		</div>
 			<div class="clear"></div>

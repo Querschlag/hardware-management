@@ -1,7 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Nunito:400,700);
+
 body {
 	width:800px;
 	margin:auto;
-	font-family:Arial, Verdana, sans-serif;
+	font-family:'Nunito', Arial, Verdana, sans-serif;
 }
 
 .left {
@@ -29,6 +31,30 @@ hr {
 	width:400px;
 	border:1px solid #ddd;
 	margin-bottom:30px;
+}
+
+input {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+select {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
+}
+
+textarea {
+	border: 1px solid #ccc;
+	-border-radius: 6px;
+  	-webkit-border-radius: 6px;
+  	border-radius: 6px;
+  	padding:2px 8px;
 }
 
 #header {
@@ -99,14 +125,6 @@ hr {
 	float:right;
 }
 
-#search_bar input {
-	border: 1px solid #ccc;
-	-border-radius: 10px;
-  	-webkit-border-radius: 10px;
-  	border-radius: 10px;
-  	padding:2px 8px;
-}
-
 #content {
 	clear: both;
 	margin-top:40px;
@@ -148,6 +166,10 @@ hr {
 	-border-radius: 10px;
   	-webkit-border-radius: 10px;
   	border-radius: 10px;
+  	
+  	-moz-box-shadow:    0px 1px 2px 0px #bbb;
+	-webkit-box-shadow: 0px 1px 2px 0px #bbb;
+	box-shadow:         0px 1px 2px 0px #bbb;
 }
 
 #action_bar {
@@ -179,14 +201,6 @@ hr {
 	background: -ms-linear-gradient(top,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#33d6d6d6',GradientType=0 ); /* IE6-8 */
-}
-
-#information {
-	float:left;
-}
-
-#login {
-	float:right;
 }
 
 table {
@@ -221,7 +235,6 @@ form p {
 	margin-top:20px;
 	font-size:13px;
 	text-align:center;
-	font-family:Latha ,sans-serif;
 }
 
 .require { color:red; }
@@ -232,7 +245,7 @@ form p {
 
 /* lauch screen */
 #launch_menu{width:300px;margin:20px auto;color:#105CB6;}
-.tile {
+.tile a {
 	background-color:#ccc;
 	text-align:center;
 	margin:15px 0;
@@ -242,27 +255,30 @@ form p {
   	-webkit-border-radius: 10px;
   	border-radius: 10px;
 	font-size:22px;
+	
+	display: block;
+	height: 100%;
+	width: 100%;
 
 	-moz-transition: color 0.5s, background-color 0.5s, -moz-transform 0.5s;
     -webkit-transition: color 0.5s, background-color 0.5s, -webkit-transform 0.5s;
     -o-transition: color 0.5s, background-color 0.5s, -o-transform 0.5s;
     transition: color 0.5s, background-color 0.5s, transform 0.5s;
 }
-.tile:hover {
+.tile a:hover {
 	transform: scale(1.05);
 	background-color: #999;
-	color:#105CB6;
+	color:#fff;
 	border:2px solid #eee;
 	
 	-moz-box-shadow:    3px 3px 3px 1px #ccc;
 	-webkit-box-shadow: 3px 3px 3px 1px #ccc;
 	box-shadow:         3px 3px 3px 1px #ccc;
 }
-.tile:hover a {color:#fff;}
 
 /* module Rooms */
 .rooms {list-style:none;}
-.rooms li {width:80px; display:inline-block;}
+.rooms li {width:118px; display:inline-block;}
 
 /* module Device */
 .components {list-style:none;}

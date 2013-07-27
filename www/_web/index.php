@@ -42,12 +42,14 @@
         ?>
 
 		<div id="header">
+			<!--
 			<div id="search_bar">
 				<form action="index.php" method="get">
 					<input name="search" type="search" />
 					<input name="btnSearch" type="submit" value="Suchen" />
 				</form>
 			</div>
+			-->
 			<div class="clearfix"></div>
 			<div id="top_nav">
 				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>

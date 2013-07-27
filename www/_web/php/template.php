@@ -79,8 +79,8 @@
 
 			
 			// default module
-			$userGroup = SESSION('userGroup');
-			if ($userGroup != null)
+			$userPermission = SESSION('userPermission');
+			if ($userPermission != null)
 			{
 				return 'launch_menu.php';
 			} else {
