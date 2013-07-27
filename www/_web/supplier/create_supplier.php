@@ -2,12 +2,20 @@
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
+		<!--
+		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?menu=management&mod=rooms">Stammdaten</a></li>
+		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="index.php?mod=createSupplier">Lieferant anlegen</a></li>
+		-->
+
 		<?php
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
 		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'supplier'), false) ?>">Lieferanten</a></li>
 		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'createSupplier'), false) ?>">Lieferant anlegen</a></li>
+
 	</ul>
 </div>
 <div id="module">

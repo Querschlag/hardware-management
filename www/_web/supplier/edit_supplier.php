@@ -6,6 +6,12 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
+
+	<!--		
+		<li><a href="index.php?menu=management&mod=rooms">Stammdaten</a></li>
+		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="">Lieferant bearbeiten</a></li>
+	-->
 		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'supplier'), false) ?>">Lieferanten</a></li>
 		<li>>> <a href="index.php<?php echo navParams(array('mod' => 'supplier')) ?>">Lieferant bearbeiten</a></li>
 	</ul>
