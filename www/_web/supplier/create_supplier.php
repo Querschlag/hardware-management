@@ -3,6 +3,7 @@
 <div id="breadcrumb_nav">
 	<ul>
 		<li><a href="index.php">Startseite</a></li>
+		<li>>> <a href="index.php?menu=management&mod=rooms">Stammdaten</a></li>
 		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
 		<li>>> <a href="index.php?mod=createSupplier">Lieferant anlegen</a></li>
 	</ul>

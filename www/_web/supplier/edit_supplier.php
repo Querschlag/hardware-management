@@ -6,9 +6,10 @@
 			// add selected menu entry
 			include ('php/breadcrumb.php');
 		?>
-
-		<li><a href="index.php?mod=supplier">Lieferant</a></li>
-		<li>>> <a href="index.php?mod=editSupplier">Lieferant bearbeiten</a></li>
+		
+		<li><a href="index.php?menu=management&mod=rooms">Stammdaten</a></li>
+		<li>>> <a href="index.php?mod=supplier">Lieferant</a></li>
+		<li>>> <a href="">Lieferant bearbeiten</a></li>
 	</ul>
 </div>
 <div id="module">
@@ -17,6 +18,9 @@
 		<div class="clearfix"></div>
 	</div>
 	<h2>DHL</h2>
+	<?php
+		print_r($_GET);
+	?>
 	<form action="index.php?mod=supplier" method="post">
 		<p>Firmenname</p><input name="name" type="text"/>
 		<p>Postleitzahl</p><input name="Plz" type="text"/>
