@@ -41,7 +41,8 @@
 				echo 'Server is reachable';
 				mysql_connect("10.9.4.51", "itv_v1", "");
 			}
-		
+			
+			mysql_select_db("itv_v1");
 		}
 		
 	
