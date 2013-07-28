@@ -41,8 +41,7 @@
 				echo 'Server is reachable';
 				mysql_connect("10.9.4.51", "itv_v1", "");
 			}
-			
-			mysql_select_db("itv_v1");
+		
 		}
 		
 	
@@ -1372,9 +1371,10 @@
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE b_name = '".$userName."';";
+						WHERE b_name = '".$userName."'";
 					   
-			$Data = mysql_query($select);			
+$Data = mysql_query($select) 
+   or die ("MySQL-Error: " . mysql_error());  			
 			$row = mysql_fetch_assoc($Data);
 			if($row['b_id'] == null)
 			{
@@ -1726,6 +1726,27 @@
 		 {
 			//Verschieben von Komponenten in Lager
 			//Man bekommt nen Device und all Komponenten werden ins Lager verschoben	
+			
+			/*$select = "SELECT * FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$componentId.";";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$count = "SELECT count(*) AS counter FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$row["komponenten_k_id_teil"].";";
+				$DataSub = mysql_query($count);
+				$rowSub = mysql_fetch_assoc($DataSub);
+				
+				if($rowSub["counter"] > 0)
+				{
+					
+				}
+
+			
+				$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$row["komponenten_k_id_teil"].";";
+				mysql_query($update);
+			}
+			
+			$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$componentId.";";
+			mysql_query($update);*/
 		 }
 	}
 ?>
