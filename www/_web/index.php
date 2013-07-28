@@ -19,37 +19,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <?php
-			session_start();
-			
-			$redirect = false;
-			$params = null;
-			
-			if (GET('lightTheme'))
-			{
-				$_SESSION['theme2'] = false;
-				$params = rm_url_param('lightTheme');
-				$redirect = true;
-			}
-				
-			if (GET('darkTheme'))
-			{
-				$_SESSION['theme2'] = true;
-				$params = rm_url_param('darkTheme');
-				$redirect = true;
-			}
-
-			if ($redirect) {
-				$url = 'index.php';
-				$url .= (sizeof($_GET) > 0) ? '?' : '';
-				$url .= $params;
-				header('location:' . $url);
-			}
-				
-        	echo '<link rel="stylesheet" href="css/content';
-        	if (SESSION('theme2') == true)
-				echo '2';
-			echo '.css">';	
-        ?>
+        	// Stylesheet chooser
+       		include('theme.php');
+       	?>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

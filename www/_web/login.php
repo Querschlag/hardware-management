@@ -19,18 +19,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <?php
-			session_start();
-			
-			if (GET('lightTheme'))
-				$_SESSION['theme2'] = false;
-			if (GET('darkTheme'))
-        		$_SESSION['theme2'] = true;
-			
-        	echo '<link rel="stylesheet" href="css/content';
-        	if (SESSION('theme2') == true)
-				echo '2';
-			echo '.css">';
-        ?>
+        	// Stylesheet chooser
+       		include('theme.php');
+       	?>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
