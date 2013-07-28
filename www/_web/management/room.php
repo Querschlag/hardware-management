@@ -174,7 +174,6 @@
 	$(function() {
 		$('.btnDeleteRoom').on('click', function()
 			{
-				alert('hi');
 			    $("#dialog").dialog({
 			        autoOpen: true,
 			        minWidth: 430,
@@ -182,7 +181,7 @@
 			        buttons: 
 			        [
 			            	{
-			            		text: "Raum & Ger&auml;te l&ouml;schen",
+			            		text: unescape("Raum & Ger%E4te l%F6schen"),
 			            		name: "btnYes",
 			            		class: "destructiveButton",
 			                	click: function () 
@@ -201,7 +200,8 @@
 										(
 											function()
 											{
-												window.location = 'index.php' . navParams(array('mod' => 'rooms'));
+												var url = "index.php?menu=" + $.query.get("menu") + "&mod=rooms";
+												window.location = url;
 											}
 										);				
 									}
