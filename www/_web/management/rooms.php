@@ -188,7 +188,7 @@
 				// print list element
 				$requiresMaintenance = true;
 				print '<li ';
-				if (menuItem() == 'maintenance' && $requiresMaintenance) print 'class="hardwareProblem"';
+				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"';
 				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 
 				// increase row count

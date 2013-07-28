@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Armata);
 
 body {
-	min-width:453px;
+	min-width:410px;
 	max-width:800px;
 	margin:0 auto;
 	font-family:'Armata', 'Nunito', Arial, Verdana, sans-serif;
@@ -86,7 +86,12 @@ textarea {
 	font-size: 36px;
 	color:#333;
 }
-
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#top_nav h1 a {
+		font-size: 6vmin
+	}
+};
 #top_nav ul {
 	list-style:none;
 }
@@ -144,13 +149,6 @@ textarea {
   	border-radius: 3px;
 	
     transition: all 0.2s ease-in-out 0s;
-}
-/* Mobile adjustments */
-@media screen and (max-width: 700px) {
-	#user_bar_wrapper {
-		right:25%;
-		top:40px;
-	}
 }
 #user_bar {
 	position:relative;
@@ -239,7 +237,7 @@ textarea {
 }
 
 #module {
-	margin:10px 50px;
+	margin:10px 40px;
 	padding:10px 25px 25px 25px;
 	background-color: #fff;
 	
@@ -362,10 +360,10 @@ form p {
     transition: color 0.1s, background-color 0.2s, transform 0.1s;
 }
 /* Mobile adjustments */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 840px) {
 	.tile a {
 		float:none!important;
-		margin: 15px auto;
+		margin: 15px auto!important;
 	}
 }
 .tile a p {
@@ -381,6 +379,12 @@ form p {
 .lastTile {
 	width:323px;
 	margin:0 auto;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 840px) {
+	.lastTile {
+		width:auto;
+	}
 }
 
 #launch_menu a {

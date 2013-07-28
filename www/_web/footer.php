@@ -3,7 +3,7 @@
 </p>
 <p>
 	Style: 
-	<a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?lightTheme=1">Hell</a> | 
-	<a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?darkTheme=1">Dunkel</a>
+	<a href="<?php echo $_SERVER['REQUEST_URI']; print (sizeof($_GET) > 0) ? '&' : '?'; ?>lightTheme=1">Hell</a> | 
+	<a href="<?php echo $_SERVER['REQUEST_URI']; print (sizeof($_GET) > 0) ? '&' : '?'; ?>darkTheme=1">Dunkel</a>
 </p>
 <img class="logo" src="img/Logo_team2_int.png" alt="IFA11B2 - IT-Team2 Logo" />
