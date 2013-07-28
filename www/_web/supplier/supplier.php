@@ -243,4 +243,5 @@
 		<li style="background-color: #ddd"><a href="index.php<?php echo navParams(array('mod' => 'editSupplier', 'supplier' => 2)) ?>">Kondrad</a></li>
 	-->
 	</ul>
+	-->
 </div>
