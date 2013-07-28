@@ -193,6 +193,7 @@ textarea {
     background-color: #DDDDDD;
     color: #444444;
     padding: 2px 4px;
+    border-radius:3px;
 }
 #action_bar a:hover, #action_bar button:hover {
     background-color: #999999;
