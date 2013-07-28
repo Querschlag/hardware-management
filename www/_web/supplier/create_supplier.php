@@ -1,4 +1,4 @@
-<?php require_once('php/navigation.php'); ?>
+<?php require_once('php/navigation.php'); ob_start(); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -277,7 +277,8 @@
 			
 			// create controller object
 			$controller = new DelivererController($view, $database);
-	
+			
+			
 	?>
 	
 	<form method="post">
@@ -300,7 +301,13 @@
 				{
 					$controller->insertDeliverer();
 					
+					/*
+					 * FIXME: Maybe called too early
+					 * Call header() redirect in seperate handler after the controller successfully created the supplier!
+					 */
+					
 					header( "Location: index.php" . navParams(array('mod' => 'supplier')) );
+					ob_flush();
 				}
 				else 
 				{

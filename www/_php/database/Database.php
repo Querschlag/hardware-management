@@ -35,7 +35,8 @@
 			$fp = @fsockopen("http://10.9.4.51", $port, $errno, $errstr, $timeout);
 			if (!$fp) {
 			    //echo "$errstr ($errno)<br />\n";
-				mysql_connect("itv_v1", "root", "");
+				if (!@mysql_connect("localhost", "itv_v1", ""))
+					mysql_connect("itv_v1", "root", "");
 			} else {
 				echo 'Server is reachable';
 				mysql_connect("10.9.4.51", "itv_v1", "");

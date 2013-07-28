@@ -1,4 +1,4 @@
-<?php require_once('php/navigation.php'); ?>
+<?php require_once('php/navigation.php'); ob_start(); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -17,11 +17,6 @@
 	</ul>
 </div>
 <div id="module">
-	<div id="action_bar">
-		
-		<div class="clearfix"></div>
-	</div>
-	<h2>Lieferant bearbeiten</h2>
 	<!--
 		//TODO
 		
@@ -296,6 +291,13 @@
 			}
 	
 	?>
+	
+	<div id="action_bar">
+		<input class="right destructiveButton" type="submit" name="btnDeleteSubmit" value="Lieferant l&ouml;schen" <?php echo $disabled; ?> />
+		<div class="clearfix"></div>
+	</div>
+	<h2>Lieferant bearbeiten</h2>
+	
 	<form method="post">
 		<p>Firmenname</p><input name="companyName" value="<?php echo $view->getDelivererCompanyName(); ?>" type="text"/>&nbsp;<span class="require">*</span>
 		<p>Straße</p><input name="street" value="<?php echo $view->getDelivererStreet(); ?>" type="text"/>
@@ -318,6 +320,7 @@
 					$controller->updateDeliverer();
 					
 					header( "Location: index.php" . navParams(array('mod' => 'supplier')) );
+					ob_flush();
 				}
 				else 
 				{
@@ -329,6 +332,11 @@
 			{
 				$controller->deleteDeliverer();
 				
+				/*
+				 * FIXME: Maybe called too early
+				 * Call header() redirect in seperate handler after the controller successfully created the supplier!
+				 */
+				
 				header( "Location: index.php" . navParams(array('mod' => 'supplier')) );
 			}
 		?>
@@ -336,6 +344,5 @@
 		<br>
 		<input name="btnChangeSubmit" type="submit" value="&Uuml;bernehmen" />
 		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'supplier'), false) ?>'" type="button" value="Abbrechen" />
-		<input class="right destructiveButton" type="submit" name="btnDeleteSubmit" value="Lieferant l&ouml;schen" <?php echo $disabled; ?> />
 	</form>
 </div>
