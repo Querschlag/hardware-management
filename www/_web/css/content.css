@@ -11,7 +11,12 @@ body {
 .left {
 	float:left;
 }
-
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.left {
+		margin: 15px auto;
+	}
+}
 .right {
 	float:right;
 }
@@ -140,7 +145,13 @@ textarea {
 	
     transition: all 0.2s ease-in-out 0s;
 }
-
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar_wrapper {
+		right:25%;
+		top:40px;
+	}
+}
 #user_bar {
 	position:relative;
 }
@@ -349,6 +360,13 @@ form p {
     -webkit-transition: color 0.1s, background-color 0.2s, -webkit-transform 0.1s;
     -o-transition: color 0.1s, background-color 0.2s, -o-transform 0.1s;
     transition: color 0.1s, background-color 0.2s, transform 0.1s;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.tile a {
+		float:none!important;
+		margin: 15px auto;
+	}
 }
 .tile a p {
 }

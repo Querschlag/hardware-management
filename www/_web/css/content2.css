@@ -1,9 +1,5 @@
 @import "http://fonts.googleapis.com/css?family=Armata";
 
-@viewport {
-  width: device-width;
-}
-
 body {
     font-family: 'Armata','Nunito',Arial,Verdana,sans-serif;
     margin: 0 auto;
@@ -12,6 +8,12 @@ body {
 }
 .left {
     float: left;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.left {
+		margin: 15px auto;
+	}
 }
 .right {
     float: right;
@@ -95,9 +97,16 @@ textarea {
     height: 34px;
     overflow: hidden;
     position: absolute;
-    right: 195px;;
+    right: 195px;
     top:6px;
     transition: all 0.2s ease-in-out 0s;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar_wrapper {
+		right:25%;
+		top:40px;
+	}
 }
 #user_bar {
     position: relative;
@@ -259,13 +268,20 @@ form p {
     border: 2px solid #BBBBBB;
     border-radius: 3px 3px 3px 3px;
     display: block;
-    float: left;
     font-size: 22px;
     height: 100px;
     margin: 15px 35px;
     padding: 15px;
     transition: color 0.1s ease 0s, background-color 0.2s ease 0s, transform 0.1s ease 0s;
     width: 220px;
+    float:left;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.tile a {
+		float:none!important;
+		margin: 15px auto;
+	}
 }
 .tile a p {
 }
@@ -311,6 +327,7 @@ form p {
 .rooms li {
     display: inline-block;
     width: 118px;
+    margin:12px 0;
 }
 .components {
     list-style: none outside none;
