@@ -18,7 +18,19 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/content.css">
+        <?php
+			session_start();
+			
+			if (GET('lightTheme'))
+				$_SESSION['theme2'] = false;
+			if (GET('darkTheme'))
+        		$_SESSION['theme2'] = true;
+			
+        	echo '<link rel="stylesheet" href="css/content';
+        	if (SESSION('theme2') == true)
+				echo '2';
+			echo '.css">';
+        ?>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -29,6 +41,30 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+		<script type="text/javascript">
+			;(function($) {
+			    $.fn.textfill = function(options) {
+			        var fontSize = options.maxFontPixels;
+			        var ourText = $('h1:visible:first', this);
+			        var maxHeight = $(this).height();
+			        var maxWidth = $(this).width();
+			        var textHeight;
+			        var textWidth;
+			        do {
+			            ourText.css('font-size', fontSize);
+			            textHeight = ourText.height();
+			            textWidth = ourText.width();
+			            fontSize = fontSize - 1;
+			        } while ((textHeight > maxHeight || textWidth > maxWidth) && fontSize > 3);
+			        return this;
+			    }
+			})(jQuery);
+			
+			$(document).ready(function() {
+			    $('.jtextfill').textfill({ minFontPixels: 36 });
+			});
+		</script>
+		
 		<!--
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
@@ -42,16 +78,21 @@
 			 
 			if (isset($_GET['logout']))
 			{
-			 	session_start();
+			 	if(!isset($_COOKIE["PHPSESSID"]))
+				{
+					session_start();
+				}
+
+				$_SESSION['userPermission'] = null;
 				session_destroy();
 			}
 			 
-			 include('check_login.php')
+			include('check_login.php')
         ?>
 
 		<div id="header">
 			<div id="top_nav">
-				<h1><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
+				<h1 class="jtextfill"><a href="./">IT Verwaltung - B3 F&uuml;rth</a></h1>
 			</div>
 			<div id="user_bar">
 				<?php
@@ -75,7 +116,7 @@
 		<div id="footer">
 			<?php
 				// Include page footer
-				include('footer.html');
+				include('footer.php');
 			?>
 		</div>
     </body>

@@ -122,6 +122,7 @@
 		<p>Attribut 1</p><input name="attribut1" type="text" disabled=""/>
 		<p>Attribut 2</p><input name="attribut1" type="text" disabled=""/>
 		<p>Attribut 3</p><input name="attribut1" type="text" disabled=""/>
+		<p><input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'device', 'room' => GET('room'), 'device' => GET('device')), false); ?>'" type="button" value="Zur&uuml;ck" /></p>
 	</form>
 
 </div>
