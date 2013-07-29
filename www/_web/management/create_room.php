@@ -244,8 +244,8 @@
 				// check error count
 				if($controller->getErrorCount() == 0)
 				{
-					// redirect
-					header( "Location: index.php" . navParams(array('mod' => 'rooms')) );
+					// print javascript redirect
+					print '<script>$(function() { window.location = "index.php' . navParams(array('mod' => 'rooms')) .'"; })</script>';
 				}				
 			}
 		?>

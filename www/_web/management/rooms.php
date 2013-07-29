@@ -250,12 +250,8 @@
 	 		*/
 			public function displayProblemCount($count) 
 			{
-				// check count
-				if($count > 0)
-				{
 					// set problem count message
-					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
-				}				
+					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';				
 			}
 		
 			/**
