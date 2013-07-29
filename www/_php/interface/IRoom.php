@@ -16,7 +16,7 @@
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com> 
 		 */
-		public function displayRoom($id, $number, $name, $note);
+		public function displayRoom($id, $number, $name, $note, $roomHasProblems=false);
 		
 		/**
 		 *  function to display floor
@@ -87,5 +87,15 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function getFloorNumber();
+		
+		/**
+		* function to get Problems
+		*
+		* @return bool hasProblem
+		* 
+		* @author Daniel Schulz <schmoschu@gmail.com>
+		*
+		*/
+		/*public function getProblems();*/
 	}
 ?>

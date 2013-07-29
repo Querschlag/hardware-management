@@ -166,7 +166,7 @@
 			 * 
 			 * @author Johannes Alt <altjohannes510@gmail.com> 
 			 */
-			public function displayRoom($id, $number, $name, $note)
+			public function displayRoom($id, $number, $name, $note, $roomHasProblems = false)
 			{
 				// check row count
 				if($this->_rowCount == $this->_rowMax)
@@ -186,9 +186,13 @@
 				}
 				
 				// print list element
-				$requiresMaintenance = true;
+				echo 'problem:';
+				var_export($roomHasProblems);
+				
+				echo 'id:';
+				var_export($id);
 				print '<li ';
-				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"';
+				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $roomHasProblems) print 'class="hardwareProblem"';
 				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 
 				// increase row count
@@ -254,7 +258,8 @@
 				if($count > 0)
 				{
 					// set problem count message
-					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
+					if (menuItem() == 'maintenance' || menuItem() == 'scrap')
+						print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
 				}				
 			}
 		
