@@ -60,7 +60,7 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com> 
 				 */
-				public function displayRoom($id, $number, $name, $note)
+				public function displayRoom($id, $number, $name, $note, $roomHasProblems = false)
 				{
 					// store number
 					$_POST['number'] = $number;
@@ -244,8 +244,8 @@
 				// check error count
 				if($controller->getErrorCount() == 0)
 				{
-					// redirect
-					header( "Location: index.php" . navParams(array('mod' => 'rooms')) );
+					// print javascript redirect
+					print '<script>$(function() { window.location = "index.php' . navParams(array('mod' => 'rooms')) .'"; })</script>';
 				}				
 			}
 		?>

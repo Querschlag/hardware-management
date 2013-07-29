@@ -129,6 +129,13 @@
 				// $this->_view->setError();
 			// }
 			$id = $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			
+			if($isDevice == 1) {
+				$subId = $this->_database->insertSubComponent($id, 0);
+			} else {
+				$subId = $this->_database->insertSubComponent(POST('MainDevice'), $id);
+			}
+			
 			$this->_view->setComponentId($id);
 		}	
 		
@@ -227,7 +234,7 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function selectAttributesByType($type) {
-			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
+			return $this->_database->getComponentAttributesFromComponent($type);
 		}
 		
 		/**

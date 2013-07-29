@@ -136,7 +136,8 @@
 						$room->roomId, 
 						$room->roomNumber,
 						$room->roomName, 
-						$room->roomNote);	
+						$room->roomNote,
+						$room->roomHasProblems);	
 				}
 				
 				// display room end

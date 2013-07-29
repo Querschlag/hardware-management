@@ -3,13 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 26. Jul 2013 um 12:29
+-- Erstellungszeit: 29. Jul 2013 um 11:53
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 SET FOREIGN_KEY_CHECKS=0;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,23 +37,27 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
   `b_nachname` varchar(40) NOT NULL,
   `b_name` varchar(40) NOT NULL,
   `b_email` varchar(255) NOT NULL,
+  `deletedFlag` tinyint(1) NOT NULL,
   PRIMARY KEY (`b_id`),
   KEY `bg_id` (`bg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`) VALUES
-(8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', ''),
-(9, 5, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com'),
-(10, 5, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', ''),
-(11, 5, '*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29', 'Thomas', 'Bayer', 'thomas.bayer', 'thomasbayer95@gmail.com'),
-(17, 5, '*C519D9F81EFE5C77B3C94A67119B98A4C17711EB', 'Philipp', 'Schmidkunz', 'philipp.schmidkunz', 'philippschmidkunz@googlemail.com'),
-(18, 6, '*E2C277BAA637E2E323FEA3A03F2E409B374D8827', 'Adrian', 'Geuss', 'adrian.geuss', 'adriangeuss@gmail.com'),
-(19, 5, '*6892D460CC3543A87AC6F13DE339B62EFBDDBCA0', 'Thomas', 'Bayer2', 'thomas.bayer2', 'thomas.bayer@test.com'),
-(20, 6, '*51B76DE2A6FC620B72FA100C6BBC5A84694FE894', 'Thomas', 'Michl', 'thomas.michl', 'thomas.michl1988@gmail.com');
+INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`, `deletedFlag`) VALUES
+(8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', '', 1),
+(9, 5, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com', 0),
+(10, 6, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', '', 0),
+(11, 5, '*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29', 'Thomas', 'Bayer', 'thomas.bayer', 'thomasbayer95@gmail.com', 0),
+(17, 7, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Philipp', 'Schmidkunz', 'philipp.schmidkunz', 'philippschmidkunz@googlemail.com', 0),
+(18, 6, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Adrian', 'Geuss', 'adrian.geuss', 'adriangeuss@gmail.com', 0),
+(20, 6, '*51B76DE2A6FC620B72FA100C6BBC5A84694FE894', 'Thomas', 'Michl', 'thomas.michl', 'thomas.michl1988@gmail.com', 0),
+(21, 5, '*B0CDCEA28ACB92271CDECA35C5BF922F696B2A73', 'Phil', 'Morris', 'Phil', 'p.morris@b3-fuerth.de', 1),
+(22, 6, '*AA803D048B666A933E512AA53B36C70174A37D1E', 'Daniel', 'Schulz', 'daniel.schulz', 'schmoschu@gmail.com', 0),
+(23, 5, '*D2D84AE8B45F5B80CFD3FA312E928F43AAE31F9C', 'Max', 'Mustermann', 'max.mustermann', 'max.mustermann@test.com', 1),
+(24, 5, '*843E83DA7BAF6C5A40241F1DE74E4A2F11554D09', 'Max', 'Mustermann', 'max.mustermann', 'max.mustermann@test.com', 1);
 
 -- --------------------------------------------------------
 
@@ -210,31 +215,67 @@ CREATE TABLE IF NOT EXISTS `komponente` (
   `k_hersteller` varchar(45) DEFAULT NULL,
   `komponentenarten_ka_id` int(11) DEFAULT NULL,
   `k_device` tinyint(1) DEFAULT NULL,
+  `k_erstellungszeit` int(11) NOT NULL,
   PRIMARY KEY (`k_id`),
   KEY `fk_komponenten_haendler` (`lieferant_l_id`),
   KEY `fk_komponenten_raeume1` (`lieferant_r_id`),
   KEY `fk_komponenten_komponentenarten1` (`komponentenarten_ka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 --
 -- Daten für Tabelle `komponente`
 --
 
-INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, `k_einkaufsdatum`, `k_gewaehrleistungsdauer`, `k_notiz`, `k_hersteller`, `komponentenarten_ka_id`, `k_device`) VALUES
-(1, 1, 1, 'XT-801', 2052013, 30, NULL, 'Siemens', 2, 0),
-(2, 1, 1, 'GTX-560', 25072013, 12, NULL, 'Nvidia', 12, 0),
-(3, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 0),
-(4, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 1),
-(11, 1, 1, '', 1374789600, 1406325600, 'advavadv', 'hp', 12, 1),
-(12, 1, 1, '', 1374789600, 1437861600, '', 'hp', 12, 1),
-(13, 1, 1, 'sasda', 1372716000, 1375002269, 'qw', 'asdasda', 12, 1),
-(14, 1, 1, '', 1374789600, 1375002387, '', '', 12, 1),
-(15, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1),
-(16, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1),
-(17, 1, 1, 'testtesttest', 1374789600, 1374962400, 'asdvasvasdv', 'hp', 12, 1),
-(18, 1, 1, '', 1372716000, 1372716000, '', '', 12, 1),
-(19, 1, 1, '', 1373320800, 1373320800, '', '', 12, 1),
-(20, 1, 1, '', 1372802400, 1372802400, '', '', 12, 1);
+INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, `k_einkaufsdatum`, `k_gewaehrleistungsdauer`, `k_notiz`, `k_hersteller`, `komponentenarten_ka_id`, `k_device`, `k_erstellungszeit`) VALUES
+(1, 1, 1, 'XT-801', 2052013, 30, NULL, 'Siemens', 2, 0, 0),
+(2, 1, 1, 'GTX-560', 25072013, 12, NULL, 'Nvidia', 12, 0, 0),
+(3, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 0, 0),
+(4, 1, 1, 'Plasma TV', 25072013, 1, 'Fernseher', 'Leonie', 11, 1, 0),
+(11, 1, 1, '', 1374789600, 1406325600, 'advavadv', 'hp', 12, 1, 0),
+(12, 1, 1, '', 1374789600, 1437861600, '', 'hp', 12, 1, 0),
+(13, 1, 1, 'sasda', 1372716000, 1375002269, 'qw', 'asdasda', 12, 1, 0),
+(14, 1, 1, '', 1374789600, 1375002387, '', '', 12, 1, 0),
+(15, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1, 0),
+(16, 1, 1, 'testtesttest', 1374789600, 1374876000, 'asdvasdvasv', 'hp', 12, 1, 0),
+(17, 1, 13, 'testtesttest', 1374789600, 1374962400, 'asdvasvasdv', 'hp', 12, 1, 0),
+(18, 1, 1, '', 1372716000, 1372716000, '', '', 12, 1, 0),
+(19, 1, 1, '', 1373320800, 1373320800, '', '', 12, 1, 0),
+(20, 1, 1, '', 1372802400, 1372802400, '', '', 12, 1, 0),
+(21, 1, 1, 'test', 1372629600, 1372716000, '', 'test', 12, 1, 0),
+(22, 1, 1, 'test', 1372629600, 1372716000, 'test', 'test', 12, 1, 0),
+(23, 1, 1, '', 1372716000, 1372716000, '', '', 12, 1, 0),
+(24, 1, 1, '', 1372629600, 1372629600, '', '', 12, 1, 0),
+(25, 3, 1, '', 1375048800, 1375135200, 'alnfaslfnkaslfasef', 'hp', 12, 1, 0),
+(26, 1, 1, '', 1372629600, 1372629600, '', '', 12, 1, 0),
+(27, 1, 1, '', 1372629600, 1372629600, '', '', 12, 1, 0),
+(28, 1, 1, 'test', 1372629600, 1372716000, '', 'test', 12, 1, 0),
+(29, 3, 1, '', 1375048800, 1375221600, 'asdvsavas', 'hp', 12, 1, 0),
+(30, 1, 1, '', 1375048800, 1375135200, 'ddfbsfd', 'hp', 12, 1, 0),
+(31, 1, 1, '', 1375048800, 1375135200, 'asdvasdv', 'hp', 12, 1, 0),
+(32, 1, 1, 'asd', 1373580000, 1373752800, '', '2q', 12, 1, 0),
+(33, 1, 1, 'test', 1375048800, 1375135200, 'test', 'test', 12, 1, 0),
+(34, 1, 1, '', 1375048800, 1375135200, 'avadsvasv', 'hp', 12, 1, 0),
+(35, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(36, 1, 1, '', 1375048800, 1375135200, 'asvasdv', 'hp', 12, 1, 0),
+(37, 1, 1, '', 1375048800, 1375135200, 'avasdvasv', 'hp', 12, 1, 0),
+(38, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(39, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(40, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(41, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(42, 3, 1, '', 1375048800, 1375135200, 'asldfnaldfn', 'ASUS', 3, 0, 0),
+(43, 1, 1, '', 1375048800, 1375135200, 'adasvavd', 'hp', 12, 1, 0),
+(44, 1, 1, 'Motherboard1', 1375048800, 1375135200, 'avasdasvd', 'ASUS', 3, 0, 0),
+(45, 1, 1, 'Motherboard1', 1375048800, 1375135200, 'avasdasvd', 'ASUS', 3, 0, 0),
+(46, 1, 1, '', 1375048800, 1375135200, 'test', 'test', 12, 1, 1375089817),
+(47, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(48, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(49, 1, 1, '', 1375048800, 1375135200, '', 'testprozessorhersteller', 12, 1, 1375091033),
+(50, 1, 1, 'motherboardtest', 1375048800, 1375221600, '', 'siemens', 3, 0, 1375091129),
+(51, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091239),
+(52, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091395),
+(53, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091455),
+(54, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091556),
+(55, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091614);
 
 -- --------------------------------------------------------
 
@@ -348,7 +389,29 @@ INSERT INTO `komponente_kattribut` (`komponenten_k_id`, `komponentenattribute_ka
 (1, 37, '123'),
 (2, 15, '2'),
 (17, 9, '4 GB RAM'),
-(17, 14, '4GHz');
+(17, 14, '4GHz'),
+(25, 9, '4 GB RAM'),
+(25, 14, '4GHz'),
+(29, 9, '4 GB RAM'),
+(29, 14, '4GHz'),
+(30, 9, '4 GB RAM'),
+(30, 14, '4GHz'),
+(31, 9, '4 GB RAM'),
+(31, 14, '4GHz'),
+(34, 9, '4 GB RAM'),
+(34, 14, '4GHz'),
+(36, 9, '4 GB RAM'),
+(36, 14, '4GHz'),
+(37, 9, '4 GB RAM'),
+(37, 14, '4GHz'),
+(43, 9, '4 GB RAM'),
+(43, 14, '4GHz'),
+(46, 9, '4 GB RAM'),
+(46, 14, '4GHz'),
+(49, 9, '4 GB RAM'),
+(49, 14, '4GHz'),
+(50, 8, 'Chipsatz'),
+(50, 17, 'Festplattenspeicher');
 
 -- --------------------------------------------------------
 
@@ -363,7 +426,15 @@ CREATE TABLE IF NOT EXISTS `komponente_komponente` (
   PRIMARY KEY (`khk_id`),
   KEY `fk_komponenten_has_komponenten_komponenten2` (`komponenten_k_id_teil`),
   KEY `fk_komponenten_has_komponenten_komponenten1` (`komponenten_k_id_aggregat`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Daten für Tabelle `komponente_komponente`
+--
+
+INSERT INTO `komponente_komponente` (`komponenten_k_id_aggregat`, `komponenten_k_id_teil`, `khk_id`) VALUES
+(43, 44, 2),
+(43, 45, 3);
 
 -- --------------------------------------------------------
 
@@ -382,7 +453,7 @@ CREATE TABLE IF NOT EXISTS `komp_vorgang` (
   KEY `k_id` (`k_id`),
   KEY `v_id` (`v_id`),
   KEY `b_id` (`b_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Daten für Tabelle `komp_vorgang`
@@ -390,7 +461,10 @@ CREATE TABLE IF NOT EXISTS `komp_vorgang` (
 
 INSERT INTO `komp_vorgang` (`kom_id`, `k_id`, `v_id`, `b_id`, `comment`, `datum`) VALUES
 (1, 1, 2, 8, '', 0),
-(2, 4, 2, 8, '', 2121212);
+(2, 4, 2, 8, '', 2121212),
+(3, 3, 1, 9, '', 2121212),
+(4, 4, 2, 8, '', 2121212),
+(5, 17, 2, 10, '', 2121212);
 
 -- --------------------------------------------------------
 
@@ -410,14 +484,15 @@ CREATE TABLE IF NOT EXISTS `lieferant` (
   `l_email` varchar(45) DEFAULT NULL,
   `l_land` char(40) NOT NULL,
   PRIMARY KEY (`l_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `lieferant`
 --
 
 INSERT INTO `lieferant` (`l_id`, `l_firmenname`, `l_strasse`, `l_plz`, `l_ort`, `l_tel`, `l_mobil`, `l_fax`, `l_email`, `l_land`) VALUES
-(1, 'Siemens', 'Siemensstrasse', '91173', 'Nürnberg', NULL, NULL, NULL, 'siemens@gmail.com', 'Deutschland');
+(1, 'Siemens', 'Siemensstrasse', '91173', 'Nürnberg', NULL, NULL, NULL, 'siemens@gmail.com', 'Deutschland'),
+(3, 'Sissi', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -432,14 +507,19 @@ CREATE TABLE IF NOT EXISTS `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Daten für Tabelle `raeume`
 --
 
 INSERT INTO `raeume` (`r_id`, `r_nr`, `r_etage`, `r_bezeichnung`, `r_notiz`) VALUES
-(1, '01', 0, 'Computerraum', NULL);
+(1, '01', 0, 'Computerraum', NULL),
+(2, '2', 0, 'Lehrerzimmer', ''),
+(13, '01', 1, 'Religionsraum', NULL),
+(16, '01', 2, 'Lehrraum', NULL),
+(17, '02', 2, 'Lehrraum', NULL),
+(18, '03', 2, 'Lehrraum', NULL);
 
 -- --------------------------------------------------------
 
@@ -555,5 +635,4 @@ ALTER TABLE `komp_vorgang`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 SET FOREIGN_KEY_CHECKS=1;

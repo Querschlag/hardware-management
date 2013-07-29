@@ -44,6 +44,11 @@
 		/**
 		 *  storage for the user email-adress
 		 */
-		public $userEmail;		
+		public $userEmail;	
+
+		/**
+		 * deletedFlag
+		 */
+		public $deletedFlag;
 	}
 ?>
