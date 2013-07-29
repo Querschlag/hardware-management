@@ -535,13 +535,13 @@
 				
 				if($attribute->componentAttributeValidValue) {
 					
-					$attrList .= '<select name="componentAttribute[]">';
+					$attrList .= '<select name="attributeValue[]">';
 					foreach($attribute->componentAttributeValidValue as $key => $value) {
 						$attrList .= '<option value="'.$value.'">'.$value.'</p>';
 					}
 					$attrList .= '</select>'; 
 				} else {
-					$attrList .= '<input type="text" name="componentAttribute[]" />';
+					$attrList .= '<input type="text" name="attributeValue[]" />';
 				}
 			}
 			
