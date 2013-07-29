@@ -73,6 +73,92 @@
 			}
 		}
 		
+		/** 
+		 * Select a device and print the device on UI
+		 * 
+		 *  @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function selectDevice()
+		{
+			// get device id
+			$deviceId = $this->_view->getDeviceId();
+			
+			// check device id
+			if(isset($deviceId))
+			{
+				// get device from databse
+				$device = $this->_database->getDeviceByDeviceId($deviceId);
+				
+				// check device
+				if(isset($device))
+				{
+					// display room
+					$this->_view->displayRoom($device->deviceRoom);
+					
+					// display device
+					// TODO: Add more properties
+					$this->_view->displayDevice(
+						$device->deviceId, 
+						$device->deviceNumber,
+						$device->deviceName, 
+						$device->deviceNote);
+				}
+			}	
+		}
+		
+		/**
+		 *  Select all devices for given room and print the devices on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectDevicesForRoomId($roomId)
+		{	
+			// get devices from database
+			$devices = $this->_database->getComponentDevicesByRoomId();
+			
+			// create device types array
+			$deviceTypes = array();
+			
+			// check device types
+			if(isset($devices['devices']))
+			{			
+				// iteration over all devices
+				foreach($devices['devices'] as $device)
+				{
+					// add device to device type list
+					$deviceTypes[$device->deviceType][] = $device;					
+				}
+			}
+			
+			// check problem count
+			if(isset($devices['problemCount']))
+			{
+				// display problems
+				$this->_view->displayProblemCount($devices['problemCount']);
+			}
+			
+			// iteration over all device types
+			foreach($deviceTypes as $key=>$deviceType)
+			{
+				// display device type name
+				$this->_view->displayFloor($key);
+				
+				// iteration over the device type  devices
+				foreach($deviceTypes as $device)
+				{
+					// display room
+					$this->_view->displayDevices(
+						$device->deviceId, 
+						$device->deviceName, 
+						$device->deviceNote,
+						$device->deviceHasProblems);	
+				}
+				
+				// display room end
+				$this->_view->displayDeviceTypeEnd();
+			}
+		}
+		
 		/**
 		 *  Insert a new Component to database
 		 *
