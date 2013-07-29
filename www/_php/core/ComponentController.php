@@ -59,7 +59,7 @@
 			foreach($components as $component)
 			{							
 				// display components
-				$this->_view->displayComponents(
+				$this->_view->displayComponent(
 					$component->componentId,
 					$component->componentDeliverer,
 					$component->componentRoom,
@@ -71,6 +71,139 @@
 					$component->componentType,
 					$component->componentIsDevice);
 			}
+		}
+		
+		/** 
+		 * Select a device and print the device on UI
+		 * 
+		 *  @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function selectDevice()
+		{
+			// get device id
+			$deviceId = $this->_view->getDeviceId();
+
+			// check device id
+			if(isset($deviceId))
+			{
+				// get device from databse
+				$device = $this->_database->getDevicebyDeviceId($deviceId);
+
+				// check device
+				if(isset($device))
+				{
+					// display device
+					$this->_view->displayDevice(
+						$device->componentId,
+						$device->componentRoom,
+						$device->componentName, 
+						$device->componentNote,
+						$device->componentHasProblems);	
+				}
+			}	
+		}
+		
+		/** 
+		 * Select a component and print the device on UI
+		 * 
+		 *  @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function selectComponent()
+		{
+			$componentId = $this->_view->getComponentId();
+			
+			// check component id
+			if(isset($componentId))
+			{
+				// get component from databse
+				$component = $this->_database->getComponentByComponentId($componentId);
+				
+				// check component
+				if(isset($component))
+				{
+					// display component
+					$this->_view->displayComponent(
+						$component->componentId,
+						$component->componentDeliverer,
+						$component->componentRoom,
+						$component->componentName,
+						$component->componentBuy,
+						$component->componentWarranty,
+						$component->componentNote,
+						$component->componentSupplier,
+						$component->componentType,
+						$component->componentIsDevice);
+				}
+			}	
+		}
+		
+		/**
+		 *  Select all devices for given room and print the devices on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectDevicesForRoomId($roomId)
+		{	
+			// get devices from database
+			$allDevices = $this->_database->getComponentDevicesByRoomId($roomId);
+			
+			// create device types array
+			$deviceTypes = array();
+			
+			// create store for device problems
+			$deviceProblemCount = 0;
+			
+			// check device types
+			if($allDevices)
+			{			
+				// iteration over all devices
+				foreach($allDevices as $deviceEntity)
+				{
+					// add device to device type list
+					$deviceTypes[$deviceEntity->componentType][] = $deviceEntity;		
+					
+					if ($deviceEntity->componentHasProblems)
+						$deviceProblemCount++;			
+				}
+			}			
+			
+			// check problem count
+			if($deviceProblemCount > 0)
+			{
+				// display problems
+				$this->_view->displayProblemCount($deviceProblemCount);
+			}
+			
+			// iteration over all device types
+			foreach($deviceTypes as $deviceTypeId=>$devices)
+			{
+				// display device type name
+				$deviceTypeEntity = $this->_database->getComponentTypeById($deviceTypeId);
+				$this->_view->displayDeviceType($deviceTypeEntity->typeName);
+				
+				// iteration over the device type  devices
+				foreach($devices as $device)
+				{
+					// display room
+					$this->_view->displayDevice(
+						$device->componentId,
+						$device->componentRoom,
+						$device->componentName, 
+						$device->componentNote,
+						$device->componentHasProblems);	
+				}
+				
+				// display room end
+				$this->_view->displayDeviceTypeEnd();
+			}
+		}
+
+		public function selectComponentsForDevice($deviceId)
+		{
+			// get devices from database
+			$components = $this->_database->getSubComponentsByComponentId($deviceId);
+			
+			$this->_view->displayComponents($components);
 		}
 		
 		/**

@@ -128,7 +128,7 @@
 				 * 
 		 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 				 */
-				public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
+				public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type)
 				{
 					// print display room
 					print $id . ' ' . $deliverer . ' '. $room . ' ' . $name . ' ' . $buy . ' ' . $warranty . ' ' . $note . ' ' . $supplier . ' ' . $type . '<br/>';

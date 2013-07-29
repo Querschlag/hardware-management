@@ -1,4 +1,4 @@
-<?php require_once('php/navigation.php'); ?>
+<?php require_once('php/navigation.php'); ob_start(); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -238,6 +238,7 @@
 				{
 					// no redirect
 					header( 'Location: index.php'. navParams(array('mod' => 'modifyRoom')) );
+					ob_flush();
 				}
 			}
 			else if(isset($_POST['btnChangeSubmit']))
@@ -250,6 +251,7 @@
 				{
 					// redirect
 					header( 'Location: index.php'. navParams(array('mod' => 'room')) );
+					ob_flush();
 				}				
 			}
 		?>
