@@ -1885,5 +1885,48 @@
 			
 			return $entityArray;
 		 }
+		 
+		 	 /**
+		  *  function to get Devices by RoomId
+		  * 
+		  * @param int $id roomId
+		  *
+		  * @return ComponentEntity[]
+		  * 
+		  * @author Leon Geim <leon.geim@gmail.com>
+		  */
+		 public function getComponentDevicesByRoomId($roomId)
+		 {
+			$entityArray = array();
+						
+			$select = "SELECT kom.*,  CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+						WHERE kom.k_device = 1 AND rae.r_id = ".$roomId.";";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier= $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems= $row['v_id'];
+				
+				$entityArray[] = $entity;
+				
+			}
+			return $entityArray;
+		 }
 	}
 ?>
