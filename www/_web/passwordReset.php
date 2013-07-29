@@ -1,3 +1,7 @@
+<?php
+	require_once('php/additions.php');
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,7 +18,10 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/content.css">
+        <?php
+        	// Stylesheet chooser
+       		include('theme.php');
+       	?>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -40,7 +47,7 @@
 		</div>
 		<div id="footer">
 			<?php
-				include('footer.html');
+				include('footer.php');
 			?>
 		</div>
     </body>

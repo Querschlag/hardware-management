@@ -34,7 +34,7 @@
 		
 			// include deliverer entity
 			require_once('../_php/interface/IDeliverer.php');
-	
+			
 			/**
 			* Deliverer object
 			*
@@ -70,13 +70,6 @@
 				public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $email, $country)
 				{
 					// check row count
-					if($this->_rowCount == $this->_rowMax)
-					{
-						// print end list
-						print '</ul>';					
-					}
-					
-					// check row count
 					if(isset($this->_rowCount) == FALSE || $this->_rowCount == $this->_rowMax)
 					{
 						// print start list
@@ -87,7 +80,7 @@
 					}
 					
 					// print list element
-					print '<li style="background-color: #eee"><a href="index.php?mod=editSupplier&supplierId=' . $id .'"">' . $companyName . '</a></li>';
+					print '<li style="background-color: #eee"><a href="index.php?menu=management&mod=editSupplier&supplierId=' . $id .'">' . $companyName . '</a></li>';
 					
 					// increase row count
 					$this->_rowCount++;			
@@ -111,7 +104,7 @@
 			 */
 			public function getDelivererCompanyName()
 			{
-				return "";
+				return $_POST['companyName'];
 			}
 		
 			/** 
@@ -121,7 +114,7 @@
 			 */
 			public function getDelivererStreet()
 			{
-				return "";
+				return $_POST['street'];
 			}
 		
 				
@@ -132,7 +125,7 @@
 			 */
 			public function getDelivererZip()
 			{
-				return "";
+				return $_POST['zip'];
 			}
 			
 			/**
@@ -142,7 +135,7 @@
 			 */
 			public function getDelivererCity()
 			{
-				return "";
+				return $_POST['city'];
 			}
 			
 			
@@ -153,7 +146,7 @@
 			 */
 			public function getDelivererTelephone()
 			{
-				return "";
+				return $_POST['telephone'];
 			}
 			
 			
@@ -164,7 +157,7 @@
 			 */
 			public function getDelivererMobile()
 			{
-				return "";
+				return $_POST['mobile'];
 			}
 			
 			
@@ -175,7 +168,7 @@
 			 */
 			public function getDelivererFax()
 			{
-				return "";
+				return $_POST['fax'];
 			}
 			
 			
@@ -186,7 +179,7 @@
 			 */
 			public function getDelivererEmail()
 			{
-				return "";
+				return $_POST['email'];
 			}
 			
 			
@@ -197,7 +190,7 @@
 			 */
 			public function getDelivererCountry()
 			{
-				return "";
+				return $_POST['country'];
 			}
 				
 			/**
@@ -233,7 +226,12 @@
 			
 			// create controller object
 			$controller = new DelivererController($view, $database);
-					
+			
+			if(isset($_POST['btnAddSubmit']))
+			{
+				$controller->insertDeliverer();
+			}
+			
 			// select the deliverers
 			$controller->selectDeliverers();
 		?>
@@ -243,6 +241,6 @@
 	<ul class="orders">
 		<li style="background-color: #eee"><a href="index.php<?php echo navParams(array('mod' => 'editSupplier', 'supplier' => 1)) ?>">DHL</a></li>
 		<li style="background-color: #ddd"><a href="index.php<?php echo navParams(array('mod' => 'editSupplier', 'supplier' => 2)) ?>">Kondrad</a></li>
-	</ul>
 	-->
+	</ul>
 </div>

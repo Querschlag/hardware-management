@@ -18,7 +18,10 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/content.css">
+        <?php
+        	// Stylesheet chooser
+       		include('theme.php');
+       	?>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -42,12 +45,13 @@
 						<h2>Anmeldung</h2>
 					</div>
 					<form action="login.php" method="post">
-						<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>"></input>
+						<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>">
 						<p>Passwort</p><input name="password" type="password" />
 						<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
 						<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
 						
 						<?php
+<<<<<<< HEAD
 							// include IUser
 							require_once('../_php/interface/IUser.php');
 							
@@ -77,8 +81,10 @@
 						 		*/
 								public function displayUser($id, $groupId, $name, $firstName, $lastName, $email)
 								{
-									// start session
-									session_start();
+									if(!isset($_COOKIE["PHPSESSID"]))
+									{
+										session_start();
+									}
 									
 									// store uniqueidentifier user id
 									$_SESSION['uid'] = $id;
@@ -266,14 +272,13 @@
 								$controller->lostPassword();
 							}		
 						?>
-			
 					</form>
 				</div>
 			</div>
 		</div>
 		<div id="footer">
 			<?php
-				include('footer.html');
+				include('footer.php');
 			?>
 		</div>
     </body>

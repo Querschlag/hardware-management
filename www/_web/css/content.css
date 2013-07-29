@@ -1,16 +1,22 @@
-@import url(http://fonts.googleapis.com/css?family=Nunito:400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Nunito:400,700);*/
+@import url(http://fonts.googleapis.com/css?family=Armata);
 
 body {
-	min-width:453px;
+	min-width:410px;
 	max-width:800px;
 	margin:0 auto;
-	font-family:'Nunito', Arial, Verdana, sans-serif;
+	font-family:'Armata', 'Nunito', Arial, Verdana, sans-serif;
 }
 
 .left {
 	float:left;
 }
-
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.left {
+		margin: 15px auto;
+	}
+}
 .right {
 	float:right;
 }
@@ -22,6 +28,10 @@ a {
 
 a:hover {
 	color:#777;
+}
+
+a:focus {
+    outline: none;
 }
 
 p {
@@ -76,7 +86,12 @@ textarea {
 	font-size: 36px;
 	color:#333;
 }
-
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#top_nav h1 a {
+		font-size: 6vmin
+	}
+};
 #top_nav ul {
 	list-style:none;
 }
@@ -135,7 +150,6 @@ textarea {
 	
     transition: all 0.2s ease-in-out 0s;
 }
-
 #user_bar {
 	position:relative;
 }
@@ -156,6 +170,7 @@ textarea {
 
 #user_bar .user {
 	padding:6px 18px;
+	border-bottom:2px solid #ccc;
 }
 
 #user_bar .logout {
@@ -222,7 +237,7 @@ textarea {
 }
 
 #module {
-	margin:10px 50px;
+	margin:10px 40px;
 	padding:10px 25px 25px 25px;
 	background-color: #fff;
 	
@@ -250,27 +265,24 @@ textarea {
 }
 
 #action_bar a, #action_bar button {
-	border:1px solid #999;
+	background-color:#ccc;
 	color:#444;
-	font-weight:bold;
 	padding:2px 4px;
 	background-color: #ddd;
 	
-	-border-radius: 6px;
-  	-webkit-border-radius: 6px;
-  	border-radius: 6px;
+	-border-radius: 3px;
+  	-webkit-border-radius: 3px;
+  	border-radius: 3px;
 }
 
 #action_bar a:hover, #action_bar button:hover {
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4ZThlOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkNmQ2ZDYiIHN0b3Atb3BhY2l0eT0iMC4yIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-	background: -moz-linear-gradient(top,  rgba(232,232,232,1) 0%, rgba(214,214,214,0.2) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232,232,232,1)), color-stop(100%,rgba(214,214,214,0.2))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(232,232,232,1) 0%,rgba(214,214,214,0.2) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#33d6d6d6',GradientType=0 ); /* IE6-8 */
+	background-color: #999;
+	color:#eee;
+	
+	-moz-transition: color 0.1s, background-color 0.2s;
+    -webkit-transition: color 0.1s, background-color 0.2s;
+    -o-transition: color 0.1s, background-color 0.2s;
+    transition: color 0.1s, background-color 0.2s;
 }
 
 table {
@@ -299,6 +311,13 @@ form p {
 
 .destructiveButton {
 	background-color: #D45E61!important;
+}
+
+.hardwareProblem {
+	background-image: url("../img/warning.png");
+	background-repeat: no-repeat;
+	background-size: 20px 20px;
+	padding-left:30px;
 }
 
 #footer {
@@ -335,10 +354,17 @@ form p {
 	width:220px;
 	height:100px;
 
-	-moz-transition: color 0.1s, background-color 0.1s, -moz-transform 0.1s;
-    -webkit-transition: color 0.1s, background-color 0.1s, -webkit-transform 0.1s;
-    -o-transition: color 0.1s, background-color 0.1s, -o-transform 0.1s;
-    transition: color 0.1s, background-color 0.1s, transform 0.1s;
+	-moz-transition: color 0.1s, background-color 0.2s, -moz-transform 0.1s;
+    -webkit-transition: color 0.1s, background-color 0.2s, -webkit-transform 0.1s;
+    -o-transition: color 0.1s, background-color 0.2s, -o-transform 0.1s;
+    transition: color 0.1s, background-color 0.2s, transform 0.1s;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 840px) {
+	.tile a {
+		float:none!important;
+		margin: 15px auto!important;
+	}
 }
 .tile a p {
 }
@@ -353,6 +379,12 @@ form p {
 .lastTile {
 	width:323px;
 	margin:0 auto;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 840px) {
+	.lastTile {
+		width:auto;
+	}
 }
 
 #launch_menu a {

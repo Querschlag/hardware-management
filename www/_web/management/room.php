@@ -174,7 +174,6 @@
 	$(function() {
 		$('.btnDeleteRoom').on('click', function()
 			{
-				alert('hi');
 			    $("#dialog").dialog({
 			        autoOpen: true,
 			        minWidth: 430,
@@ -182,7 +181,7 @@
 			        buttons: 
 			        [
 			            	{
-			            		text: "Raum & Ger&auml;te l&ouml;schen",
+			            		text: unescape("Raum & Ger%E4te l%F6schen"),
 			            		name: "btnYes",
 			            		class: "destructiveButton",
 			                	click: function () 
@@ -201,7 +200,8 @@
 										(
 											function()
 											{
-												window.location = 'index.php' . navParams(array('mod' => 'rooms'));
+												var url = "index.php?menu=" + $.query.get("menu") + "&mod=rooms";
+												window.location = url;
 											}
 										);				
 									}
@@ -350,19 +350,19 @@
 	
 	<h2>Computer</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 2)); ?>">PC002</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 3)); ?>">PC003</a></li>
 	</ul>
 	<h2>Drucker</h2>
 	<ul class="rooms">
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 4)); ?>">HP MP105</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 5)); ?>">Canon i350</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 5)); ?>">Canon i350</a></li>
 	</ul>
 	<h2>Router</h2>
 	<ul class="rooms">
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 6)); ?>">DLINK 1</a></li>
-		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 8)); ?>">FritzBox!</a></li>
 	</ul>
 </div>

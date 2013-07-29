@@ -66,6 +66,14 @@
 		public function getComponents();
 		
 		/**
+		 * function to get components
+		 * 
+		 * @return components
+		 * @author Thomas Bayer <thomasbayer95gmail.com> 
+		 */
+		public function getComponentsbyDelivererId($id);
+		
+		/**
 		 *  function to insert components
 		 * 
 		 * @param integer $deliverer The components deliverer id
@@ -116,6 +124,13 @@
 		 * @return DelivererEntity[]
 		 */
 		 public function getDeliverers();
+		 
+		 /**
+		 * select deliverer by id
+		 * 
+		 * @return Array
+		 */
+		 public function getDeliverersById($id);
 		 
 		 /**
 		  * insert deliverer
