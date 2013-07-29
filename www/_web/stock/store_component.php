@@ -175,6 +175,13 @@ else if ($step == 2)
 			public function displayProblemCount($count){}
 			
 			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentName($device_name){}
+			
+			/**
 			 *  function to get component id
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>

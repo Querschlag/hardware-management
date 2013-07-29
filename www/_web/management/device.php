@@ -278,6 +278,13 @@
 			public function setComponentId($id){}
 			
 			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentName($device_name) {}
+			
+			/**
 			 *  function to get component deliverer
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
