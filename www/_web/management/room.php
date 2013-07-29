@@ -200,7 +200,7 @@
 										(
 											function()
 											{
-												var url = "index.php?menu=" + $.get("menu") + "&mod=rooms";
+												var url = "index.php?menu=index.php?menu=management&mod=rooms";
 												window.location = url;
 											}
 										);				
