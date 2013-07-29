@@ -623,5 +623,23 @@
 		 public function takeOutOfService($componentId);
 		 
 		 
+		 /**
+		 * delete Corpses.
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>		  
+		 */
+		 public function deleteCorpses();
+		 
+		  /**
+		  *  function to get Components in Storage
+		  * 
+		  * @return ComponentEntity[]
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getComponentsInStorageByName($name, $count);
 		 
 }

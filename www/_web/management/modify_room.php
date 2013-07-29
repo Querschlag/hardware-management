@@ -64,7 +64,7 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com> 
 				 */
-				public function displayRoom($id, $number, $name, $note)
+				public function displayRoom($id, $number, $name, $note, $roomHasProblems = false)
 				{
 					// store number
 					$_POST['number'] = $number;

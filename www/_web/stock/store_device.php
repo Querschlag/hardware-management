@@ -25,7 +25,7 @@
 	<?php
 		require_once('php/additions.php');
 		
-		// include IRoom
+		// include IComponent
 		require_once('../_php/interface/IComponent.php');
 		
 		// include component controller
@@ -93,7 +93,7 @@
 			 */
 			public function getComponentName() 
 			{
-				return POST('device_name');
+				return POST('device_name') ? '' : '';
 			}
 				
 			/**
@@ -207,7 +207,12 @@
 		}
 		else if ($step == 5) 
 		{
-	
+			// insert attributes for device components
+			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			{
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+			}
+
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Wie viele Ger&auml;te anlegen?</h4>
@@ -241,6 +246,7 @@
 		}
 		else if ($step == 4) 
 		{
+			//Set session variable
 			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
 			{
 				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
@@ -248,11 +254,11 @@
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<form action="index.php?mod=storeComponent" method="post">
+			<form action="index.php?mod=storeComponent&MainDevice='.$view->getComponentId().'" method="post">
 			
-				<input name="step" value="4" type="hidden" />
-				<input type="hidden" name="id" value="'.$view->getComponentId().'">				
-				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
+				<input name="step" value="1" type="hidden" />
+				<input type="hidden" name="id" value="'.$view->getComponentId().'" />				
+				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -269,6 +275,7 @@
 		{
 			$controller->insertComponent();
 			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
@@ -279,9 +286,9 @@
 				<p>Attribut 2</p>
 				<input type="hidden" name="componentAttribute[]" value="14" />
 				<input name="attributeValue[]" type="text" value="4GHz" />
-				<input name="step" value="4" type="hidden" />
-				<input name="device_name" value="'.$_POST['device_name'].'" type="hidden"/>
-				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
+				<input type="hidden" name="step" value="4" />
+				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
+				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
@@ -291,7 +298,131 @@
 
 		}
 		else if ($step == 2)
-		{	
+		{
+			// include IComponent
+			require_once('../_php/interface/IDeliverer.php');
+			
+			// include component controller
+			require_once('../_php/core/DelivererController.php');
+			
+			// include database
+			require_once('../_php/database/Database.php');
+			
+			// include component entity
+			require_once('../_php/entity/DelivererEntity.php');
+			
+			class Deliverer implements IDeliverer 
+			{
+				/**
+				 *  function to display Deliverer
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com> 
+				 */
+				public function displayDeliverer($id, $companyName, $street, $zip, $city, $telephone, $mobile, $fax, $email, $country){}
+				
+				/**
+				* function to get Deliverer id
+				* 
+				* @author Thomas Bayer <thomasbayer95@gmail.com>
+				*/
+				public function getDelivererId(){}
+			
+				
+				/**
+				 *  function to get Deliverer campany name
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCompanyName(){}
+			
+				/** 
+				 *  function to get Deliverer street
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererStreet(){}
+			
+					
+				/**
+				 * function to get Deliverer zip 
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererZip(){}
+				
+				
+				/**
+				 * function to get Deliverer city
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCity(){}
+				
+				
+				/**
+				 * function to get Deliverer telephone 
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererTelephone(){}
+				
+				
+				/**
+				 * function to get Deliverer mobile
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererMobile(){}
+				
+				
+				/**
+				 * function to get Deliverer fax
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererFax(){}
+				
+				
+				/**
+				 * function to get Deliverer email
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererEmail(){}
+				
+				
+				/**
+				 * function to get Deliverer country
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function getDelivererCountry(){}
+				
+					
+				/**
+				 * function to set error
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */			
+				public function setError(){}
+				
+				/**
+				 * function to set Deliverer email
+				 * 
+				 * @author Thomas Bayer <thomasbayer95@gmail.com>
+				 */
+				public function setDelivererEmailError(){}
+			}
+
+			$dController = new DelivererController($view, $database);
+			
+			$deliverer = $dController->getDeliverer();
+			
+			$delivererList = "";
+			foreach($deliverer as $value) {
+				$delivererList .= '<option value="'.$value->delivererId.'">'.$value->delivererCompanyName.'</option>';
+			}
+			
 			echo '
 			<!-- Device creation wizard - Step 2 -->
 			<form action="index.php?mod=storeDevice" method="post">
@@ -300,10 +431,7 @@
 				<p>Lieferant</p>
 				<select name="deliverer">
 					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
+					'.$delivererList.'
 				</select>
 				<p>Hersteller</p><input name="supplier" type="text"/>
 				<p>Kaufdatum</p><input name="buy" type="date"/>
