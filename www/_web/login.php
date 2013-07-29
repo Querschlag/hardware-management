@@ -51,7 +51,6 @@
 						<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
 						
 						<?php
-<<<<<<< HEAD
 							// include IUser
 							require_once('../_php/interface/IUser.php');
 							
