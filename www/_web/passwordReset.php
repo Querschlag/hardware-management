@@ -30,7 +30,7 @@
 			<div id="module">
 				<h2>Passwort zur&uuml;cksetzen</h2>
 				<form action="login.php" method="post">
-					<p>E-Mail:</p><input name="Mail" type="text" />
+					<p>E-Mail:</p><input name="email" type="text" />
 					<p>&nbsp;</p>
 					<input name="btnReset" type="submit" value="Passwort zur&uuml;cksetzen"/>
 					<input onClick="location.href = 'login.php'" type="button" value="Zur&uuml;ck" />

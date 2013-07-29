@@ -137,7 +137,7 @@
 			$retVal = NULL;					
 			
 			// check and set room id
-			if(isset($_GET['roomId'])) $retVal = $_GET['roomId'];
+			if(isset($_GET['room'])) $retVal = $_GET['room'];
 			
 			// return value
 			return $retVal;
@@ -186,7 +186,7 @@
 	if (GET('room'))
 		echo '<li> >> <a href="index.php' .
 		navParams( array('mod' => 'room', 'room' => GET('room')), false ) .
-		'">R001</a></li>';
+		'">' . $view->getRoomNumber() . '</a></li>';
 	if (GET('device'))
 		echo '<li> >> <a href="index.php' . 
 		navParams( array('mod' => 'device', 'room' => GET('room'), 'device' => GET('device')), false ) .
