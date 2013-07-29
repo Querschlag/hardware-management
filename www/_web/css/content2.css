@@ -376,7 +376,7 @@ form p {
 .largeButton {
     background-color: #BBBBBB;
     display: inline-block;
-    margin: 0 30px;
+    margin: 20px 30px;
     padding: 40px 30px;
     text-align: center;
 }
@@ -385,7 +385,7 @@ form p {
     border: medium none;
     font-size: 20px;
     height: 80px;
-    width: 120px;
+    width: 160px;
 }
 .orders {
     list-style: none outside none;
