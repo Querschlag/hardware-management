@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Jul 2013 um 11:53
+-- Erstellungszeit: 29. Jul 2013 um 12:41
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
 
 INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`, `deletedFlag`) VALUES
 (8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', '', 1),
-(9, 5, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com', 0),
-(10, 6, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', '', 0),
+(9, 6, '*41E8D261CDE7C452D948735CF50F78197AD88590', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com', 0),
+(10, 6, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', 'leongeihm95@gmail.com', 0),
 (11, 5, '*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29', 'Thomas', 'Bayer', 'thomas.bayer', 'thomasbayer95@gmail.com', 0),
 (17, 7, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Philipp', 'Schmidkunz', 'philipp.schmidkunz', 'philippschmidkunz@googlemail.com', 0),
 (18, 6, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Adrian', 'Geuss', 'adrian.geuss', 'adriangeuss@gmail.com', 0),
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `komponente` (
   KEY `fk_komponenten_haendler` (`lieferant_l_id`),
   KEY `fk_komponenten_raeume1` (`lieferant_r_id`),
   KEY `fk_komponenten_komponentenarten1` (`komponentenarten_ka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 --
 -- Daten für Tabelle `komponente`
@@ -275,7 +275,25 @@ INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, 
 (52, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091395),
 (53, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091455),
 (54, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091556),
-(55, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091614);
+(55, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091614),
+(56, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091827),
+(57, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092154),
+(58, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092409),
+(59, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092563),
+(60, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092612),
+(61, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092660),
+(62, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092866),
+(63, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092984),
+(64, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093032),
+(65, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093041),
+(66, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093131),
+(67, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093184),
+(68, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093221),
+(69, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093277),
+(70, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093315),
+(71, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093348),
+(72, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093431),
+(73, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093458);
 
 -- --------------------------------------------------------
 
@@ -426,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `komponente_komponente` (
   PRIMARY KEY (`khk_id`),
   KEY `fk_komponenten_has_komponenten_komponenten2` (`komponenten_k_id_teil`),
   KEY `fk_komponenten_has_komponenten_komponenten1` (`komponenten_k_id_aggregat`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Daten für Tabelle `komponente_komponente`
@@ -507,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=900001 ;
 
 --
 -- Daten für Tabelle `raeume`
@@ -519,7 +537,8 @@ INSERT INTO `raeume` (`r_id`, `r_nr`, `r_etage`, `r_bezeichnung`, `r_notiz`) VAL
 (13, '01', 1, 'Religionsraum', NULL),
 (16, '01', 2, 'Lehrraum', NULL),
 (17, '02', 2, 'Lehrraum', NULL),
-(18, '03', 2, 'Lehrraum', NULL);
+(18, '03', 2, 'Lehrraum', NULL),
+(900000, NULL, 0, 'Lager', NULL);
 
 -- --------------------------------------------------------
 
