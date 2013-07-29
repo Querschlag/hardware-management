@@ -12,31 +12,314 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="right destructiveButton" id="btnDeleteUser" href="javascript:void(0);">Benutzer l&ouml;schen</a>
+		<?php			
+			if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] != $_SESSION['uid'])
+			{
+				// print user delete link
+				echo '<a class="right destructiveButton" id="btnDeleteUser" href="javascript:void(0);">Benutzer l&ouml;schen</a>';
+			}		
+		?>		
 		<div class="clearfix"></div>
 	</div>
-	<h2>Otto (Systembetreuer)</h2>
-	<!--
-		//TODO
+		<?php
+			// include user controller
+			require_once('../_php/core/UserController.php');
+			
+			// include database
+			require_once('../_php/database/Database.php');
+			
+			// include user interface
+			require_once('../_php/interface/IUser.php');
 		
-		When providing this form with functionality, please modify the 'mod' parameter to point to the current
-		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
-		user,room,device,component,supplier and so on.
+			/**
+			 * Class for User
+			 *
+			 * Class for Insert, Update and Delete User
+			 *
+			 * @category 
+			 * @package
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 * @author Thomas Bayer <thomasbayer95@gmail.com>
+			 * @copyright 2013 B3ProjectGroup2
+			 */
+			class User implements IUser
+			{
+				/**
+				 *  function to display user
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayUser($id, $groupId, $name, $firstName, $lastName, $email) 
+				{
+					// store user data
+					$_POST['usergroup'] = $groupId;
+					
+					// store name
+					$_POST['name'] = $name;
+					
+					// store first name
+					$_POST['firstName'] = $firstName;
+					
+					// store name
+					$_POST['lastName'] = $lastName;
+					
+					// store email
+					$_POST['email'] = $email;
+				}
+				
+				/**
+				 *  function to display user group
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayGroup($id, $name, $permisson)
+				{
+					print isset($_POST['usergroup']);
+					
+					// check group id
+					if($id == $_POST['usergroup'])
+					{
+						// print group
+						print '<option value="' . $id . '" selected="selected">' . $name . '</option>';
+					}
+					else 
+					{
+						// print group
+						print '<option value="' . $id . '">' . $name . '</option>';	
+					}					
+				}
+							
+				/**
+				 *  function to get user name
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getUserName() 
+				{
+					// return user name
+					return $_POST['name'];
+				}
+				
+				/**
+				 *  function to get password
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getPassword() 
+				{
+					// password to return
+					$password = NULL;
+					
+					// check post value
+					if(isset($_POST['password1']))
+					{
+						// set password 1
+		 				$password = $_POST['password1'];
+					}
+					
+					// return password
+					return $password;
+				}
+				
+				/**
+				 *  function to set password error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function setPasswordError() 
+				{
+					// print unknown error message
+					print '<b><p><span class="require">Das Passwort entspricht nicht den Anforderungen.</span></p></b>';
+				}
 		
-		After doing your update and validation stuff use this:
+				/**
+				 *  function to set user don't exist error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function setNotExistError() 
+				{
+					// print unknown error message
+					print '<b><p><span class="require">Unbekannter Fehler! 
+							Bitte versuchen Sie es später nocheinmal</span></p></b>';
+				}
+				
+			   /**
+			 	*  function to set required data error
+			 	* 
+			 	* @author Johannes Alt <altjohannes510@gmail.com>
+			 	*/
+				public function setRequiredDataError()
+				{
+					// print error message
+					print '<b><p><span class="require">Pflichtfelder k&ouml;nnen nicht leer sein.</span></p></b>';
+				}
+				
+				/**
+				 *  function to get user id
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getUserId() 
+				{
+					// uniquei user id
+					$uid;
+					
+					// check get id
+					if(isset($_GET['user']))
+					{
+						// return user id
+						$uid = $_GET['user']; 
+					}
+					else if(isset($_SESSION['uid']))
+					{
+						// return user id
+						$uid = $_SESSION['uid'];
+					}
+					
+					// return uniquei user id
+					return $uid;
+				}
+				
+				/**
+				 *  function to get email adress
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getEmail() 
+				{
+					// return email
+					return $_POST['email'];
+				}
+				
+				/**
+				 *  function to get subject of mail
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getSubject() {}
 		
-			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+				/**
+				 *  function to set email not send error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function setEmailNotSend() {}
 		
-		to redirect to the page where you came or started the wizard from.
-	-->
-	<form action="index.php<?php echo navParams(array('mod' => 'user'), false) ?>" method="post">
-		<select name="usergroup">
-			<optgroup label="W&auml;hle eine Gruppe"></optgroup>
-				<option value="0">Systembetreuer</option>
-				<option value="1">Azubi</option>
-				<option value="2">Lehrer</option>
-				<option value="3">Verwaltung</option>
-		</select>
+				/**
+				 *  function to get first name
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getFirstName() 
+				{
+					// return first name
+					return $_POST['firstName'];
+				}
+		
+				/**
+				 *  function to get last name
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getLastName() 
+				{
+					// return last name
+					return $_POST['lastName'];
+				}
+		
+				/**
+				 *  function to get group id
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getGroupId()
+				{
+					// return user group id
+					return $_POST['usergroup'];
+				}
+				
+				/**
+				 *  function to set error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+		 		public function setError() 
+		 		{
+		 			// print unknown error message
+					print '<b><p><span class="require">Unbekannter Fehler! 
+							Bitte versuchen Sie es später nocheinmal</span></p></b>';
+		 		}				
+		
+				/** 
+				 *  function to set user exist error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+		 		public function setExistError() {}
+		
+		 		/**
+				 *  function to get confirm password
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+		 		public function getPassword2() 
+		 		{
+					// password to return
+					$password = NULL;
+					
+					// check post value
+					if(isset($_POST['password2']))
+					{
+						// set password 1
+		 				$password = $_POST['password2'];
+					}
+					
+					// return password
+					return $password;
+		 		}
+				
+				/**
+				 *  function to get message
+				 * 
+				 *  @author Johannes Alt <altjohannes510@gmx.net>
+				 */
+				public function getMessage() {}
+			}
+	
+			// create view
+			$view = new User();
+			
+			// create database
+			$database = new Database();
+			
+			// create controller
+			$controller = new UserController($view, $database); 
+			
+			// get user
+			$controller->getUser();
+		?>	
+
+	<h2>
+		<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>&nbsp;<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?> 
+	</h2>
+	<form method="post">
+		<p>Benutzername</p><input name="name" disabled="disabled" type="text" value="<?php if(isset($_POST['name'])) print $_POST['name']; ?>"/>
+		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>
+		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>
+		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>
+		<?php if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] == $_SESSION['uid']): ?>
+			<p>Passwort</p><input name="password1" type="password" title="Das Passwort muss min. 6 Zeichen lang sein und muss Groß- und Kleinbuchstaben sowie Zahlen beinhalten."/>;
+			<p>Passwort bestätigen</p><input name="password2" type="password"/>;
+		<?php endif; ?>
+		
+		<?php if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] != $_SESSION['uid']): ?>
+			<p>Gruppe</p>
+			<select name="usergroup">
+				<optgroup label="W&auml;hle eine Gruppe"></optgroup>
+				<?php $controller->selectUserGroups(); ?>
+			</select>
+		<?php endif; ?>	
 		<br>
 		<br>
 		<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
@@ -44,12 +327,13 @@
 	</form>
 	
 		<div id="dialog" title="Benutzer l&ouml;schen?">
-	<p>Sind Sie sicher, dass Sie den Benutzer "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
-</div>
+			<p>Sind Sie sicher, dass Sie den Benutzer "<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>&nbsp;<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>" l&ouml;schen wollen?</p>
+		</div>
 
 	<script>
 		$(function() { $('#dialog').hide(); } );
 	
+		$(function() { $(document).tooltip(); })
 		$(function() {
 			$('#btnDeleteUser').on('click', function()
 				{
@@ -105,8 +389,13 @@
 			// check yes button
 			if(isset($_POST['btnYes']))
 			{
-				// delete room
+				// delete user
 				$controller->deleteUser();	
+			}
+			else if(isset($_POST['btnSubmit']))
+			{
+				// udpate user
+				$controller->updateUser();
 			}
 	?>
 	

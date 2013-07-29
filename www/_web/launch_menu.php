@@ -33,7 +33,6 @@
 		
 		return $tiles;
 	}
-	
 ?>
 
 <!-- Refactor this to be created dynamically -->

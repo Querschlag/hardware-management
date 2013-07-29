@@ -7,6 +7,10 @@
 	if(file_exists('../entity/UserEntity.php')) require_once('../entity/UserEntity.php');
 	if(file_exists('../_php/entity/UserEntity.php')) require_once('../_php/entity/UserEntity.php');
 
+	// include user group entity
+	if(file_exists('../entity/UserGroupEntity.php')) require_once('../entity/UserGroupEntity.php');
+	if(file_exists('../_php/entity/UserGroupEntity.php')) require_once('../_php/entity/UserGroupEntity.php');
+
 	/**
 	* Controller for Users
 	*
@@ -31,6 +35,22 @@
 		private $_database;
 		
 		/**
+		 *  storage for the error count
+		 */
+		private $_errorCount = 0;		
+		
+		/**
+		 *  function to get error count
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function getErrorCount()
+		{
+			// return error count
+			return $this->_errorCount;
+		}
+		
+		/**
 		 *  paramized constructor
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
@@ -44,13 +64,56 @@
 			$this->_database = $database;
 		}
 		
+		/**
+		 *  function to selects user group
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function selectUserGroups()
+		{
+			// get user groups
+			$groups = $this->_database->getUsergroups();
+			
+			// iteration over all groups
+			foreach($groups as $group)
+			{
+				// display user group
+				$this->_view->displayGroup($group->userGroupId, 
+										   $group->userGroupName, 
+										   $group->userGroupPermisson);
+			}
+		}
+		
+		/**
+		 *  function to select user group
+		 */
+		public function selectUserGroup()
+		{
+			// get group id
+			$groupId = $this->_view->getGroupId();
+			
+			// get user group
+			$group = $this->_database->getUsergroupById($groupId);
+			
+			// check group
+			if(isset($group))
+			{
+				// display user group
+				$this->_view->displayGroup($group->userGroupId, 
+										   $group->userGroupName, 
+										   $group->userGroupPermisson);
+			}
+		}
+		
 		/** 
 		 *  function to generate password
 		 */
 		private function generatePassword()
 		{
 			// the allowed characters
-			$characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!`\"§$%&/()=?;:";
+			$characters = "AaBb0CcDd1EeFf2GgHh3IiJj4KkLl5MmNn6OoPp7QqRr8SsTt9UuVv?WwXx!YyZz";
+			
+			srand();			
 			
 			// while password contains password police
 			do
@@ -62,22 +125,22 @@
 				for($length = 8; $length >= 0; $length--)
 				{
 					// get next random character
-					$character = rand(0, strlen($characters));
+					$character = substr($characters, rand(0, strlen($characters)), 1);
 					
 					// add character to password
-					$password = $password + $character;
+					$password = $password . $character;
 				}			
 				
 				// check password police
-				$passwordPolice =  	empty($password1) == FALSE && 
+				$passwordPolice =  	(empty($password1) == FALSE && 
 									empty($password2) == FALSE && 
 									$password1 == $password2 &&
 									strlen($password1) >= 6 &&
-									preg_match("/[a-z]/", $password1) && 
-									preg_match("/[A-Z]/", $password1) &&
-									preg_match("/[0-9]/", $password1);
-
-			} while($passwordPolice == FALSE);
+									preg_match("/[a-z]/", $password1) == 1 && 
+									preg_match("/[A-Z]/", $password1) == 1 &&
+									preg_match("/[0-9]/", $password1) == 1);
+									
+			} while($passwordPolice == TRUE);
 		
 		    // return the password
 			return $password;
@@ -110,6 +173,9 @@
 				{
 					// set password error
 					$this->_view->setPasswordError();
+					
+					// increase error count
+					$this->_errorCount++;
 				}
 				else 
 				{
@@ -120,12 +186,27 @@
 												$user->userFirstName,
 												$user->userLastName,
 												$user->userEmail);
+												
+					// get user group
+					$group = $this->_database->getUsergroupById($user->userGroupId);
+					
+					// check group
+					if(isset($group))
+					{
+						// display user group
+						$this->_view->displayGroup($group->userGroupId, 
+												   $group->userGroupName, 
+												   $group->userGroupPermisson);
+					} 
 				}
 			}
 			else 
 			{
 				// set user not exist error
 				$this->_view->setNotExistError();	
+				
+				// increase error count
+				$this->_errorCount++;
 			}
 		}				
 		
@@ -147,6 +228,18 @@
 											$user->userFirstName,
 											$user->userLastName,
 											$user->userEmail);
+											
+				// get user group
+				$group = $this->_database->getUsergroupById($user->userGroupId);
+				
+				// check group
+				if(isset($group))
+				{
+					// display user group
+					$this->_view->displayGroup($group->userGroupId, 
+											   $group->userGroupName, 
+											   $group->userGroupPermisson);
+				}  
 			}
 		}
 		
@@ -190,22 +283,34 @@
 			// check for null
 			if(isset($user))
 			{
+				// generate new password
+				$password = $this->generatePassword();
+				
 				// get lost password message
-				$message = sprintf($this->_view->getMessage(), $username, $this->generatePassword());
+				$message = sprintf($this->_view->getMessage(), $user->userName, $password);
 				
 				// get email subject
 				$subject = $this->_view->getSubject();
 				
 				// send mail
-				if(mail($username, $subject, $message) == FALSE)
+				if(mail($email, $subject, $message) == TRUE)
 				{
-					// set error information
-					$this->_view->setEmailNotSend();
+					// update user
+					$result = $this->_database->updateUser( $user->userId, 
+															$user->userName, 
+															$user->userGroupId, 
+															$user->userFirstName, 
+															$user->userLastName, 
+															$password, 
+															$user->userEmail);
 				}	
 				else 
 				{
-					// set success information
-					$this->_view->setSuccess();	
+					// set error information
+					$this->_view->setEmailNotSend();
+					
+					// increase error count
+					$this->_errorCount++;	
 				}
 			}
 		}
@@ -231,56 +336,84 @@
 			
 			// get user group id
 			$groupId = $this->_view->getGroupId();
+		
+			// check user name
+			if(empty($username) == FALSE)
+			{
+				// get user with username from db
+				$userUserName = $this->_database->getUserByUsername($username);
+			}
 			
-			// get user with username from db
-			$userUserName = $this->_database->getUserByUsername($username);
-			
-			// get user with email from db
-			$userEmail = $this->_database->getUserByEmail($email);
+			// check user email
+			if(empty($email) == FALSE)
+			{
+				// get user with email from db
+				$userEmail = $this->_database->getUserByEmail($email);
+			}
 			
 			// check if user already exist
-			if(	isset($userUserName) == FALSE && isset($userEmail) == FALSE &&
-				empty($firstName) == FALSE && empty($lastName) && 
-			   	empty($firstName) == FALSE && empty($lastName) == FALSE &&
-			   	isset($groupId))
+			if(	isset($userUserName) == FALSE && isset($userEmail) == FALSE)
 			{
-				// create password
-				$password = $this->generatePassword();
-				
-				// get lost password message
-				$message = sprintf($this->_view->getMessage(), $username, $password);
-					
-				// get email subject
-				$subject = $this->_view->getSubject();
-					
-				// send mail
-				if(mail($username, $subject, $message) == TRUE)
+				// check required data
+				if(	empty($username) == FALSE && empty($email) == FALSE && 
+			   		empty($firstName) == FALSE && empty($lastName) == FALSE &&
+			   		isset($groupId))
 				{
-					// create new user
-					$result = $this->_database->insertUser(	$username, 
-															$groupId, 
-															$firstName, 
-															$lastName, 
-															$password,
-															$email );
+					// create password
+					$password = $this->generatePassword();
 					
-					// check result
-					if($result == FALSE)
+					// get lost password message
+					$message = sprintf($this->_view->getMessage(), $username, $password);
+	
+					// get email subject
+					$subject = $this->_view->getSubject();
+						
+					// send mail
+					if(mail($email, $subject, $message) == TRUE)
 					{
+						// create new user
+						$result = $this->_database->insertUser(	$username, 
+																$groupId, 
+																$firstName, 
+																$lastName, 
+																$password,
+																$email );
+						
+						// check result
+						if($result == FALSE)
+						{
+							// set error information
+							$this->_view->setError();
+							
+							// increase error count
+							$this->_errorCount++;
+						}
+					}	
+					else 
+					{				
 						// set error information
-						$this->_view->setError();
+						$this->_view->setEmailNotSend();
+						
+						// increase error count
+						$this->_errorCount++;							
 					}
-				}	
+				}
 				else 
-				{				
-					// set error information
-					$this->_view->setEmailNotSend();							
+				{
+					// set required data error
+					$this->_view->setRequiredDataError();
+					
+					// increase error count
+					$this->_errorCount++;
 				}
 			}
 			else
 			{
 				// set user exist error
 				$this->_view->setExistError();
+				
+				// increase error count
+				$this->_errorCount++;
 			}
 		}
 
@@ -323,34 +456,86 @@
 				
 				// check entered data
 			   if(	empty($username) == FALSE && empty($email) == FALSE && 
-			   		empty($firstName) == FALSE && empty($lastName) == FALSE &&
-					isset($groupId))
+			   		empty($firstName) == FALSE && empty($lastName) == FALSE )
 				{
-					// check password
-					if(	empty($password1) == FALSE && 
-						empty($password2) == FALSE && 
-						$password1 == $password2 &&
-						strlen($password1) >= 6 &&
-						preg_match("/[a-z]/", $password1) && 
-						preg_match("/[A-Z]/", $password1) &&
-						preg_match("/[0-9]/", $password1))
+					// check for empty password
+					if(isset($password1) && isset($password2))
 					{
-						// update password
-						$result = $this->_database->updateUserPassword($userId, $password1);
-						
+						// check password
+						if(	empty($password1) == FALSE && 
+							empty($password2) == FALSE && 
+							$password1 == $password2 &&
+							strlen($password1) >= 6 &&
+							preg_match("/[a-z]/", $password1) && 
+							preg_match("/[A-Z]/", $password1) &&
+							preg_match("/[0-9]/", $password1))
+						{
+							// update user
+							$result = $this->_database->updateUser( $user->userId, 
+																	$username, 
+																	$user->userGroupId, 
+																	$firstName, 
+																	$lastName, 
+																	$password1, 
+																	$email);
+							
+							// check result
+							if($result == FALSE)
+							{
+								// set error information
+								$this->_view->setError();
+								
+						   		// increase error count
+								$this->_errorCount++;
+							}
+						}
+						else
+						{
+							// set password error
+							$this->_view->setPasswordError();
+							
+							// increase error count
+							$this->_errorCount++;
+						}
+					}
+					else 
+					{
+						// update user
+						$result = $this->_database->updateUser( $user->userId, 
+											$username, 
+											$groupId, 
+											$firstName, 
+											$lastName, 
+											$user->userPw, 
+											$email);
+											
 						// check result
 						if($result == FALSE)
 						{
 							// set error information
 							$this->_view->setError();
-						}
+							
+					   		// increase error count
+							$this->_errorCount++;
+						}	
 					}
 				}
+			   else
+			   	{
+			   		// set required data error
+			   		$this->_view->setRequiredDataError();
+					
+			   		// increase error count
+					$this->_errorCount++;
+			   	}
 			}
 			else
 			{
 				// set user not exist error
-				$this->_view->setNotExistError();							
+				$this->_view->setNotExistError();
+				
+				// increase error count
+				$this->_errorCount++;							
 			}
 		}
 		
