@@ -21,6 +21,8 @@
 		?>		
 		<div class="clearfix"></div>
 	</div>
+		<form method="post">
+			
 		<?php
 			// include user controller
 			require_once('../_php/core/UserController.php');
@@ -74,10 +76,8 @@
 				 */
 				public function displayGroup($id, $name, $permisson)
 				{
-					print isset($_POST['usergroup']);
-					
 					// check group id
-					if($id == $_POST['usergroup'])
+					if(isset($_POST['usergroup'])&& $id == $_POST['usergroup'])
 					{
 						// print group
 						print '<option value="' . $id . '" selected="selected">' . $name . '</option>';
@@ -235,8 +235,18 @@
 				 */
 				public function getGroupId()
 				{
+					// user group to return
+					$usergroup = NULL;
+					
+					// check post
+					if(isset($_POST['usergroup']))
+					{
+						// set usergroup
+						$usergroup = $_POST['usergroup'];
+					}
+					
 					// return user group id
-					return $_POST['usergroup'];
+					return $usergroup;
 				}
 				
 				/**
@@ -296,21 +306,28 @@
 			// create controller
 			$controller = new UserController($view, $database); 
 			
-			// get user
-			$controller->getUser();
+			// check posts
+			if( isset($_POST['name'])== FALSE	&&
+				isset($_POST['firstName']) == FALSE 	&&
+				isset($_POST['lastName']) == FALSE	&&
+				isset($_POST['email'])== FALSE	&&
+			 	isset($_POST['usergroup']) == FALSE)
+				{							
+					// get user
+					$controller->getUser();
+				}
 		?>	
 
 	<h2>
 		<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>&nbsp;<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?> 
 	</h2>
-	<form method="post">
-		<p>Benutzername</p><input name="name" disabled="disabled" type="text" value="<?php if(isset($_POST['name'])) print $_POST['name']; ?>"/>
+		<p>Benutzername</p><input name="name" type="text" value="<?php if(isset($_POST['name'])) print $_POST['name']; ?>"/>
 		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>
 		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>
 		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>
 		<?php if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] == $_SESSION['uid']): ?>
-			<p>Passwort</p><input name="password1" type="password" title="Das Passwort muss min. 6 Zeichen lang sein und muss Groß- und Kleinbuchstaben sowie Zahlen beinhalten."/>;
-			<p>Passwort bestätigen</p><input name="password2" type="password"/>;
+			<p>Passwort</p><input name="password1" type="password" title="Das Passwort muss min. 6 Zeichen lang sein und muss Groß- und Kleinbuchstaben sowie Zahlen beinhalten."/>
+			<p>Passwort bestätigen</p><input name="password2" type="password"/>
 		<?php endif; ?>
 		
 		<?php if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] != $_SESSION['uid']): ?>
@@ -319,14 +336,9 @@
 				<optgroup label="W&auml;hle eine Gruppe"></optgroup>
 				<?php $controller->selectUserGroups(); ?>
 			</select>
-		<?php endif; ?>	
-		<br>
-		<br>
-		<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
-		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" type="button" value="Abbrechen" />
-	</form>
-	
-		<div id="dialog" title="Benutzer l&ouml;schen?">
+		<?php endif; ?>
+		
+				<div id="dialog" title="Benutzer l&ouml;schen?">
 			<p>Sind Sie sicher, dass Sie den Benutzer "<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>&nbsp;<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>" l&ouml;schen wollen?</p>
 		</div>
 
@@ -355,17 +367,13 @@
 														async: false,
 														type: "POST",
 														url: window.location,
-														data: { btnYes: true },	
+														data: { btnYes: true },
+														success: function(result)
+																{
+																	window.location = "index.php?menu=" + $.get("menu") + "&mod=user";
+																}	
 													}										
-												);	
-												
-											ajax.done
-											(
-												function()
-												{
-													window.location = "index.php?mod=user";
-												}
-											);				
+												);			
 										}
 								},
 				            	{
@@ -386,17 +394,32 @@
 	</script>
 	
 	<?php	
-			// check yes button
-			if(isset($_POST['btnYes']))
-			{
-				// delete user
-				$controller->deleteUser();	
-			}
-			else if(isset($_POST['btnSubmit']))
+			if(isset($_POST['btnSubmit']))
 			{
 				// udpate user
 				$controller->updateUser();
+				
+				// check error count
+				if($controller->getErrorCount() == 0)
+				{
+					// print javascript redirect
+					print '<script>$(function() { window.location = "index.php' . navParams(array('mod' => 'user')) .'"; })</script>';
+				}
 			}
 	?>
+	<br/>
+	<br/>
+	<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
+	<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" type="button" value="Abbrechen" />
+		
+	</form>
 	
+	<?php	
+		// check yes button
+		if(isset($_POST['btnYes']))
+		{
+			// delete user
+			$controller->deleteUser();	
+		}
+	?>
 </div>

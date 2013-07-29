@@ -284,10 +284,12 @@
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
-						k_hersteller,komponentenarten_ka_id, k_device) 
+						k_hersteller,komponentenarten_ka_id, k_device,
+						k_erstellungszeit) 
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
-								'".$supplier."', ".$type.", ".$isDevice.")";
+								'".$supplier."', ".$type.", ".$isDevice.",
+								".Time().")";
 			mysql_query($insert) or die(mysql_error());
 			
 			$select = "SELECT k_id FROM komponente
@@ -534,8 +536,8 @@
 		  */
 		 public function insertUsergroup($name, $permission)
 		 {
-		 $insert ="INSERT INTO benutzergruppe (bg_name,bg_rechte)
-								VALUES(	'".$name."',".$permission.");";
+		 $insert ="INSERT INTO benutzergruppe (bg_name,bg_rechte, deletedFlag)
+								VALUES(	'".$name."',".$permission.", 0);";
 										
 			mysql_query($insert);
 			
@@ -619,7 +621,7 @@
 		 {
 			$entityArray = array();
 			
-			$select = "SELECT * FROM benutzer order by b_id ASC;";
+			$select = "SELECT * FROM benutzer WHERE deletedFlag = 0 ORDER BY b_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -631,6 +633,7 @@
 				$entity->userFirstName = $row['b_vorname'];
 				$entity->userLastName = $row['b_nachname'];				
 				$entity->userEmail = $row['b_email'];
+				$entity->deletedFlag = 0;
 				$entityArray[] = $entity;
 			}
 			
@@ -646,7 +649,7 @@
 		 */
 		  public function getUserById($id)
 		 {
-			$select = "SELECT * FROM benutzer WHERE b_id = ".$id.";";
+			$select = "SELECT * FROM benutzer WHERE b_id = ".$id." AND deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -676,7 +679,7 @@
 		  */
 		 public function getUserByEmail($email)
 		 {
-			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
+			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."' AND deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -762,9 +765,11 @@
 		  */
 		 public function deleteUser($id)
 		 {
-			$delete ="DELETE FROM 
+			$update ="UPDATE 
 							benutzer 
-						WHERE 
+						SET
+							deletedFlag = 1
+						WHERE						
 							b_id = ".$id.";";
 			return mysql_query($delete);
 		 }
@@ -1050,6 +1055,17 @@
 				$entity->componentAttributeName = $row['kat_name'];
 				$entity->componentAttributeIsFromComponent = false;
 				$entity->componentAttributeUncertaintId = $row['ka_id'];
+				
+				$select = "SELECT zw_wert FROM zulaessige_werte zw 
+							INNER JOIN kattribut_zulaessiger_wert kazw ON kazw.zulaessige_werte_zw_id = zw_id
+							WHERE kazw.komponentenattribute_kat_id = ".$row['kat_id'].";";
+				$DataSubSelect = mysql_query($select);
+				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
+				{
+					$entitySubArray[] = $rowSubSelect['zw_wert'];
+				}
+				echo var_export($entitySubArray);
+				$entity->componentAttributeValidValue = $entitySubArray;
 				
 				$entityArray[] = $entity;
 			}
@@ -1407,7 +1423,7 @@
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE b_name = '".$userName."'";
+						WHERE b_name = '".$userName."' AND deletedFlag = 0";
 			mysql_select_db("itv_v1");		   
 			$Data = mysql_query($select) 
 			or die ("MySQL-Error: " . mysql_error());  			
@@ -1792,7 +1808,10 @@
 		 */
 		 public function deleteCorpses()
 		 {
-			$select = "SELECT * FROM komponente WHERE k_name is NULL OR k_name = ''";
+			$interval = 60*60*24;
+			$time = Time();
+			$select = "SELECT * FROM komponente WHERE (k_name is NULL OR k_name = '')
+						AND k_erstellungszeit > ".$time-$interval;
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -1821,18 +1840,40 @@
 							
 				mysql_query($delete);			
 			}
-		 }
+		}
 			
 		  /**
 		  *  function to get Components in Storage
 		  * 
 		  * @return ComponentEntity[]
 		  * 
-		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
 		 public function getComponentsInStorageByName($name, $count)
 		 {
+			$entityArray = array();
+		 
+			$select = "SELECT * FROM komponente WHERE k_name = '".$name."' AND
+													  lieferant_r_id is NULL LIMIT ".$count;
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdauer'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				
+				$entityArray[] = $entity;
+			}
 			
+			return $entityArray;
 		 }
 	}
 ?>

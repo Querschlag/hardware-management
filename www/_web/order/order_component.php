@@ -9,6 +9,62 @@
 	</ul>
 </div>
 <div id="module">
+<?php
+
+
+$step = POST('step');
+
+ if ($step == 2) 
+		{
+			echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+			
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+
+			</li>
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+			
+		}
+		else 
+		{
+			echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="activeStep">
+				<img class="stepImage" src="img/stepprogress/Number_green_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+		
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+	
+			</li>
+
+			<div class="clearfix"></div>
+			</ol>
+		</div>
+		';
+
+		}
+			?>
+		
+	
+	
+	
 	<h3>Komponente bestellen</h3>
 	<?php
 		require_once('php/additions.php');

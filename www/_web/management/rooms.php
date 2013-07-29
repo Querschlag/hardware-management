@@ -186,6 +186,7 @@
 				}
 				
 				// print list element
+				print '<li ';
 				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $roomHasProblems) print 'class="hardwareProblem"';
 				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 
@@ -248,13 +249,8 @@
 	 		*/
 			public function displayProblemCount($count) 
 			{
-				// check count
-				if($count > 0)
-				{
-					// set problem count message
-					if (menuItem() == 'maintenance' || menuItem() == 'scrap')
-						print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
-				}				
+				if (menuItem() == 'maintenance' || menuItem() == 'scrap')
+					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
 			}
 		
 			/**
