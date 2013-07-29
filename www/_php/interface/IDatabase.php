@@ -635,11 +635,26 @@
 		 
 		  /**
 		  *  function to get Components in Storage
-		  * 
+		  *
+          * @param string $name component name		  
+		  * @param int $count count	
+		  *
 		  * @return ComponentEntity[]
 		  * 
 		  * @author Daniel Schulz <schmoschu@gmail.com>
 		  */
 		 public function getComponentsInStorageByName($name, $count);
+		 
+		 /**
+		  *  function to get Devices by RoomId
+		  * 
+		  * @param int $id roomId
+		  *
+		  * @return ComponentEntity[]
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getComponentDevicesByRoomId($roomId);
+		 
 		 
 }
