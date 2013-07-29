@@ -59,7 +59,7 @@
 		{   
 			$entityArray = array();
 			
-			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT * FROM raeume WHERE r_id < 900000 ORDER BY r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -185,6 +185,13 @@
 		 */
 		public function deleteRoom($id)
 		{
+			$delete ="UPDATE  
+							komponente
+						SET lieferant_r_id = 900000
+						WHERE 
+							lieferant_r_id = ".$id.";";
+			return mysql_query($delete);
+		
 			$delete ="DELETE FROM 
 							raeume 
 						WHERE 
@@ -1859,7 +1866,7 @@
 			$entityArray = array();
 		 
 			$select = "SELECT * FROM komponente WHERE k_name = '".$name."' AND
-													  lieferant_r_id is NULL LIMIT ".$count;
+													  lieferant_r_id  = 900000 LIMIT ".$count;
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
