@@ -207,7 +207,12 @@
 		}
 		else if ($step == 5) 
 		{
-	
+			// insert attributes for device components
+			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			{
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+			}
+
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Wie viele Ger&auml;te anlegen?</h4>
@@ -249,11 +254,11 @@
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<form action="index.php?mod=storeComponent" method="post">
+			<form action="index.php?mod=storeComponent&MainDevice='.$view->getComponentId().'" method="post">
 			
-				<input name="step" value="4" type="hidden" />
-				<input type="hidden" name="id" value="'.$view->getComponentId().'">				
-				<input name="device_name" value="'.POST('device_name').'" type="hidden"/>
+				<input name="step" value="1" type="hidden" />
+				<input type="hidden" name="id" value="'.$view->getComponentId().'" />				
+				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
 			<br>
@@ -270,6 +275,7 @@
 		{
 			$controller->insertComponent();
 			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
@@ -280,9 +286,9 @@
 				<p>Attribut 2</p>
 				<input type="hidden" name="componentAttribute[]" value="14" />
 				<input name="attributeValue[]" type="text" value="4GHz" />
-				<input name="step" value="4" type="hidden" />
-				<input name="device_name" value="'.POST('device_name').'" type="hidden"/>
-				<input type="hidden" name="k_id" value="'.$view->getComponentId().'">	
+				<input type="hidden" name="step" value="4" />
+				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
+				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
@@ -408,13 +414,15 @@
 				public function setDelivererEmailError(){}
 			}
 
-			$dcontroller = new DelivererController($view, $database);
+			$dController = new DelivererController($view, $database);
 			
-			$deliverer = $controller->getDeliverer();
+			$deliverer = $dController->getDeliverer();
 			
-			var_dump($deliverer);
+			$delivererList = "";
+			foreach($deliverer as $value) {
+				$delivererList .= '<option value="'.$value->delivererId.'">'.$value->delivererCompanyName.'</option>';
+			}
 			
-			die();
 			echo '
 			<!-- Device creation wizard - Step 2 -->
 			<form action="index.php?mod=storeDevice" method="post">
@@ -423,10 +431,7 @@
 				<p>Lieferant</p>
 				<select name="deliverer">
 					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
-						<option value="1">Lieferant 1</option>
+					'.$delivererList.'
 				</select>
 				<p>Hersteller</p><input name="supplier" type="text"/>
 				<p>Kaufdatum</p><input name="buy" type="date"/>

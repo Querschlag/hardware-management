@@ -129,6 +129,13 @@
 				// $this->_view->setError();
 			// }
 			$id = $this->_database->insertComponent($deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
+			
+			if($isDevice == 1) {
+				$subId = $this->_database->insertSubComponent($id, 0);
+			} else {
+				$subId = $this->_database->insertSubComponent(POST('MainDevice'), $id);
+			}
+			
 			$this->_view->setComponentId($id);
 		}	
 		

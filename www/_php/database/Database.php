@@ -34,7 +34,7 @@
 			 
 			$fp = @fsockopen("10.9.4.55", $port, $errno, $errstr, $timeout);
 			if (!$fp) {
-			    //echo "$errstr ($errno)<br />\n";
+			    // echo "$errstr ($errno)<br />\n";
 				if (!mysql_connect("localhost", "itv_v1", "") )
 				{
 					mysql_connect("itv_v1", "root", "");
