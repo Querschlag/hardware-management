@@ -35,14 +35,15 @@
 			$fp = @fsockopen("http://10.9.4.55", $port, $errno, $errstr, $timeout);
 			if (!$fp) {
 			    //echo "$errstr ($errno)<br />\n";
-				if (!@mysql_connect("localhost", "itv_v1", ""))
+				if (!mysql_connect("localhost", "itv_v1", "") )
+				{
 					mysql_connect("itv_v1", "root", "");
+				}
 			} else {
-				echo 'Server is reachable';
 				mysql_connect("10.9.4.55", "itv_v1", "");
 			}
 			
-			mysql_select_db("itv_v1");
+			mysql_select_db("itv_v1") or die (mysql_error());
 		}
 		
 	
@@ -117,10 +118,10 @@
 		{
 			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz) 
 						VALUES(".$number. ", ".$floor.", '".$name."', '".$note."')";
-			mysql_query($insert);
+			mysql_query($insert)  or die(mysql_error());
 			
 			$select = "SELECT r_id FROM raeume ORDER BY r_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["r_id"];
@@ -505,7 +506,7 @@
 			mysql_query($insert);
 			
 			$select = "SELECT bg_id FROM benutzergruppe ORDER BY bg_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["bg_id"];			
@@ -683,7 +684,7 @@
 			return mysql_query($insert);
 			
 			$select = "SELECT b_id FROM benutzer ORDER BY b_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["b_id"];		
@@ -842,7 +843,7 @@
 			mysql_query($insert);
 			
 			$select = "SELECT kom_id FROM komp_vorgang ORDER BY kom_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["kom_id"];	
@@ -1373,9 +1374,9 @@
 		 { 
 			$select = "SELECT * FROM benutzer
 						WHERE b_name = '".$userName."'";
-					   
-$Data = mysql_query($select) 
-   or die ("MySQL-Error: " . mysql_error());  			
+			mysql_select_db("itv_v1");		   
+			$Data = mysql_query($select) 
+			or die ("MySQL-Error: " . mysql_error());  			
 			$row = mysql_fetch_assoc($Data);
 			if($row['b_id'] == null)
 			{
@@ -1728,26 +1729,16 @@ $Data = mysql_query($select)
 			//Verschieben von Komponenten in Lager
 			//Man bekommt nen Device und all Komponenten werden ins Lager verschoben	
 			
-			/*$select = "SELECT * FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$componentId.";";
+			$select = "SELECT * FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$componentId.";";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$count = "SELECT count(*) AS counter FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$row["komponenten_k_id_teil"].";";
-				$DataSub = mysql_query($count);
-				$rowSub = mysql_fetch_assoc($DataSub);
-				
-				if($rowSub["counter"] > 0)
-				{
-					
-				}
-
-			
 				$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$row["komponenten_k_id_teil"].";";
 				mysql_query($update);
 			}
 			
 			$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$componentId.";";
-			mysql_query($update);*/
+			mysql_query($update);
 		 }
 	}
 ?>
