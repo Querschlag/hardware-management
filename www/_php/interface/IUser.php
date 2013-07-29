@@ -20,6 +20,13 @@
 		public function displayUser($id, $groupId, $name, $firstName, $lastName, $email);
 		
 		/**
+		 *  function to display user group
+		 * 
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		public function displayGroup($id, $name, $permisson);
+		
+		/**
 		 *  function to get user name
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
@@ -76,13 +83,6 @@
 		public function setEmailNotSend();
 
 		/**
-		 *  function to set success information
-		 * 
-		 * @author Johannes Alt <altjohannes510@gmail.com>
-		 */
-		public function setSuccess();	
-
-		/**
 		 *  function to get first name
 		 * 
 		 * @author Johannes Alt <altjohannes510@gmail.com>
@@ -123,5 +123,12 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
  		public function getPassword2();
+		
+		/**
+		 *  function to get message
+		 * 
+		 *  @author Johannes Alt <altjohannes510@gmx.net>
+		 */
+		public function getMessage();
 	}
 ?>

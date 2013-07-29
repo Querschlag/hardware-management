@@ -53,8 +53,17 @@
 				 */
 				public function displayGroup($id, $name, $permisson)
 				{
-					// print group
-					print '<option value="' . $id . '">' . $name . '</option>';
+					// check usergroup post back
+					if(isset($_POST['usergroup']) && $_POST['usergroup'] == $id)
+					{
+						// print group
+						print '<option value="' . $id . '" selected="selected">' . $name . '</option>';						
+					}
+					else 
+					{
+						// print group
+						print '<option value="' . $id . '">' . $name . '</option>';	
+					}					
 				}
 							
 				/**
@@ -123,7 +132,7 @@
 				public function getSubject() 
 				{
 					// return subject text
-					return 'IT Hardware Verwaltung';
+					return 'IT Hardware Verwaltung - Neues Konto';
 				}
 		
 				/**
@@ -131,14 +140,12 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
-				public function setEmailNotSend() {}
-		
-				/**
-				 *  function to set success information
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function setSuccess() {}
+				public function setEmailNotSend() 
+				{
+					// print unknown error message
+					print '<b><p><span class="require">Die Email konnte nicht gesendet werden. 
+							Bitte versuchen Sie es später nocheinmal.</span></p></b>';	
+				}
 		
 				/**
 				 *  function to get first name
@@ -178,14 +185,24 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
-		 		public function setError() {}				
+		 		public function setError() 
+		 		{
+		 			// print unknown error message
+					print '<b><p><span class="require">Unbekannter Fehler! 
+							Bitte versuchen Sie es später nocheinmal</span></p></b>';	
+		 		}				
 		
 				/** 
 				 *  function to set user exist error
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
-		 		public function setExistError() {}
+		 		public function setExistError() 
+		 		{
+		 			// set error text
+		 			print '<b><p><span class="require">Der Benutzername oder die 
+		 					Email Adress wird bereits verwendet.</span></p></b>';
+		 		}
 		
 		 		/**
 				 *  function to get confirm password
@@ -195,6 +212,17 @@
 		 		public function getPassword2() { }
 				
 				/**
+			 	*  function to set required data error
+			 	* 
+			 	* @author Johannes Alt <altjohannes510@gmail.com>
+			 	*/
+				public function setRequiredDataError()
+				{
+					// print error message
+					print '<b><p><span class="require">Pflichtfelder k&ouml;nnen nicht leer sein.</span></p></b>';
+				}
+				
+				/**
 				 *  function to get message
 				 * 
 				 *  @author Johannes Alt <altjohannes510@gmx.net>
@@ -202,10 +230,10 @@
 				public function getMessage()
 				{
 					// return message
-					return nl2br('IT Verwaltung B3-Fürth. \r\n\r\n'
-						  		.'Ein Konto wurde für Sie erstellt. Ihre Login daten sind: \r\n'
-						  		.'Benutzername: %s\r\n'
-						  		.'Passwort: %s');
+					return 'IT Verwaltung B3-Fürth. \r\n\r\n'
+						  .'Ein Konto wurde für Sie erstellt. Ihre Login daten sind: \r\n'
+						  .'Benutzername: %s\r\n'
+						  .'Passwort: %s';
 				}
 			}
 
@@ -221,40 +249,34 @@
 
 	<h2>Benutzer anlegen</h2>
 	<form method="post">
-		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>
-		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>
-		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>
-	<!--
-		//TODO
+		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>&nbsp;<span class="require">*</span>
+		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>&nbsp;<span class="require">*</span>
+		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>&nbsp;<span class="require">*</span>
 		
-		When providing this form with functionality, please modify the 'mod' parameter to point to the current
-		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
-		user,room,device,component,supplier and so on.
-		
-		After doing your update and validation stuff use this:
-		
-			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
-		
-		to redirect to the page where you came or started the wizard from.
-		
-		<form action="index.php<?php echo navParams(array('mod' => 'user'), false) ?>" method="post">
-	-->
 		<p>Gruppe</p>
 		<select name="usergroup">
 			<optgroup label="W&auml;hle eine Gruppe"></optgroup>
 				<?php $controller->selectUserGroups(); ?>
 		</select>
-		<br>
-		<br>
-		<input name="btnSubmit" type="submit" value="Anlegen" />
-		<input  type="button" value="Abbrechen" onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" />		
 		<?php
 			// check button
 			if(isset($_POST['btnSubmit']))
 			{
 				// invite user into application
 				$controller->inviteUser();
+				
+				// check error count
+				if($controller->getErrorCount() == 0)
+				{
+					// redirect to previous page
+					header("Location: index.php" . navParams(array('mod' => 'user')));
+				}
 			}
 		?>
+		
+		<p class="require">* Pflichtfeld</p>
+		
+		<input name="btnSubmit" type="submit" value="Anlegen" />
+		<input  type="button" value="Abbrechen" onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" />
 	</form>
 </div>
