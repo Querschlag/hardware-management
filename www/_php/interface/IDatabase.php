@@ -623,5 +623,15 @@
 		 public function takeOutOfService($componentId);
 		 
 		 
+		 /**
+		 * delete Corpses.
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>		  
+		 */
+		 public function deleteCorpses();
+		 
 		 
 }

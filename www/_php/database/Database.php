@@ -68,16 +68,28 @@
 				$entity->roomName = $row['r_bezeichnung'];
 				$entity->roomNote= $row['r_notiz'];
 				
+				$select  = "SELECT 
+				CASE WHEN count(*) > 0 then true else false END As problem
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id 
+						AND v_id = 2
+						WHERE rae.r_id = ".$row['r_id']."";
+				$DataSub = mysql_query($select);
+				$rowSub = mysql_fetch_assoc($DataSub);
+				$entity->roomHasProblems = $rowSub["problem"];
+				
 				$entityArray[] = $entity;
 			}
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
 			
-			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+			return array('problemCount' => $row["problemCount"], 'rooms' => $entityArray);
 	
 		}
 		
@@ -89,7 +101,9 @@
 		 */
 		public function getRoomByRoomId($id)
 		{
-			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT *
+						FROM raeume 
+						ORDER BY r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -99,6 +113,14 @@
 			$entity->roomFloor = $row['r_etage'];
 			$entity->roomName = $row['r_bezeichnung'];
 			$entity->roomNote= $row['r_notiz'];
+			
+			$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			$entity->roomHasProblems = $row["problem"];
 			
 			return $entity;			
 		}
@@ -178,11 +200,16 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom ORDER BY kom.k_id asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$entity = new RoomEntity();
+				$entity = new ComponentEntity();
 				$entity->componentId = $row['k_id'];
 				$entity->componentDeliverer = $row['lieferant_l_id'];
 				$entity->componentRoom = $row['lieferant_r_id'];
@@ -193,6 +220,7 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
@@ -209,11 +237,16 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * FROM komponente where lieferant_l_id = \"" . $id . "\"";
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom where kom.lieferant_l_id = '".$id."'";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$entity = new RoomEntity();
+				$entity = new ComponentEntity();
 				$entity->componentId = $row['k_id'];
 				$entity->componentDeliverer = $row['lieferant_l_id'];
 				$entity->componentRoom = $row['lieferant_r_id'];
@@ -224,6 +257,7 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
@@ -1436,7 +1470,7 @@
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
 						WHERE kom.k_device = 1;";
 			$Data = mysql_query($select);
@@ -1487,7 +1521,7 @@
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
 						WHERE kom.k_device = 0;";
 			$Data = mysql_query($select);
@@ -1507,7 +1541,7 @@
 		 {
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
@@ -1702,16 +1736,23 @@
 		 */
 		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate)
 		{
-			$insert = "INSERT INTO komp_vorgang (k_id, v_id, b_id, comment, datum)
-						VALUES (".$componentId.", ".$transactionId.", ".$userId.", ".$maintenanceComment.", ".$maintenanceDate.");";
-						
-			mysql_query($insert);
-			
-			$select = "SELECT MAX(kom_id) as ID from komp_vorgang;";
+			$select = "SELECT v_id FROM komp_vorgang WHERE k_id = ".$componentId." Order by kom_id desc LIMIT 1";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
-			return $row["ID"];
+			if($row["v_id"] == '1')
+			{
+				$insert = "INSERT INTO komp_vorgang (k_id, v_id, b_id, comment, datum)
+							VALUES (".$componentId.", ".$transactionId.", ".$userId.", ".$maintenanceComment.", ".$maintenanceDate.");";
+							
+				mysql_query($insert);
+				
+				$select = "SELECT MAX(kom_id) as ID from komp_vorgang;";
+				$Data = mysql_query($select);
+				$row = mysql_fetch_assoc($Data);
+				
+				return $row["ID"];
+			}
 		}		 
 		
 		  /**
@@ -1739,6 +1780,48 @@
 			
 			$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$componentId.";";
 			mysql_query($update);
+		 }
+		 
+		  /**
+		 * delete Corpses.
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>		  
+		 */
+		 public function deleteCorpses()
+		 {
+			$select = "SELECT * FROM komponente WHERE k_name is NULL OR k_name = ''";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$delete = "DELETE 
+							FROM komponente_komponente 
+							WHERE komponenten_k_id = ".$row["k_id"]." 
+							OR komponenten_k_id_teil = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komponente_kattribut 
+							WHERE komponenten_k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komp_vorgang 
+							WHERE k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komponente 
+							WHERE k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);			
+			}
+			
 		 }
 	}
 ?>
