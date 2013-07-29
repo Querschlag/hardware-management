@@ -105,6 +105,7 @@
 		{
 			$select = "SELECT *
 						FROM raeume 
+						WHERE r_id = ".$id.";
 						ORDER BY r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
