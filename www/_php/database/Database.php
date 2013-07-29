@@ -1324,8 +1324,10 @@
 		 *
          * @author Leon Geim<leon.geim@gmail.com>		  
 		 */
-		 public function getSubComponentbyComponentId($id)
+		 public function getSubComponentsbyComponentId($id)
 		 {
+			$entityArray = array();
+			
 			$select = "SELECT kom.*, CASE WHEN (Select v_id
 									FROM komp_vorgang kova 
 									WHERE kova.k_id = kom.k_id
@@ -1337,22 +1339,25 @@
 							sub.komponenten_k_id_aggregat = ".$id.";";
 					   
 			$Data = mysql_query($select);
-			$row = mysql_fetch_assoc($Data);
-			
-			$entity = new ComponentEntity();
-			$entity->componentId = $row['k_id'];
-			$entity->componentDeliverer = $row['lieferant_l_id'];
-			$entity->componentRoom = $row['lieferant_r_id'];
-			$entity->componentName = $row['k_name'];
-			$entity->componentBuy = $row['k_einkaufsdatum'];
-			$entity->componentWarranty = $row['k_gewaehrleistungsdauert'];
-			$entity->componentNote = $row['k_notiz'];
-			$entity->componentSupplier = $row['k_hersteller'];
-			$entity->componentType = $row['komponentenarten_ka_id'];
-			$entity->componentIsDevice = $row['k_device'];
-			$entity->componentHasProblems = $row['v_id'];
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy = $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdauert'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
+				
+				$entityArray[] = $entity;				
+			}
 						
-			return $entity;
+			return $entityArray;
 		 }
 		 
 		 
@@ -1463,9 +1468,7 @@
 		 */
 		 public function getComponentDevices()
 		 {
-		 
 			$entityArray = array();
-			
 						
 			$select = "SELECT kom.*,  CASE WHEN (Select v_id
 									FROM komp_vorgang kova 
@@ -2010,7 +2013,7 @@
 				$entity->componentIsDevice = $row['k_device'];
 				$entity->componentHasProblems= $row['v_id'];
 				
-			return $entity;
+			return $entity;  
 		 }
 	}
 ?>
