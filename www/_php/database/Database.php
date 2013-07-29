@@ -534,8 +534,8 @@
 		  */
 		 public function insertUsergroup($name, $permission)
 		 {
-		 $insert ="INSERT INTO benutzergruppe (bg_name,bg_rechte)
-								VALUES(	'".$name."',".$permission.");";
+		 $insert ="INSERT INTO benutzergruppe (bg_name,bg_rechte, deletedFlag)
+								VALUES(	'".$name."',".$permission.", 0);";
 										
 			mysql_query($insert);
 			
@@ -619,7 +619,7 @@
 		 {
 			$entityArray = array();
 			
-			$select = "SELECT * FROM benutzer order by b_id ASC;";
+			$select = "SELECT * FROM benutzer WHERE deletedFlag = 0 ORDER BY b_id ASC;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -631,6 +631,7 @@
 				$entity->userFirstName = $row['b_vorname'];
 				$entity->userLastName = $row['b_nachname'];				
 				$entity->userEmail = $row['b_email'];
+				$entity->deletedFlag = 0;
 				$entityArray[] = $entity;
 			}
 			
@@ -646,7 +647,7 @@
 		 */
 		  public function getUserById($id)
 		 {
-			$select = "SELECT * FROM benutzer WHERE b_id = ".$id.";";
+			$select = "SELECT * FROM benutzer WHERE b_id = ".$id." AND deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -676,7 +677,7 @@
 		  */
 		 public function getUserByEmail($email)
 		 {
-			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."';";
+			$select = "SELECT * FROM benutzer WHERE b_email = '".$email."' AND deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -762,9 +763,11 @@
 		  */
 		 public function deleteUser($id)
 		 {
-			$delete ="DELETE FROM 
+			$update ="UPDATE 
 							benutzer 
-						WHERE 
+						SET
+							deletedFlag = 1
+						WHERE						
 							b_id = ".$id.";";
 			return mysql_query($delete);
 		 }
@@ -1407,7 +1410,7 @@
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE b_name = '".$userName."'";
+						WHERE b_name = '".$userName."' AND deletedFlag = 0";
 			mysql_select_db("itv_v1");		   
 			$Data = mysql_query($select) 
 			or die ("MySQL-Error: " . mysql_error());  			
@@ -1821,18 +1824,40 @@
 							
 				mysql_query($delete);			
 			}
+		}
 			
 		  /**
 		  *  function to get Components in Storage
 		  * 
 		  * @return ComponentEntity[]
 		  * 
-		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  * @author Leon Geim <leon.geim@gmail.com>
 		  */
 		 public function getComponentsInStorageByName($name, $count)
 		 {
-		 }
+			$entityArray = array();
+		 
+			$select = "SELECT * FROM komponente WHERE k_name = '".$name."' AND
+													  lieferant_r_id is NULL LIMIT ".$count;
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdauer'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				
+				$entityArray[] = $entity;
+			}
 			
+			return $entityArray;
 		 }
 	}
 ?>
