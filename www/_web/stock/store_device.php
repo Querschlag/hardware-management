@@ -527,38 +527,29 @@
 			$controller->insertComponent();
 			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
 			
-			var_dump($attributes);
-			die();
-			
-			$attr = '';
+			$attrList = '';
 			foreach($attributes as $attribute)
 			{
-				$attr .= '<p>'.$attribute->componentAttributeName.'</p>';
+				$attrList .= '<p>'.utf8_encode($attribute->componentAttributeName).'</p>';
+				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'"';
 				
 				if($attribute->componentAttributeValidValue) {
 					
-					$attr .= '<select name="componentAttribute[]">';
+					$attrList .= '<select name="componentAttribute[]">';
 					foreach($attribute->componentAttributeValidValue as $key => $value) {
-						$attr .= '<option value="'.$key.'">'.$attribute->componentAttributeName.'</p>';
+						$attrList .= '<option value="'.$value.'">'.$value.'</p>';
 					}
-					$attr .= '</select>'; 
+					$attrList .= '</select>'; 
 				} else {
-					echo "nich";
+					$attrList .= '<input type="text" name="componentAttribute[]" />';
 				}
 			}
-			
-			die();
 			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p>
-				<input type="hidden" name="componentAttribute[]" value="9" />
-				<input name="attributeValue[]" type="text" value="4 GB RAM" />
-				<p>Attribut 2</p>
-				<input type="hidden" name="componentAttribute[]" value="14" />
-				<input name="attributeValue[]" type="text" value="4GHz" />
+				'.$attrList.'
 				<input type="hidden" name="step" value="4" />
 				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
