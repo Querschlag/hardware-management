@@ -32,7 +32,7 @@
 			$timeout = 0.5;
 			$port = 80;
 			 
-			$fp = @fsockopen("http://10.9.4.55", $port, $errno, $errstr, $timeout);
+			$fp = @fsockopen("10.9.4.55", $port, $errno, $errstr, $timeout);
 			if (!$fp) {
 			    //echo "$errstr ($errno)<br />\n";
 				if (!mysql_connect("localhost", "itv_v1", "") )
