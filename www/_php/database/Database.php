@@ -68,6 +68,14 @@
 				$entity->roomName = $row['r_bezeichnung'];
 				$entity->roomNote= $row['r_notiz'];
 				
+				$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+				$DataSub = mysql_query($select);
+				$rowSub = mysql_fetch_assoc($DataSub);
+				$entity->roomHasProblems = $rowSub["problem"];
+				
 				$entityArray[] = $entity;
 			}
 			
@@ -76,8 +84,9 @@
 						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
 			
-			return array('problemCount' => $Data["problemCount"], 'rooms' => $entityArray);
+			return array('problemCount' => $row["problemCount"], 'rooms' => $entityArray);
 	
 		}
 		
@@ -89,7 +98,9 @@
 		 */
 		public function getRoomByRoomId($id)
 		{
-			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT *
+						FROM raeume 
+						ORDER BY r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -99,6 +110,14 @@
 			$entity->roomFloor = $row['r_etage'];
 			$entity->roomName = $row['r_bezeichnung'];
 			$entity->roomNote= $row['r_notiz'];
+			
+			$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
+						FROM raeume rae
+						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			$entity->roomHasProblems = $row["problem"];
 			
 			return $entity;			
 		}
@@ -178,11 +197,16 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom ORDER BY kom.k_id asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$entity = new RoomEntity();
+				$entity = new ComponentEntity();
 				$entity->componentId = $row['k_id'];
 				$entity->componentDeliverer = $row['lieferant_l_id'];
 				$entity->componentRoom = $row['lieferant_r_id'];
@@ -193,6 +217,7 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
@@ -209,11 +234,16 @@
 		{
 			$entityArray = array();
 			
-			$select = "SELECT * FROM komponente where lieferant_l_id = \"" . $id . "\"";
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente kom where kom.lieferant_l_id = '".$id."'";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
-				$entity = new RoomEntity();
+				$entity = new ComponentEntity();
 				$entity->componentId = $row['k_id'];
 				$entity->componentDeliverer = $row['lieferant_l_id'];
 				$entity->componentRoom = $row['lieferant_r_id'];
@@ -224,6 +254,7 @@
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
 			
