@@ -1959,15 +1959,16 @@
 		 {
 			$entityArray = array();
 						
-			$select = "SELECT kom.*,  CASE WHEN (Select v_id
-									FROM komp_vorgang kova 
-									WHERE kova.k_id = kom.k_id
-									Order by Datum DESC
-               						LIMIT 1) = 2 then true else false end as v_id
-						FROM raeume rae
-						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
-						INNER JOIN komponente_komponente koko ON koko.komponenten_k_id_aggregat = kom.k_id 
-						WHERE kom.k_device = 1 AND rae.r_id = ".$roomId.";";
+			//$select = "SELECT kom.*,  CASE WHEN (Select v_id
+			$select = "SELECT *, CASE WHEN (Select v_id
+							FROM komp_vorgang kova 
+							WHERE kova.k_id = kom.k_id
+							Order by Datum DESC
+							LIMIT 1) = 2 then true else false end as v_id
+							FROM raeume rae
+							INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+							INNER JOIN komponente_komponente koko ON koko.komponenten_k_id_aggregat = kom.k_id 
+							WHERE kom.k_device = 1 AND rae.r_id = ".$roomId.";";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -2019,7 +2020,6 @@
 			$select = "SELECT *
 						FROM komponente
 						WHERE k_device = 0 AND deletedFlag = 0 AND k_id = ".$id.";";
-
 			$Data = mysql_query($select);			
 			$row = mysql_fetch_assoc($Data);
 			
