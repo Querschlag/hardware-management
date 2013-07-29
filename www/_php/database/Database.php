@@ -1829,7 +1829,9 @@
 		  * 
 		  * @author Daniel Schulz <schmoschu@gmail.com>
 		  */
-		 public function getComponentsInStorageByName($name, $count);
+		 public function getComponentsInStorageByName($name, $count)
+		 {
+		 }
 			
 		 }
 	}
