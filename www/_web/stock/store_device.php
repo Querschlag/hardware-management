@@ -8,6 +8,343 @@
 	</ul>
 </div>
 <div id="module">
+	
+	<?php
+			$step = POST('step');
+	
+	if ($step == 7) 
+		{
+			echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+			
+		}
+		else if ($step == 6) 
+		{
+		echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+		
+				
+		}
+		else if ($step == 5) 
+		{
+	echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 4) 
+		{
+		echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 3) 
+		{
+			echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 2)
+		{	
+	echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+		}
+		else
+		{
+		echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Komponente wählen</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
+				<span class="stepTitle">Komponente Eigenschaften</span>
+				<div class="clearfix"></div>
+			</li>
+			
+			</ol>
+		</div>';
+		
+		}
+	
+	?>
+	
+	
 	<h3>Ger&auml;t anlegen</h3>
 	<?php
 		require_once('php/additions.php');
@@ -160,7 +497,7 @@
 			// create controller object
 			$controller = new ComponentController($view, $database);
 		
-		$step = POST('step');
+
 		
 		if ($step == 7) 
 		{
