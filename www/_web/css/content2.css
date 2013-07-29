@@ -105,12 +105,21 @@ textarea {
 	#user_bar_wrapper {
 		right:25%;
 		top:40px;
+		position:inherit;
+		max-width:160px;
+		margin:30px auto;
 	}
 }
 #user_bar {
-    position: relative;
+    position:relative;
     margin:0 auto;
     max-width:1200px;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar {
+		position:inherit;
+	}
 }
 #user_bar_wrapper:hover {
     background-color: #EEEEEE;
