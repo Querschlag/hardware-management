@@ -114,44 +114,52 @@
 		public function selectDevicesForRoomId($roomId)
 		{	
 			// get devices from database
-			$devices = $this->_database->getComponentDevicesByRoomId();
+			$allDevices = $this->_database->getComponentDevicesByRoomId($roomId);
 			
 			// create device types array
 			$deviceTypes = array();
 			
+			// create store for device problems
+			$deviceProblemCount = 0;
+			
 			// check device types
-			if(isset($devices['devices']))
+			if($allDevices)
 			{			
 				// iteration over all devices
-				foreach($devices['devices'] as $device)
+				foreach($allDevices as $deviceEntity)
 				{
 					// add device to device type list
-					$deviceTypes[$device->deviceType][] = $device;					
+					$deviceTypes[$deviceEntity->componentType][] = $deviceEntity;		
+					
+					if ($deviceEntity->componentHasProblems)
+						$deviceProblemCount++;			
 				}
-			}
+			}			
 			
 			// check problem count
-			if(isset($devices['problemCount']))
+			if($deviceProblemCount > 0)
 			{
 				// display problems
-				$this->_view->displayProblemCount($devices['problemCount']);
+				$this->_view->displayProblemCount($deviceProblemCount);
 			}
 			
 			// iteration over all device types
-			foreach($deviceTypes as $key=>$deviceType)
+			foreach($deviceTypes as $deviceTypeId=>$devices)
 			{
 				// display device type name
-				$this->_view->displayFloor($key);
+				$deviceTypeEntity = $this->_database->getComponentTypeById($deviceTypeId);
+				$this->_view->displayDeviceType($deviceTypeEntity->typeName);
 				
 				// iteration over the device type  devices
-				foreach($deviceTypes as $device)
+				foreach($devices as $device)
 				{
 					// display room
-					$this->_view->displayDevices(
-						$device->deviceId, 
-						$device->deviceName, 
-						$device->deviceNote,
-						$device->deviceHasProblems);	
+					$this->_view->displayDevice(
+						$device->componentId,
+						$device->componentRoom,
+						$device->componentName, 
+						$device->componentNote,
+						$device->componentHasProblems);	
 				}
 				
 				// display room end

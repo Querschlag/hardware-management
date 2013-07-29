@@ -332,6 +332,10 @@ form p {
     margin:12px 0;
     padding-right:40px;
 }
+.problems{
+	font-size:14px;
+	color:#D45E61;
+}
 .components {
     list-style: none outside none;
 }

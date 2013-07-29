@@ -23,14 +23,14 @@
 		 * 
 		 * @author Adrian Geuss <adriangeuss@gmail.com> 
 		 */
-		public function displayDevice($id, $name, $note, $deviceHasProblems=false);
+		public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems=false);
 		
 		/**
 		 *  function to display floor
 		 * 
 		 * @author Adrian Geuss <adriangeuss@gmail.com>
 		 */
-		public function displayDeviceType($DeviceTypeName);
+		public function displayDeviceType($deviceTypeName);
 		
 		/**
 		 *  function to display floor

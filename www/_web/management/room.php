@@ -244,7 +244,7 @@
 			 * 
 			 * @author Adrian Geuss <adriangeuss@gmail.com>
 			 */
-			public function displayDevice($id, $name, $note, $deviceHasProblems = false)
+			public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems = false)
 			{
 				// check row count
 				if($this->_rowCount == $this->_rowMax)
@@ -265,8 +265,8 @@
 				
 				// print list element
 				print '<li ';
-				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $roomHasProblems) print 'class="hardwareProblem"';
-				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
+				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $deviceHasProblems) print 'class="hardwareProblem"';
+				print '><a href="index.php' . navParams(array('mod' => 'device', 'room' => $roomId, 'device' => $id)) . '">' . $name . '</a></li>';
 
 				// increase row count
 				$this->_rowCount++;
@@ -277,27 +277,13 @@
 			 * 
 			 * @author Adrian Geuss <adriangeuss@gmail.com>
 			 */
-			public function displayDeviceType($DeviceTypeName)
+			public function displayDeviceType($deviceTypeName)
 			{
 				// print end list
 				print '</ul>';
 				
-				// check floor number
-				if($floorNumber == 0)
-				{
-					// print floor name
-					print '<h2>Erdgeschoss</h2>';
-				}
-				else if($floorNumber > 0)
-				{
-					// print floor name
-					print '<h2>' . $floorNumber . '. Obergeschoss</h2>';
-				}
-				else 
-				{
-					// print floor nmae
-					print '<h2>' . ($floorNumber * -1) . ' Untergeschoss</h2>';
-				}
+				// print floor name
+				print '<h2>' . $deviceTypeName . '</h2>';
 				
 				// print start list
 				print '<ul class="rooms">';
@@ -314,7 +300,7 @@
 			public function displayProblemCount($count) 
 			{
 				if (menuItem() == 'maintenance' || menuItem() == 'scrap')
-				print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
+					print '<b><span class="problems"><p>Probleme: ' . $count . '</p></span></b>';
 			}
 			
 			/**
@@ -447,6 +433,7 @@
 		
 	?>
 	
+	<!---
 	<h2>Computer</h2>
 	<ul class="rooms">
 		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
@@ -464,4 +451,5 @@
 		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 8)); ?>">FritzBox!</a></li>
 	</ul>
+	-->
 </div>
