@@ -531,7 +531,7 @@
 			foreach($attributes as $attribute)
 			{
 				$attrList .= '<p>'.utf8_encode($attribute->componentAttributeName).'</p>';
-				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'"';
+				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'" />';
 				
 				if($attribute->componentAttributeValidValue) {
 					
