@@ -250,7 +250,7 @@
 			public function displayProblemCount($count) 
 			{
 				if (menuItem() == 'maintenance' || menuItem() == 'scrap')
-					print '<b><span><p>Es wurden ' . $count . ' Probleme gefunden.</p></span></b>';
+					print '<b><span class="problems"><p>Probleme: ' . $count . '</p></span></b>';
 			}
 		
 			/**
