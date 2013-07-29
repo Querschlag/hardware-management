@@ -14,96 +14,59 @@
 	
 	if ($step == 7) 
 		{
-			echo '
-			<div class="progress">
-			<ol>
 			
-			<li class="inactiveStep">
-				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
-			</li>
-			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			
-			</ol>
-		</div>';
 			
 		}
 		else if ($step == 6) 
 		{
-		echo '
+			
+			$room = POST('room');
+		
+			if($room == 0)
+			{
+				header('location:index.php?mod=stock');
+			}
+			else 
+			{
+				echo '
 			<div class="progress">
 			<ol>
 			
 			<li class="inactiveStep">
 				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät wählen</span>
 			</li>
 			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
+				<span class="stepTitle">Gerät Attribute</span>
 			
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+							<span class="stepTitle">Komponente hinzufügen</span>
+	
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+							<span class="stepTitle">Geräte Menge</span>
+		
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_6.png" alt="">
+				<span class="stepTitle">Raum auswählen</span>
+		
+			</li>
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
+			}
+		
 		
 				
 		}
@@ -115,41 +78,32 @@
 			
 			<li class="inactiveStep">
 				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät wählen</span>
+
 			</li>
 			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+		
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät Attribute</span>
+
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+								<span class="stepTitle">Komponente hinzufügen</span>
+
 			</li>
 			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<img class="stepImage" src="img/stepprogress/Number_green_5.png" alt="">
+							<span class="stepTitle">Geräte Menge</span>
+
 			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			
+
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
 
@@ -162,41 +116,30 @@
 			
 			<li class="inactiveStep">
 				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät wählen</span>
+
 			</li>
 			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+	
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät Attribute</span>
+
 			</li>
 			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<img class="stepImage" src="img/stepprogress/Number_green_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+						<span class="stepTitle">Geräte Menge</span>
 			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
 
@@ -209,41 +152,30 @@
 			
 			<li class="inactiveStep">
 				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät wählen</span>
+			
 			</li>
 			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+	
 			</li>
 			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+			<img class="stepImage" src="img/stepprogress/Number_green_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+			
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Komponente hinzufügen</span>
+		
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+						<span class="stepTitle">Geräte Menge</span>
 			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
 
@@ -256,41 +188,32 @@
 			
 			<li class="inactiveStep">
 				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+			    <span class="stepTitle">Gerät wählen</span>
+
 			</li>
 			
 			<li class="activeStep">
 			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
+				<span class="stepTitle">Gerät Daten</span>
 			
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+		
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+				
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+					<span class="stepTitle">Geräte Menge</span>
+
+			</li>
+
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
 		}
@@ -300,48 +223,36 @@
 			<div class="progress">
 			<ol>
 			
+			<li class="activeStep">
+				<img class="stepImage" src="img/stepprogress/Number_green_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+
+			</li>
+			
 			<li class="inactiveStep">
-				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
-				<span class="stepTitle">Komponente wählen</span>
-				<div class="clearfix"></div>
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+
 			</li>
-			
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Gerät Attribute</span>
+
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
+				<span class="stepTitle">Komponente hinzufügen</span>
+
 			</li>
-			<li class="activeStep">
+			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_6.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			<li class="activeStep">
-			<img class="stepImage" src="img/stepprogress/Number_grey_7.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
-				<div class="clearfix"></div>
-			</li>
-			
+				<span class="stepTitle">Geräte Menge</span>
+</li>
+			<div class="clearfix"></div>
 			</ol>
 		</div>';
 		
 		}
-	
 	?>
 	
 	
