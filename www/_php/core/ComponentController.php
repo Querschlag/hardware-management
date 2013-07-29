@@ -162,7 +162,7 @@
 					// add device to device type list
 					$deviceTypes[$deviceEntity->componentType][] = $deviceEntity;		
 					
-					if ($deviceEntity->componentHasProblems)
+					if ($deviceEntity->componentHasProblems && $deviceEntity->componentIsDevice)
 						$deviceProblemCount++;			
 				}
 			}			

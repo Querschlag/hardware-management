@@ -88,7 +88,7 @@
 						FROM raeume rae
 						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
-						WHERE kom.deletedFlag = 0 AND rae.deletedFlag = 0;";
+						WHERE kom.deletedFlag = 0 AND kom.k_device = 1 AND rae.deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
