@@ -139,7 +139,7 @@
 					$retVal = NULL;					
 					
 					// check and set room id
-					if(isset($_GET['roomId'])) $retVal = $_GET['roomId'];
+					if(isset($_GET['room'])) $retVal = $_GET['room'];
 					
 					// return value
 					return $retVal;
@@ -168,12 +168,11 @@
 	<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
 </div>
 
-
-<script>
+<script language="JavaScript" type="text/javascript">
 	$(function() { $('#dialog').hide(); } );
 
 	$(function() {
-		$('#btnDeleteRoom').on('click', function()
+		$('.btnDeleteRoom').on('click', function()
 			{
 			    $("#dialog").dialog({
 			        autoOpen: true,
@@ -182,7 +181,7 @@
 			        buttons: 
 			        [
 			            	{
-			            		text: "Raum & Geräte löschen",
+			            		text: unescape("Raum & Ger%E4te l%F6schen"),
 			            		name: "btnYes",
 			            		class: "destructiveButton",
 			                	click: function () 
@@ -201,7 +200,8 @@
 										(
 											function()
 											{
-												window.location = "index.php?mod=rooms";
+												var url = "index.php?menu=" + $.query.get("menu") + "&mod=rooms";
+												window.location = url;
 											}
 										);				
 									}
@@ -235,27 +235,134 @@
 
 <div id="module">
 	<div id="action_bar">
-		<a class="left" href="index.php?mod=addDevice<?php echo '&menu=' . GET('menu');?>">Ger&auml;t hinzuf&uuml;gen</a>		
-		<a class="right destructiveButton" href="javascript:void(0);" id="btnDeleteRoom">Raum l&ouml;schen</a>
-		<a class="right" href="index.php?mod=change_room&roomId=<?php echo GET('roomId'); echo '&menu=' . GET('menu');?>">Raum bearbeiten</a>				
+		
+		<?php
+			
+			require_once('php/actionbar.php');
+			
+			/**
+			* RoomsActionBarController class
+			*
+			* Controller displaying actionbar buttons for rooms
+			*
+			* @category 
+			* @package
+			* @author Adrian Geuss <adriangeuss@gmail.com>
+			* @copyright 2013 IFA11B2 IT-Team2
+			*/
+			
+			class RoomsActionBarController extends ActionBarController
+			{
+		
+				/**
+				 *  function action button for adding a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddRoom() {}
+				
+				/**
+				 *  function action button for user management 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonUserManagement() {}
+				
+				/**
+				 *  function action button for supplier
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonSupplier() {}
+				
+				/**
+				 *  function action button for adding a device
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddDevice() 
+				{
+					echo '<a class="left" href="index.php' . navParams(array('mod' => 'addDevice')) .'">Ger&auml;t hinzuf&uuml;gen</a>';
+				}
+				
+				/**
+				 *  function action button for editing a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonEditRoom()
+				{
+					echo '<a class="right" href="index.php' . navParams(array('mod' => 'modifyRoom')) .'">Raum bearbeiten</a>';
+				}
+				
+				/**
+				 *  function action button for deleting a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonDeleteRoom()
+				{
+					echo '<a class="right destructiveButton btnDeleteRoom" href="javascript:void(0);">Raum l&ouml;schen</a>';
+				}
+				
+				/**
+				 *  function action button for adding a component 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddComponent() {}
+				
+				/**
+				 *  function action button for fixing a problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonFixProblem() {}
+				
+				/**
+				 *  function action button for reporting problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonReportProblem() {}
+				
+				/**
+				 *  function action button for scraping a device 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapDevice() {}
+				
+				/**
+				 *  function action button for scraping a component
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapComponent() {}
+			}
+			
+			$actionbar = new RoomsActionBarController( array('menu' => menuItem(), 'mod' => GET('mod')) );
+			$actionbar->displayActionBar();
+		?>
+							
 		<div class="clearfix"></div>
 	</div>
 	
 	<h2>Computer</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 1); ?>">PC001</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 2); ?>">PC002</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 3); ?>">PC003</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 2)); ?>">PC002</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 3)); ?>">PC003</a></li>
 	</ul>
 	<h2>Drucker</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 4); ?>">HP MP105</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 5); ?>">Canon i350</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 4)); ?>">HP MP105</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 5)); ?>">Canon i350</a></li>
 	</ul>
 	<h2>Router</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 6); ?>">DLINK 1</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 7); ?>">DLINK 2</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'device', null, 8); ?>">FritzBox!</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 6)); ?>">DLINK 1</a></li>
+		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 8)); ?>">FritzBox!</a></li>
 	</ul>
 </div>

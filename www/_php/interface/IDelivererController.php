@@ -20,6 +20,20 @@
 		public function selectDeliverers();
 		
 		/**
+		 *  select deliverer by id and print the deliverers on UI
+		 * 
+		 * @author Thomas Bayer <thomasbayer95@gmail.com> 
+		 */
+		public function selectDeliverersById($id);
+		
+		/**
+		 *  select components by deliverer id
+		 * 
+		 * @author Thomas Bayer <thomasbayer95@gmail.com> 
+		 */
+		public function selectComponentsByDelivererId($id);
+		
+		/**
 		 * insert a new deliverer
 		 *
 		 * @author Thomas Bayer <thomasbayer95@gmail.com>  

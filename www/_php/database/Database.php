@@ -17,12 +17,33 @@
 	{
 		public function __construct() 
 		{
-			if(!(mysql_connect("10.9.4.51", "itv_v1", "")))
-			{				
-				mysql_connect("localhost", "itv_v1", "");
+			/**
+			 * Checks connection to the main mySQL server.
+			 * 
+			 * If working locally with no access to this server, this will reduce the
+			 * time the application would need to connect to the none accessable server,
+			 * before using the local fallback.
+			 * 
+			 * If there are any problem in production environment, please increase the
+			 * timeout and/or server ports to avoid the local fallback.
+			 * 
+			 */
+			
+			$timeout = 0.5;
+			$port = 80;
+			 
+			$fp = @fsockopen("http://10.9.4.55", $port, $errno, $errstr, $timeout);
+			if (!$fp) {
+			    //echo "$errstr ($errno)<br />\n";
+				if (!mysql_connect("localhost", "itv_v1", "") )
+				{
+					mysql_connect("itv_v1", "root", "");
+				}
+			} else {
+				mysql_connect("10.9.4.55", "itv_v1", "");
 			}
-			mysql_select_db("itv_v1");
-					
+			
+			mysql_select_db("itv_v1") or die (mysql_error());
 		}
 		
 	
@@ -97,10 +118,10 @@
 		{
 			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz) 
 						VALUES(".$number. ", ".$floor.", '".$name."', '".$note."')";
-			mysql_query($insert);
+			mysql_query($insert)  or die(mysql_error());
 			
 			$select = "SELECT r_id FROM raeume ORDER BY r_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["r_id"];
@@ -158,6 +179,37 @@
 			$entityArray = array();
 			
 			$select = "SELECT * FROM komponente ORDER BY k_id asc;";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new RoomEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = $row['k_gewaehrleistungsdauer'];
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+		}
+		
+		/**
+		 * function to get components
+		 * 
+		 * @return components
+		 * @author Thomas Bayer <thomasbayer95gmail.com> 
+		 */
+		public function getComponentsbyDelivererId($id)
+		{
+			$entityArray = array();
+			
+			$select = "SELECT * FROM komponente where lieferant_l_id = \"" . $id . "\"";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -306,6 +358,32 @@
 		 }
 		 
 		 /**
+		 * select deliverer by id
+		 * 
+		 * @return Array
+		 */
+		 public function getDeliverersById($id)
+		 {			
+			$select = "SELECT * FROM lieferant where l_id =\"" . $id . "\"";
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			$entity = new DelivererEntity();
+			$entity->delivererId = $row['l_id'];
+			$entity->delivererCompanyName = $row['l_firmenname'];
+			$entity->delivererStreet = $row['l_strasse'];
+			$entity->delivererZip = $row['l_plz'];
+			$entity->delivererCity= $row['l_ort'];
+			$entity->delivererTelephone= $row['l_tel'];
+			$entity->delivererMobile= $row['l_mobil'];
+			$entity->delivererFax= $row['l_fax'];
+			$entity->delivererEmail= $row['l_email'];
+			$entity->delivererCountry= $row['l_land'];
+
+			return $entity;
+		 }
+		 
+		 /**
 		  * insert deliverer
 		  *
 		  * @param string $companyName company name 
@@ -335,7 +413,7 @@
 			mysql_query($insert);
 			
 			$select = "SELECT l_id FROM lieferant ORDER BY l_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["l_id"];
@@ -359,19 +437,19 @@
 		 public function updateDeliverer($id, $companyName, $street, $zipCode, $location, $phoneNumber, $mobileNumber, $faxNumber, $email, $country)
 		 {
 		 	$update = "UPDATE lieferant 
-					   SET l_firmenname = ".$companyName.",
-							l_strasse = ".$street.",
-							l_plz= ".$zipCode.",
-							l_ort= ".$location.",
-							l_tel= ".$phoneNumber.",
-							l_mobil= ".$mobileNumber.",
-							l_fax= ".$faxNumber.",
-							l_email= ".$email.",
-							l_land= ".$country."
+					   SET l_firmenname = \"".$companyName."\",
+							l_strasse = \"".$street."\",
+							l_plz= \"".$zipCode."\",
+							l_ort= \"".$location."\",
+							l_tel= \"".$phoneNumber."\",
+							l_mobil= \"".$mobileNumber."\",
+							l_fax= \"".$faxNumber."\",
+							l_email= \"".$email."\",
+							l_land= \"".$country."\"
 						WHERE
 							l_id = ".$id.";";
 							
-			return mysql_query($update);
+			mysql_query($update);
 		 }
 		 
 		 /**
@@ -428,7 +506,7 @@
 			mysql_query($insert);
 			
 			$select = "SELECT bg_id FROM benutzergruppe ORDER BY bg_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["bg_id"];			
@@ -606,7 +684,7 @@
 			return mysql_query($insert);
 			
 			$select = "SELECT b_id FROM benutzer ORDER BY b_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["b_id"];		
@@ -765,7 +843,7 @@
 			mysql_query($insert);
 			
 			$select = "SELECT kom_id FROM komp_vorgang ORDER BY kom_id desc LIMIT 1";
-			$Data = mysql_query($insert);
+			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["kom_id"];	
@@ -1295,11 +1373,11 @@
 		 public function getUserByUsername($userName) 
 		 { 
 			$select = "SELECT * FROM benutzer
-						WHERE b_name = '".$userName."';";
-					   
-			$Data = mysql_query($select);			
+						WHERE b_name = '".$userName."'";
+			mysql_select_db("itv_v1");		   
+			$Data = mysql_query($select) 
+			or die ("MySQL-Error: " . mysql_error());  			
 			$row = mysql_fetch_assoc($Data);
-			
 			if($row['b_id'] == null)
 			{
 				return null;
@@ -1650,6 +1728,17 @@
 		 {
 			//Verschieben von Komponenten in Lager
 			//Man bekommt nen Device und all Komponenten werden ins Lager verschoben	
+			
+			$select = "SELECT * FROM komponente_komponente WHERE komponenten_k_id_aggregat = ".$componentId.";";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$row["komponenten_k_id_teil"].";";
+				mysql_query($update);
+			}
+			
+			$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$componentId.";";
+			mysql_query($update);
 		 }
 	}
 ?>
