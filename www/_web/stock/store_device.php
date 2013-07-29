@@ -285,6 +285,9 @@
 		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
+		// include component attributeEntity
+		require_once('../_php/entity/ComponentAttributeEntity.php');
+		
 		class Component implements IComponent 
 		{
 			/**
@@ -523,7 +526,27 @@
 		{
 			$controller->insertComponent();
 			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
 			var_dump($attributes);
+			die();
+			
+			$attr = '';
+			foreach($attributes as $attribute)
+			{
+				$attr .= '<p>'.$attribute->componentAttributeName.'</p>';
+				
+				if($attribute->componentAttributeValidValue) {
+					
+					$attr .= '<select name="componentAttribute[]">';
+					foreach($attribute->componentAttributeValidValue as $key => $value) {
+						$attr .= '<option value="'.$key.'">'.$attribute->componentAttributeName.'</p>';
+					}
+					$attr .= '</select>'; 
+				} else {
+					echo "nich";
+				}
+			}
+			
 			die();
 			
 			echo '
