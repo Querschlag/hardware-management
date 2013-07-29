@@ -40,7 +40,9 @@
 					mysql_connect("itv_v1", "root", "");
 				}
 			} else {
-				mysql_connect("10.9.4.55", "itv_v1", "");
+				@fclose($x);
+				if (!@mysql_connect("10.9.4.55", "itv_v1", ""))
+					mysql_connect("localhost", "itv_v1", "");
 			}
 			
 			mysql_select_db("itv_v1") or die (mysql_error());
@@ -1056,7 +1058,7 @@
 				$entity->componentAttributeIsFromComponent = false;
 				$entity->componentAttributeUncertaintId = $row['ka_id'];
 				
-				$select = "SELECT zw_wert FROM zulaessige_werte zw 
+				$select = "SELECT zw_id, zw_wert FROM zulaessige_werte zw 
 							INNER JOIN kattribut_zulaessiger_wert kazw ON kazw.zulaessige_werte_zw_id = zw_id
 							WHERE kazw.komponentenattribute_kat_id = ".$row['kat_id'].";";
 				
@@ -1065,7 +1067,7 @@
 				$DataSubSelect = mysql_query($select);
 				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
 				{
-					$entitySubArray[] = $rowSubSelect['zw_wert'];
+					$entitySubArray[$rowSubSelect['zw_id']] = $rowSubSelect['zw_wert'];
 				}
 				//echo var_export($entitySubArray);
 				$entity->componentAttributeValidValue = $entitySubArray;
