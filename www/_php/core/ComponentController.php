@@ -234,7 +234,7 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function selectAttributesByType($type) {
-			return $this->_database->insertAttributeValue($attributeId, $componentId, $value);
+			return $this->_database->getComponentAttributesFromComponent($type);
 		}
 		
 		/**

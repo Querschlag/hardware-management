@@ -274,7 +274,9 @@
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			var_dump($attributes);
+			die();
 			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
@@ -433,10 +435,14 @@
 					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
 					'.$delivererList.'
 				</select>
-				<p>Hersteller</p><input name="supplier" type="text"/>
-				<p>Kaufdatum</p><input name="buy" type="date"/>
-				<p>Gew&auml;hrleistung in Jahren</p><input name="warranty" type="number"/>
-				<p>Notiz</p><textarea name="note" rows=6 cols=30></textarea>
+				<p>Hersteller</p>
+				<input name="supplier" type="text"/>
+				<p>Kaufdatum</p>
+				<input name="buy" type="date"/>
+				<p>Gew&auml;hrleistung in Jahren</p>
+				<input name="warranty" type="number"/>
+				<p>Notiz</p>
+				<textarea name="note" rows=6 cols=30></textarea>
 				<input name="step" value="3" type="hidden" />
 				<input type="hidden" name="type" value="'.$view->getComponentTypes().'">
 				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'">

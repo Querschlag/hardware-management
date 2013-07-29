@@ -1821,6 +1821,7 @@
 							
 				mysql_query($delete);			
 			}
+		 }
 			
 		  /**
 		  *  function to get Components in Storage
@@ -1831,7 +1832,6 @@
 		  */
 		 public function getComponentsInStorageByName($name, $count)
 		 {
-		 }
 			
 		 }
 	}
