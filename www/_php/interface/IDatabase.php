@@ -633,5 +633,13 @@
 		 */
 		 public function deleteCorpses();
 		 
+		  /**
+		  *  function to get Components in Storage
+		  * 
+		  * @return ComponentEntity[]
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getComponentsInStorageByName($name, $count);
 		 
 }
