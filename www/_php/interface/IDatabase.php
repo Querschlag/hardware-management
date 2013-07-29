@@ -656,5 +656,15 @@
 		  */
 		 public function getComponentDevicesByRoomId($roomId);
 		 
+		 /**
+		  *  function to get Devices by RoomId
+		  * 
+		  * @param int $id componentId
+		  *
+		  * @return ComponentEntity
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getComponentbyComponentId($id);		 
 		 
 }
