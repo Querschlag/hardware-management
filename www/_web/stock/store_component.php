@@ -59,7 +59,7 @@ else if ($step == 2)
 			</li>
 			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
+				<span class="stepTitle">Komponente Attribute</span>
 	
 			</li>
 			<div class="clearfix"></div>
@@ -86,7 +86,7 @@ else if ($step == 2)
 			</li>
 			<li class="inactiveStep">
 			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
-				<span class="stepTitle">Komponente Eigenschaften</span>
+				<span class="stepTitle">Komponente Attribute</span>
 		
 			</li>
 			<div class="clearfix"></div>
@@ -126,6 +126,9 @@ else if ($step == 2)
 		
 		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
+		
+		// include component attributeEntity
+		require_once('../_php/entity/ComponentAttributeEntity.php');
 		
 		class Component implements IComponent 
 		{
@@ -276,18 +279,32 @@ else if ($step == 2)
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
+			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
+			$attrList = '';
+			foreach($attributes as $attribute)
+			{
+				$attrList .= '<p>'.utf8_encode($attribute->componentAttributeName).'</p>';
+				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'" />';
+				
+				if($attribute->componentAttributeValidValue) {
+					
+					$attrList .= '<select name="attributeValue[]">';
+					foreach($attribute->componentAttributeValidValue as $key => $value) {
+						$attrList .= '<option value="'.$value.'">'.$value.'</p>';
+					}
+					$attrList .= '</select>'; 
+				} else {
+					$attrList .= '<input type="text" name="attributeValue[]" />';
+				}
+			}
 			
 			echo '
 			<!-- Component creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p>
-				<input type="hidden" name="componentAttribute[]" value="8" />
-				<input name="attributeValue[]" type="text" value="Chipsatz" />
-				<p>Attribut 2</p>
-				<input type="hidden" name="componentAttribute[]" value="17" />
-				<input name="attributeValue[]" type="text" value="Festplattenspeicher" />
+				'.$attrList.'
 				<input type="hidden" name="step" value="5" />
 				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	

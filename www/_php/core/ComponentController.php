@@ -320,7 +320,7 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function selectAttributesByType($type) {
-			return $this->_database->getComponentAttributesFromComponent($type);
+			return $this->_database->getComponentAttributesFromComponentType($type);
 		}
 		
 		/**

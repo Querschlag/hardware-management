@@ -285,6 +285,9 @@
 		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
+		// include component attributeEntity
+		require_once('../_php/entity/ComponentAttributeEntity.php');
+		
 		class Component implements IComponent 
 		{
 			/**
@@ -523,19 +526,30 @@
 		{
 			$controller->insertComponent();
 			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
-			var_dump($attributes);
-			die();
+			
+			$attrList = '';
+			foreach($attributes as $attribute)
+			{
+				$attrList .= '<p>'.utf8_encode($attribute->componentAttributeName).'</p>';
+				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'" />';
+				
+				if($attribute->componentAttributeValidValue) {
+					
+					$attrList .= '<select name="attributeValue[]">';
+					foreach($attribute->componentAttributeValidValue as $key => $value) {
+						$attrList .= '<option value="'.$value.'">'.$value.'</p>';
+					}
+					$attrList .= '</select>'; 
+				} else {
+					$attrList .= '<input type="text" name="attributeValue[]" />';
+				}
+			}
 			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p>
-				<input type="hidden" name="componentAttribute[]" value="9" />
-				<input name="attributeValue[]" type="text" value="4 GB RAM" />
-				<p>Attribut 2</p>
-				<input type="hidden" name="componentAttribute[]" value="14" />
-				<input name="attributeValue[]" type="text" value="4GHz" />
+				'.$attrList.'
 				<input type="hidden" name="step" value="4" />
 				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
