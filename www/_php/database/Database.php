@@ -68,10 +68,13 @@
 				$entity->roomName = $row['r_bezeichnung'];
 				$entity->roomNote= $row['r_notiz'];
 				
-				$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
+				$select  = "SELECT 
+				CASE WHEN count(*) > 0 then true else false END As problem
 						FROM raeume rae
 						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
-						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
+						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id 
+						AND v_id = 2
+						WHERE rae.r_id = ".$row['r_id']."";
 				$DataSub = mysql_query($select);
 				$rowSub = mysql_fetch_assoc($DataSub);
 				$entity->roomHasProblems = $rowSub["problem"];
