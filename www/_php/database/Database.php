@@ -70,7 +70,7 @@
 				
 				$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 				$DataSub = mysql_query($select);
 				$rowSub = mysql_fetch_assoc($DataSub);
@@ -81,7 +81,7 @@
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
@@ -113,7 +113,7 @@
 			
 			$select  = "SELECT CASE WHEN count(*) > 0 then true else false END As problem
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
@@ -1467,7 +1467,7 @@
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
 						WHERE kom.k_device = 1;";
 			$Data = mysql_query($select);
@@ -1518,7 +1518,7 @@
 			
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
 						WHERE kom.k_device = 0;";
 			$Data = mysql_query($select);
@@ -1538,7 +1538,7 @@
 		 {
 			$select  = "SELECT count(*) AS problemCount
 						FROM raeume rae
-						INNER JOIN komponente kom ON kom.kom.lieferant_r_id = rae.r_id
+						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
