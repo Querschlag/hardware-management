@@ -284,10 +284,12 @@
 			$insert = "INSERT INTO komponente
 						(lieferant_l_id, lieferant_r_id, k_name,
 						k_einkaufsdatum,k_gewaehrleistungsdauer,k_Notiz,
-						k_hersteller,komponentenarten_ka_id, k_device) 
+						k_hersteller,komponentenarten_ka_id, k_device,
+						k_erstellungszeit) 
 						VALUES(".$deliverer.", ".$room.", '".$name."',
 								".$date.", ".$warranty.", '".$note."',
-								'".$supplier."', ".$type.", ".$isDevice.")";
+								'".$supplier."', ".$type.", ".$isDevice.",
+								".Time().")";
 			mysql_query($insert) or die(mysql_error());
 			
 			$select = "SELECT k_id FROM komponente
@@ -1795,7 +1797,10 @@
 		 */
 		 public function deleteCorpses()
 		 {
-			$select = "SELECT * FROM komponente WHERE k_name is NULL OR k_name = ''";
+			$interval = 60*60*24;
+			$time = Time();
+			$select = "SELECT * FROM komponente WHERE (k_name is NULL OR k_name = '')
+						AND k_erstellungszeit > ".$time-$interval;
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
