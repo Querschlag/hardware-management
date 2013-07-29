@@ -1,7 +1,7 @@
 @import "http://fonts.googleapis.com/css?family=Armata";
 
 body {
-    font-family: 'Armata','Nunito',Arial,Verdana,sans-serif;
+    font-family: 'Armata',Arial,Verdana,sans-serif;
     margin: 0 auto;
     min-width: 320px;
     background-color:#323544;
@@ -147,6 +147,7 @@ textarea {
 	margin:0 auto;
 	width:200px;
 	text-align:center;
+	padding:20px 0 10px;
 }
 #content {
     clear: both;

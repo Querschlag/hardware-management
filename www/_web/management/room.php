@@ -39,7 +39,7 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com> 
 				 */
-				public function displayRoom($id, $number, $name, $note)
+				public function displayRoom($id, $number, $name, $note, $roomHasProblems = false)
 				{
 					// store room name
 					$this->_number = $number;
@@ -200,7 +200,7 @@
 										(
 											function()
 											{
-												var url = "index.php?menu=" + $.query.get("menu") + "&mod=rooms";
+												var url = "index.php?menu=" + $.get("menu") + "&mod=rooms";
 												window.location = url;
 											}
 										);				
