@@ -1736,16 +1736,23 @@
 		 */
 		 public function insertMaintenance($userId, $componentId, $transactionId, $maintenanceComment, $maintenanceDate)
 		{
-			$insert = "INSERT INTO komp_vorgang (k_id, v_id, b_id, comment, datum)
-						VALUES (".$componentId.", ".$transactionId.", ".$userId.", ".$maintenanceComment.", ".$maintenanceDate.");";
-						
-			mysql_query($insert);
-			
-			$select = "SELECT MAX(kom_id) as ID from komp_vorgang;";
+			$select = "SELECT v_id FROM komp_vorgang WHERE k_id = ".$componentId." Order by kom_id desc LIMIT 1";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
-			return $row["ID"];
+			if($row["v_id"] == '1')
+			{
+				$insert = "INSERT INTO komp_vorgang (k_id, v_id, b_id, comment, datum)
+							VALUES (".$componentId.", ".$transactionId.", ".$userId.", ".$maintenanceComment.", ".$maintenanceDate.");";
+							
+				mysql_query($insert);
+				
+				$select = "SELECT MAX(kom_id) as ID from komp_vorgang;";
+				$Data = mysql_query($select);
+				$row = mysql_fetch_assoc($Data);
+				
+				return $row["ID"];
+			}
 		}		 
 		
 		  /**
@@ -1773,6 +1780,48 @@
 			
 			$update = "UPDATE komponente SET lieferant_r_id = NULL WHERE k_id = ".$componentId.";";
 			mysql_query($update);
+		 }
+		 
+		  /**
+		 * delete Corpses.
+		 *
+		 * @return 1 - true
+		 *		   2 - false
+		 *
+         * @author Leon Geim <leon.geim@gmail.com>		  
+		 */
+		 public function deleteCorpses()
+		 {
+			$select = "SELECT * FROM komponente WHERE k_name is NULL OR k_name = ''";
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$delete = "DELETE 
+							FROM komponente_komponente 
+							WHERE komponenten_k_id = ".$row["k_id"]." 
+							OR komponenten_k_id_teil = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komponente_kattribut 
+							WHERE komponenten_k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komp_vorgang 
+							WHERE k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);
+				
+				$delete = "DELETE 
+							FROM komponente 
+							WHERE k_id = ".$row["k_id"]."";
+							
+				mysql_query($delete);			
+			}
+			
 		 }
 	}
 ?>
