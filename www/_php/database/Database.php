@@ -40,7 +40,9 @@
 					mysql_connect("itv_v1", "root", "");
 				}
 			} else {
-				mysql_connect("10.9.4.55", "itv_v1", "");
+				@fclose($x);
+				if (!@mysql_connect("10.9.4.55", "itv_v1", ""))
+					mysql_connect("localhost", "itv_v1", "");
 			}
 			
 			mysql_select_db("itv_v1") or die (mysql_error());
