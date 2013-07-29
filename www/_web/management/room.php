@@ -228,6 +228,7 @@
 			 */
 			private $_rowCount;
 			
+			
 			/**
 			 *  function to display components
 			 * 
@@ -432,13 +433,13 @@
 		$controller = new ComponentController($view, $database);	
 			
 		// select room to change
-		$controller->selectComponent(GET('room'));		
+		$controller->selectDevicesForRoomId(GET('room'));		
 
 		
 	?>
 	
 	<div id="dialog" title="Raum l&ouml;schen?">
-		<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
+		<p>Sind Sie sicher, dass Sie diesen Raum l&ouml;schen wollen?</p>
 	</div>
 	
 	<!---

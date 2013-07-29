@@ -219,6 +219,7 @@
 						FROM komponente kom
 						WHERE deletedFlag = 0
 						ORDER BY kom.k_id asc;";
+						
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -236,7 +237,6 @@
 				$entity->componentHasProblems = $row['v_id'];
 				$entityArray[] = $entity;
 			}
-			
 			return $entityArray;
 		}
 		
@@ -1128,7 +1128,7 @@
 				{
 					$entitySubArray[] = $rowSubSelect['zw_wert'];
 				}
-				echo var_export($entitySubArray);
+
 				$entity->componentAttributeValidValue = $entitySubArray;
 				$entityArray[] = $entity;
 			}
@@ -1347,7 +1347,6 @@
 						INNER JOIN komponente kom ON kom.k_id = sub.komponenten_k_id_teil
 						WHERE
 							sub.komponenten_k_id_aggregat = ".$id.";";
-					   
 			$Data = mysql_query($select);
 			
 			$entityArray = array();
@@ -1992,25 +1991,35 @@
 		 }
 		 
 		 /**
-		  *  function to get Devices by RoomId
+		  *  function to get component by componentId
 		  * 
 		  * @param int $id componentId
 		  *
 		  * @return ComponentEntity
 		  * 
 		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  * @author Adrian Geuss <adriangeuss@gmail.com>
 		  */
 		 public function getComponentbyComponentId($id)
 		 {
-			$select = "SELECT kom.*,  CASE WHEN (Select v_id
-									FROM komp_vorgang kova 
-									WHERE kova.k_id = kom.k_id
-									Order by Datum DESC
-               						LIMIT 1) = 2 then true else false end as v_id
-						FROM raeume rae
-						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
-						INNER JOIN komponente_komponente koko ON koko.komponenten_k_id_aggregat = kom.k_id 
-						WHERE kom.k_device = 1 AND kom.k_id = ".$id.";";;
+		 	/*
+			 *  FIXME: Does anyone need this query? Purpose?
+			 * 	
+			 */
+		 	
+			// $select = "SELECT kom.*,  CASE WHEN (Select v_id
+									// FROM komp_vorgang kova 
+									// WHERE kova.k_id = kom.k_id
+									// Order by Datum DESC
+               						// LIMIT 1) = 2 then true else false end as v_id
+						// FROM raeume rae
+						// INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
+						// INNER JOIN komponente_komponente koko ON koko.komponenten_k_id_aggregat = kom.k_id 
+						// WHERE kom.k_device = 1 AND kom.k_id = ".$id.";";
+			$select = "SELECT *
+						FROM komponente
+						WHERE k_device = 0 AND deletedFlag = 0 AND k_id = ".$id.";";
+
 			$Data = mysql_query($select);			
 			$row = mysql_fetch_assoc($Data);
 			
@@ -2025,7 +2034,38 @@
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
 				$entity->componentIsDevice = $row['k_device'];
-				$entity->componentHasProblems= $row['v_id'];
+				
+			return $entity;  
+		 }
+		 
+		 /**
+		  *  function to get device by device id
+		  * 
+		  * @param int $id deviceId
+		  *
+		  * @return ComponentEntity
+		  * 
+		  * @author Adrian Geuss <adriangeuss@gmail.com>
+		  */
+		 public function getDevicebyDeviceId($id)
+		 {
+			$select = "SELECT *
+						FROM komponente
+						WHERE k_device = 1 AND deletedFlag = 0 AND k_id = ".$id.";";
+			$Data = mysql_query($select);			
+			$row = mysql_fetch_assoc($Data);
+			
+			$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy= $row['k_einkaufsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier= $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
 				
 			return $entity;  
 		 }

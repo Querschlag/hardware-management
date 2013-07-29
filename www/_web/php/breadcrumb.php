@@ -348,7 +348,7 @@
 	$deviceController = new ComponentController($deviceView, $database);	
 		
 	// select room to change
-	$deviceController->selectDevice(GET('device'));	
+	$deviceController->selectDevice();	
 	
 	
 	
@@ -524,17 +524,7 @@
 		 * 
 		 * @author Adrian Geuss <adriangeuss@gmail.com>
 		 */
-		public function getDeviceId()
-		{
-			// return value to return
-			$retVal = NULL;					
-			
-			// check and set room id
-			if(isset($_GET['device'])) $retVal = $_GET['device'];
-			
-			// return value
-			return $retVal;
-		}
+		public function getDeviceId(){}
 	}
 
 	// create view object

@@ -667,4 +667,16 @@
 		  */
 		 public function getComponentbyComponentId($id);		 
 		 
+		 
+		 /**
+		  *  function to get device by device id
+		  * 
+		  * @param int $id deviceId
+		  *
+		  * @return ComponentEntity
+		  * 
+		  * @author Adrian Geuss <adriangeuss@gmail.com>
+		  */
+		 public function getDevicebyDeviceId($id);
+		 
 }

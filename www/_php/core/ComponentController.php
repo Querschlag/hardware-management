@@ -82,13 +82,13 @@
 		{
 			// get device id
 			$deviceId = $this->_view->getDeviceId();
-			
+
 			// check device id
 			if(isset($deviceId))
 			{
 				// get device from databse
-				$device = $this->_database->getComponentByComponentId($deviceId);
-				
+				$device = $this->_database->getDevicebyDeviceId($deviceId);
+
 				// check device
 				if(isset($device))
 				{

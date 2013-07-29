@@ -171,8 +171,15 @@
 				
 				print '<ul class="components">';
 				
-				foreach ($components as $key => $componentEntity) {
-					print '<li><a href="index.php' . navParams(array('mod' => 'component', 'component' => $componentEntity->componentId)) . '">' . $componentEntity->componentName . '</a></li>';
+				if (sizeof($components) == 0)
+				{
+					print '<li>Keine Komponenten verbaut.</a></li>';
+				}
+				else
+				{
+					foreach ($components as $key => $componentEntity) {
+						print '<li><a href="index.php' . navParams(array('mod' => 'component', 'component' => $componentEntity->componentId)) . '">' . $componentEntity->componentName . '</a></li>';
+					}
 				}
 					
 				print '</ul>';
