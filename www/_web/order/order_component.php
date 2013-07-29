@@ -32,7 +32,7 @@
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Bestellen" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<input onClick="location.href = \'index.php?mod=order\'" type="button" value="Abbrechen" />
 			</form>
 			';
 
@@ -47,9 +47,10 @@
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/EthernetCable.png" /><p>Ethernet Kabel</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/Motherboard.png" /><p>Motherboard</p></div>
 				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/component_icons/RCAConnector_Plug.png" /><p>Audio Anschluss</p></div>
+				<div class="deviceButton"><input name="btnSubmit" type="image" src="img/add-button.png" /><p>Typ hinzuf&uuml;gen</p></div>
 				<input name="step" value="2" type="hidden" />
-				<div class="clearfix" />
-				<input onClick="location.href = \'index.php?mod=order\'"; type="button" value="Abbrechen" />
+				<div class="clearfix"></div>
+				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=order\'" type="button" value="Abbrechen" /></div>
 			</form>
 			';
 		

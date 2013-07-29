@@ -1,4 +1,9 @@
-<?php require_once('php/navigation.php'); ?>
+<?php
+	require_once('php/navigation.php'); 
+
+	// Workaround: Replaces usage of GET parameter 'menu'
+	$_SESSION['selectedMainMenuItem'] = GET('menu');
+?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -10,9 +15,115 @@
 </div>
 <div id="module">
 	<div id="action_bar">
-		<a class="left" href="index.php?mod=createRoom<?php echo '&menu=' . GET('menu');?>">Raum hinzuf&uuml;gen</a>
-		<a class="right" href="index.php?mod=supplier">Lieferanten</a>
-		<a class="right" href="index.php?mod=user">Benutzer</a>
+		<?php
+			
+			require_once('php/actionbar.php');
+			
+			/**
+			* RoomsActionBarController class
+			*
+			* Controller displaying actionbar buttons for rooms
+			*
+			* @category 
+			* @package
+			* @author Adrian Geuss <adriangeuss@gmail.com>
+			* @copyright 2013 IFA11B2 IT-Team2
+			*/
+			
+			class RoomsActionBarController extends ActionBarController
+			{
+		
+				/**
+				 *  function action button for adding a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddRoom()
+				{
+					echo '<a class="left" href="index.php' . navParams( array("mod" => "createRoom"), false ) . '">Raum hinzuf&uuml;gen</a>';
+				}
+				
+				/**
+				 *  function action button for user management 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonUserManagement()
+				{
+					echo '<a class="right" href="index.php' . navParams( array("mod" => "user"), false ) . '">Benutzer</a>';
+				}
+				
+				/**
+				 *  function action button for supplier
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonSupplier()
+				{
+					echo '<a class="right" href="index.php' . navParams( array("mod" => "supplier"), false ) . '">Lieferanten</a>';
+				}
+				
+				/**
+				 *  function action button for adding a device
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddDevice() {}
+				
+				/**
+				 *  function action button for editing a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonEditRoom() {}
+				
+				/**
+				 *  function action button for deleting a room 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonDeleteRoom() {}
+				
+				/**
+				 *  function action button for adding a component 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonAddComponent() {}
+				
+				/**
+				 *  function action button for fixing a problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonFixProblem() {}
+				
+				/**
+				 *  function action button for reporting problem 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonReportProblem() {}
+				
+				/**
+				 *  function action button for scraping a device 
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapDevice() {}
+				
+				/**
+				 *  function action button for scraping a component
+				 *
+				 * @author Adrian Geuss <adriangeuss@gmail.com>
+				 */
+				protected function displayActionButtonScrapComponent() {}
+			}
+			
+			$actionbar = new RoomsActionBarController( array('menu' => menuItem(), 'mod' => GET('mod')) );
+			$actionbar->displayActionBar();
+		?>
+	
 		<div class="clearfix"></div>
 	</div>
 	
@@ -75,7 +186,10 @@
 				}
 				
 				// print list element
-				print '<li><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
+				$requiresMaintenance = true;
+				print '<li ';
+				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"';
+				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 
 				// increase row count
 				$this->_rowCount++;			
@@ -238,21 +352,21 @@
 	<!-- mock rooms
 	<h2>Erdgeschoss</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 1); ?>">R001</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 2); ?>">R002</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 3); ?>">R003</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R001</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R002</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R003</a></li>
 	</ul>
 	<h2>Stockwerk 1</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 4); ?>">R101</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 5); ?>">R102</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 6); ?>">R103</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R101</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R102</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R103</a></li>
 	</ul>
 	<h2>Stockwerk 2</h2>
 	<ul class="rooms">
-		<li><a href="index.php<?php echo navParams(null, 'room', 7); ?>">R201</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 8); ?>">R202</a></li>
-		<li><a href="index.php<?php echo navParams(null, 'room', 9); ?>">R203</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R201</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R202</a></li>
+		<li><a href="index.php<?php echo navParams(array('mod' => 'room', 'room' => 1)); ?>">R203</a></li>
 	</ul>
 	-->
 </div>

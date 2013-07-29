@@ -1,4 +1,5 @@
 <?php
+	require_once('php/navigation.php');
 	
 	require_once('php/additions.php');
 		
@@ -136,7 +137,7 @@
 			$retVal = NULL;					
 			
 			// check and set room id
-			if(isset($_GET['roomId'])) $retVal = $_GET['roomId'];
+			if(isset($_GET['room'])) $retVal = $_GET['room'];
 			
 			// return value
 			return $retVal;
@@ -155,9 +156,6 @@
 	// select room to change
 	$controller->selectRoom();		
 
-			
-	/*<li>>> <a href="index.php?mod=room<?php echo '&menu=' . GET('menu');?>"><?php echo $view->getRoomNumber(); ?></a></li>
-	*/
 	
 	/**
 	 * Breadcrumb composer
@@ -177,35 +175,24 @@
 	// main menu item
 	$menuItem = GET('menu');
 	
-	echo '<li> >> <a href="index.php' . menuParams() . '&mod=rooms">';
+	echo '<li> >> <a href="index.php' . navParams( array('mod' => 'rooms'), false ) . '">';
 	
-	if ($menuItem == 'scrap')
-		echo 'Ausmustern';
-	else if ($menuItem == 'maintenance')
-		echo 'Wartung';
-	else if ($menuItem == 'reporting')
-		echo 'Reporting';
-	else if ($menuItem == 'management')
-		echo 'Stammdaten';
-	
+	echo menuTitle($menuItem);
+
 	echo '</a></li>';
 	
 	// rest of navigation tree based on GET params
 	// FIXME: Load names for selected room, device, component from database
 	if (GET('room'))
-		echo '<li> >> <a href="index.php' . menuParams() .
-		'&mod=room&room=' . GET('room') .
-		'">R001</a></li>';
-		
+		echo '<li> >> <a href="index.php' .
+		navParams( array('mod' => 'room', 'room' => GET('room')), false ) .
+		'">' . $view->getRoomNumber() . '</a></li>';
 	if (GET('device'))
-		echo '<li> >> <a href="index.php' . menuParams() .
-		'&mod=device&room=' . GET('room') .
-		'&device=' . GET('device') .
+		echo '<li> >> <a href="index.php' . 
+		navParams( array('mod' => 'device', 'room' => GET('room'), 'device' => GET('device')), false ) .
 		'">PC001</a></li>'; 
 	if (GET('component'))
-		echo '<li> >> <a href="index.php' . menuParams() .
-		'&mod=component&room=' . GET('room') .
-		'&device=' . GET('device') .
-		'&component=' . GET('component') .
+		echo '<li> >> <a href="index.php' .
+		navParams( array('mod' => 'component', 'room' => GET('room'), 'device' => GET('device'), 'component' => GET('component')), false ) .
 		'">Komponente 1</a></li>';
 ?>

@@ -10,22 +10,26 @@
 	</ul>
 </div>
 <div id="module">
+	<!--
+		//TODO
+		
+		When providing this form with functionality, please modify the 'mod' parameter to point to the current
+		module (see /php/navigation.php for more details), so you can make use of the auto appended id of
+		user,room,device,component,supplier and so on.
+		
+		After doing your update and validation stuff use this:
+		
+			header( "Location: index.php" . echo navParams(array('mod' => '<upperModule>')) );
+		
+		to redirect to the page where you came or started the wizard from.
+	-->
 	<!-- FIXME: Post on module to handle inputs. After that redirect to upper nav item. -->
 	<form method="post">
 		
 		<?php
-		
-			// check room id
-			if(isset($_GET['roomId']))
-			{
-				// print site header
-				print '<h3>Raum &auml;ndern</h3>';				
-			}
-			else
-			{
-				// print site header
-				print '<h3>Raum hinzuf&uuml;gen</h3>';					
-			}
+
+			// print site header
+			print '<h3>Raum hinzuf&uuml;gen</h3>';					
 		
 			// include IRoom
 			require_once('../_php/interface/IRoom.php');
@@ -175,7 +179,7 @@
 					$retVal = NULL;					
 					
 					// check and set room id
-					if(isset($_GET['roomId'])) $retVal = $_GET['roomId'];
+					if(isset($_GET['room'])) $retVal = $_GET['room'];
 					
 					// return value
 					return $retVal;
@@ -196,7 +200,7 @@
 				isset($_POST['number'])	== FALSE 	&&
 				isset($_POST['name'])	== FALSE	&&
 				isset($_POST['note'])	== FALSE	&&
-			 	isset($_GET['roomId'])  == TRUE)
+			 	isset($_GET['room'])  == TRUE)
 				{							
 					// select room to change
 					$controller->selectRoom();
@@ -229,7 +233,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// no redirect
-					header( "Location: index.php?mod=rooms" );
+					header( "Location: index.php" . navParams() );
 				}
 			}
 			else if(isset($_POST['btnChangeSubmit']))
@@ -241,7 +245,7 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// redirect
-					header( "Location: index.php?mod=rooms" );
+					header( "Location: index.php" . navParams(array('mod' => 'rooms')) );
 				}				
 			}
 		?>
@@ -249,7 +253,7 @@
 		<p class="require">* Pflichtfeld</p>
 		
 		<?php  
-			if(isset($_GET['roomId']))
+			if(isset($_GET['room']))
 			{
 				// print change button
 				print '<input name="btnChangeSubmit" type="submit" value="&Auml;ndern" />';				
@@ -260,7 +264,7 @@
 				print '<input name="btnAddSubmit" type="submit" value="Hinzuf&uuml;gen" />';					
 			}
 		?>
-		<input onClick="location.href = 'index.php?mod=rooms'"; type="button" value="Abbrechen" />	
+		<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'rooms')); ?>'" type="button" value="Abbrechen" />	
 
 	</form>
 </div>

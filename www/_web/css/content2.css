@@ -1,0 +1,413 @@
+@import "http://fonts.googleapis.com/css?family=Armata";
+
+body {
+    font-family: 'Armata','Nunito',Arial,Verdana,sans-serif;
+    margin: 0 auto;
+    min-width: 320px;
+    background-color:#323544;
+}
+.left {
+    float: left;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.left {
+		margin: 15px auto;
+	}
+}
+.right {
+    float: right;
+}
+a {
+    color: #777777;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+a:hover {
+    color:#68CC14;
+}
+a:focus {
+    outline: medium none;
+}
+p {
+    font-size: 14px;
+}
+hr {
+    border: 1px solid #DDDDDD;
+    margin-bottom: 30px;
+}
+input {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 2px 8px;
+}
+select {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px 6px 6px 6px;
+    padding: 2px 8px;
+}
+textarea {
+    border: 1px solid #CCCCCC;
+    border-radius: 6px 6px 6px 6px;
+    padding: 2px 8px;
+}
+#header {
+    background-color: #323544;
+    height: 80px;
+    margin-bottom: 0;
+    padding-bottom: 80px;
+    padding-top: 100px;
+}
+#top_nav {
+    margin: 0 auto;
+}
+#top_nav h1 {
+    color: #EEEEEE !important;
+    text-align: center;
+}
+#top_nav h1 a {
+    color: #EEEEEE;
+    font-size: 6vmin;
+}
+#top_nav ul {
+    list-style: none outside none;
+}
+#top_nav li {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26) 0%, transparent 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #CCCCCC;
+    border-radius: 1em 1em 1em 1em;
+    float: left;
+    margin: 0 2px;
+    padding: 0 10px;
+}
+#top_nav li:hover {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 1%, transparent 52%, rgba(0, 0, 0, 0.15) 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #AAAAAA;
+}
+#top_nav h1 {
+    font-size: 14px;
+    font-weight: 100;
+    margin: 8px 0;
+}
+#user_bar_wrapper {
+    background-color: #454A59;
+    border-radius: 3px 3px 3px 3px;
+    color: #EEEEEE;
+    height: 36px;
+    overflow: hidden;
+    position: absolute;
+    right: 195px;
+    top:6px;
+    transition: all 0.2s ease-in-out 0s;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar_wrapper {
+		right:25%;
+		top:40px;
+	}
+}
+#user_bar {
+    position: relative;
+    margin:0 auto;
+    max-width:1200px;
+}
+#user_bar_wrapper:hover {
+    background-color: #EEEEEE;
+    box-shadow: 0 1px 1px 1px #999999;
+    color: #666666;
+    height: 74px;
+}
+#user_bar ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 2px 0 0;
+}
+#user_bar .user {
+    padding: 6px 12px 6px 18px;
+    border-bottom:2px solid #ccc;
+}
+#user_bar .logout {
+    height: 40px;
+}
+#user_bar .logout a {
+    display: block;
+    height: 100%;
+    padding: 6px 18px;
+    width: 100%;
+}
+#user_bar a:hover {
+    background-color: #999999;
+    color: #EEEEEE;
+}
+#user_bar .arrowDown {
+    margin-left: 4px;
+}
+#login {
+	margin:0 auto;
+	width:200px;
+	text-align:center;
+}
+#content {
+    clear: both;
+    background-color:#fff;
+    padding: 0 15px
+}
+#breadcrumb_nav {
+    padding: 6px;
+    background-color:#fff;
+    margin:0 auto;
+    max-width:800px;
+}
+#breadcrumb_nav ul {
+    list-style: none outside none;
+    margin: 4px 0;
+    padding-left: 0px;
+}
+#breadcrumb_nav ul li {
+    color: #555555;
+    display: inline;
+    text-shadow: 1px 1px white, -1px -1px #DDDDDD;
+}
+#module {
+    background-color: #FFFFFF;
+    padding-bottom:24px;
+    display:block;
+    background-color:#fff;
+    margin:0 auto;
+    max-width:812px;
+}
+#action_bar {
+    border-bottom: 2px solid #DDDDDD;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+#action_bar a.left {
+    margin-right: 10px;
+}
+#action_bar a.right {
+    margin-left: 10px;
+}
+#action_bar a, #action_bar button {
+    background-color: #DDDDDD;
+    color: #444444;
+    padding: 6px 16px;
+    border-radius:3px;
+    margin: 6px 0;
+}
+#action_bar a:hover, #action_bar button:hover {
+    background-color: #999999;
+    color: #EEEEEE;
+    transition: color 0.1s ease 0s, background-color 0.2s ease 0s;
+}
+table {
+    border: 1px outset #DDDDDD;
+    border-spacing: 2px;
+    font-size: 14px;
+}
+td {
+    border: 1px solid #DDDDDD;
+    padding: 5px 8px;
+}
+.tableHead {
+    font-weight: bold;
+}
+form p {
+    margin: 10px 0;
+}
+.abortButton {
+    float: right;
+}
+.destructiveButton {
+    background-color: #D45E61 !important;
+}
+.hardwareProblem {
+	background-image: url("../img/warning.png");
+	background-repeat: no-repeat;
+	background-size: 20px 20px;
+	padding-left:26px;
+}
+#footer {
+    background-color: #323544;
+    color: #EEEEEE;
+    font-size: 13px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+#footer a {
+	color:#fff;
+}
+#footer a:hover {
+	color:#68CC14;
+}
+#footer input {
+	border:none;
+	width: 50px;
+	background-color:#323544;
+	transition: all 0.2s;
+	color:#68CC14;
+}
+.require {
+    color: red;
+}
+.logo {
+    width: 200px;
+}
+.cancelButton {
+    margin: 20px auto 0;
+    width: 95px;
+}
+#launch_menu {
+    margin:0 auto;
+    text-align: center;
+    max-width:660px;
+    padding: 50px 0;
+}
+.tile a {
+    background-color: #CCCCCC;
+    border: 2px solid #BBBBBB;
+    border-radius: 3px 3px 3px 3px;
+    display: block;
+    font-size: 22px;
+    height: 100px;
+    margin: 15px 35px;
+    padding: 15px;
+    transition: color 0.1s ease 0s, background-color 0.2s ease 0s, transform 0.1s ease 0s;
+    width: 220px;
+    float:left;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	.tile a {
+		float:none!important;
+		margin: 15px auto;
+	}
+}
+.tile a p {
+}
+.tile a:hover {
+    background-color: #999999;
+    border: 2px solid #888888;
+    color: #EEEEEE;
+    text-shadow: 2px 2px #777777;
+    transform: scale(1);
+}
+.lastTile {
+    margin: 0 auto;
+    width: 323px;
+}
+#launch_menu a {
+    background-position: 50% 80%;
+    background-repeat: no-repeat;
+}
+#launch_menu #order a {
+    background-image: url("../img/launchscreen/order.png");
+}
+#launch_menu #stock a {
+    background-image: url("../img/launchscreen/stock.png");
+}
+#launch_menu #management a {
+    background-image: url("../img/launchscreen/management.png");
+}
+#launch_menu #scrap a {
+    background-image: url("../img/launchscreen/scrap.png");
+}
+#launch_menu #maintenance a {
+    background-image: url("../img/launchscreen/maintenance.png");
+}
+#launch_menu #reporting a {
+    background-image: url("../img/launchscreen/reporting.png");
+}
+#launch_menu #user a {
+    background-image: url("../img/launchscreen/user.png");
+}
+.rooms {
+    list-style: none outside none;
+}
+.rooms li {
+    display: inline-block;
+    min-width: 80px;
+    margin:12px 0;
+    padding-right:40px;
+}
+.components {
+    list-style: none outside none;
+}
+.components li {
+    padding: 10px;
+}
+.support_event {
+    list-style: none outside none;
+}
+.support_event li {
+    padding: 5px;
+}
+.deviceButton {
+    float: left;
+    height: 140px;
+    margin: 0 20px;
+    text-align: center;
+    width: 89px;
+}
+.deviceButton input {
+    border: 0 none;
+}
+#order_selction {
+    margin: 60px 0;
+    text-align: center;
+    width: 100%;
+}
+.largeButton {
+    background-color: #BBBBBB;
+    display: inline-block;
+    margin: 0 30px;
+    padding: 40px 30px;
+    text-align: center;
+}
+.largeButton input {
+    background-color: #BBBBBB;
+    border: medium none;
+    font-size: 20px;
+    height: 80px;
+    width: 120px;
+}
+.orders {
+    list-style: none outside none;
+}
+.orders li {
+    padding: 5px;
+}
+.activeStep {
+    color: #999999;
+    float: left;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: bold;
+    list-style-type: none;
+    margin: 0 0.6em;
+    min-height: 3em;
+    padding-left: 2.2em;
+    width: 6em;
+}
+.inactiveStep {
+    color: #999999;
+    float: left;
+    font-size: 10px;
+    font-style: italic;
+    list-style-type: none;
+    margin: 0 0.6em;
+    min-height: 3em;
+    padding-left: 2.2em;
+    width: 6em;
+}
+.stepImage {
+    margin: 10%;
+    width: 20px;
+}
+.stepTitle {
+    float: right;
+}
+.oneActive {
+    background-image: url("img/stepprogress/Number_green_1.png");
+}

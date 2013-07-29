@@ -7,11 +7,15 @@
 	* @copyright 2013 B3ProjectGroup2
 	*/
 	
-	session_start();
+	if(!isset($_COOKIE["PHPSESSID"]))
+	{
+		session_start();
+	}
 
-	if ( !isset($_SESSION['userGroup']) || $_SESSION['userGroup'] == null)
+	if ( !isset($_SESSION['userPermission']))
 	{	
 		// Redirect to login page
+		session_destroy();
 		header('location:login.php');
 	}
 ?>
