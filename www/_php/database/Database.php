@@ -40,7 +40,9 @@
 					mysql_connect("itv_v1", "root", "");
 				}
 			} else {
-				mysql_connect("10.9.4.55", "itv_v1", "");
+				@fclose($x);
+				if (!@mysql_connect("10.9.4.55", "itv_v1", ""))
+					mysql_connect("localhost", "itv_v1", "");
 			}
 			
 			mysql_select_db("itv_v1") or die (mysql_error());
@@ -57,7 +59,7 @@
 		{   
 			$entityArray = array();
 			
-			$select = "SELECT * FROM raeume order by r_etage asc, r_nr asc;";
+			$select = "SELECT * FROM raeume WHERE r_id < 900000 ORDER BY r_etage asc, r_nr asc;";
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{
@@ -183,6 +185,13 @@
 		 */
 		public function deleteRoom($id)
 		{
+			$delete ="UPDATE  
+							komponente
+						SET lieferant_r_id = 900000
+						WHERE 
+							lieferant_r_id = ".$id.";";
+			return mysql_query($delete);
+		
 			$delete ="DELETE FROM 
 							raeume 
 						WHERE 
@@ -1056,12 +1065,24 @@
 				$entity->componentAttributeIsFromComponent = false;
 				$entity->componentAttributeUncertaintId = $row['ka_id'];
 				
+				$select = "SELECT zw_id, zw_wert FROM zulaessige_werte zw 
+							INNER JOIN kattribut_zulaessiger_wert kazw ON kazw.zulaessige_werte_zw_id = zw_id
+							WHERE kazw.komponentenattribute_kat_id = ".$row['kat_id'].";";
+				
+				$entitySubArray = array();
+				
+				$DataSubSelect = mysql_query($select);
+				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
+				{
+					$entitySubArray[$rowSubSelect['zw_id']] = $rowSubSelect['zw_wert'];
+				}
+				//echo var_export($entitySubArray);
+				$entity->componentAttributeValidValue = $entitySubArray;
+				
 				$entityArray[] = $entity;
 			}
 			
 			return $entityArray;
-					   
-					   
 		 }
 		 
 		 /**
@@ -1843,7 +1864,7 @@
 			$entityArray = array();
 		 
 			$select = "SELECT * FROM komponente WHERE k_name = '".$name."' AND
-													  lieferant_r_id is NULL LIMIT ".$count;
+													  lieferant_r_id  = 900000 LIMIT ".$count;
 			$Data = mysql_query($select);
 			while($row = mysql_fetch_assoc($Data))
 			{

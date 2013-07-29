@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Jul 2013 um 11:13
+-- Erstellungszeit: 29. Jul 2013 um 12:41
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
   `deletedFlag` tinyint(1) NOT NULL,
   PRIMARY KEY (`b_id`),
   KEY `bg_id` (`bg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Daten für Tabelle `benutzer`
@@ -48,14 +48,16 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
 
 INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`, `deletedFlag`) VALUES
 (8, 5, '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257', '', '', 'Leon', '', 1),
-(9, 6, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com', 0),
-(10, 6, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', '', 0),
+(9, 6, '*41E8D261CDE7C452D948735CF50F78197AD88590', 'Johannes', 'Alt', 'johannes.alt', 'altjohannes510@gmail.com', 0),
+(10, 6, '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Leon', 'Geim', 'leongeim', 'leongeihm95@gmail.com', 0),
 (11, 5, '*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29', 'Thomas', 'Bayer', 'thomas.bayer', 'thomasbayer95@gmail.com', 0),
 (17, 7, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Philipp', 'Schmidkunz', 'philipp.schmidkunz', 'philippschmidkunz@googlemail.com', 0),
 (18, 6, '*00A51F3F48415C7D4E8908980D443C29C69B60C9', 'Adrian', 'Geuss', 'adrian.geuss', 'adriangeuss@gmail.com', 0),
 (20, 6, '*51B76DE2A6FC620B72FA100C6BBC5A84694FE894', 'Thomas', 'Michl', 'thomas.michl', 'thomas.michl1988@gmail.com', 0),
 (21, 5, '*B0CDCEA28ACB92271CDECA35C5BF922F696B2A73', 'Phil', 'Morris', 'Phil', 'p.morris@b3-fuerth.de', 1),
-(22, 6, '*AA803D048B666A933E512AA53B36C70174A37D1E', 'Daniel', 'Schulz', 'daniel.schulz', 'schmoschu@gmail.com', 0);
+(22, 6, '*AA803D048B666A933E512AA53B36C70174A37D1E', 'Daniel', 'Schulz', 'daniel.schulz', 'schmoschu@gmail.com', 0),
+(23, 5, '*D2D84AE8B45F5B80CFD3FA312E928F43AAE31F9C', 'Max', 'Mustermann', 'max.mustermann', 'max.mustermann@test.com', 1),
+(24, 5, '*843E83DA7BAF6C5A40241F1DE74E4A2F11554D09', 'Max', 'Mustermann', 'max.mustermann', 'max.mustermann@test.com', 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `komponente` (
   KEY `fk_komponenten_haendler` (`lieferant_l_id`),
   KEY `fk_komponenten_raeume1` (`lieferant_r_id`),
   KEY `fk_komponenten_komponentenarten1` (`komponentenarten_ka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 --
 -- Daten für Tabelle `komponente`
@@ -263,7 +265,35 @@ INSERT INTO `komponente` (`k_id`, `lieferant_l_id`, `lieferant_r_id`, `k_name`, 
 (42, 3, 1, '', 1375048800, 1375135200, 'asldfnaldfn', 'ASUS', 3, 0, 0),
 (43, 1, 1, '', 1375048800, 1375135200, 'adasvavd', 'hp', 12, 1, 0),
 (44, 1, 1, 'Motherboard1', 1375048800, 1375135200, 'avasdasvd', 'ASUS', 3, 0, 0),
-(45, 1, 1, 'Motherboard1', 1375048800, 1375135200, 'avasdasvd', 'ASUS', 3, 0, 0);
+(45, 1, 1, 'Motherboard1', 1375048800, 1375135200, 'avasdasvd', 'ASUS', 3, 0, 0),
+(46, 1, 1, '', 1375048800, 1375135200, 'test', 'test', 12, 1, 1375089817),
+(47, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(48, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 0),
+(49, 1, 1, '', 1375048800, 1375135200, '', 'testprozessorhersteller', 12, 1, 1375091033),
+(50, 1, 1, 'motherboardtest', 1375048800, 1375221600, '', 'siemens', 3, 0, 1375091129),
+(51, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091239),
+(52, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091395),
+(53, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091455),
+(54, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091556),
+(55, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091614),
+(56, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375091827),
+(57, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092154),
+(58, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092409),
+(59, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092563),
+(60, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092612),
+(61, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092660),
+(62, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092866),
+(63, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375092984),
+(64, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093032),
+(65, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093041),
+(66, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093131),
+(67, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093184),
+(68, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093221),
+(69, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093277),
+(70, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093315),
+(71, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093348),
+(72, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093431),
+(73, 1, 1, '', 1375048800, 1375048800, '', '', 12, 1, 1375093458);
 
 -- --------------------------------------------------------
 
@@ -393,7 +423,13 @@ INSERT INTO `komponente_kattribut` (`komponenten_k_id`, `komponentenattribute_ka
 (37, 9, '4 GB RAM'),
 (37, 14, '4GHz'),
 (43, 9, '4 GB RAM'),
-(43, 14, '4GHz');
+(43, 14, '4GHz'),
+(46, 9, '4 GB RAM'),
+(46, 14, '4GHz'),
+(49, 9, '4 GB RAM'),
+(49, 14, '4GHz'),
+(50, 8, 'Chipsatz'),
+(50, 17, 'Festplattenspeicher');
 
 -- --------------------------------------------------------
 
@@ -408,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `komponente_komponente` (
   PRIMARY KEY (`khk_id`),
   KEY `fk_komponenten_has_komponenten_komponenten2` (`komponenten_k_id_teil`),
   KEY `fk_komponenten_has_komponenten_komponenten1` (`komponenten_k_id_aggregat`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Daten für Tabelle `komponente_komponente`
@@ -489,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=900001 ;
 
 --
 -- Daten für Tabelle `raeume`
@@ -498,13 +534,11 @@ CREATE TABLE IF NOT EXISTS `raeume` (
 INSERT INTO `raeume` (`r_id`, `r_nr`, `r_etage`, `r_bezeichnung`, `r_notiz`) VALUES
 (1, '01', 0, 'Computerraum', NULL),
 (2, '2', 0, 'Lehrerzimmer', ''),
-(12, '3', 0, 'Lehrraum', ''),
 (13, '01', 1, 'Religionsraum', NULL),
-(14, '02', 1, 'Lehrraum', NULL),
 (16, '01', 2, 'Lehrraum', NULL),
 (17, '02', 2, 'Lehrraum', NULL),
 (18, '03', 2, 'Lehrraum', NULL),
-(27, '5', 1, 'raum 5', 'raum 5');
+(900000, NULL, 0, 'Lager', NULL);
 
 -- --------------------------------------------------------
 

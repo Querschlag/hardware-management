@@ -285,6 +285,9 @@
 		// include component entity
 		require_once('../_php/entity/ComponentEntity.php');
 		
+		// include component attributeEntity
+		require_once('../_php/entity/ComponentAttributeEntity.php');
+		
 		class Component implements IComponent 
 		{
 			/**
@@ -522,18 +525,31 @@
 		else if ($step == 3) 
 		{
 			$controller->insertComponent();
-			// $attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
+			$attrList = '';
+			foreach($attributes as $attribute)
+			{
+				$attrList .= '<p>'.utf8_encode($attribute->componentAttributeName).'</p>';
+				$attrList .= '<input type="hidden" name="componentAttribute[]" value="'.$attribute->componentAttributeId.'" />';
+				
+				if($attribute->componentAttributeValidValue) {
+					
+					$attrList .= '<select name="componentAttribute[]">';
+					foreach($attribute->componentAttributeValidValue as $key => $value) {
+						$attrList .= '<option value="'.$value.'">'.$value.'</p>';
+					}
+					$attrList .= '</select>'; 
+				} else {
+					$attrList .= '<input type="text" name="componentAttribute[]" />';
+				}
+			}
 			
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Attribut 1</p>
-				<input type="hidden" name="componentAttribute[]" value="9" />
-				<input name="attributeValue[]" type="text" value="4 GB RAM" />
-				<p>Attribut 2</p>
-				<input type="hidden" name="componentAttribute[]" value="14" />
-				<input name="attributeValue[]" type="text" value="4GHz" />
+				'.$attrList.'
 				<input type="hidden" name="step" value="4" />
 				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
@@ -681,10 +697,14 @@
 					<optgroup label="W&auml;hle einen Lieferant"></optgroup>
 					'.$delivererList.'
 				</select>
-				<p>Hersteller</p><input name="supplier" type="text"/>
-				<p>Kaufdatum</p><input name="buy" type="date"/>
-				<p>Gew&auml;hrleistung in Jahren</p><input name="warranty" type="number"/>
-				<p>Notiz</p><textarea name="note" rows=6 cols=30></textarea>
+				<p>Hersteller</p>
+				<input name="supplier" type="text"/>
+				<p>Kaufdatum</p>
+				<input name="buy" type="date"/>
+				<p>Gew&auml;hrleistung in Jahren</p>
+				<input name="warranty" type="number"/>
+				<p>Notiz</p>
+				<textarea name="note" rows=6 cols=30></textarea>
 				<input name="step" value="3" type="hidden" />
 				<input type="hidden" name="type" value="'.$view->getComponentTypes().'">
 				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'">

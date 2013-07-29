@@ -3,13 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Jul 2013 um 09:53
+-- Erstellungszeit: 29. Jul 2013 um 12:49
 -- Server Version: 5.5.32
 -- PHP-Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 SET FOREIGN_KEY_CHECKS=0;
+
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -37,16 +38,17 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
   `b_nachname` varchar(40) NOT NULL,
   `b_name` varchar(40) NOT NULL,
   `b_email` varchar(255) NOT NULL,
+  `deletedFlag` tinyint(1) NOT NULL,
   PRIMARY KEY (`b_id`),
   KEY `bg_id` (`bg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`) VALUES
-(8, 6, '*4ACFE3202A5FF5CF467898FC58AAB1D615029441', '', '', 'Admin', '');
+INSERT INTO `benutzer` (`b_id`, `bg_id`, `b_pw`, `b_vorname`, `b_nachname`, `b_name`, `b_email`, `deletedFlag`) VALUES
+(1, 6, '*4ACFE3202A5FF5CF467898FC58AAB1D615029441', '', '', 'Admin', '', 0);
 
 -- --------------------------------------------------------
 
@@ -204,11 +206,12 @@ CREATE TABLE IF NOT EXISTS `komponente` (
   `k_hersteller` varchar(45) DEFAULT NULL,
   `komponentenarten_ka_id` int(11) DEFAULT NULL,
   `k_device` tinyint(1) DEFAULT NULL,
+  `k_erstellungszeit` int(11) NOT NULL,
   PRIMARY KEY (`k_id`),
   KEY `fk_komponenten_haendler` (`lieferant_l_id`),
   KEY `fk_komponenten_raeume1` (`lieferant_r_id`),
   KEY `fk_komponenten_komponentenarten1` (`komponentenarten_ka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 -- --------------------------------------------------------
 
@@ -324,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `komponente_komponente` (
   PRIMARY KEY (`khk_id`),
   KEY `fk_komponenten_has_komponenten_komponenten2` (`komponenten_k_id_teil`),
   KEY `fk_komponenten_has_komponenten_komponenten1` (`komponenten_k_id_aggregat`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -343,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `komp_vorgang` (
   KEY `k_id` (`k_id`),
   KEY `v_id` (`v_id`),
   KEY `b_id` (`b_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -363,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `lieferant` (
   `l_email` varchar(45) DEFAULT NULL,
   `l_land` char(40) NOT NULL,
   PRIMARY KEY (`l_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -378,7 +381,20 @@ CREATE TABLE IF NOT EXISTS `raeume` (
   `r_bezeichnung` varchar(45) DEFAULT NULL COMMENT 'z.B. Werkstatt, Lager,...',
   `r_notiz` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=900001 ;
+
+--
+-- Daten für Tabelle `raeume`
+--
+
+INSERT INTO `raeume` (`r_id`, `r_nr`, `r_etage`, `r_bezeichnung`, `r_notiz`) VALUES
+(1, '01', 0, 'Computerraum', NULL),
+(2, '2', 0, 'Lehrerzimmer', ''),
+(13, '01', 1, 'Religionsraum', NULL),
+(16, '01', 2, 'Lehrraum', NULL),
+(17, '02', 2, 'Lehrraum', NULL),
+(18, '03', 2, 'Lehrraum', NULL),
+(900000, NULL, 0, 'Lager', NULL);
 
 -- --------------------------------------------------------
 
