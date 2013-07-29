@@ -93,7 +93,7 @@ textarea {
     background-color: #454A59;
     border-radius: 3px 3px 3px 3px;
     color: #EEEEEE;
-    height: 36px;
+    height: 35px;
     overflow: hidden;
     position: absolute;
     right: 195px;
@@ -331,6 +331,10 @@ form p {
     min-width: 80px;
     margin:12px 0;
     padding-right:40px;
+}
+.problems{
+	font-size:14px;
+	color:#D45E61;
 }
 .components {
     list-style: none outside none;

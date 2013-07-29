@@ -73,6 +73,100 @@
 			}
 		}
 		
+		/** 
+		 * Select a device and print the device on UI
+		 * 
+		 *  @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function selectDevice()
+		{
+			// get device id
+			$deviceId = $this->_view->getDeviceId();
+			
+			// check device id
+			if(isset($deviceId))
+			{
+				// get device from databse
+				$device = $this->_database->getDeviceByDeviceId($deviceId);
+				
+				// check device
+				if(isset($device))
+				{
+					// display room
+					$this->_view->displayRoom($device->deviceRoom);
+					
+					// display device
+					// TODO: Add more properties
+					$this->_view->displayDevice(
+						$device->deviceId, 
+						$device->deviceNumber,
+						$device->deviceName, 
+						$device->deviceNote);
+				}
+			}	
+		}
+		
+		/**
+		 *  Select all devices for given room and print the devices on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectDevicesForRoomId($roomId)
+		{	
+			// get devices from database
+			$allDevices = $this->_database->getComponentDevicesByRoomId($roomId);
+			
+			// create device types array
+			$deviceTypes = array();
+			
+			// create store for device problems
+			$deviceProblemCount = 0;
+			
+			// check device types
+			if($allDevices)
+			{			
+				// iteration over all devices
+				foreach($allDevices as $deviceEntity)
+				{
+					// add device to device type list
+					$deviceTypes[$deviceEntity->componentType][] = $deviceEntity;		
+					
+					if ($deviceEntity->componentHasProblems)
+						$deviceProblemCount++;			
+				}
+			}			
+			
+			// check problem count
+			if($deviceProblemCount > 0)
+			{
+				// display problems
+				$this->_view->displayProblemCount($deviceProblemCount);
+			}
+			
+			// iteration over all device types
+			foreach($deviceTypes as $deviceTypeId=>$devices)
+			{
+				// display device type name
+				$deviceTypeEntity = $this->_database->getComponentTypeById($deviceTypeId);
+				$this->_view->displayDeviceType($deviceTypeEntity->typeName);
+				
+				// iteration over the device type  devices
+				foreach($devices as $device)
+				{
+					// display room
+					$this->_view->displayDevice(
+						$device->componentId,
+						$device->componentRoom,
+						$device->componentName, 
+						$device->componentNote,
+						$device->componentHasProblems);	
+				}
+				
+				// display room end
+				$this->_view->displayDeviceTypeEnd();
+			}
+		}
+		
 		/**
 		 *  Insert a new Component to database
 		 *

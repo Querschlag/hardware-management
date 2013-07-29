@@ -19,6 +19,34 @@
 		public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice);
 		
 		/**
+		 *  function to display device
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems=false);
+		
+		/**
+		 *  function to display floor
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function displayDeviceType($deviceTypeName);
+		
+		/**
+		 *  function to display floor
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function displayDeviceTypeEnd();
+		
+		/** 
+		 *  function to display problem count
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function displayProblemCount($count);
+		
+		/**
 		 *  function to get component id
 		 * 
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>

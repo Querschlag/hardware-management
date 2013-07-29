@@ -141,7 +141,7 @@
 		public function insertRoom($floor, $number, $name, $note)
 		{
 			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz) 
-						VALUES(".$number. ", ".$floor.", '".$name."', '".$note."')";
+						VALUES('$number', $floor, '$name', '$note')";
 			mysql_query($insert)  or die(mysql_error());
 			
 			$select = "SELECT r_id FROM raeume ORDER BY r_id desc LIMIT 1";
@@ -149,7 +149,6 @@
 			$row = mysql_fetch_assoc($Data);
 			
 			return $row["r_id"];
-			
 		}
 		
 		/**
@@ -1273,13 +1272,17 @@
 		 */
 		 public function getComponentTypeById($id)
 		 {
+		 	if(file_exists('../entity/RoomEntity.php')) require_once('../entity/ComponentTypeEntity.php');
+		 	if(file_exists('../_php/entity/RoomEntity.php')) require_once('../_php/entity/ComponentTypeEntity.php');
+			
 			$select = "SELECT ka_id, ka_komponentenart, ka_link
 					   FROM komponentenarten
 						WHERE
 							ka_id = ".$id.";";
-					   
-			$Data = mysql_query($select);
-			$row = mysql_fetch_assoc($Data);
+							
+			$data = mysql_query($select);
+		   
+			$row = mysql_fetch_assoc($data);
 			
 			$entity = new ComponentTypeEntity();
 			$entity->typeId = $row['ka_id'];
@@ -1919,7 +1922,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];

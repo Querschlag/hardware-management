@@ -19,6 +19,13 @@
 		public function selectComponents();
 		
 		/**
+		 *  Select all devices and print the room on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectDevicesForRoomId($roomId);
+		
+		/**
 		 *  function insert a new component
 		 *
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
