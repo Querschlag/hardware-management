@@ -186,6 +186,7 @@
 				}
 				
 				// print list element
+				print '<li ';
 				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $roomHasProblems) print 'class="hardwareProblem"';
 				print '><a href="index.php' . navParams(array('mod' => 'room', 'room' => $id)) . '">' . $number . '</a></li>';
 

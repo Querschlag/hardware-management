@@ -8,6 +8,254 @@
 	</ul>
 </div>
 <div id="module">
+	
+	<?php
+			$step = POST('step');
+	
+	if ($step == 7) 
+		{
+			
+			
+		}
+		else if ($step == 6) 
+		{
+			
+			$room = POST('room');
+		
+			if($room == 0)
+			{
+				header('location:index.php?mod=stock');
+			}
+			else 
+			{
+				echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+			
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+							<span class="stepTitle">Komponente hinzufügen</span>
+	
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+							<span class="stepTitle">Geräte Menge</span>
+		
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_6.png" alt="">
+				<span class="stepTitle">Raum auswählen</span>
+		
+			</li>
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+			}
+		
+		
+				
+		}
+		else if ($step == 5) 
+		{
+	echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+		
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+								<span class="stepTitle">Komponente hinzufügen</span>
+
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_5.png" alt="">
+							<span class="stepTitle">Geräte Menge</span>
+
+			</li>
+
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 4) 
+		{
+		echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+	
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+						<span class="stepTitle">Geräte Menge</span>
+			</li>
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 3) 
+		{
+			echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+			
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+	
+			</li>
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+			
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+		
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+						<span class="stepTitle">Geräte Menge</span>
+			</li>
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+
+		}
+		else if ($step == 2)
+		{	
+	echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="inactiveStep">
+				<img class="stepImage" src="img/stepprogress/Number_grey_1.png" alt="">
+			    <span class="stepTitle">Gerät wählen</span>
+
+			</li>
+			
+			<li class="activeStep">
+			<img class="stepImage" src="img/stepprogress/Number_green_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+			
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+		
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+				
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+					<span class="stepTitle">Geräte Menge</span>
+
+			</li>
+
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+		}
+		else
+		{
+		echo '
+			<div class="progress">
+			<ol>
+			
+			<li class="activeStep">
+				<img class="stepImage" src="img/stepprogress/Number_green_1.png" alt="">
+				<span class="stepTitle">Gerät wählen</span>
+
+			</li>
+			
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_2.png" alt="">
+				<span class="stepTitle">Gerät Daten</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_3.png" alt="">
+				<span class="stepTitle">Gerät Attribute</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_4.png" alt="">
+				<span class="stepTitle">Komponente hinzufügen</span>
+
+			</li>
+			<li class="inactiveStep">
+			<img class="stepImage" src="img/stepprogress/Number_grey_5.png" alt="">
+				<span class="stepTitle">Geräte Menge</span>
+</li>
+			<div class="clearfix"></div>
+			</ol>
+		</div>';
+		
+		}
+	?>
+	
+	
 	<h3>Ger&auml;t anlegen</h3>
 	<!--
 		//TODO
@@ -173,7 +421,7 @@
 			// create controller object
 			$controller = new ComponentController($view, $database);
 		
-		$step = POST('step');
+
 		
 		if ($step == 7) 
 		{
