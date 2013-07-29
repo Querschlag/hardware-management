@@ -295,7 +295,7 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 			 */
-			public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
+			public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
 			
 			/**
 			 *  function to get component id

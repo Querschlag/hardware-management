@@ -59,7 +59,7 @@
 			foreach($components as $component)
 			{							
 				// display components
-				$this->_view->displayComponents(
+				$this->_view->displayComponent(
 					$component->componentId,
 					$component->componentDeliverer,
 					$component->componentRoom,
@@ -87,21 +87,52 @@
 			if(isset($deviceId))
 			{
 				// get device from databse
-				$device = $this->_database->getDeviceByDeviceId($deviceId);
+				$device = $this->_database->getComponentByComponentId($deviceId);
 				
 				// check device
 				if(isset($device))
 				{
-					// display room
-					$this->_view->displayRoom($device->deviceRoom);
-					
 					// display device
-					// TODO: Add more properties
 					$this->_view->displayDevice(
-						$device->deviceId, 
-						$device->deviceNumber,
-						$device->deviceName, 
-						$device->deviceNote);
+						$device->componentId,
+						$device->componentRoom,
+						$device->componentName, 
+						$device->componentNote,
+						$device->componentHasProblems);	
+				}
+			}	
+		}
+		
+		/** 
+		 * Select a component and print the device on UI
+		 * 
+		 *  @author Adrian Geuss <adriangeuss@gmail.com>
+		 */
+		public function selectComponent()
+		{
+			$componentId = $this->_view->getComponentId();
+			
+			// check component id
+			if(isset($componentId))
+			{
+				// get component from databse
+				$component = $this->_database->getComponentByComponentId($componentId);
+				
+				// check component
+				if(isset($component))
+				{
+					// display component
+					$this->_view->displayComponent(
+						$component->componentId,
+						$component->componentDeliverer,
+						$component->componentRoom,
+						$component->componentName,
+						$component->componentBuy,
+						$component->componentWarranty,
+						$component->componentNote,
+						$component->componentSupplier,
+						$component->componentType,
+						$component->componentIsDevice);
 				}
 			}	
 		}
@@ -165,6 +196,14 @@
 				// display room end
 				$this->_view->displayDeviceTypeEnd();
 			}
+		}
+
+		public function selectComponentsForDevice($deviceId)
+		{
+			// get devices from database
+			$components = $this->_database->getSubComponentsByComponentId($deviceId);
+			
+			$this->_view->displayComponents($components);
 		}
 		
 		/**

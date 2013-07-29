@@ -11,10 +11,6 @@
 	</ul>
 </div>
 
-<div id="dialog" title="Raum l&ouml;schen?">
-	<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
-</div>
-
 <script language="JavaScript" type="text/javascript">
 	$(function() { $('#dialog').hide(); } );
 
@@ -237,7 +233,7 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 			 */
-			public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice) {}
+			public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice) {}
 							
 			/**
 			 *  function to display device
@@ -316,6 +312,13 @@
 				// reset row count
 				$this->_rowCount = 0;
 			}
+			
+			/**
+			 *  function to display components
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayComponents($components){}
 
 			/**
 			 *  function to get component id
@@ -429,9 +432,14 @@
 		$controller = new ComponentController($view, $database);	
 			
 		// select room to change
-		$controller->selectDevicesForRoomId(GET('room'));		
+		$controller->selectComponent(GET('room'));		
+
 		
 	?>
+	
+	<div id="dialog" title="Raum l&ouml;schen?">
+		<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
+	</div>
 	
 	<!---
 	<h2>Computer</h2>

@@ -1325,6 +1325,52 @@
 		 * 
 		 * @return ComponentEntity[]
 		 *
+         * @author Adrian Geuss <adriangeuss@gmail.com>	  
+		 */
+		 public function getSubComponentsByComponentId($id)
+		 {
+			$select = "SELECT kom.*, CASE WHEN (Select v_id
+									FROM komp_vorgang kova 
+									WHERE kova.k_id = kom.k_id
+									Order by Datum DESC
+               						LIMIT 1) = 2 then true else false end as v_id
+						FROM komponente_komponente sub
+						INNER JOIN komponente kom ON kom.k_id = sub.komponenten_k_id_teil
+						WHERE
+							sub.komponenten_k_id_aggregat = ".$id.";";
+					   
+			$Data = mysql_query($select);
+			
+			$entities = array();
+			while ($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy = $row['k_einkaufsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
+				
+				$entities[] = $entity;
+			}
+						
+			return $entities;
+		 }
+		 
+		 
+		 /**
+		 * get SubComponent by MasterComponentId
+		 *
+	  	 * @param int $id id
+		 * 
+		 * @return ComponentEntity[]
+		 *
          * @author Leon Geim<leon.geim@gmail.com>		  
 		 */
 		 public function getSubComponentbyComponentId($id)
@@ -1340,22 +1386,27 @@
 							sub.komponenten_k_id_aggregat = ".$id.";";
 					   
 			$Data = mysql_query($select);
-			$row = mysql_fetch_assoc($Data);
 			
-			$entity = new ComponentEntity();
-			$entity->componentId = $row['k_id'];
-			$entity->componentDeliverer = $row['lieferant_l_id'];
-			$entity->componentRoom = $row['lieferant_r_id'];
-			$entity->componentName = $row['k_name'];
-			$entity->componentBuy = $row['k_einkaufsdatum'];
-			$entity->componentWarranty = $row['k_gewaehrleistungsdauert'];
-			$entity->componentNote = $row['k_notiz'];
-			$entity->componentSupplier = $row['k_hersteller'];
-			$entity->componentType = $row['komponentenarten_ka_id'];
-			$entity->componentIsDevice = $row['k_device'];
-			$entity->componentHasProblems = $row['v_id'];
+			$entities = array();
+			while ($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentEntity();
+				$entity->componentId = $row['k_id'];
+				$entity->componentDeliverer = $row['lieferant_l_id'];
+				$entity->componentRoom = $row['lieferant_r_id'];
+				$entity->componentName = $row['k_name'];
+				$entity->componentBuy = $row['k_einkaufsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
+				$entity->componentNote = $row['k_notiz'];
+				$entity->componentSupplier = $row['k_hersteller'];
+				$entity->componentType = $row['komponentenarten_ka_id'];
+				$entity->componentIsDevice = $row['k_device'];
+				$entity->componentHasProblems = $row['v_id'];
+				
+				$entities[] = $entity;
+			}
 						
-			return $entity;
+			return $entities;
 		 }
 		 
 		 
@@ -1486,7 +1537,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
@@ -1537,7 +1588,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
@@ -1604,7 +1655,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
@@ -1877,7 +1928,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdauer'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier = $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
@@ -1964,7 +2015,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
@@ -2006,7 +2057,7 @@
 				$entity->componentRoom = $row['lieferant_r_id'];
 				$entity->componentName = $row['k_name'];
 				$entity->componentBuy= $row['k_einkaufsdatum'];
-				$entity->componentWarranty = $row['k_gewaehrleistungsdatum'];
+				$entity->componentWarranty = (isset($row['k_gewaehrleistungsdatum'])) ? $row['k_gewaehrleistungsdatum'] : null;
 				$entity->componentNote = $row['k_notiz'];
 				$entity->componentSupplier= $row['k_hersteller'];
 				$entity->componentType = $row['komponentenarten_ka_id'];
