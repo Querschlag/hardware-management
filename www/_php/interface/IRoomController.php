@@ -52,5 +52,12 @@
 		 * @author Johannes Alt <altjohannes510@gmail.com>
 		 */
 		public function deleteRoom();
+		
+		/**
+		 * function to get rooms (only Entities)
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function getRooms();
 	}
 ?>
