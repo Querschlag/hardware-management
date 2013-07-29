@@ -1062,7 +1062,7 @@
 				$DataSubSelect = mysql_query($select);
 				while($rowSubSelect = mysql_fetch_assoc($DataSubSelect))
 				{
-					$entitySubArray[] = $rowSubSelect['zw_wert'];
+					$entitySubArray['zw_id'] = $rowSubSelect['zw_wert'];
 				}
 				echo var_export($entitySubArray);
 				$entity->componentAttributeValidValue = $entitySubArray;
