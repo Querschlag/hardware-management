@@ -69,5 +69,13 @@
 		 */
 		public function selectAttributesByType($type);
 		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function updateComponentNameAndRoom($id, $name, $room);
+		
 	}
 ?>

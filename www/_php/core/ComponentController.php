@@ -162,7 +162,7 @@
 					// add device to device type list
 					$deviceTypes[$deviceEntity->componentType][] = $deviceEntity;		
 					
-					if ($deviceEntity->componentHasProblems)
+					if ($deviceEntity->componentHasProblems && $deviceEntity->componentIsDevice)
 						$deviceProblemCount++;			
 				}
 			}			
@@ -279,7 +279,10 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 		 */
 		public function updateComponent($id)
-		{			
+		{
+			/**
+			 * TODO
+			 */			
 			// get component deliverer
 			$deliverer = $this->_view->getComponentDeliverer();
 			
@@ -371,7 +374,7 @@
 		}
 		
 		/**
-		 * delete a component
+		 * insert component attributes
 		 *
 		 * @return void
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
@@ -379,5 +382,17 @@
 		public function insertAttributes($attributeId, $componentId, $value) {
 			$this->_database->insertAttributeValue($attributeId, $componentId, $value);
 		}
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function updateComponentNameAndRoom($id, $name, $room) {
+			$this->_database->updateComponentNameAndRoom($id, $name, $room);
+		}
+		
+		
 	}
 ?>

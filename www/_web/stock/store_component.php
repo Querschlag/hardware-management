@@ -140,6 +140,48 @@ else if ($step == 2)
 			public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
 			
 			/**
+			 *  function to display components
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayComponents($components){}
+			
+			/**
+			 *  function to display device
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems=false){}
+			
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceType($deviceTypeName){}
+			
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceTypeEnd(){}
+			
+			/** 
+			 *  function to display problem count
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayProblemCount($count){}
+			
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentName($device_name){}
+			
+			/**
 			 *  function to get component id
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com>
@@ -278,6 +320,9 @@ else if ($step == 2)
 		}
 		else if ($step == 3) 
 		{
+			//save device component id to session
+			$_SESSION['SubDeviceId'] = $view->getComponentId();
+			
 			$controller->insertComponent();
 			
 			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
@@ -305,9 +350,7 @@ else if ($step == 2)
 			<h4>Eigenschaften</h4>
 			<form action="index.php?mod=storeDevice" method="post">
 				'.$attrList.'
-				<input type="hidden" name="step" value="5" />
-				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
-				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
+				<input type="hidden" name="step" value="4" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Anlegen" />
@@ -459,7 +502,6 @@ else if ($step == 2)
 				<input name="step" value="3" type="hidden" />
 				<input type="hidden" name="type" value="'.$view->getComponentTypes().'">
 				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'">
-				<input type="hidden" name="MainDevice" value="'.POST('MainDevice').'" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
@@ -481,7 +523,6 @@ else if ($step == 2)
 				<div class="deviceButton"><input name="type" type="image" src="img/component_icons/RCAConnector_Plug.png" /><p>Audio Anschluss</p></div>
 				<div class="deviceButton"><input name="type" type="image" src="img/add-button.png" /><p>Typ hinzuf&uuml;gen</p></div>
 				<input type="hidden" name="device" value="0">
-				<input type="hidden" name="MainDevice" value="'.GET('MainDevice').'" />
 				<input type="hidden" name="step" value="2" />
 				<div class="clearfix"></div>
 				<div class="cancelButton"><input onClick="location.href = \'index.php?mod=stock\'" type="button" value="Abbrechen" /></div>

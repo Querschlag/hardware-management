@@ -26,7 +26,9 @@
 	}
 		
 	echo '<link rel="stylesheet" href="css/content';
-	if (SESSION('theme2') == true)
+	if (SESSION('theme1') == true)
+		echo '';
+	else
 		echo '2';
 	echo '.css">';	
 ?>

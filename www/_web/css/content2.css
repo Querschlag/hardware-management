@@ -105,12 +105,21 @@ textarea {
 	#user_bar_wrapper {
 		right:25%;
 		top:40px;
+		position:inherit;
+		max-width:160px;
+		margin:30px auto;
 	}
 }
 #user_bar {
-    position: relative;
+    position:relative;
     margin:0 auto;
     max-width:1200px;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar {
+		position:inherit;
+	}
 }
 #user_bar_wrapper:hover {
     background-color: #EEEEEE;
@@ -367,7 +376,7 @@ form p {
 .largeButton {
     background-color: #BBBBBB;
     display: inline-block;
-    margin: 0 30px;
+    margin: 20px 30px;
     padding: 40px 30px;
     text-align: center;
 }
@@ -376,7 +385,7 @@ form p {
     border: medium none;
     font-size: 20px;
     height: 80px;
-    width: 120px;
+    width: 160px;
 }
 .orders {
     list-style: none outside none;

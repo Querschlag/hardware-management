@@ -44,7 +44,7 @@
 				if (!@mysql_connect("10.9.4.55", "itv_v1", ""))
 					mysql_connect("localhost", "itv_v1", "");
 			}
-			
+			// mysql_connect("localhost", "root", "");
 			mysql_select_db("itv_v1") or die (mysql_error());
 		}
 		
@@ -88,7 +88,7 @@
 						FROM raeume rae
 						INNER JOIN komponente kom ON kom.lieferant_r_id = rae.r_id
 						INNER JOIN komp_vorgang kovo ON kovo.K_id = kom.k_id AND v_id = 2
-						WHERE kom.deletedFlag = 0 AND rae.deletedFlag = 0;";
+						WHERE kom.deletedFlag = 0 AND kom.k_device = 1 AND rae.deletedFlag = 0;";
 			$Data = mysql_query($select);
 			$row = mysql_fetch_assoc($Data);
 			
@@ -344,6 +344,31 @@
 						WHERE
 									k_id = ".$id.";";
 									
+			return mysql_query($update);
+		}
+		
+		/**
+		 * update a component
+		 * 
+		 * @param integer $id The components component id
+		 * @param integer $deliverer The components deliverer id
+		 * @param integer $room The components room id
+		 * @param string $name The components name
+		 * @param string $date The components date
+		 * @param integer $warranty The components warranty
+		 * @param string $note The components note
+		 * @param string $supplier The components supplier
+		 * @param integer $type The components type
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function updateComponentNameAndRoom($id, $name, $room) {
+			$update = "UPDATE komponente SET
+									lieferant_r_id = ".$room.",
+									k_name = '".$name."'
+								WHERE
+									k_id = ".$id.";";
 			return mysql_query($update);
 		}
 		

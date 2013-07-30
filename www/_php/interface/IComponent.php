@@ -87,6 +87,13 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>
 		 */
 		public function getComponentName();
+		
+		/**
+		 *  function to set component id
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function setComponentName($device_name);
 			
 		/**
 		 * function to get component buying date 
