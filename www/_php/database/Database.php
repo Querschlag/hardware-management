@@ -35,9 +35,9 @@
 			$fp = @fsockopen("10.9.4.55", $port, $errno, $errstr, $timeout);
 			if (!$fp) {
 			    // echo "$errstr ($errno)<br />\n";
-				if (!mysql_connect("localhost", "itv_v1", "") )
+				if (!mysql_connect("localhost", "root", "") )
 				{
-					mysql_connect("itv_v1", "root", "");
+					mysql_connect("localhost", "root", "");
 				}
 			} else {
 				@fclose($x);
@@ -143,7 +143,7 @@
 		public function insertRoom($floor, $number, $name, $note)
 		{
 			$insert = "INSERT INTO raeume (r_nr, r_etage, r_bezeichnung, r_notiz, deletedFlag) 
-						VALUES('$number', $floor, '$name', '$note', 0)";
+						VALUES('" . $number . "', $floor, '" . $name . "', '" . $note . "', 0)";
 			mysql_query($insert)  or die(mysql_error());
 			
 			$select = "SELECT r_id FROM raeume ORDER BY r_id desc LIMIT 1";
@@ -874,6 +874,40 @@
 			$entity->componentTransactionComment = $row['comment'];
 									
 			return $entity;
+		}
+		
+		/**
+		 * select ComponentTransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		 public function getComponentTransactionByComponentId($id)	
+		{
+			$entityArray = array();
+			
+			$select = "SELECT * 
+					   FROM komp_vorgang 
+					   WHERE k_id = ".$id."
+					   ORDER BY datum ASC;";
+					   						
+			$Data = mysql_query($select);
+			while($row = mysql_fetch_assoc($Data))
+			{
+				$entity = new ComponentTransactionEntity();
+				$entity->componentTransactionId = $row['kom_id'];
+				$entity->componentId = $row['k_id'];
+				$entity->transactionId = $row['v_id'];
+				$entity->componentTransactionuserId = $row['b_id'];
+				$entity->componentTransactionDate = $row['datum'];
+				$entity->componentTransactionComment = $row['comment'];
+				$entityArray[] = $entity;
+			}
+			
+			return $entityArray;
+
 		}
 		
 		 /**
