@@ -273,5 +273,15 @@
 				$this->_errorCount++;
 			}	
 		}
+		
+		/**
+		 * function to get rooms
+		 * 
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>
+		 */
+		public function getRooms()
+		{
+			return $this->_database->getRooms();
+		}
 	}
 ?>

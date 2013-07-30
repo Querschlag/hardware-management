@@ -19,6 +19,20 @@
 		public function selectComponents();
 		
 		/**
+		 *  Select all devices for given room and print the room on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectDevicesForRoomId($roomId);
+		
+		/**
+		 *  Select all components for given device and print the room on UI
+		 * 
+		 * @author Adrian Geuss <adriangeuss@gmail.com> 
+		 */
+		public function selectComponentsForDevice($deviceId);
+		
+		/**
 		 *  function insert a new component
 		 *
 		 * @author Thomas Michl <thomas.michl1988@gmail.com> 
@@ -54,6 +68,14 @@
 		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
 		 */
 		public function selectAttributesByType($type);
+		
+		/**
+		 * delete a component
+		 *
+		 * @return void
+		 * @author Thomas Michl <thomas.michl1988@gmail.com>  
+		 */
+		public function updateComponentNameAndRoom($id, $name, $room);
 		
 	}
 ?>

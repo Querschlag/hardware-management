@@ -295,8 +295,44 @@
 			 * 
 			 * @author Thomas Michl <thomas.michl1988@gmail.com> 
 			 */
-			public function displayComponents($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
+			public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice){}
 			
+			
+			/**
+			 *  function to display components
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayComponents($components){}
+			
+			/**
+			 *  function to display device
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems=false){}
+			
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceType($deviceTypeName){}
+			
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceTypeEnd(){}
+			
+			/** 
+			 *  function to display problem count
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayProblemCount($count){}
+		
 			/**
 			 *  function to get component id
 			 * 
@@ -304,7 +340,7 @@
 			 */
 			public function getComponentId()
 			{
-				return $_POST['k_id'];
+				return POST('k_id');
 			}
 			 
 			/**
@@ -334,7 +370,7 @@
 			 */
 			public function getComponentRoom()
 			{
-				return POST('room') ? POST('room') : 1;
+				return POST('room') ? POST('room') : 900000;
 			}
 				
 			/**
@@ -345,6 +381,16 @@
 			public function getComponentName() 
 			{
 				return POST('device_name') ? '' : '';
+			}
+				
+			/**
+			 * function to get component name 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentName($device_name) 
+			{
+				$_POST['device_name'] = $device_name;
 			}
 				
 			/**
@@ -364,7 +410,7 @@
 			 */
 			public function getComponentWarranty()
 			{
-				return (strtotime($_POST['buy']) + (POST('warranty') * 86400));
+				return (strtotime(POST('buy')) + (POST('warranty') * 86400));
 			}
 				
 			/**
@@ -428,25 +474,35 @@
 		
 		if ($step == 7) 
 		{
+			// foreach(POST('deviceNames') as $names) {
+				// $controller->insertComponent();
+			// }
 			header('location:index.php?mod=stock');
 		}
 		else if ($step == 6) 
 		{
-			$room = POST('room');
+			$room = $view->getComponentRoom();
 		
 			if($room == 0)
 			{
 				header('location:index.php?mod=stock');
 			}
 			else 
-			{
+			{				
+				$controller->updateComponentNameAndRoom($_SESSION['MainDeviceId'], $_SESSION['MainDeviceName'], $view->getComponentRoom());
+				
+				$deviceNames = "";
+				for($i = 1; $i <= POST('itemCount'); $i++) {
+					$deviceNames .= '<p>Gerät '.$i.'</p><input type="text" name="deviceNames[]" value="'.$_SESSION['MainDeviceName'].'-'.$i.'" />';
+				}
+				
 				echo '
 				<!-- Device adding wizard - Step 3 -->
 				<h4>Benennung</h4>
 				<form action="index.php?mod=storeDevice" method="post">
-					<p>1</p><input name="attribute2" type="text" value="PC004"/>
-					<p>2</p><input name="attribute2" type="text" value="PC005"/>
-					<input name="step" value="7" type="hidden" />
+					'.$deviceNames.'
+					<input type="hidden" name="step" value="7" />
+					<input type="hidden" name="room" value="'.$view->getComponentRoom().'" />
 					<br>
 					<br>
 					<input name="btnSubmit" type="submit" value="Speichern" />
@@ -459,34 +515,158 @@
 		else if ($step == 5) 
 		{
 			// insert attributes for device components
-			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
+			for($i = 0; $i < count(POST('componentAttribute')); $i++)
 			{
-				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $_SESSION['SubDeviceId'], $_POST['attributeValue'][$i]);				
 			}
+
+		
+			// include IRoom
+			require_once('../_php/interface/IRoom.php');
+
+			// include room controller
+			require_once('../_php/core/RoomController.php');
+			
+			// include room entity
+			require_once('../_php/entity/RoomEntity.php');
+		
+			/**
+			* Room object
+			*
+			* Room object with functionality of IRoom
+			*
+			* @category 
+			* @package
+			* @author Johannes Alt <altjohannes510@gmail.com>
+			* @copyright 2013 B3ProjectGroup2
+			*/	
+			class Room implements IRoom
+			{
+				/**
+				 *  storage for the row max
+				 */
+				 
+				private $_rowMax = 7;
+				
+				/** 
+				 *  storage for the row count
+				 */
+				private $_rowCount;
+									
+				/**
+				 *  function to display room
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com> 
+				 */
+				public function displayRoom($id, $number, $name, $note, $roomHasProblems = false) {}
+			
+				/**
+				 *  function to display floor
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function displayFloor($floorNumber) {}
+				
+				/**
+				 *  function to display room end
+				 * 
+				 *  @author Johannes Alt <altjohannes@gmail.com>
+				 */
+				public function displayRoomEnd() {}
+			
+				/** 
+		 		*  function to display problem count
+		 		* 
+		 		* @author Johannes Alt <altjohannes510@gmail.com>
+		 		*/
+				public function displayProblemCount($count) {}
+			
+				/**
+				 *  function to get room number
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getRoomNumber()
+				{
+				}
+				
+				/** 
+				 *  function to get room name
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getRoomName()
+				{
+				}
+				
+				/**
+				 * function to get room note 
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getRoomNote()
+				{		
+				}
+				
+			   /** 
+			 	*  function to get floor number
+			 	* 
+			 	* @author Johannes Alt <altjohannes510@gmail.com>
+				*/
+				public function getFloorNumber()
+				{
+				}
+				
+				/**
+				 * function to set error
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */			
+				public function setError()
+				{	
+				}
+			
+			   /**
+			 	*  function to set required data error
+			 	* 
+			 	* @author Johannes Alt <altjohannes510@gmail.com>
+			 	*/
+				public function setRequiredDataError()
+				{
+				}
+					
+				/**
+				 * function to get room id
+				 * 
+				 * @author Johannes Alt <altjohannes510@gmail.com>
+				 */
+				public function getRoomId()
+				{
+				}
+				
+			}
+			
+			// create controller object
+			$rController = new RoomController($view, $database);
+					
+			// select the rooms
+			$rooms = $rController->getRooms();
+			
+			$roomList = '<select name="room"><optgroup label="Bitte Raum wählen"></optgroup>';
+			foreach($rooms['rooms'] as $value) {
+				$roomList .= '<option value="'.$value->roomId.'">'.$value->roomFloor.''.(strlen($value->roomNumber) > 1 ? $value->roomNumber : '0'.$value->roomNumber).'</option>';
+			}
+			$roomList .= '</select>';
 
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Wie viele Ger&auml;te anlegen?</h4>
 			<form action="index.php?mod=storeDevice" method="post">
-				<p>Anzahl</p><input name="itemCount" type="text"/>
-				<input name="step" value="6" type="hidden" />
+				<p>Anzahl</p>
+				<input type="number" name="itemCount" min="1" value="1"/>
+				<input type="hidden" name="step" value="6" />
 				<p>Raum</p>
-				<select name="room">
-						<option value="0">Lager</option>
-					<optgroup label="Erdgeschoss"></optgroup>
-						<option value="1">R001</option>
-						<option value="2">R002</option>
-						<option value="3">R003</option>
-					<optgroup label="Stockwerk 1"></optgroup>
-						<option value="4">R101</option>
-						<option value="5">R102</option>
-						<option value="6">R103</option>	
-					<optgroup label="Stockwerk 2"></optgroup>
-						<option value="7">R201</option>
-						<option value="8">R202</option>
-						<option value="9">R203</option>
-						
-				</select>
+				'.$roomList.'
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Anlegen" />
@@ -497,18 +677,16 @@
 		}
 		else if ($step == 4) 
 		{
-			//Set session variable
 			for($i = 0; $i < count($_POST['componentAttribute']); $i++)
 			{
-				$controller->insertAttributes($_POST['componentAttribute'][$i], $view->getComponentId(), $_POST['attributeValue'][$i]);				
+				$controller->insertAttributes($_POST['componentAttribute'][$i], $_SESSION['MainDeviceId'], $_POST['attributeValue'][$i]);
 			}
 			echo '
 			<!-- Device creation wizard - Step 3 -->
 			<h4>Komponenten</h4>
-			<form action="index.php?mod=storeComponent&MainDevice='.$view->getComponentId().'" method="post">
+			<form action="index.php?mod=storeComponent" method="post">
 			
-				<input name="step" value="1" type="hidden" />
-				<input type="hidden" name="id" value="'.$view->getComponentId().'" />				
+				<input name="step" value="1" type="hidden" />				
 				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
 				<input name="btnSubmit" type="submit" value="Komponente hinzuf&uuml;gen" />
 			</form>
@@ -524,8 +702,13 @@
 		}
 		else if ($step == 3) 
 		{
+			
+			
 			$controller->insertComponent();
 			$attributes = $controller->selectAttributesByType($view->getComponentTypes());
+			
+			$_SESSION['MainDeviceId'] = $view->getComponentId();
+			$_SESSION['MainDeviceName'] = POST('device_name');
 			
 			$attrList = '';
 			foreach($attributes as $attribute)
@@ -551,8 +734,6 @@
 			<form action="index.php?mod=storeDevice" method="post">
 				'.$attrList.'
 				<input type="hidden" name="step" value="4" />
-				<input type="hidden" name="device_name" value="'.POST('device_name').'" />
-				<input type="hidden" name="k_id" value="'.$view->getComponentId().'" />	
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />
@@ -706,8 +887,8 @@
 				<p>Notiz</p>
 				<textarea name="note" rows=6 cols=30></textarea>
 				<input name="step" value="3" type="hidden" />
-				<input type="hidden" name="type" value="'.$view->getComponentTypes().'">
-				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'">
+				<input type="hidden" name="type" value="'.$view->getComponentTypes().'" />
+				<input type="hidden" name="device" value="'.$view->getComponentIsDevice().'" />
 				<br>
 				<br>
 				<input name="btnSubmit" type="submit" value="Weiter" />

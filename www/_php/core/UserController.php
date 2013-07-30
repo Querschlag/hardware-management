@@ -303,6 +303,16 @@
 															$user->userLastName, 
 															$password, 
 															$user->userEmail);
+															
+					// check result
+					if($result == FALSE)
+					{
+						// set error information
+						$this->_view->setError();
+						
+						// increase error count
+						$this->_errorCount++;
+					}
 				}	
 				else 
 				{
@@ -312,8 +322,16 @@
 					// increase error count
 					$this->_errorCount++;	
 				}
-			}
-		}
+			}	
+		   else
+		   	{
+				// set user not exist error
+				$this->_view->setNotExistError();
+				
+				// increase error count
+				$this->_errorCount++;
+		   	}
+	}
 		
 		/**
 		 *  function to invite a new user
@@ -454,31 +472,68 @@
 				// get confirm password
 				$password2 = $this->_view->getPassword2();
 				
-				// check entered data
-			   if(	empty($username) == FALSE && empty($email) == FALSE && 
-			   		empty($firstName) == FALSE && empty($lastName) == FALSE )
+				// get user with username from db
+				$userByUsername = $this->_database->getUserByUsername($username);
+
+				// get user with email from db
+				$userByEmail = $this->_database->getUserByEmail($email);
+
+				if(	($userByEmail == NULL || $userByEmail->userId == $user->userId) &&
+					($userByUsername == NULL || $userByUsername->userId == $user->userId))
 				{
-					// check for empty password
-					if(isset($password1) && isset($password2))
+					// check entered data
+				   if(	empty($username) == FALSE && empty($email) == FALSE && 
+				   		empty($firstName) == FALSE && empty($lastName) == FALSE )
 					{
-						// check password
-						if(	empty($password1) == FALSE && 
-							empty($password2) == FALSE && 
-							$password1 == $password2 &&
-							strlen($password1) >= 6 &&
-							preg_match("/[a-z]/", $password1) && 
-							preg_match("/[A-Z]/", $password1) &&
-							preg_match("/[0-9]/", $password1))
+						// check for empty password
+						if(!empty($password1) && !empty($password2))
+						{
+							// check password
+							if(	$password1 == $password2 &&
+								strlen($password1) >= 6 &&
+								preg_match("/[a-z]/", $password1) && 
+								preg_match("/[A-Z]/", $password1) &&
+								preg_match("/[0-9]/", $password1))
+							{
+								// update user
+								$result = $this->_database->updateUser( $user->userId, 
+																		$username, 
+																		$user->userGroupId, 
+																		$firstName, 
+																		$lastName, 
+																		$password1, 
+																		$email);
+								
+								// check result
+								if($result == FALSE)
+								{
+									// set error information
+									$this->_view->setError();
+									
+							   		// increase error count
+									$this->_errorCount++;
+								}
+							}
+							else
+							{
+								// set password error
+								$this->_view->setPasswordError();
+								
+								// increase error count
+								$this->_errorCount++;
+							}
+						}
+						else if(isset($groupId)) 
 						{
 							// update user
 							$result = $this->_database->updateUser( $user->userId, 
-																	$username, 
-																	$user->userGroupId, 
-																	$firstName, 
-																	$lastName, 
-																	$password1, 
-																	$email);
-							
+												$username, 
+												$groupId, 
+												$firstName, 
+												$lastName, 
+												NULL, 
+												$email);
+												
 							// check result
 							if($result == FALSE)
 							{
@@ -487,52 +542,52 @@
 								
 						   		// increase error count
 								$this->_errorCount++;
-							}
+							}	
 						}
-						else
-						{
-							// set password error
-							$this->_view->setPasswordError();
-							
-							// increase error count
-							$this->_errorCount++;
+						else 
+						{						
+							// update user
+							$result = $this->_database->updateUser( $user->userId, 
+												$username, 
+												$user->userGroupId, 
+												$firstName, 
+												$lastName, 
+												NULL, 
+												$email);
+												
+							// check result
+							if($result == FALSE)
+							{
+								// set error information
+								$this->_view->setError();
+								
+						   		// increase error count
+								$this->_errorCount++;
+							}	
 						}
 					}
-					else 
-					{
-						// update user
-						$result = $this->_database->updateUser( $user->userId, 
-											$username, 
-											$groupId, 
-											$firstName, 
-											$lastName, 
-											$user->userPw, 
-											$email);
-											
-						// check result
-						if($result == FALSE)
-						{
-							// set error information
-							$this->_view->setError();
-							
-					   		// increase error count
-							$this->_errorCount++;
-						}	
-					}
+				   else
+				   	{
+				   		// set required data error
+				   		$this->_view->setRequiredDataError();
+						
+				   		// increase error count
+						$this->_errorCount++;
+				   	}				
 				}
-			   else
-			   	{
-			   		// set required data error
-			   		$this->_view->setRequiredDataError();
+				else 
+				{
+					// set user already exist error
+					$this->_view->setExistError();
 					
-			   		// increase error count
-					$this->_errorCount++;
-			   	}
+					// increase error count
+					$this->_errorCount++;	
+				}
 			}
 			else
 			{
 				// set user not exist error
-				$this->_view->setNotExistError();
+				$this->_view->setError();
 				
 				// increase error count
 				$this->_errorCount++;							

@@ -93,7 +93,7 @@ textarea {
     background-color: #454A59;
     border-radius: 3px 3px 3px 3px;
     color: #EEEEEE;
-    height: 36px;
+    height: 35px;
     overflow: hidden;
     position: absolute;
     right: 195px;
@@ -105,12 +105,21 @@ textarea {
 	#user_bar_wrapper {
 		right:25%;
 		top:40px;
+		position:inherit;
+		max-width:160px;
+		margin:30px auto;
 	}
 }
 #user_bar {
-    position: relative;
+    position:relative;
     margin:0 auto;
     max-width:1200px;
+}
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+	#user_bar {
+		position:inherit;
+	}
 }
 #user_bar_wrapper:hover {
     background-color: #EEEEEE;
@@ -227,6 +236,7 @@ form p {
 	background-repeat: no-repeat;
 	background-size: 20px 20px;
 	padding-left:26px;
+	margin-left:-26px !important
 }
 #footer {
     background-color: #323544;
@@ -332,6 +342,10 @@ form p {
     margin:12px 0;
     padding-right:40px;
 }
+.problems{
+	font-size:14px;
+	color:#D45E61;
+}
 .components {
     list-style: none outside none;
 }
@@ -362,7 +376,7 @@ form p {
 .largeButton {
     background-color: #BBBBBB;
     display: inline-block;
-    margin: 0 30px;
+    margin: 20px 30px;
     padding: 40px 30px;
     text-align: center;
 }
@@ -371,7 +385,7 @@ form p {
     border: medium none;
     font-size: 20px;
     height: 80px;
-    width: 120px;
+    width: 160px;
 }
 .orders {
     list-style: none outside none;

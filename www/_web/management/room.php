@@ -4,168 +4,11 @@
 	<ul>
 		<?php
 			require_once('php/additions.php');
-		
-			// include IRoom
-			require_once('../_php/interface/IRoom.php');
-			
-			// include room controller
-			require_once('../_php/core/RoomController.php');
-			
-			// include mock database
-			require_once('../_php/database/Database.php');
-			
-			// include room entity
-			require_once('../_php/entity/RoomEntity.php');
-	
-			/**
-			* Room object
-			*
-			* Room object with functionality of IRoom
-			*
-			* @category 
-			* @package
-			* @author Johannes Alt <altjohannes510@gmail.com>
-			* @copyright 2013 B3ProjectGroup2
-			*/	
-			class Room implements IRoom
-			{
-				/**
-				 *  storage for the room name
-				 */
-				private $_number;
-								
-				/**
-				 *  function to display room
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com> 
-				 */
-				public function displayRoom($id, $number, $name, $note, $roomHasProblems = false)
-				{
-					// store room name
-					$this->_number = $number;
-				}
-			
-				/**
-				 *  function to display floor
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function displayFloor($floorNumber)
-				{
-				}
-				
-				/** 
-		 		*  function to display problem count
-		 		* 
-		 		* @author Johannes Alt <altjohannes510@gmail.com>
-		 		*/
-				public function displayProblemCount($count) 
-				{
-				}
-				
-				/**
-				 *  function to display room end
-				 * 
-				 *  @author Johannes Alt <altjohannes@gmail.com>
-				 */
-				public function displayRoomEnd()
-				{
-				}
-			
-				/**
-				 *  function to get room number
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getRoomNumber()
-				{
-					// return room number
-					return $this->_number;			
-				}
-				
-				/** 
-				 *  function to get room name
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getRoomName()
-				{		
-				}
-				
-				/**
-				 * function to get room note 
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getRoomNote()
-				{				
-				}
-				
-			   /** 
-			 	*  function to get floor number
-			 	* 
-			 	* @author Johannes Alt <altjohannes510@gmail.com>
-				*/
-				public function getFloorNumber()
-				{
-				}
-				
-				/**
-				 * function to set error
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */			
-				public function setError()
-				{		
-				}
-			
-			   /**
-			 	*  function to set required data error
-			 	* 
-			 	* @author Johannes Alt <altjohannes510@gmail.com>
-			 	*/
-				public function setRequiredDataError()
-				{
-				}
-					
-				/**
-				 * function to get room id
-				 * 
-				 * @author Johannes Alt <altjohannes510@gmail.com>
-				 */
-				public function getRoomId()
-				{
-					// return value to return
-					$retVal = NULL;					
-					
-					// check and set room id
-					if(isset($_GET['room'])) $retVal = $_GET['room'];
-					
-					// return value
-					return $retVal;
-				}
-			}
-		
-			// create view object
-			$view = new Room($_POST);
-			
-			// create database
-			$database = new Database();
-			
-			// create controller object
-			$controller = new RoomController($view, $database);	
-				
-			// select room to change
-			$controller->selectRoom();		
 
 			// Breadcrumb navigation
 			include('php/breadcrumb.php');
 		?>
 	</ul>
-</div>
-
-<div id="dialog" title="Raum l&ouml;schen?">
-	<p>Sind Sie sicher, dass Sie den Raum "<?php print $view->getRoomNumber(); ?>" l&ouml;schen wollen?</p>
 </div>
 
 <script language="JavaScript" type="text/javascript">
@@ -348,6 +191,265 @@
 		<div class="clearfix"></div>
 	</div>
 	
+	<?php
+		
+		// include IComponent
+		require_once('../_php/interface/IComponent.php');
+		
+		// include room controller
+		require_once('../_php/core/ComponentController.php');
+		
+		// include mock database
+		require_once('../_php/database/Database.php');
+		
+		// include room entity
+		require_once('../_php/entity/ComponentEntity.php');
+
+		/**
+		* Devices object
+		*
+		* Device object with functionality of IComponent
+		*
+		* @category 
+		* @package
+		* @author Adrian Geuss <adriangeuss@gmail.com>
+		* @copyright 2013 B3ProjectGroup2
+		*/	
+		class Device implements IComponent
+		{	
+			/**
+			 *  storage for the row max
+			 */
+			 
+			private $_rowMax = 7;
+			
+			/** 
+			 *  storage for the row count
+			 */
+			private $_rowCount;
+			
+			
+			/**
+			 *  function to display components
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com> 
+			 */
+			public function displayComponent($id, $deliverer, $room, $name, $buy, $warranty, $note, $supplier, $type, $isDevice) {}
+							
+			/**
+			 *  function to display device
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDevice($id, $roomId, $name, $note, $deviceHasProblems = false)
+			{
+				// check row count
+				if($this->_rowCount == $this->_rowMax)
+				{
+					// print end list
+					print '</ul>';					
+				}
+				
+				// check row count
+				if(isset($this->_rowCount) == FALSE || $this->_rowCount == $this->_rowMax)
+				{
+					// print start list
+					print '<ul class="rooms">';
+					
+					// reset row count
+					$this->_rowCount = 0;
+				}
+				
+				// print list element
+				print '<li ';
+				if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $deviceHasProblems) print 'class="hardwareProblem"';
+				print '><a href="index.php' . navParams(array('mod' => 'device', 'room' => $roomId, 'device' => $id)) . '">' . $name . '</a></li>';
+
+				// increase row count
+				$this->_rowCount++;
+			}
+		
+			/**
+			 *  function to display floor
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceType($deviceTypeName)
+			{
+				// print end list
+				print '</ul>';
+				
+				// print floor name
+				print '<h2>' . $deviceTypeName . '</h2>';
+				
+				// print start list
+				print '<ul class="rooms">';
+				
+				// reset row count
+				$this->_rowCount = 0;
+			}
+
+			/** 
+	 		*  function to display problem count
+	 		* 
+	 		* @author Adrian Geuss <adriangeuss@gmail.com>
+	 		*/
+			public function displayProblemCount($count) 
+			{
+				if (menuItem() == 'maintenance' || menuItem() == 'scrap')
+					print '<b><span class="problems"><p>Probleme: ' . $count . '</p></span></b>';
+			}
+			
+			/**
+			 *  function to display room end
+			 * 
+			 *  @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function displayDeviceTypeEnd()
+			{
+				// print end list
+				print '</ul>';
+				
+				// reset row count
+				$this->_rowCount = 0;
+			}
+			
+			/**
+			 *  function to display components
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com> 
+			 */
+			public function displayComponents($components){}
+
+			/**
+			 *  function to get component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentId(){}
+			
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentId($id){}
+			
+			/**
+			 *  function to set component id
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function setComponentName($device_name){}
+			
+			/**
+			 *  function to get component deliverer
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentDeliverer(){}
+				
+			/** 
+			 *  function to get component room
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentRoom(){}
+				
+			/**
+			 * function to get component name 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentName(){}
+				
+			/**
+			 * function to get component buying date 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentBuy(){}
+				
+			/**
+			 * function to get component warranty 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentWarranty(){}
+				
+			/**
+			 * function to get component note 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentNote(){}
+				
+			/**
+			 * function to get component supplier 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentSupplier(){}
+				
+			/**
+			 * function to get component types 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentTypes(){}
+				
+			/**
+			 * function to get component types 
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */
+			public function getComponentIsDevice(){}
+			
+			/**
+			 * function to set error
+			 * 
+			 * @author Thomas Michl <thomas.michl1988@gmail.com>
+			 */			
+			public function setError(){}
+				
+			/**
+			 * function to get room id
+			 * 
+			 * @author Adrian Geuss <adriangeuss@gmail.com>
+			 */
+			public function getDeviceId()
+			{
+				// return value to return
+				$retVal = NULL;					
+				
+				// check and set room id
+				if(isset($_GET['device'])) $retVal = $_GET['device'];
+				
+				// return value
+				return $retVal;
+			}
+		}
+	
+		// create view object
+		$view = new Device($_POST);
+		
+		// create database
+		$database = new Database();
+		
+		// create controller object
+		$controller = new ComponentController($view, $database);	
+			
+		// select room to change
+		$controller->selectDevicesForRoomId(GET('room'));		
+
+		
+	?>
+	
+	<div id="dialog" title="Raum l&ouml;schen?">
+		<p>Sind Sie sicher, dass Sie diesen Raum l&ouml;schen wollen?</p>
+	</div>
+	
+	<!---
 	<h2>Computer</h2>
 	<ul class="rooms">
 		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 1)); ?>">PC001</a></li>
@@ -365,4 +467,5 @@
 		<li <?php $requiresMaintenance = true; if ((menuItem() == 'maintenance' || menuItem() == 'scrap') && $requiresMaintenance) print 'class="hardwareProblem"'; ?>><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 7)); ?>">DLINK 2</a></li>
 		<li><a href="index.php<?php echo navParams(array('mod' => 'device', 'device' => 8)); ?>">FritzBox!</a></li>
 	</ul>
+	-->
 </div>

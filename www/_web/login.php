@@ -30,8 +30,9 @@
         <![endif]-->
 
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 		<div id="header">
 			<div id="top_nav">
@@ -47,9 +48,7 @@
 					<form action="login.php" method="post">
 						<p>Benutzername</p><input name="username" type="text" value="<?php if(isset($_POST['username'])) print $_POST['username'];  ?>">
 						<p>Passwort</p><input name="password" type="password" />
-						<p><a href="passwordReset.php">Passwort vergessen?</a> </p>
-						<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
-						
+						<p><a href="passwordReset.php">Passwort vergessen?</a> </p>						
 						<?php
 							// include IUser
 							require_once('../_php/interface/IUser.php');
@@ -264,13 +263,9 @@
 							{
 								// log in user
 								$controller->logIn();
-							}		
-							else if(isset($_POST['btnReset']))
-							{
-								// reset password of the user
-								$controller->lostPassword();
-							}		
+							}
 						?>
+						<p><input name="btnLogin" type="submit" value="Anmelden"/></p>
 					</form>
 				</div>
 			</div>

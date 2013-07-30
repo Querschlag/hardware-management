@@ -1,4 +1,4 @@
-<?php require_once('php/navigation.php'); ?>
+<?php require_once('php/navigation.php'); ob_start(); ?>
 <!-- Refactor this to be created dynamically -->
 <div id="breadcrumb_nav">
 	<ul>
@@ -211,8 +211,8 @@
 		<select name="floor">
 			<optgroup label="W&auml;hle ein Stockwerk"></optgroup>
 				<option value="0" <?php if(isset($_POST['floor']) && $_POST['floor'] == 0) echo 'selected'; ?>>Erdgeschoss</option>
-				<option value="1" <?php if(isset($_POST['floor']) && $_POST['floor'] == 1) echo 'selected'; ?>>1 Stockwerk</option>
-				<option value="2" <?php if(isset($_POST['floor']) && $_POST['floor'] == 2) echo 'selected'; ?>>2 Stockwerk</option>
+				<option value="1" <?php if(isset($_POST['floor']) && $_POST['floor'] == 1) echo 'selected'; ?>>1. Stockwerk</option>
+				<option value="2" <?php if(isset($_POST['floor']) && $_POST['floor'] == 2) echo 'selected'; ?>>2. Stockwerk</option>
 		</select>&nbsp;<span class="require">*</span>
 		
 		<p>Raumnummer</p>
@@ -233,7 +233,8 @@
 				if($controller->getErrorCount() == 0)
 				{
 					// no redirect
-					header( "Location: index.php" . navParams() );
+					header( "Location: index.php" . navParams(array('mod' => 'rooms')) );
+					ob_flush();
 				}
 			}
 			else if(isset($_POST['btnChangeSubmit']))

@@ -656,5 +656,43 @@
 		  */
 		 public function getComponentDevicesByRoomId($roomId);
 		 
+		 /**
+		  *  function to get Devices by RoomId
+		  * 
+		  * @param int $id componentId
+		  *
+		  * @return ComponentEntity
+		  * 
+		  * @author Daniel Schulz <schmoschu@gmail.com>
+		  */
+		 public function getComponentbyComponentId($id);		 
 		 
+		 
+		 /**
+		  *  function to get device by device id
+		  * 
+		  * @param int $id deviceId
+		  *
+		  * @return ComponentEntity
+		  * 
+		  * @author Adrian Geuss <adriangeuss@gmail.com>
+		  */
+		 public function getDevicebyDeviceId($id);
+		 
+		 /** 
+		  *  function to get user by id include all inactive user
+		  * 
+		  * @author Johannes Alt
+		  */
+		 public function getUserByIdIncludeInactiveUser($id);
+		 
+		 /**
+		 * select ComponentTransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		 public function getComponentTransactionByComponentId($id);
 }
