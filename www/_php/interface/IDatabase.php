@@ -679,4 +679,20 @@
 		  */
 		 public function getDevicebyDeviceId($id);
 		 
+		 /** 
+		  *  function to get user by id include all inactive user
+		  * 
+		  * @author Johannes Alt
+		  */
+		 public function getUserByIdIncludeInactiveUser($id);
+		 
+		 /**
+		 * select ComponentTransactionById
+		 * 
+		 * @param int $id id
+		 *
+		 * @return TransactionType
+		 * @author Johannes Alt <altjohannes510@gmail.com>
+		 */
+		 public function getComponentTransactionByComponentId($id);
 }

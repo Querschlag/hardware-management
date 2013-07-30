@@ -142,7 +142,7 @@
 				 */
 				public function setEmailNotSend() 
 				{
-					// print unknown error message
+					// print email error
 					print '<b><p><span class="require">Die Email konnte nicht gesendet werden. 
 							Bitte versuchen Sie es später nocheinmal.</span></p></b>';	
 				}
@@ -268,8 +268,8 @@
 				// check error count
 				if($controller->getErrorCount() == 0)
 				{
-					// redirect to previous page
-					header("Location: index.php" . navParams(array('mod' => 'user')));
+					// print javascript redirect
+					print '<script>$(function() { window.location = "index.php' . navParams(array('mod' => 'user')) .'"; })</script>';
 				}
 			}
 		?>

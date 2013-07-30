@@ -266,7 +266,12 @@
 				 * 
 				 * @author Johannes Alt <altjohannes510@gmail.com>
 				 */
-		 		public function setExistError() {}
+		 		public function setExistError() 
+		 		{
+		 			// set error text
+		 			print '<b><p><span class="require">Der Benutzername oder die 
+		 					Email Adress wird bereits verwendet.</span></p></b>';
+		 		}
 		
 		 		/**
 				 *  function to get confirm password
@@ -321,10 +326,10 @@
 	<h2>
 		<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>&nbsp;<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?> 
 	</h2>
-		<p>Benutzername</p><input name="name" type="text" value="<?php if(isset($_POST['name'])) print $_POST['name']; ?>"/>
-		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>
-		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>
-		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>
+		<p>Benutzername</p><input name="name" type="text" value="<?php if(isset($_POST['name'])) print $_POST['name']; ?>"/>&nbsp;<span class="require">*</span>
+		<p>Vorname</p><input name="firstName" type="text" value="<?php if(isset($_POST['firstName'])) print $_POST['firstName']; ?>"/>&nbsp;<span class="require">*</span>
+		<p>Nachname</p><input name="lastName" type="text" value="<?php if(isset($_POST['lastName'])) print $_POST['lastName']; ?>"/>&nbsp;<span class="require">*</span>
+		<p>Email</p><input name="email" type="email" value="<?php if(isset($_POST['email'])) print $_POST['email']; ?>"/>&nbsp;<span class="require">*</span>
 		<?php if(isset($_GET['user']) && isset($_SESSION['uid']) && $_GET['user'] == $_SESSION['uid']): ?>
 			<p>Passwort</p><input name="password1" type="password" title="Das Passwort muss min. 6 Zeichen lang sein und muss Groß- und Kleinbuchstaben sowie Zahlen beinhalten."/>
 			<p>Passwort bestätigen</p><input name="password2" type="password"/>
@@ -370,7 +375,7 @@
 														data: { btnYes: true },
 														success: function(result)
 																{
-																	window.location = "index.php?menu=" + $.get("menu") + "&mod=user";
+																	window.location = "index.php?menu=management&mod=user";
 																}	
 													}										
 												);			
@@ -407,8 +412,8 @@
 				}
 			}
 	?>
-	<br/>
-	<br/>
+
+	<p class="require">* Pflichtfeld</p>
 	<input name="btnSubmit" type="submit" value="&Uuml;bernehmen" />
 	<input onClick="location.href = 'index.php<?php echo navParams(array('mod' => 'user'), false) ?>'" type="button" value="Abbrechen" />
 		

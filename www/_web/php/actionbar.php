@@ -63,9 +63,9 @@
 				if ($this->_menu == 'management')
 					$this->displayActionButtonAddDevice();
 				if ($this->_menu == 'management')
-					$this->displayActionButtonEditRoom();
-				if ($this->_menu == 'management')
 					$this->displayActionButtonDeleteRoom();
+				if ($this->_menu == 'management')
+					$this->displayActionButtonEditRoom();
 			}
 
 			if ($this->_module == 'device')

@@ -130,17 +130,14 @@
 	<?php
 	
 		// include IComponent
-		require_once('../_php/interface/IComponent.php');
+		require_once('../_php/interface/IReport.php');
 		
 		// include room controller
-		require_once('../_php/core/ComponentController.php');
+		require_once('../_php/core/ReportController.php');
 		
 		// include mock database
 		require_once('../_php/database/Database.php');
 		
-		// include room entity
-		require_once('../_php/entity/ComponentEntity.php');
-
 		/**
 		* Component object
 		*
@@ -385,6 +382,138 @@
 		$controller->selectComponentsForDevice(GET('device'));		
 		
 	?>
+	<?php
+		// include IComponent
+		require_once('../_php/interface/IReport.php');
+		
+		// include room controller
+		require_once('../_php/core/ReportController.php');
+		
+		// include mock database
+		require_once('../_php/database/Database.php');
+		
+		/**
+		* Component object
+		*
+		* Component object with functionality of IComponent
+		*
+		* @category 
+		* @package
+		* @author Adrian Geuss <adriangeuss@gmail.com>
+		* @copyright 2013 B3ProjectGroup2
+		*/	
+		class Report implements IReport
+		{
+			/**
+			*  storage for the report index
+			*/
+			private $_index = 0;
+			
+			/**
+			 *  function to display componet transaction
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function displayComponentTransaction($comTransactionId, $date, $comment, $type, $firstname, $lastname)
+			{
+				// color for table
+				$color = '#ddd';
+				
+				// check index
+				if(($this->_index % 2) == 0)
+				{
+					// change color
+					$color = '#eee';
+				}
+				
+				// print report
+				print '<li style="background-color:' . $color . '">' . $date . ' - ' . $type . ' - ' . $comment . ' - ' . $firstname . ' ' . $lastname . '</li>';
+				
+				// increase index
+				$this->_index++;
+			}
+			
+			/**
+			 *  function to display transactin
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function displayTransaction($id, $name)
+			{				
+			}
+			
+			/**
+			 *  function to get transaction type
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getTransactionType()
+			{				
+			}
+				
+			/**
+			 *  function to get component id
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getComponentId()
+			{
+				// return component id
+				return GET('device');				
+			}
+			
+			/**
+			 *  function to get user id
+			 * 
+			 * @author Johannes Alt
+			 */
+			public function getUserId()
+			{				
+			}
+			
+			/**
+			 *  function to get date
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getDate()
+			{				
+			}
+				
+			/**
+			 *  function to get note
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function getNote()
+			{				
+			}
+				
+			/**
+			 *  function to set error
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function setError()
+			{				
+			}
+			
+			/**
+			 *  function to set required data error
+			 * 
+			 * @author Johannes Alt <altjohannes510@gmail.com>
+			 */
+			public function setRequiredDataError()
+			{				
+			}	
+		}
+
+		// create view object
+		$reportView = new Report($_POST);
+		
+		// create controller object
+		$reportController = new ReportController($reportView, $database);			
+	?>
 	<!--
 	<ul class="components">
 		<li><a href="index.php<?php echo navParams(array('mod' => 'component', 'component' => 1)); ?>">Komponente 1</a></li>
@@ -394,8 +523,9 @@
 	-->
 	<h2>Wartungshistorie</h2>
 	<ul class="support_event">
-		<li style="background-color:#eee">12.07.2013 - Wartungsfall gemeldet: Geh&auml;use kaputt</li>
-		<li style="background-color:#ddd">15.07.2013 - Bearbeitung durch Otto (Azubi)</li>
-		<li style="background-color:#eee">15.07.2013 - Wartungsfall behoben.</li>
+		<?php
+			// select report
+			$reportController->getReportByComponentId();
+		?>
 	</ul>
 </div>

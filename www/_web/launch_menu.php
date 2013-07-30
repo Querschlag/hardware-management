@@ -23,7 +23,10 @@
 		if ($userPermission == 1) {
 			$tiles[] = '<div id="user" class="tile"><a href="index.php?menu=management&mod=user">Benutzer</a></div>';
 		}
-		
+
+		if ($userPermission != 1 && isset($_SESSION['uid'])) {
+			$tiles[] = '<div id="user" class="tile"><a href="index.php?menu=management&mod=editUser&user=' . $_SESSION['uid'] . '">Benutzer</a></div>';
+		}		
 		
 		// Add 'last' class when there's an uneven number
 		if ( (sizeof($tiles) % 2) != 0 )

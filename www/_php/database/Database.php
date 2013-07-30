@@ -166,7 +166,7 @@
 		public function updateRoom($id, $floor, $number, $name, $note)
 		{
 			$update = "UPDATE raeume SET
-									r_nr = ".$number.",
+									r_nr = '".$number."',
 									r_etage= ".$floor.",
 									r_bezeichnung = '".$name."',
 									r_Notiz = '".$note."'
@@ -680,6 +680,33 @@
 			return $entityArray;
 		 }
 	
+			 /** 
+		  *  function to get user by id include all inactive user
+		  * 
+		  * @author Johannes Alt
+		  */
+		 public function getUserByIdIncludeInactiveUser($id)
+		 {
+		 	$select = "SELECT * FROM benutzer WHERE b_id = ".$id;
+			$Data = mysql_query($select);
+			$row = mysql_fetch_assoc($Data);
+			
+			if($row['b_id'] == null)
+			{
+				return null;
+			}
+			
+			$entity = new UserEntity();
+			$entity->userId = $row['b_id'];
+			$entity->userGroupId = $row['bg_id'];
+			$entity->userPw = $row['b_pw'];
+			$entity->userName = $row['b_name'];
+			$entity->userFirstName = $row['b_vorname'];
+			$entity->userLastName = $row['b_nachname'];				
+			$entity->userEmail = $row['b_email'];
+				
+			return $entity;
+		 }
 	
 		  /**
 		 * select UserById
@@ -951,7 +978,7 @@
 		 {
 			 $insert ="INSERT INTO komp_vorgang 
 						(k_id, v_id, b_id, comment, datum)
-						VALUES(".$componentID.",".$transactionId.",".$userId.",".$comment.",".date." );";
+						VALUES(".$componentID.",".$transactionId.",".$userId.",'".$comment."',".date." );";
 										
 			mysql_query($insert);
 			
@@ -1050,7 +1077,7 @@
 			
 			$entity = new TransactionEntity();
 			$entity->transactionId = $row['v_id'];
-			$entity->transactionDescription = $row['v_bezeichnung'];						
+			$entity->transactionTypName = $row['v_bezeichnung'];						
 			return $entity;
 		 }
 		 
